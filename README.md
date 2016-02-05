@@ -2,7 +2,7 @@
 Add a task to your [Todoist](https://todoist.com/ "Todoist") inbox from [Alfred](https://www.alfredapp.com "Alfred"). I nicked the idea from [Ruben Schmidtmann](https://github.com/rubenschmidtmann "Ruben Schmidtmann")'s [todoist-alfred-workflow](https://github.com/rubenschmidtmann/todoist-alfred-workflow "todoist-alfred-workflow"), and expanded on it a little. It uses Todoist `v6` API.
 
 ## Installation
-1. import workflow
+1. [download](https://github.com/moranje/alfred-workflow-todoist/blob/master/dist/alfred-workflow-todoist.alfredworkflow?raw=true) and import workflow
 2. replace `TOKEN=<your api key>` in the bash file with your Todoist api key (get it from Todoist Preferences =\> Account =\> API-token)
 3. replace the `DATE_LANG="nl"` to match your locale (valid languages are: : `en`, `da`, `pl`, `zh`, `ko`, `de`, `pt`, `ja`, `it`, `fr`, `sv`, `ru`, `es`, `nl`)
 
