@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 # author: M. Oranje
-# date: 05-02-2016
-# version: 0.5.0
 
 # Add your API key here
-TOKEN=<yout api key>
+TOKEN=<your api key>
 
 # Create UUID
 UUID=$(uuidgen)
@@ -35,6 +33,4 @@ COMMAND='[{"type": "item_add", "temp_id": "", "uuid": "'$UUID'", "args": {"conte
 # Add Task through Todoist API
 curl https://todoist.com/API/v6/sync \
     -d token=$TOKEN \
-    -d commands="$COMMAND" \
-    > /dev/null
-echo "Item added to inbox"
+    -d commands="$COMMAND"
