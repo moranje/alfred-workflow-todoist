@@ -4,7 +4,7 @@ Add tasks to your [Todoist](https://todoist.com/ "Todoist") inbox or list upcomi
 The task listing feature relies on javascript (sorry no PHP, perl of ruby foo) which means it works from Yosemite and up. The task adding feature should work on any Mac OSX version.
 
 ## Installation
-[download](https://github.com/moranje/alfred-workflow-todoist/blob/master/dist/alfred-workflow-todoist.alfredworkflow?raw=true) and import workflow.
+[download](https://github.com/moranje/alfred-workflow-todoist/raw/master/dist/Alfred%20Workflow%20Todoist.alfredworkflow) and import workflow.
 
 ## Configuration
 ![](https://raw.githubusercontent.com/moranje/alfred-workflow-todoist/master/images/config.png "Configuration image")  
