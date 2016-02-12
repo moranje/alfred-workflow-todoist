@@ -24,7 +24,6 @@ The task listing feature relies on javascript (sorry no PHP, perl of ruby foo) w
 ![](https://raw.githubusercontent.com/moranje/alfred-workflow-todoist/master/images/add-task.png "Add a task to your Todoist Inbox")  
 
 **Add a task**  
-`⌘T {task}, {date}, {priority} `  
 `todo {task}, {date}, {priority}`  
 Example: _todo Get milk, tomorrow @ 9, 3_  
 
@@ -49,7 +48,6 @@ IFS=':' read -r -a SPLIT <<< "{query}"
 ![](https://raw.githubusercontent.com/moranje/alfred-workflow-todoist/master/images/list-tasks.png "List your Todoist tasks ")  
 
 **View and mark done**  
-`⌘⇧T ` + navigate and hit ENTER  
 `todo` + navigate and hit ENTER  
 
 ## License
