@@ -55,7 +55,7 @@ IFS=':' read -r -a SPLIT <<< "{query}"
 `todo` + navigate and hit ENTER  
 
 ## Changelog
-View [CHANGELOG.md](https://raw.githubusercontent.com/moranje/alfred-workflow-todoist/master/CHANGELOG.md "Changelog")
+View [CHANGELOG.md](https://github.com/moranje/alfred-workflow-todoist/blob/master/CHANGELOG.md "Changelog")
 
 ## License
 The MIT License (MIT)
