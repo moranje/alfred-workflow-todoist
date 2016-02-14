@@ -4,21 +4,25 @@ Add tasks to your [Todoist](https://todoist.com/ "Todoist") inbox or list upcomi
 The task listing feature relies on javascript (sorry no PHP, perl of ruby foo) which means it works from Yosemite and up. The task adding feature should work on any Mac OSX version.
 
 ## Installation
-[download](https://github.com/moranje/alfred-workflow-todoist/raw/master/dist/Alfred%20Workflow%20Todoist.alfredworkflow) and import workflow.
+[Download](https://github.com/moranje/alfred-workflow-todoist/raw/master/dist/Alfred%20Workflow%20Todoist.alfredworkflow) and import workflow.
 
 ## Configuration
 ![](https://raw.githubusercontent.com/moranje/alfred-workflow-todoist/master/images/config.png "Configuration image")  
 
-1. `/bin/bash` file  
-  * replace `TOKEN=<your api token>` in the bash file with your Todoist api token (get it from Todoist Preferences =\> Account =\> API-token)  
-  * replace the `DATE_LANG="nl"` to match your locale (valid languages are: : `en`, `da`, `pl`, `zh`, `ko`, `de`, `pt`, `ja`, `it`, `fr`, `sv`, `ru`, `es`, `nl`)  
- 
-2. script filter file (see image)  
-  * insert your here `var CONFIG = { token: '<your api token>' }` (leave the quotes)  
-  * if you want to show more (or less) tasks, change the `var CONFIG = { maxItems: 10 }` to the desired amount.  
+**One Time Config**  
+`todo:config {api token}, {language}, {max list items}`  
+Example: _todo:config 2d2e2a334c5f36e7a7c43b46e, nl, 9_
 
-3. If you need to use another hotkey, change it here.  
-4. If you need to change the trigger keyword to something else that `todo` do it here.
+### Token*
+Your Todoist api token, get it from Todoist Preferences => Account => API-token (should be 40 charcters)
+
+### Language*
+This is relevant for parsing date strings ('tomorrow @ 9pm', in `en`). Valid languages are: `en`, `da`, `pl`, `zh`, `ko`, `de`, `pt`, `ja`, `it`, `fr`, `sv`, `ru`, `es`, `nl`.
+
+### Max List Items*
+This parameter limits the amount of tasks shown when using the `todo` command.
+
+\* All of these are required!
 
 ## Usage
 ![](https://raw.githubusercontent.com/moranje/alfred-workflow-todoist/master/images/add-task.png "Add a task to your Todoist Inbox")  
@@ -49,6 +53,9 @@ IFS=':' read -r -a SPLIT <<< "{query}"
 
 **View and mark done**  
 `todo` + navigate and hit ENTER  
+
+## Changelog
+View [CHANGELOG.md](https://raw.githubusercontent.com/moranje/alfred-workflow-todoist/master/CHANGELOG.md "Changelog")
 
 ## License
 The MIT License (MIT)
