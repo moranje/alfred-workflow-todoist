@@ -1,5 +1,7 @@
 # Changelog
 
+### 1.0.1
+  * [FIX] Undo bundle id change, since it's needed for updating packal
 
 ### 1.0.0
   * [BREAKING]: changed bundle id from `com.alfred-workflow-todoist` tot `com.moranje.alfred-workflow-todoist`
