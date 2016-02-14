@@ -1,15 +1,16 @@
 #!/usr/bin/env bash
 # author: M. Oranje
+# licence: MIT
 
 # Add your API key here
-TOKEN=<your api key>
+TOKEN=`grep -Eo '"[a-f0-9]{40}"' "$alfred_workflow_data/.workflowrc" | cut -d '"' -f2`
+DATE_LANG=`grep -Eo '"en|da|pl|zh|ko|de|pt|ja|it|fr|sv|ru|es|nl"' "$alfred_workflow_data/.workflowrc" | cut -d '"' -f2`
+
+echo "$TOKEN"
+echo "$DATE_LANG"
 
 # Create UUID
 UUID=$(uuidgen)
-
-# The language of the date_string (valid languages are: en, da, pl, zh, ko, de,
-# pt, ja, it, fr, sv, ru, es, nl).
-DATE_LANG="nl"
 
 # The {query} is interpolated by alfred to contain the query string.
 # The first item in the query will be the task, the second will be the date

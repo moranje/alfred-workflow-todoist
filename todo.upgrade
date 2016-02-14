@@ -1,0 +1,32 @@
+### Test
+  * create config ✓
+  * create task ✓
+  * list and mark tasks done ✓
+
+### Source folder
+  * update all comments ✓
+  * update CHANGELOG.md ✓
+
+### Workflow folder
+  * compile jxa and store in workflow folder ✓
+  * copy new library-check.sh over if changed ✓
+
+### User folder
+  * Verify if anything needs updating
+  * Verify that update won't break any settings
+
+### Dist folder
+  * save new workflow version
+
+### Github
+  * update README.md (instant preview)
+  * commit
+  * update version
+
+### Packal
+  * update version
+  * update README.md
+  * update workflow
+
+### Forum
+  * Update forum post
