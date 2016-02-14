@@ -1,15 +1,15 @@
 ### Test
-  * create config ✓
-  * create task ✓
-  * list and mark tasks done ✓
+  * create config
+  * create task
+  * list and mark tasks done
 
 ### Source folder
-  * update all comments ✓
-  * update CHANGELOG.md ✓
+  * update all comments
+  * update CHANGELOG.md
 
 ### Workflow folder
-  * compile jxa and store in workflow folder ✓
-  * copy new library-check.sh over if changed ✓
+  * compile jxa and store in workflow folder
+  * copy new library-check.sh over if changed
 
 ### User folder
   * Verify if anything needs updating
