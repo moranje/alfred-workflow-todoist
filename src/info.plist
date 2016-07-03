@@ -1,0 +1,1008 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.alfred-workflow-todoist</string>
+	<key>category</key>
+	<string>Tools</string>
+	<key>connections</key>
+	<dict>
+		<key>00D57379-6DC9-4291-BAE2-FBA5371ABA43</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>63E741AD-4AD6-4D29-A56A-D956D363C24D</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>1511F8D7-86F9-4FA0-892A-61A9B0A59071</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>3B29E17F-D8CB-4FCC-B2F3-CFFC7E81064B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>20F91B2A-B330-42C1-A897-E7B3E317C377</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>329F88DE-5F91-459A-8CA3-9471677B3673</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>23CD40A6-624D-4A89-952B-8D225CB9A461</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>3B29E17F-D8CB-4FCC-B2F3-CFFC7E81064B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>27DA9968-06F7-4EE1-BE4B-E9E019851DCC</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>20F91B2A-B330-42C1-A897-E7B3E317C377</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>2D712B58-55EB-4860-8AD1-39D34D41784F</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>3B29E17F-D8CB-4FCC-B2F3-CFFC7E81064B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>329F88DE-5F91-459A-8CA3-9471677B3673</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>3B29E17F-D8CB-4FCC-B2F3-CFFC7E81064B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>39F2AAD4-9A9E-49CD-9445-D103FC5B89B1</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>3B29E17F-D8CB-4FCC-B2F3-CFFC7E81064B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>3B29E17F-D8CB-4FCC-B2F3-CFFC7E81064B</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>00D57379-6DC9-4291-BAE2-FBA5371ABA43</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>ACF30E58-A2E8-4D69-8E6A-AF7038A63023</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>4779F81C-8B78-452A-A546-C1695AF4E84A</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>AAA14883-904F-4837-9B4B-96B2C68EB5FA</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>4DC1E42F-29F2-4C92-A04A-67E33CF53AEF</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>39F2AAD4-9A9E-49CD-9445-D103FC5B89B1</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>63E741AD-4AD6-4D29-A56A-D956D363C24D</key>
+		<array/>
+		<key>8287BDA1-4CEE-4AE3-981E-71A3F4BDCA5D</key>
+		<array/>
+		<key>86944C36-38BC-4A53-A112-3587F01E500C</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>1511F8D7-86F9-4FA0-892A-61A9B0A59071</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>8B26117D-DC05-4B02-B59A-61E240EA1545</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>2D712B58-55EB-4860-8AD1-39D34D41784F</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>AAA14883-904F-4837-9B4B-96B2C68EB5FA</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>3B29E17F-D8CB-4FCC-B2F3-CFFC7E81064B</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>ACF30E58-A2E8-4D69-8E6A-AF7038A63023</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>D8FCA4F1-A656-4FF6-93DA-8037A7F06830</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>D0A0F0C0-08A8-46B6-A84A-EBBB0D1B6633</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>23CD40A6-624D-4A89-952B-8D225CB9A461</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>D8FCA4F1-A656-4FF6-93DA-8037A7F06830</key>
+		<array/>
+		<key>FA3C3BCC-9F60-4F28-ACBF-FA4AAF3442DA</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>4779F81C-8B78-452A-A546-C1695AF4E84A</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Martien Oranje</string>
+	<key>description</key>
+	<string>Adds a task to Inbox</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Alfred Workflow Todoist</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<true/>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>t</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Going through all your folders</string>
+				<key>script</key>
+				<string># pickup old tokens
+. settings.sh
+
+if [[ "token" =~ ^[0-9a-f]{40}$ ]]
+then
+	echo "$token"
+else
+	echo "$config_results"
+fi</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string>init.js</string>
+				<key>subtext</key>
+				<string>Looking for an old config</string>
+				<key>title</key>
+				<string>Alfred Todoist</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>8287BDA1-4CEE-4AE3-981E-71A3F4BDCA5D</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>todo</string>
+				<key>subtext</key>
+				<string>Add {query} to your inbox</string>
+				<key>text</key>
+				<string>Add task</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>20F91B2A-B330-42C1-A897-E7B3E317C377</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string># author: M. Oranje
+. settings.sh
+
+# Create UUID
+uuid=$(uuidgen)
+
+# The {query} is interpolated by alfred to contain the query string.
+# The first item in the query will be the task, the second will be the date
+# string and the third will be the priority.
+IFS=',' read -r -a items &lt;&lt;&lt; "{query}"
+
+# The pipe to xargs is meant to remove trailing and leading whitespace
+task=$(echo "${items[0]}" | xargs)
+# See http://bit.ly/1PX1txy for supported date formats
+date=$(echo "${items[1]}" | xargs)
+# A number between 1 and 4, 4 being highest priority.
+priority=$(echo "${items[2]}" | xargs)
+if [[ ! "$priority" =~ ^[1-4]$ ]]
+then
+  priority="1"
+fi
+
+# Adding task
+command='[{"type": "item_add", "temp_id": "", "uuid": "'$uuid'", "args": {"content": "'$task'", "date_string":"'$date'", "priority":"'$priority'", "date_lang": "'$language'"}}]'
+
+# Add Task through Todoist API
+curl https://todoist.com/API/v7/sync \
+    -d token=$token \
+    -d commands="$command" &gt; /dev/null
+
+echo -n "Task was added to your inbox"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>329F88DE-5F91-459A-8CA3-9471677B3673</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>hotkey</key>
+				<integer>0</integer>
+				<key>hotmod</key>
+				<integer>0</integer>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>27DA9968-06F7-4EE1-BE4B-E9E019851DCC</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>hotkey</key>
+				<integer>0</integer>
+				<key>hotmod</key>
+				<integer>0</integer>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>FA3C3BCC-9F60-4F28-ACBF-FA4AAF3442DA</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>escaping</key>
+				<integer>126</integer>
+				<key>keyword</key>
+				<string>todo</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Hold on, while I get your tasks</string>
+				<key>script</key>
+				<string>/usr/local/bin/node index.js "getTasks" "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Show upcoming todoist tasks</string>
+				<key>title</key>
+				<string>List Todo's</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>4779F81C-8B78-452A-A546-C1695AF4E84A</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>126</integer>
+				<key>script</key>
+				<string>/usr/local/bin/node index.js "markDone" "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>AAA14883-904F-4837-9B4B-96B2C68EB5FA</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Failure</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>63E741AD-4AD6-4D29-A56A-D956D363C24D</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string># author: M. Oranje
+. settings.sh
+
+query=$1
+notification="Error: could not store token"
+
+if [[ "$query" =~ ^[0-9a-f]{40}$ ]]
+then
+  # Set a variable
+  ./settings.sh $language $max_items $query
+  notification="Token was stored"
+fi
+
+echo -n "$notification"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>23CD40A6-624D-4A89-952B-8D225CB9A461</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>t:token</string>
+				<key>subtext</key>
+				<string>t:token &lt;token&gt;</string>
+				<key>text</key>
+				<string>Store Token</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>D0A0F0C0-08A8-46B6-A84A-EBBB0D1B6633</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>Error</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>00D57379-6DC9-4291-BAE2-FBA5371ABA43</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.junction</string>
+			<key>uid</key>
+			<string>3B29E17F-D8CB-4FCC-B2F3-CFFC7E81064B</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string># author: M. Oranje
+. settings.sh
+
+query=$1
+notification="Error: could not store language"
+match="^(en|da|pl|zh|ko|de|pt|ja|it|fr|sv|ru|es|nl)$"
+
+if [[ "$query" =~ $match ]]
+then
+
+  # Replace variable in settings.json
+  ./settings.sh $query $max_items $token
+  notification="Language was stored"
+fi
+
+echo -n "$notification"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>2D712B58-55EB-4860-8AD1-39D34D41784F</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>t:language</string>
+				<key>subtext</key>
+				<string>t:language &lt;language&gt;</string>
+				<key>text</key>
+				<string>Store Language</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>8B26117D-DC05-4B02-B59A-61E240EA1545</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Success</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>D8FCA4F1-A656-4FF6-93DA-8037A7F06830</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>^((?!Error)[\s\S])*$</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>ACF30E58-A2E8-4D69-8E6A-AF7038A63023</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>t:items</string>
+				<key>subtext</key>
+				<string>t:items &lt;amount&gt;</string>
+				<key>text</key>
+				<string>Store Item Amount</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>4DC1E42F-29F2-4C92-A04A-67E33CF53AEF</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string># author: M. Oranje
+. settings.sh
+
+query=$1
+notification="Error: could not store item amount"
+
+if [[ "$query" =~ ^[0-9]+$ ]]
+then
+  # Set a variable
+  ./settings.sh $language $query $token
+  notification="Item amount was stored"
+fi
+
+echo -n "$notification"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>39F2AAD4-9A9E-49CD-9445-D103FC5B89B1</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>notification="Error: node.js was already installed"
+
+# set PATH so brew command can be found
+PATH=/usr/local/bin:/usr/local/homebrew/bin:$PATH
+
+if ! type "node" &gt; /dev/null
+then
+
+	if ! type "brew" &gt; /dev/null
+	then
+		# install homebrew
+		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+	fi	
+
+	# update home brew's formula's
+	brew update &gt; /dev/null
+
+	# install node.js
+	brew install node &gt; /dev/null
+
+	if type "node" &gt; /dev/null
+	then
+		notification="Node.js succesfully installed"
+	else
+		notification="Error: tried to install node but failed"
+	fi
+fi
+
+echo -n $notification</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>5</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>1511F8D7-86F9-4FA0-892A-61A9B0A59071</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>t:nodejs</string>
+				<key>subtext</key>
+				<string>Are you sure?</string>
+				<key>text</key>
+				<string>Install Node.js</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>86944C36-38BC-4A53-A112-3587F01E500C</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>https://github.com/moranje/alfred-workflow-todoist/blob/master/README.md</string>
+	<key>uidata</key>
+	<dict>
+		<key>00D57379-6DC9-4291-BAE2-FBA5371ABA43</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>1</integer>
+			<key>xpos</key>
+			<integer>710</integer>
+			<key>ypos</key>
+			<integer>570</integer>
+		</dict>
+		<key>1511F8D7-86F9-4FA0-892A-61A9B0A59071</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>xpos</key>
+			<integer>420</integer>
+			<key>ypos</key>
+			<integer>1040</integer>
+		</dict>
+		<key>20F91B2A-B330-42C1-A897-E7B3E317C377</key>
+		<dict>
+			<key>xpos</key>
+			<integer>250</integer>
+			<key>ypos</key>
+			<integer>220</integer>
+		</dict>
+		<key>23CD40A6-624D-4A89-952B-8D225CB9A461</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>xpos</key>
+			<integer>420</integer>
+			<key>ypos</key>
+			<integer>540</integer>
+		</dict>
+		<key>27DA9968-06F7-4EE1-BE4B-E9E019851DCC</key>
+		<dict>
+			<key>xpos</key>
+			<integer>80</integer>
+			<key>ypos</key>
+			<integer>220</integer>
+		</dict>
+		<key>2D712B58-55EB-4860-8AD1-39D34D41784F</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>xpos</key>
+			<integer>420</integer>
+			<key>ypos</key>
+			<integer>700</integer>
+		</dict>
+		<key>329F88DE-5F91-459A-8CA3-9471677B3673</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>xpos</key>
+			<integer>420</integer>
+			<key>ypos</key>
+			<integer>220</integer>
+		</dict>
+		<key>39F2AAD4-9A9E-49CD-9445-D103FC5B89B1</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>xpos</key>
+			<integer>420</integer>
+			<key>ypos</key>
+			<integer>870</integer>
+		</dict>
+		<key>3B29E17F-D8CB-4FCC-B2F3-CFFC7E81064B</key>
+		<dict>
+			<key>xpos</key>
+			<integer>610</integer>
+			<key>ypos</key>
+			<integer>650</integer>
+		</dict>
+		<key>4779F81C-8B78-452A-A546-C1695AF4E84A</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>xpos</key>
+			<integer>250</integer>
+			<key>ypos</key>
+			<integer>380</integer>
+		</dict>
+		<key>4DC1E42F-29F2-4C92-A04A-67E33CF53AEF</key>
+		<dict>
+			<key>xpos</key>
+			<integer>250</integer>
+			<key>ypos</key>
+			<integer>870</integer>
+		</dict>
+		<key>63E741AD-4AD6-4D29-A56A-D956D363C24D</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>1</integer>
+			<key>xpos</key>
+			<integer>790</integer>
+			<key>ypos</key>
+			<integer>540</integer>
+		</dict>
+		<key>8287BDA1-4CEE-4AE3-981E-71A3F4BDCA5D</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>xpos</key>
+			<integer>250</integer>
+			<key>ypos</key>
+			<integer>60</integer>
+		</dict>
+		<key>86944C36-38BC-4A53-A112-3587F01E500C</key>
+		<dict>
+			<key>xpos</key>
+			<integer>250</integer>
+			<key>ypos</key>
+			<integer>1040</integer>
+		</dict>
+		<key>8B26117D-DC05-4B02-B59A-61E240EA1545</key>
+		<dict>
+			<key>xpos</key>
+			<integer>250</integer>
+			<key>ypos</key>
+			<integer>700</integer>
+		</dict>
+		<key>AAA14883-904F-4837-9B4B-96B2C68EB5FA</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>xpos</key>
+			<integer>420</integer>
+			<key>ypos</key>
+			<integer>380</integer>
+		</dict>
+		<key>ACF30E58-A2E8-4D69-8E6A-AF7038A63023</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>4</integer>
+			<key>xpos</key>
+			<integer>710</integer>
+			<key>ypos</key>
+			<integer>740</integer>
+		</dict>
+		<key>D0A0F0C0-08A8-46B6-A84A-EBBB0D1B6633</key>
+		<dict>
+			<key>xpos</key>
+			<integer>250</integer>
+			<key>ypos</key>
+			<integer>540</integer>
+		</dict>
+		<key>D8FCA4F1-A656-4FF6-93DA-8037A7F06830</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>4</integer>
+			<key>xpos</key>
+			<integer>790</integer>
+			<key>ypos</key>
+			<integer>710</integer>
+		</dict>
+		<key>FA3C3BCC-9F60-4F28-ACBF-FA4AAF3442DA</key>
+		<dict>
+			<key>xpos</key>
+			<integer>80</integer>
+			<key>ypos</key>
+			<integer>380</integer>
+		</dict>
+	</dict>
+	<key>version</key>
+	<string>1.2.0</string>
+	<key>webaddress</key>
+	<string>https://github.com/moranje/alfred-workflow-todoist</string>
+</dict>
+</plist>
