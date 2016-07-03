@@ -9,22 +9,22 @@ The task listing feature relies on javascript (sorry no PHP, perl of ruby foo) w
 ## Configuration 
 
 **One Time Config**  
-`t:token {api token}`  (no default)
+`t:token {api token}`  (no default)  
 Example: _t:token 2d2e2a334c5f36e7a7c43b46e_
 
-`t:language {language}`  (default: en)
+`t:language {language}`  (default: en)  
 Example: _t:language nl_
 
-`t:items {max list items}`  (default: 9)
+`t:items {max list items}`  (default: 9)  
 Example: _t:items 9_
 
 ### Token*
 Your Todoist api token, get it from Todoist Preferences => Account => API-token (should be 40 charcters)
 
-### Language*
+### Language
 This is relevant for parsing date strings ('tomorrow @ 9pm', in `en`). Valid languages are: `en`, `da`, `pl`, `zh`, `ko`, `de`, `pt`, `ja`, `it`, `fr`, `sv`, `ru`, `es`, `nl`.
 
-### Max List Items*
+### Max List Items
 This parameter limits the amount of tasks shown when using the `todo` command. Node.js is **required** for listing todos
 
 ### Node.js
@@ -33,6 +33,8 @@ Node.js is required for listing todo's. Working with JSON API's in batch is no f
 Example _t:nodejs_ => ENTER
 Uninstall Node (terminal): _brew uninstall node_
 Uninstall Homebrew (terminal): _ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"_
+
+\* _Required_
 
 ## Usage
 ![](https://raw.githubusercontent.com/moranje/alfred-workflow-todoist/master/images/add-task.png "Add a task to your Todoist Inbox")  
