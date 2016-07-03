@@ -1,5 +1,14 @@
 # Changelog
 
+### 2.0.0
+- Rewrote nearly everything
+- [BREAKING]: Removed osascript, file system operations are very clunky, and the documentation is poor.
+- [BREAKING]: Instead used Node.js now, easy install provided
+- [FIX]: Fixed listing function
+- [FEATURE]: Easier configuration with `t:` options
+- [FEATURE]: Auto migrate old settings
+- [FEATURE]: Updated to Todoist API v7 
+
 ### 1.0.1
   * [FIX] Undo bundle id change, since it's needed for updating packal
 
@@ -11,4 +20,4 @@
   * [FEATURE]: List tasks using `todo` and mark a task done using navigation + ENTER
 
 ### 0.5.0
-  *	initial release
+  * initial release

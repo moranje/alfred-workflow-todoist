@@ -1,17 +1,22 @@
 # ALFRED TODOIST WORKFLOW
-Add tasks to your [Todoist](https://todoist.com/ "Todoist") inbox or list upcoming tasks straight from [Alfred](https://www.alfredapp.com "Alfred"). I nicked the idea from [Ruben Schmidtmann](https://github.com/rubenschmidtmann "Ruben Schmidtmann")'s [todoist-alfred-workflow](https://github.com/rubenschmidtmann/todoist-alfred-workflow "todoist-alfred-workflow"), and further expanded on it. It uses Todoist `v6` API.
+Add tasks to your [Todoist](https://todoist.com/ "Todoist") inbox or list upcoming tasks straight from [Alfred](https://www.alfredapp.com "Alfred"). I nicked the idea from [Ruben Schmidtmann](https://github.com/rubenschmidtmann "Ruben Schmidtmann")'s [todoist-alfred-workflow](https://github.com/rubenschmidtmann/todoist-alfred-workflow "todoist-alfred-workflow"), and further expanded on it. It uses Todoist `v7` API.
 
 The task listing feature relies on javascript (sorry no PHP, perl of ruby foo) which means it works from Yosemite and up. The task adding feature should work on any Mac OSX version.
 
 ## Installation
 [Download](https://github.com/moranje/alfred-workflow-todoist/raw/master/dist/Alfred%20Workflow%20Todoist.alfredworkflow) and import workflow.
 
-## Configuration
-![](https://raw.githubusercontent.com/moranje/alfred-workflow-todoist/master/images/config.png "Configuration image")  
+## Configuration 
 
 **One Time Config**  
-`todo:config {api token}, {language}, {max list items}`  
-Example: _todo:config 2d2e2a334c5f36e7a7c43b46e, nl, 9_
+`t:token {api token}`  (no default)
+Example: _t:token 2d2e2a334c5f36e7a7c43b46e_
+
+`t:language {language}`  (default: en)
+Example: _t:language nl_
+
+`t:items {max list items}`  (default: 9)
+Example: _t:items 9_
 
 ### Token*
 Your Todoist api token, get it from Todoist Preferences => Account => API-token (should be 40 charcters)
@@ -20,9 +25,14 @@ Your Todoist api token, get it from Todoist Preferences => Account => API-token 
 This is relevant for parsing date strings ('tomorrow @ 9pm', in `en`). Valid languages are: `en`, `da`, `pl`, `zh`, `ko`, `de`, `pt`, `ja`, `it`, `fr`, `sv`, `ru`, `es`, `nl`.
 
 ### Max List Items*
-This parameter limits the amount of tasks shown when using the `todo` command.
+This parameter limits the amount of tasks shown when using the `todo` command. Node.js is **required** for listing todos
 
-\* All of these are required!
+### Node.js
+Node.js is required for listing todo's. Working with JSON API's in batch is no fun and the JavaScript force is strong in my, yet none of the other forces (ruby, PHP, python etc.) are. If you decide you want this feature there is an install function included. This will install **Node.js** as well as a package manager called **Homebrew** to install Node (all other ways of installing node require admin permissions or leave files on your computer). This has the added benefit of making it easy to uninstall as well.
+
+Example _t:nodejs_ => ENTER
+Uninstall Node (terminal): _brew uninstall node_
+Uninstall Homebrew (terminal): _ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"_
 
 ## Usage
 ![](https://raw.githubusercontent.com/moranje/alfred-workflow-todoist/master/images/add-task.png "Add a task to your Todoist Inbox")  
@@ -42,11 +52,11 @@ A number between 1 and 4, where 1 is the lowest and 4 would be the highest prior
 
 Use a comma to separate the parameters, leading or trailing whitespace is ignored. If you wish to change the delimiter with which the parameters (task, date and priority) are separated, you'll need to change a line in the bash script. For instance if you'd like to use ';' as a delimiter, change:  
 ```bash
-IFS=',' read -r -a SPLIT <<< "{query}"
+IFS=',' read -r -a items <<< "{query}"
 ```  
 to:    
 ```bash
-IFS=':' read -r -a SPLIT <<< "{query}"
+IFS=':' read -r -a items <<< "{query}"
 ```  
 
 ![](https://raw.githubusercontent.com/moranje/alfred-workflow-todoist/master/images/list-tasks.png "List your Todoist tasks ")  
