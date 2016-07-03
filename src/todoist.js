@@ -1,54 +1,115 @@
-/* global Library */
+// author: M. Oranje
+// licence: MIT
 
-/*********************
- * author: M. Oranje *
- * license: MIT      *
- *********************/
-
-var workflow = Library( 'workflow' ),
-  helper = Library( 'workflow-helper' );
+var https = require( 'https' );
+var querystring = require( 'querystring' );
 
 /**
- * Call the Todoist servers
+ * Build the url to the Todoist API.
  *
- * @public
- * @author moranje
- * @date    2016-02-10
- * @param   {String}    params  Additional parameters on the api call.
- * @param   {String}    token   The Todoist api token.
- * @return  {Object}            The parsed JSON response.
+ * @author moranje <martieno@gmail.com>
+ * @since  2016-07-03
+ * @param  {Object}   queryParams API params.
+ * @return {Object}
  */
-function api( params, token ) {
-  return JSON.parse(
-    helper.shell( `curl https://todoist.com/API/v6/sync -d token=${token} ${params}` )
-  );
+function buildUrl( queryParams ) {
+  return {
+    hostname: 'todoist.com',
+    path: '/API/v7/sync?' + querystring.stringify( queryParams )
+  };
 }
 
 /**
- * Get a users tasks.
+ * Generate a UUID.
  *
- * @public
- * @author moranje
- * @date    2016-02-13
- * @param   {String}    token  The Todoist api token.
- * @return  {Object}           A Todoist response object.
+ * @author moranje <martieno@gmail.com>
+ * @since  2016-07-03
+ * @return {String}
  */
-function getTasks( token ) {
-  return api( '-d seq_no=0 -d resource_types=\'["items"]\'', token );
+function uuid() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace( /[xy]/g, function( c ) {
+    var r = Math.random() * 16|0, v = c == 'x' ? r : ( r&0x3|0x8 );
+    return v.toString( 16 );
+  } );
 }
 
 /**
- * Mark a single task done.
+ * Async call to the Todoist API.
  *
- * @public
- * @author moranje
- * @date    2016-02-13
- * @param   {number}    id     A task id.
- * @param   {String}    token  A Todoist api token.
- * @return  {Object}           A todoist response object.
+ * @author moranje <martieno@gmail.com>
+ * @since  2016-07-03
+ * @param  {Object}   queryParams The query parameters.
+ * @param  {Function} success    The success callback
+ * @param  {Function} error       The error callback.
+ * @return {[type]}
  */
-function markTaskDone( id, token ) {
-  var uuid = helper.uuid();
+function api( queryParams, success, error ) {
+  var req = https.get( buildUrl( queryParams ), function( res ) {
+    var data = '';
 
-  api( `-d commands='[{"type": "item_complete", "uuid": "${uuid}", "args": {"ids": [${id}]}}]'`, token );
+    res.on('data', function( chunk ) {
+      data += chunk;
+    } );
+
+    res.on( 'end', function() {
+      success( data );
+    } );
+
+    // Return response errors
+    res.on( 'error', function( err ) {
+      error( err );
+    } )
+  } );
+
+  // Return request errors
+  req.on( 'error', function( err ) {
+    error( err );
+  } )
 }
+
+/**
+ * Get a list of todos.
+ *
+ * @author moranje <martieno@gmail.com>
+ * @since  2016-07-03
+ * @param  {String}   token   A Todoist token.
+ * @param  {Function} success The success callback.
+ * @param  {Function} error   The error callback.
+ * @return {String}
+ */
+function getTasks( token, success, error ) {
+  return api( {
+    token: token,
+    seq_no: 0,
+    resource_types: '["items"]'
+  }, success, error );
+}
+
+/**
+ * Mark a task 'done'.
+ *
+ * @author moranje <martieno@gmail.com>
+ * @since  2016-07-03
+ * @param  {String}   id      A task id.
+ * @param  {String}   token   A Todoist token.
+ * @param  {Function} success The success callback.
+ * @param  {Function} error   The error callback.
+ * @return {String}
+ */
+function markTaskDone( id, token, success, error ) {
+  return api( {
+    token: token,
+    commands: JSON.stringify( [ {
+      type: 'item_complete',
+      uuid: uuid(),
+      args: {
+        ids: '[' + id + ']'
+      }
+    } ] )
+  }, success, error );
+}
+
+module.exports = {
+  getTasks: getTasks,
+  markTaskDone: markTaskDone
+};
