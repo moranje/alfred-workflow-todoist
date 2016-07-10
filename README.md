@@ -1,7 +1,7 @@
 # ALFRED TODOIST WORKFLOW
 Add tasks to your [Todoist](https://todoist.com/ "Todoist") inbox or list upcoming tasks straight from [Alfred](https://www.alfredapp.com "Alfred"). I nicked the idea from [Ruben Schmidtmann](https://github.com/rubenschmidtmann "Ruben Schmidtmann")'s [todoist-alfred-workflow](https://github.com/rubenschmidtmann/todoist-alfred-workflow "todoist-alfred-workflow"), and further expanded on it. It uses Todoist `v7` API.
 
-The task listing feature relies on javascript (sorry no PHP, perl of ruby foo) which means it works from Yosemite and up. The task adding feature should work on any Mac OSX version.
+The task listing feature relies on javascript (sorry no PHP, perl of ruby foo) which means it needs node.js to function (OSX javascript proved to be clunky for modules and file io). The task adding feature should work on any Mac OSX version.
 
 ## Installation
 [Download](https://github.com/moranje/alfred-workflow-todoist/raw/master/dist/Alfred%20Workflow%20Todoist.alfredworkflow) and import workflow.
