@@ -1,10 +1,11 @@
 // author: M. Oranje
 // licence: MIT
 
-var todoist = require( './todoist' );
-var settings = require( './settings.json' );
 var call = process.argv[ 2 ];
-var arg = process.argv[ 3 ];
+var settingsPath = process.argv[ 3 ];
+var arg = process.argv[ 4 ];
+var todoist = require( './todoist' );
+var settings = require( settingsPath );
 var calls = {
 
   /**
@@ -39,6 +40,36 @@ var calls = {
       } );
 
       return echo( list );
+    }, function( err ) {
+      // The 'Error' suffix signals something has failed to the notification
+      // handler
+      console.log( 'Error', err );
+    } );
+  },
+
+  /**
+   * Get a list of projects from Todoist.
+   *
+   * @author moranje <martieno@gmail.com>
+   * @since  2016-07-04
+   * @return {Object}
+   */
+  getProjects: function() {
+    var list = {
+      items: []
+    };
+
+    todoist.getProjects( settings.token, function( res ) {
+      var response = JSON.parse( res );
+      var projects = {};
+
+      response.projects.forEach( function( project, index ) {
+        projects[ project.name.toLowerCase() ] = project.id;
+      } );
+
+      settings.projects = projects;
+
+      return echo( 'Projects updated' );
     }, function( err ) {
       // The 'Error' suffix signals something has failed to the notification
       // handler
