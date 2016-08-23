@@ -1,6 +1,6 @@
 {
   "name": "alfred-workflow-todoist",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "An Alfred workflow for Todoist",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,7 @@
     "workfow",
     "todoist"
   ],
-  "author": "Martien Oranje <martien@thedigitaldoctor.net> (http://www.thedigitaldoctor.net)",
+  "author": "Martien Oranje <martieno@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/moranje/alfred-workflow-todoist/issues"

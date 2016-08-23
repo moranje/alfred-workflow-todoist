@@ -163,8 +163,6 @@
 		</array>
 		<key>63E741AD-4AD6-4D29-A56A-D956D363C24D</key>
 		<array/>
-		<key>8287BDA1-4CEE-4AE3-981E-71A3F4BDCA5D</key>
-		<array/>
 		<key>86944C36-38BC-4A53-A112-3587F01E500C</key>
 		<array>
 			<dict>
@@ -178,6 +176,8 @@
 				<false/>
 			</dict>
 		</array>
+		<key>8AEEA89D-31CD-4742-ABF4-E4E84DBA7647</key>
+		<array/>
 		<key>8B26117D-DC05-4B02-B59A-61E240EA1545</key>
 		<array>
 			<dict>
@@ -260,7 +260,7 @@
 			<key>config</key>
 			<dict>
 				<key>alfredfiltersresults</key>
-				<true/>
+				<false/>
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>escaping</key>
@@ -276,25 +276,68 @@
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>runningsubtext</key>
-				<string>Going through all your folders</string>
+				<string>Looking for old configuration files</string>
 				<key>script</key>
-				<string># pickup old tokens
-. settings.sh
+				<string># author: M. Oranje
+# licence: MIT
+# This silently configures the workflow and in theory only needs to run once
 
-if [[ "token" =~ ^[0-9a-f]{40}$ ]]
+token=""
+language="en"
+max_items="9"
+workflowrc_path="$alfred_workflow_data/.workflowrc"
+settings_path="$alfred_workflow_data/settings.json"
+
+# Check if a workflow folder exists
+if [ ! -d "$alfred_workflow_data" ]
 then
-	echo "$token"
-else
-	echo "$config_results"
-fi</string>
+  # create workflow directory
+  mkdir -p "$alfred_workflow_data"
+fi
+
+# Look for an old .workflowrc, delete after
+if [ -f "$workflowrc_path" ]
+then
+  workflowrc=`cat "$workflowrc_path"`
+
+  # $token
+  regex='"token":"([a-f0-9]+)"'
+  if [[ $workflowrc =~ $regex ]]
+  then
+    token="${BASH_REMATCH[1]}"
+  fi
+
+  # $language
+  regex='"language":"(en|da|pl|zh|ko|de|pt|ja|it|fr|sv|ru|es|nl)"'
+  if [[ $workflowrc =~ $regex ]]
+  then
+    language="${BASH_REMATCH[1]}"
+  fi
+
+  # $max_items
+  regex='"max_items":"([0-9]+)"'
+  if [[ $workflowrc =~ $regex ]]
+  then
+    max_items="${BASH_REMATCH[1]}"
+  fi
+
+  rm "$workflowrc_path";
+fi
+
+# create a settings.json if one doesn't exist in $alfred_workflow_data/
+if [ ! -f "$settings_path" ]
+then
+  echo "{\"token\": \"$token\", \"language\": \"$language\", \"max_items\": \"$max_items\"}" &gt; "$settings_path"
+fi
+</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
-				<string>init.js</string>
+				<string></string>
 				<key>subtext</key>
-				<string>Looking for an old config</string>
+				<string>Doing that now</string>
 				<key>title</key>
-				<string>Alfred Todoist</string>
+				<string>Configure Workflow</string>
 				<key>type</key>
 				<integer>0</integer>
 				<key>withspace</key>
@@ -303,7 +346,7 @@ fi</string>
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>8287BDA1-4CEE-4AE3-981E-71A3F4BDCA5D</string>
+			<string>8AEEA89D-31CD-4742-ABF4-E4E84DBA7647</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -338,35 +381,62 @@ fi</string>
 				<key>script</key>
 				<string># author: M. Oranje
 . settings.sh
+settings_path="$alfred_workflow_data/settings.json"
+
+# Store the query in a variable to manipulate it
+query="{query}"
 
 # Create UUID
 uuid=$(uuidgen)
 
+# Store and strip priority from main string
+priority=`echo "$query" | sed "s/.*\!\!\([1-4]\).*/\1/"`
+query=`echo "$query" | sed -E "s/(\!\![1-4])//"`
+# This is failing, fix this
+if [[ $priority =~ $[1-4] ]]
+then
+elseif
+  priority="1"
+fi
+
+# Store and strip labels from main string
+labels=`echo "$query" | grep -o "@[^ ]*" | sed "s/@//g" | paste -sd "," -`
+query=`echo "$query" | sed "s/@[^ ]*//g"`
+
+# remove any double spaces
+query=`echo "$query" | sed "s/  / /g"`
+
 # The {query} is interpolated by alfred to contain the query string.
 # The first item in the query will be the task, the second will be the date
 # string and the third will be the priority.
-IFS=',' read -r -a items &lt;&lt;&lt; "{query}"
+IFS=',' read -r -a items &lt;&lt;&lt; "$query"
 
 # The pipe to xargs is meant to remove trailing and leading whitespace
 task=$(echo "${items[0]}" | xargs)
 # See http://bit.ly/1PX1txy for supported date formats
 date=$(echo "${items[1]}" | xargs)
 # A number between 1 and 4, 4 being highest priority.
-priority=$(echo "${items[2]}" | xargs)
-if [[ ! "$priority" =~ ^[1-4]$ ]]
+project=$(echo "${items[2]}" | xargs)
+if [ -z "$project" ]
 then
-  priority="1"
+  project="inbox"
 fi
 
+# TODO: This is where you left last time, js function should work, new api todo task, date, 
+# project. Document that the use of labels and projects requires JS.
+project_id=`/usr/local/bin/node index.js "getProjects" "$settings_path" "$project"`
+label_ids=`/usr/local/bin/node index.js "getLabels" "$settings_path" "$labels"`
+
+
 # Adding task
-command='[{"type": "item_add", "temp_id": "", "uuid": "'$uuid'", "args": {"content": "'$task'", "date_string":"'$date'", "priority":"'$priority'", "date_lang": "'$language'"}}]'
+command='[{"type": "item_add", "temp_id": "", "uuid": "'$uuid'", "args": {"content": "'$task'", "date_string":"'$date'", "project_id":"'$project_id'", "labels":"'$label_ids'", "priority":"'$priority'", "date_lang": "'$language'"}}]'
 
 # Add Task through Todoist API
 curl https://todoist.com/API/v7/sync \
     -d token=$token \
     -d commands="$command" &gt; /dev/null
 
-echo -n "Task was added to your inbox"</string>
+echo -n "Task was added to your $project"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -453,7 +523,8 @@ echo -n "Task was added to your inbox"</string>
 				<key>runningsubtext</key>
 				<string>Hold on, while I get your tasks</string>
 				<key>script</key>
-				<string>/usr/local/bin/node index.js "getTasks" "{query}"</string>
+				<string>settings_path="$alfred_workflow_data/settings.json"
+/usr/local/bin/node index.js "getTasks" "$settings_path"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -482,7 +553,8 @@ echo -n "Task was added to your inbox"</string>
 				<key>escaping</key>
 				<integer>126</integer>
 				<key>script</key>
-				<string>/usr/local/bin/node index.js "markDone" "{query}"</string>
+				<string>settings_path="$alfred_workflow_data/settings.json"
+/usr/local/bin/node index.js "markDone" "$settings_path" "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -528,15 +600,13 @@ echo -n "Task was added to your inbox"</string>
 				<key>script</key>
 				<string># author: M. Oranje
 . settings.sh
-
 query=$1
-notification="Error: could not store token"
+notification="Error: not a valid token"
 
 if [[ "$query" =~ ^[0-9a-f]{40}$ ]]
 then
   # Set a variable
-  ./settings.sh $language $max_items $query
-  notification="Token was stored"
+  notification=`./settings.sh token $query`
 fi
 
 echo -n "$notification"</string>
@@ -612,17 +682,15 @@ echo -n "$notification"</string>
 				<key>script</key>
 				<string># author: M. Oranje
 . settings.sh
-
 query=$1
-notification="Error: could not store language"
 match="^(en|da|pl|zh|ko|de|pt|ja|it|fr|sv|ru|es|nl)$"
+notification="Error: invalid language"
 
 if [[ "$query" =~ $match ]]
 then
 
   # Replace variable in settings.json
-  ./settings.sh $query $max_items $token
-  notification="Language was stored"
+  notification=`./settings.sh language $query`
 fi
 
 echo -n "$notification"</string>
@@ -732,15 +800,13 @@ echo -n "$notification"</string>
 				<key>script</key>
 				<string># author: M. Oranje
 . settings.sh
-
 query=$1
-notification="Error: could not store item amount"
+notification="Error: not a valid number"
 
 if [[ "$query" =~ ^[0-9]+$ ]]
 then
   # Set a variable
-  ./settings.sh $language $query $token
-  notification="Item amount was stored"
+  notification=`./settings.sh max_items $query`
 fi
 
 echo -n "$notification"</string>
@@ -935,21 +1001,23 @@ echo -n $notification</string>
 			<key>ypos</key>
 			<integer>540</integer>
 		</dict>
-		<key>8287BDA1-4CEE-4AE3-981E-71A3F4BDCA5D</key>
-		<dict>
-			<key>colorindex</key>
-			<integer>3</integer>
-			<key>xpos</key>
-			<integer>250</integer>
-			<key>ypos</key>
-			<integer>60</integer>
-		</dict>
 		<key>86944C36-38BC-4A53-A112-3587F01E500C</key>
 		<dict>
 			<key>xpos</key>
 			<integer>250</integer>
 			<key>ypos</key>
 			<integer>1040</integer>
+		</dict>
+		<key>8AEEA89D-31CD-4742-ABF4-E4E84DBA7647</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>note</key>
+			<string>Alfred Workflow Configuration (runs silently)</string>
+			<key>xpos</key>
+			<integer>250</integer>
+			<key>ypos</key>
+			<integer>60</integer>
 		</dict>
 		<key>8B26117D-DC05-4B02-B59A-61E240EA1545</key>
 		<dict>
@@ -1001,7 +1069,7 @@ echo -n $notification</string>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>1.2.0</string>
+	<string>3.0.0</string>
 	<key>webaddress</key>
 	<string>https://github.com/moranje/alfred-workflow-todoist</string>
 </dict>

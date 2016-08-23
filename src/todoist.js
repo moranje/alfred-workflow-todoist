@@ -86,6 +86,42 @@ function getTasks( token, success, error ) {
 }
 
 /**
+ * Get a list of projects.
+ *
+ * @author moranje <martieno@gmail.com>
+ * @since  2016-07-04
+ * @param  {String}   token   A Todoist token.
+ * @param  {Function} success The success callback.
+ * @param  {Function} error   The error callback.
+ * @return {String}
+ */
+function getProjects( token, success, error ) {
+  return api( {
+    token: token,
+    seq_no: 0,
+    resource_types: '["projects"]'
+  }, success, error );
+}
+
+/**
+ * Get a list of labels.
+ *
+ * @author moranje <martieno@gmail.com>
+ * @since  2016-08-23
+ * @param  {String}   token   A Todoist token.
+ * @param  {Function} success The success callback.
+ * @param  {Function} error   The error callback.
+ * @return {String}
+ */
+function getLabels( token, success, error ) {
+  return api( {
+    token: token,
+    seq_no: 0,
+    resource_types: '["labels"]'
+  }, success, error );
+}
+
+/**
  * Mark a task 'done'.
  *
  * @author moranje <martieno@gmail.com>
@@ -111,5 +147,7 @@ function markTaskDone( id, token, success, error ) {
 
 module.exports = {
   getTasks: getTasks,
+  getProjects: getProjects,
+  getLabels: getLabels,
   markTaskDone: markTaskDone
 };
