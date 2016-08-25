@@ -6,20 +6,21 @@ The task listing feature, adding project and labels to tasks relies on javascrip
 ## Installation
 [Download](https://github.com/moranje/alfred-workflow-todoist/raw/master/dist/Alfred%20Workflow%20Todoist.alfredworkflow) and import workflow.
 
-## Configuration 
+## COMMAND `t` 
+Some magic will happen when you run the `t` command, like creation of files and refreshing of todoist data cache. Other than that use it to configure the workflow.
 
 **One Time Config**  
-`t:token {api token}`  (no default)  
+`t:token {api token}` (no default)  
 Example: _t:token 2d2e2a334c5f36e7a7c43b46e_
 
-`t:language {language}`  (default: en)  
+`t:language {language}` (default: en)  
 Example: _t:language nl_
 
-`t:items {max list items}`  (default: 9)  
+`t:items {max list items}` (default: 9)  
 Example: _t:items 9_
 
 ### Token*
-Your Todoist api token, get it from Todoist Preferences => Account => API-token (should be 40 charcters)
+Your Todoist api token, get it from Todoist Preferences => Account => API-token (should be 40 characters)
 
 ### Language
 This is relevant for parsing date strings ('tomorrow @ 9pm', in `en`). Valid languages are: `en`, `da`, `pl`, `zh`, `ko`, `de`, `pt`, `ja`, `it`, `fr`, `sv`, `ru`, `es`, `nl`.
@@ -30,13 +31,17 @@ This parameter limits the amount of tasks shown when using the `todo` command. N
 ### Node.js
 Node.js is required for listing todo's. Working with JSON API's in batch is no fun and the JavaScript force is strong in my, yet none of the other forces (ruby, PHP, python etc.) are. If you decide you want this feature there is an install function included. This will install **Node.js** as well as a package manager called **Homebrew** to install Node (all other ways of installing node require admin permissions or leave files on your computer). This has the added benefit of making it easy to uninstall as well.
 
-Example _t:nodejs_ => ENTER
-Uninstall Node (terminal): _brew uninstall node_
-Uninstall Homebrew (terminal): _ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"_
+Example: _t:nodejs_ => ENTER  
 
-\* _Required_
+**Uninstall Node (terminal):**  
+_brew uninstall node_  
 
-## Usage
+**Uninstall Homebrew (terminal):**  
+_ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"_  
+
+\* _Required_  
+
+## COMMAND `todo`
 ![](https://raw.githubusercontent.com/moranje/alfred-workflow-todoist/master/images/add-task.png "Add a task to your Todoist Inbox")  
 
 **Add a task**  
@@ -66,22 +71,34 @@ Example: _todo Get stuff done, tomorrow @ 9, work !!2_
 Example: _todo Get stuff done , tomorrow @ 9 !!2, work_  
 Example: _todo Get stuff done !!2, tomorrow @ 9, work_  
 
-*_Relies on node.js to work_
+\* _Relies on node.js to work_  
 
 ### Hacks
 Use a comma to separate the parameters, leading or trailing whitespace is ignored. If you wish to change the delimiter with which the parameters (task, date and priority) are separated, you'll need to change a line in the bash script. For instance if you'd like to use ';' as a delimiter, change:  
 ```bash
-IFS=',' read -r -a items <<< "query"
+IFS=',' read -r -a items <<< "$query"
 ```  
-to:    
+to:  
 ```bash
-IFS=':' read -r -a items <<< "query"
+IFS=':' read -r -a items <<< "$query"
 ```  
 
+## COMMAND `todos`
 ![](https://raw.githubusercontent.com/moranje/alfred-workflow-todoist/master/images/list-tasks.png "List your Todoist tasks ")  
 
-**View and mark done**  
-`todo` + navigate and hit ENTER  
+**List tasks (and mark done)**  
+`todos` (+ navigate and hit ENTER)  
+
+**Search tasks (and mark done)**  
+`todos + {query}` (+ navigate and hit ENTER)  
+
+### Query
+Any search query one character or longer. Uses fuzzy search to find the tasks.  
+
+Example: _todos car_ => finds (because of fuzzy search):  
+* _Rent car_
+* _New cat recipe's_
+* _Cut Gras tomorrow_
 
 ## Changelog
 View [CHANGELOG.md](https://github.com/moranje/alfred-workflow-todoist/blob/master/CHANGELOG.md "Changelog")

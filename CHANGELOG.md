@@ -1,5 +1,10 @@
 # Changelog
 
+### 3.1.0
+[FEATURE] `todos + {query}` (todo search) command added, now you can fuzzy search your tasks.
+[FEATURE] caching! Cache is refreshed on hitting `t`. Everything should run a little faster now.
+[CHANGE] running `todos` without a query will list your todos (this feature used to be under `todo`)
+
 ### 3.0.0
 - [FEATURE] Add labels to your tasks
 - [FEATURE] Add a task to an existing project

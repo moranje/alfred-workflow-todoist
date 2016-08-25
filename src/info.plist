@@ -21,6 +21,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>0E0DCF99-35B9-4513-B0D9-E6020C48ED1E</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>AAA14883-904F-4837-9B4B-96B2C68EB5FA</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>1511F8D7-86F9-4FA0-892A-61A9B0A59071</key>
 		<array>
 			<dict>
@@ -287,12 +300,20 @@ language="en"
 max_items="9"
 workflowrc_path="$alfred_workflow_data/.workflowrc"
 settings_path="$alfred_workflow_data/settings.json"
+cache_path="$alfred_workflow_cache/todoist.json"
 
-# Check if a workflow folder exists
+# Check if a workflow data folder exists
 if [ ! -d "$alfred_workflow_data" ]
 then
-  # create workflow directory
+  # create workflow data directory
   mkdir -p "$alfred_workflow_data"
+fi
+
+# Check if a workflow cache folder exists
+if [ ! -d "$alfred_workflow_cache" ]
+then
+  # create workflow cache directory
+  mkdir -p "$alfred_workflow_cache"
 fi
 
 # Look for an old .workflowrc, delete after
@@ -324,11 +345,20 @@ then
   rm "$workflowrc_path";
 fi
 
-# create a settings.json if one doesn't exist in $alfred_workflow_data/
+# create a settings.json if one doesn't exist in $alfred_workflow_data
 if [ ! -f "$settings_path" ]
 then
   echo "{\"token\": \"$token\", \"language\": \"$language\", \"max_items\": \"$max_items\"}" &gt; "$settings_path"
 fi
+
+# create a todoist.json if one doesn't exist in $alfred_workflow_cache
+if [ ! -f "$cache_path" ]
+then
+  echo "{}" &gt; "$cache_path"
+fi
+
+# Refresh Todoist data cache
+/usr/local/bin/node index.js "refreshCache"
 </string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
@@ -381,7 +411,6 @@ fi
 				<key>script</key>
 				<string># author: M. Oranje
 . settings.sh
-settings_path="$alfred_workflow_data/settings.json"
 
 # Store the query in a variable to manipulate it
 query="{query}"
@@ -392,10 +421,9 @@ uuid=$(uuidgen)
 # Store and strip priority from main string
 priority=`echo "$query" | sed "s/.*\!\!\([1-4]\).*/\1/"`
 query=`echo "$query" | sed -E "s/(\!\![1-4])//"`
-# This is failing, fix this
-if [[ $priority =~ $[1-4] ]]
+one_to_four='^[1-4]$'
+if [[ ! $priority =~ $one_to_four ]]
 then
-elseif
   priority="1"
 fi
 
@@ -424,9 +452,8 @@ fi
 
 # TODO: This is where you left last time, js function should work, new api todo task, date, 
 # project. Document that the use of labels and projects requires JS.
-project_id=`/usr/local/bin/node index.js "getProjects" "$settings_path" "$project"`
-label_ids=`/usr/local/bin/node index.js "getLabels" "$settings_path" "$labels"`
-
+project_id=`/usr/local/bin/node index.js "getProjects" "$project"`
+label_ids=`/usr/local/bin/node index.js "getLabels" "$labels"`
 
 # Adding task
 command='[{"type": "item_add", "temp_id": "", "uuid": "'$uuid'", "args": {"content": "'$task'", "date_string":"'$date'", "project_id":"'$project_id'", "labels":"'$label_ids'", "priority":"'$priority'", "date_lang": "'$language'"}}]'
@@ -511,7 +538,7 @@ echo -n "Task was added to your $project"</string>
 				<key>escaping</key>
 				<integer>126</integer>
 				<key>keyword</key>
-				<string>todo</string>
+				<string>todos</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
@@ -523,8 +550,7 @@ echo -n "Task was added to your $project"</string>
 				<key>runningsubtext</key>
 				<string>Hold on, while I get your tasks</string>
 				<key>script</key>
-				<string>settings_path="$alfred_workflow_data/settings.json"
-/usr/local/bin/node index.js "getTasks" "$settings_path"</string>
+				<string>/usr/local/bin/node index.js "getTasksCapped"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -532,7 +558,7 @@ echo -n "Task was added to your $project"</string>
 				<key>subtext</key>
 				<string>Show upcoming todoist tasks</string>
 				<key>title</key>
-				<string>List Todo's</string>
+				<string>List your tasks</string>
 				<key>type</key>
 				<integer>0</integer>
 				<key>withspace</key>
@@ -553,8 +579,7 @@ echo -n "Task was added to your $project"</string>
 				<key>escaping</key>
 				<integer>126</integer>
 				<key>script</key>
-				<string>settings_path="$alfred_workflow_data/settings.json"
-/usr/local/bin/node index.js "markDone" "$settings_path" "{query}"</string>
+				<string>/usr/local/bin/node index.js "markDone" "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -587,6 +612,76 @@ echo -n "Task was added to your $project"</string>
 			<string>alfred.workflow.output.notification</string>
 			<key>uid</key>
 			<string>63E741AD-4AD6-4D29-A56A-D956D363C24D</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>todos</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Hold on, while I get your tasks</string>
+				<key>script</key>
+				<string>/usr/local/bin/node index.js "searchTasks" "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Search upcoming todoist tasks</string>
+				<key>title</key>
+				<string>Search your tasks</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>0E0DCF99-35B9-4513-B0D9-E6020C48ED1E</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>2</integer>
+				<key>matchstring</key>
+				<string>Error</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>00D57379-6DC9-4291-BAE2-FBA5371ABA43</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.junction</string>
+			<key>uid</key>
+			<string>3B29E17F-D8CB-4FCC-B2F3-CFFC7E81064B</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -648,6 +743,27 @@ echo -n "$notification"</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Success</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>D8FCA4F1-A656-4FF6-93DA-8037A7F06830</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>inputstring</key>
 				<string>{query}</string>
 				<key>matchcasesensitive</key>
@@ -655,20 +771,12 @@ echo -n "$notification"</string>
 				<key>matchmode</key>
 				<integer>2</integer>
 				<key>matchstring</key>
-				<string>Error</string>
+				<string>^((?!Error)[\s\S])*$</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.utility.filter</string>
 			<key>uid</key>
-			<string>00D57379-6DC9-4291-BAE2-FBA5371ABA43</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.junction</string>
-			<key>uid</key>
-			<string>3B29E17F-D8CB-4FCC-B2F3-CFFC7E81064B</string>
+			<string>ACF30E58-A2E8-4D69-8E6A-AF7038A63023</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -726,46 +834,6 @@ echo -n "$notification"</string>
 			<string>alfred.workflow.input.keyword</string>
 			<key>uid</key>
 			<string>8B26117D-DC05-4B02-B59A-61E240EA1545</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<false/>
-				<key>removeextension</key>
-				<false/>
-				<key>text</key>
-				<string>{query}</string>
-				<key>title</key>
-				<string>Success</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
-			<key>uid</key>
-			<string>D8FCA4F1-A656-4FF6-93DA-8037A7F06830</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>inputstring</key>
-				<string>{query}</string>
-				<key>matchcasesensitive</key>
-				<false/>
-				<key>matchmode</key>
-				<integer>2</integer>
-				<key>matchstring</key>
-				<string>^((?!Error)[\s\S])*$</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.utility.filter</string>
-			<key>uid</key>
-			<string>ACF30E58-A2E8-4D69-8E6A-AF7038A63023</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -910,14 +978,27 @@ echo -n $notification</string>
 			<key>ypos</key>
 			<integer>570</integer>
 		</dict>
+		<key>0E0DCF99-35B9-4513-B0D9-E6020C48ED1E</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>note</key>
+			<string>Search todo's</string>
+			<key>xpos</key>
+			<integer>250</integer>
+			<key>ypos</key>
+			<integer>540</integer>
+		</dict>
 		<key>1511F8D7-86F9-4FA0-892A-61A9B0A59071</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>3</integer>
+			<key>note</key>
+			<string>Install Node.js</string>
 			<key>xpos</key>
 			<integer>420</integer>
 			<key>ypos</key>
-			<integer>1040</integer>
+			<integer>1200</integer>
 		</dict>
 		<key>20F91B2A-B330-42C1-A897-E7B3E317C377</key>
 		<dict>
@@ -930,10 +1011,12 @@ echo -n $notification</string>
 		<dict>
 			<key>colorindex</key>
 			<integer>3</integer>
+			<key>note</key>
+			<string>Set token</string>
 			<key>xpos</key>
 			<integer>420</integer>
 			<key>ypos</key>
-			<integer>540</integer>
+			<integer>700</integer>
 		</dict>
 		<key>27DA9968-06F7-4EE1-BE4B-E9E019851DCC</key>
 		<dict>
@@ -946,15 +1029,19 @@ echo -n $notification</string>
 		<dict>
 			<key>colorindex</key>
 			<integer>3</integer>
+			<key>note</key>
+			<string>Set language</string>
 			<key>xpos</key>
 			<integer>420</integer>
 			<key>ypos</key>
-			<integer>700</integer>
+			<integer>860</integer>
 		</dict>
 		<key>329F88DE-5F91-459A-8CA3-9471677B3673</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>3</integer>
+			<key>note</key>
+			<string>Add todo</string>
 			<key>xpos</key>
 			<integer>420</integer>
 			<key>ypos</key>
@@ -964,10 +1051,12 @@ echo -n $notification</string>
 		<dict>
 			<key>colorindex</key>
 			<integer>3</integer>
+			<key>note</key>
+			<string>Set max. tasks shown</string>
 			<key>xpos</key>
 			<integer>420</integer>
 			<key>ypos</key>
-			<integer>870</integer>
+			<integer>1030</integer>
 		</dict>
 		<key>3B29E17F-D8CB-4FCC-B2F3-CFFC7E81064B</key>
 		<dict>
@@ -980,6 +1069,8 @@ echo -n $notification</string>
 		<dict>
 			<key>colorindex</key>
 			<integer>3</integer>
+			<key>note</key>
+			<string>List todo's</string>
 			<key>xpos</key>
 			<integer>250</integer>
 			<key>ypos</key>
@@ -990,7 +1081,7 @@ echo -n $notification</string>
 			<key>xpos</key>
 			<integer>250</integer>
 			<key>ypos</key>
-			<integer>870</integer>
+			<integer>1030</integer>
 		</dict>
 		<key>63E741AD-4AD6-4D29-A56A-D956D363C24D</key>
 		<dict>
@@ -1006,7 +1097,7 @@ echo -n $notification</string>
 			<key>xpos</key>
 			<integer>250</integer>
 			<key>ypos</key>
-			<integer>1040</integer>
+			<integer>1200</integer>
 		</dict>
 		<key>8AEEA89D-31CD-4742-ABF4-E4E84DBA7647</key>
 		<dict>
@@ -1024,12 +1115,14 @@ echo -n $notification</string>
 			<key>xpos</key>
 			<integer>250</integer>
 			<key>ypos</key>
-			<integer>700</integer>
+			<integer>860</integer>
 		</dict>
 		<key>AAA14883-904F-4837-9B4B-96B2C68EB5FA</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>3</integer>
+			<key>note</key>
+			<string>Mark todo done</string>
 			<key>xpos</key>
 			<integer>420</integer>
 			<key>ypos</key>
@@ -1049,7 +1142,7 @@ echo -n $notification</string>
 			<key>xpos</key>
 			<integer>250</integer>
 			<key>ypos</key>
-			<integer>540</integer>
+			<integer>700</integer>
 		</dict>
 		<key>D8FCA4F1-A656-4FF6-93DA-8037A7F06830</key>
 		<dict>
@@ -1069,7 +1162,7 @@ echo -n $notification</string>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>3.0.0</string>
+	<string>3.1.0</string>
 	<key>webaddress</key>
 	<string>https://github.com/moranje/alfred-workflow-todoist</string>
 </dict>
