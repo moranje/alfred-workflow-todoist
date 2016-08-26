@@ -1,5 +1,8 @@
 # Changelog
 
+### 3.1.1
+[FIX] resolve to user home dir instead of my own
+
 ### 3.1.0
 [FEATURE] `todos + {query}` (todo search) command added, now you can fuzzy search your tasks.
 [FEATURE] caching! Cache is refreshed on hitting `t`. Everything should run a little faster now.

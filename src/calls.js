@@ -2,8 +2,8 @@ var fs = require( 'fs' );
 var todoist = require( './todoist' );
 var fuzzy = require( './fuzzysearch' );
 
-var DATA_PATH = '/Users/martien/Library/Application Support/Alfred 3/Workflow Data/com.alfred-workflow-todoist';
-var CACHE_PATH = '/Users/martien/Library/Caches/com.runningwithcrayons.Alfred-3/Workflow Data/com.alfred-workflow-todoist';
+var DATA_PATH = process.env.HOME + '/Library/Application Support/Alfred 3/Workflow Data/com.alfred-workflow-todoist';
+var CACHE_PATH = process.env.HOME + '/Library/Caches/com.runningwithcrayons.Alfred-3/Workflow Data/com.alfred-workflow-todoist';
 
 var settings = require( DATA_PATH + '/settings.json' );
 var cache = require( CACHE_PATH + '/todoist.json' );
