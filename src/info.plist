@@ -262,7 +262,7 @@
 	<key>createdby</key>
 	<string>Martien Oranje</string>
 	<key>description</key>
-	<string>Adds a task to Inbox</string>
+	<string>An Alfred Todoist workflow</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
@@ -459,11 +459,21 @@ label_ids=`/usr/local/bin/node index.js "getLabels" "$labels"`
 command='[{"type": "item_add", "temp_id": "", "uuid": "'$uuid'", "args": {"content": "'$task'", "date_string":"'$date'", "project_id":"'$project_id'", "labels":"'$label_ids'", "priority":"'$priority'", "date_lang": "'$language'"}}]'
 
 # Add Task through Todoist API
-curl https://todoist.com/API/v7/sync \
-    -d token=$token \
-    -d commands="$command" &gt; /dev/null
+response=`curl https://todoist.com/API/v7/sync -d token=$token -d commands="$command"`
 
-echo -n "Task was added to your $project"</string>
+# DEBUG
+echo -n "Query: $query task: $task date: $date language: $language prio: $priority project: $project ($project_id) labels: $labels ($label_ids)"
+
+err='"error": ?"(.*)"'
+if [[ $response =~ $err ]]
+then
+  echo -n "Error: ${BASH_REMATCH[1]}"
+
+  # Refresh Todoist data cache
+  /usr/local/bin/node index.js "refreshCache"
+else
+  echo -n "Task was added to your $project"
+fi</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -1162,7 +1172,7 @@ echo -n $notification</string>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>3.1.0</string>
+	<string>3.1.2</string>
 	<key>webaddress</key>
 	<string>https://github.com/moranje/alfred-workflow-todoist</string>
 </dict>

@@ -42,6 +42,8 @@ function error( err ) {
  * @return {Object}
  */
 function optionList( list ) {
+  if ( !Array.isArray( list ) ) return error( 'Expected list to be an array.' );
+
   var options = {
     items: []
   };
@@ -87,6 +89,8 @@ function getTasksCapped() {
   var list = [];
 
   todoist.getTasks( settings.token, function( data ) {
+    if ( !Array.isArray( data.items ) ) return error( data );
+
     data.items.forEach( function( task, index ) {
       if ( index < settings.max_items ) {
         list.push( task );
@@ -109,8 +113,10 @@ function searchTasks( query ) {
   var list = [];
 
   todoist.getTasks( settings.token, function( data ) {
+    if ( !Array.isArray( data.items ) ) return error( data );
+
     data.items.forEach( function( task, index ) {
-      if ( fuzzy( query, task.content.toLowerCase() ) ) {
+      if ( fuzzy( query.toLowerCase(), task.content.toLowerCase() ) ) {
         list.push( task );
       }
     } );
@@ -129,6 +135,8 @@ function searchTasks( query ) {
  */
 function getProjects( name ) {
   todoist.getProjects( settings.token, function( data ) {
+    if ( !Array.isArray( data.projects ) ) return error( data );
+
     var projects = {};
 
     data.projects.forEach( function( project, index ) {
@@ -153,6 +161,8 @@ function getProjects( name ) {
  */
 function getLabels( string ) {
   todoist.getLabels( settings.token, function( data ) {
+    if ( !Array.isArray( data.labels ) ) return error( data );
+
     var names = string.split( ',' );
     var labels = [];
 
@@ -178,6 +188,14 @@ function getLabels( string ) {
  */
 function markDone( id ) {
   todoist.markTaskDone( id, settings.token, function( res ) {
+    var string = JSON.stringify( res );
+    var match;
+
+    if ( string.match( /"error":/ ) ) {
+      match = string.match( /"error": ?"(.*?)"/ );
+      error( match[1] );
+    }
+
     // Notification message.
     echo( 'Done, done and done!' );
   }, error );

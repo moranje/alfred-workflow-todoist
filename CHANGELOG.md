@@ -1,5 +1,10 @@
 # Changelog
 
+### 3.1.2
+[FIX] Add a an error response when the add task fails
+[FIX] Refresh cache after a task is added
+[FIX] Fixed last path issue thanks @WillPlatnick
+
 ### 3.1.1
 [FIX] resolve to user home dir instead of my own
 
