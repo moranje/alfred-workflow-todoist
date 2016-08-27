@@ -1,7 +1,7 @@
 // author: M. Oranje
 // licence: MIT
 
-var CACHE_PATH = '/Users/martien/Library/Caches/com.runningwithcrayons.Alfred-3/Workflow Data/com.alfred-workflow-todoist';
+var CACHE_PATH = process.env.HOME + '/Library/Caches/com.runningwithcrayons.Alfred-3/Workflow Data/com.alfred-workflow-todoist';
 
 var https = require( 'https' );
 var querystring = require( 'querystring' );
