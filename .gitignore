@@ -2,3 +2,5 @@
 todo.upgrade
 data
 cache
+debug
+.sublime-*
