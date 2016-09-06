@@ -36,9 +36,6 @@ else
     max_items="${BASH_REMATCH[1]}"
   fi
 
-  # $config_results
-  config_results='{"items":[{"subtitle":"Must be 40 characters","title":"Set Todoist Token","autocomplete":":token","icon":"icon.png","valid":false}]}'
-
   # Clean up
   unset settings_path;
   unset settings;

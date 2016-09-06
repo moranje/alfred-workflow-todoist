@@ -4,8 +4,6 @@
 <dict>
 	<key>bundleid</key>
 	<string>com.alfred-workflow-todoist</string>
-	<key>category</key>
-	<string>Tools</string>
 	<key>connections</key>
 	<dict>
 		<key>00D57379-6DC9-4291-BAE2-FBA5371ABA43</key>
@@ -358,8 +356,10 @@ then
 fi
 
 # Refresh Todoist data cache
-/usr/local/bin/node index.js "refreshCache"
-</string>
+if [ -f "/usr/local/bin/node index.js" ]
+then
+  /usr/local/bin/node index.js "refreshCache"
+fi</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -450,10 +450,13 @@ then
   project="inbox"
 fi
 
-# TODO: This is where you left last time, js function should work, new api todo task, date, 
-# project. Document that the use of labels and projects requires JS.
-project_id=`/usr/local/bin/node index.js "getProjects" "$project"`
-label_ids=`/usr/local/bin/node index.js "getLabels" "$labels"`
+# This part relies on Node.js because it interacts with a JSON API
+label_ids="[]"
+if [ -f "/usr/local/bin/node index.js" ]
+then
+  project_id=`/usr/local/bin/node index.js "getProjects" "$project"`
+  label_ids=`/usr/local/bin/node index.js "getLabels" "$labels"`
+fi
 
 # Adding task
 command='[{"type": "item_add", "temp_id": "", "uuid": "'$uuid'", "args": {"content": "'$task'", "date_string":"'$date'", "project_id":"'$project_id'", "labels":"'$label_ids'", "priority":"'$priority'", "date_lang": "'$language'"}}]'
@@ -461,16 +464,16 @@ command='[{"type": "item_add", "temp_id": "", "uuid": "'$uuid'", "args": {"conte
 # Add Task through Todoist API
 response=`curl https://todoist.com/API/v7/sync -d token=$token -d commands="$command"`
 
-# DEBUG
-echo -n "Query: $query task: $task date: $date language: $language prio: $priority project: $project ($project_id) labels: $labels ($label_ids)"
-
 err='"error": ?"(.*)"'
 if [[ $response =~ $err ]]
 then
   echo -n "Error: ${BASH_REMATCH[1]}"
 
   # Refresh Todoist data cache
-  /usr/local/bin/node index.js "refreshCache"
+  if [ -f "/usr/local/bin/node index.js" ]
+  then
+    /usr/local/bin/node index.js "refreshCache"
+  fi
 else
   echo -n "Task was added to your $project"
 fi</string>
@@ -1172,7 +1175,7 @@ echo -n $notification</string>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>3.1.2</string>
+	<string>3.1.3</string>
 	<key>webaddress</key>
 	<string>https://github.com/moranje/alfred-workflow-todoist</string>
 </dict>

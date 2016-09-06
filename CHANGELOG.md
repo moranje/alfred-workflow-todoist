@@ -1,5 +1,8 @@
 # Changelog
 
+### 3.1.3
+[FIX] Fixed a bug where adding a task would fail if node.js wasn't installed
+
 ### 3.1.2
 [FIX] Add a an error response when the add task fails
 [FIX] Refresh cache after a task is added
