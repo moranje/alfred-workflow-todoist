@@ -1,5 +1,8 @@
 # Changelog
 
+### 3.1.4
+[FIX] Introduced a bug in last version where labels and projects wouldn't be added to a task
+
 ### 3.1.3
 [FIX] Fixed a bug where adding a task would fail if node.js wasn't installed
 
