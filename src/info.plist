@@ -4,6 +4,8 @@
 <dict>
 	<key>bundleid</key>
 	<string>com.alfred-workflow-todoist</string>
+	<key>category</key>
+	<string>Productivity</string>
 	<key>connections</key>
 	<dict>
 		<key>00D57379-6DC9-4291-BAE2-FBA5371ABA43</key>
@@ -45,19 +47,6 @@
 				<false/>
 			</dict>
 		</array>
-		<key>20F91B2A-B330-42C1-A897-E7B3E317C377</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>329F88DE-5F91-459A-8CA3-9471677B3673</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
 		<key>23CD40A6-624D-4A89-952B-8D225CB9A461</key>
 		<array>
 			<dict>
@@ -75,7 +64,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>20F91B2A-B330-42C1-A897-E7B3E317C377</string>
+				<string>3B253BFA-8E99-4D9C-819A-36643869F629</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -123,6 +112,19 @@
 				<false/>
 			</dict>
 		</array>
+		<key>3B253BFA-8E99-4D9C-819A-36643869F629</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>329F88DE-5F91-459A-8CA3-9471677B3673</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>3B29E17F-D8CB-4FCC-B2F3-CFFC7E81064B</key>
 		<array>
 			<dict>
@@ -138,6 +140,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>ACF30E58-A2E8-4D69-8E6A-AF7038A63023</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>45051E37-E864-459C-A12B-6FC80705321C</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>28725829-55E1-4CC7-9A6C-795EC2DC91E7</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -164,6 +179,19 @@
 			<dict>
 				<key>destinationuid</key>
 				<string>39F2AAD4-9A9E-49CD-9445-D103FC5B89B1</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>63627FD3-3FF2-4279-95A2-F85FA35D6BDA</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>45051E37-E864-459C-A12B-6FC80705321C</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -271,7 +299,7 @@
 			<key>config</key>
 			<dict>
 				<key>alfredfiltersresults</key>
-				<false/>
+				<true/>
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>escaping</key>
@@ -287,79 +315,16 @@
 				<key>queuemode</key>
 				<integer>1</integer>
 				<key>runningsubtext</key>
-				<string>Looking for old configuration files</string>
+				<string>Brewin' your coffee</string>
 				<key>script</key>
-				<string># author: M. Oranje
-# licence: MIT
-# This silently configures the workflow and in theory only needs to run once
+				<string>#!/usr/bin/env bash
 
-token=""
-language="en"
-max_items="9"
-workflowrc_path="$alfred_workflow_data/.workflowrc"
-settings_path="$alfred_workflow_data/settings.json"
-cache_path="$alfred_workflow_cache/todoist.json"
+###############################################################################
+# Author: M. Oranje
+# Licence: MIT
+###############################################################################
 
-# Check if a workflow data folder exists
-if [ ! -d "$alfred_workflow_data" ]
-then
-  # create workflow data directory
-  mkdir -p "$alfred_workflow_data"
-fi
-
-# Check if a workflow cache folder exists
-if [ ! -d "$alfred_workflow_cache" ]
-then
-  # create workflow cache directory
-  mkdir -p "$alfred_workflow_cache"
-fi
-
-# Look for an old .workflowrc, delete after
-if [ -f "$workflowrc_path" ]
-then
-  workflowrc=`cat "$workflowrc_path"`
-
-  # $token
-  regex='"token":"([a-f0-9]+)"'
-  if [[ $workflowrc =~ $regex ]]
-  then
-    token="${BASH_REMATCH[1]}"
-  fi
-
-  # $language
-  regex='"language":"(en|da|pl|zh|ko|de|pt|ja|it|fr|sv|ru|es|nl)"'
-  if [[ $workflowrc =~ $regex ]]
-  then
-    language="${BASH_REMATCH[1]}"
-  fi
-
-  # $max_items
-  regex='"max_items":"([0-9]+)"'
-  if [[ $workflowrc =~ $regex ]]
-  then
-    max_items="${BASH_REMATCH[1]}"
-  fi
-
-  rm "$workflowrc_path";
-fi
-
-# create a settings.json if one doesn't exist in $alfred_workflow_data
-if [ ! -f "$settings_path" ]
-then
-  echo "{\"token\": \"$token\", \"language\": \"$language\", \"max_items\": \"$max_items\"}" &gt; "$settings_path"
-fi
-
-# create a todoist.json if one doesn't exist in $alfred_workflow_cache
-if [ ! -f "$cache_path" ]
-then
-  echo "{}" &gt; "$cache_path"
-fi
-
-# Refresh Todoist data cache
-if [ -f "/usr/local/bin/node index.js" ]
-then
-  /usr/local/bin/node index.js "refreshCache"
-fi</string>
+./shell/t.configuration.sh "$alfred_workflow_data" "$alfred_workflow_cache"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -383,23 +348,54 @@ fi</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
 				<key>argumenttype</key>
-				<integer>0</integer>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
 				<key>keyword</key>
 				<string>todo</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>script</key>
+				<string>#!/usr/bin/env bash
+
+###############################################################################
+# Author: M. Oranje
+# Licence: MIT
+###############################################################################
+
+export PATH="$PATH:/usr/local/bin:/usr/bin"
+
+./shell/todo.parse.sh "$1" "$alfred_workflow_data"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
 				<key>subtext</key>
-				<string>Add {query} to your inbox</string>
-				<key>text</key>
-				<string>Add task</string>
+				<string>What to do?</string>
+				<key>title</key>
+				<string>Create new task</string>
+				<key>type</key>
+				<integer>0</integer>
 				<key>withspace</key>
 				<true/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
+			<string>alfred.workflow.input.scriptfilter</string>
 			<key>uid</key>
-			<string>20F91B2A-B330-42C1-A897-E7B3E317C377</string>
+			<string>3B253BFA-8E99-4D9C-819A-36643869F629</string>
 			<key>version</key>
-			<integer>1</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -409,74 +405,14 @@ fi</string>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string># author: M. Oranje
-. settings.sh
+				<string>#!/usr/bin/env bash
 
-# Store the query in a variable to manipulate it
-query="{query}"
+###############################################################################
+# Author: M. Oranje
+# Licence: MIT
+###############################################################################
 
-# Create UUID
-uuid=$(uuidgen)
-
-# Store and strip priority from main string
-priority=`echo "$query" | sed "s/.*\!\!\([1-4]\).*/\1/"`
-query=`echo "$query" | sed -E "s/(\!\![1-4])//"`
-one_to_four='^[1-4]$'
-if [[ ! $priority =~ $one_to_four ]]
-then
-  priority="1"
-fi
-
-# Store and strip labels from main string
-labels=`echo "$query" | grep -o "@[^ ]*" | sed "s/@//g" | paste -sd "," -`
-query=`echo "$query" | sed "s/@[^ ]*//g"`
-
-# remove any double spaces
-query=`echo "$query" | sed "s/  / /g"`
-
-# The {query} is interpolated by alfred to contain the query string.
-# The first item in the query will be the task, the second will be the date
-# string and the third will be the priority.
-IFS=',' read -r -a items &lt;&lt;&lt; "$query"
-
-# The pipe to xargs is meant to remove trailing and leading whitespace
-task=$(echo "${items[0]}" | xargs)
-# See http://bit.ly/1PX1txy for supported date formats
-date=$(echo "${items[1]}" | xargs)
-# A number between 1 and 4, 4 being highest priority.
-project=$(echo "${items[2]}" | xargs)
-if [ -z "$project" ]
-then
-  project="inbox"
-fi
-
-# This part relies on Node.js because it interacts with a JSON API
-label_ids="[]"
-if [ -f "/usr/local/bin/node index.js" ]
-then
-  project_id=`/usr/local/bin/node index.js "getProjects" "$project"`
-  label_ids=`/usr/local/bin/node index.js "getLabels" "$labels"`
-fi
-
-# Adding task
-command='[{"type": "item_add", "temp_id": "", "uuid": "'$uuid'", "args": {"content": "'$task'", "date_string":"'$date'", "project_id":"'$project_id'", "labels":"'$label_ids'", "priority":"'$priority'", "date_lang": "'$language'"}}]'
-
-# Add Task through Todoist API
-response=`curl https://todoist.com/API/v7/sync -d token=$token -d commands="$command"`
-
-err='"error": ?"(.*)"'
-if [[ $response =~ $err ]]
-then
-  echo -n "Error: ${BASH_REMATCH[1]}"
-
-  # Refresh Todoist data cache
-  if [ -f "/usr/local/bin/node index.js" ]
-  then
-    /usr/local/bin/node index.js "refreshCache"
-  fi
-else
-  echo -n "Task was added to your $project"
-fi</string>
+./shell/todo.add.sh "{query}" "$alfred_workflow_data"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -498,6 +434,10 @@ fi</string>
 				<integer>0</integer>
 				<key>argument</key>
 				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
 				<key>hotkey</key>
 				<integer>0</integer>
 				<key>hotmod</key>
@@ -523,6 +463,10 @@ fi</string>
 				<integer>0</integer>
 				<key>argument</key>
 				<integer>0</integer>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
 				<key>hotkey</key>
 				<integer>0</integer>
 				<key>hotmod</key>
@@ -563,7 +507,16 @@ fi</string>
 				<key>runningsubtext</key>
 				<string>Hold on, while I get your tasks</string>
 				<key>script</key>
-				<string>/usr/local/bin/node index.js "getTasksCapped"</string>
+				<string>#!/usr/bin/env bash
+
+###############################################################################
+# Author: M. Oranje
+# Licence: MIT
+###############################################################################
+
+export PATH="$PATH:/usr/local/bin:/usr/bin"
+
+/usr/bin/env node js/index.js "getTasksCapped"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -590,11 +543,21 @@ fi</string>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
-				<integer>126</integer>
+				<integer>102</integer>
 				<key>script</key>
-				<string>/usr/local/bin/node index.js "markDone" "{query}"</string>
+				<string>#!/usr/bin/env bash
+
+###############################################################################
+# Author: M. Oranje
+# Licence: MIT
+###############################################################################
+
+# Imports
+. shell/utilities.sh
+
+/usr/bin/env node js/index.js "markDone" "$(json_find "$1" "id")"</string>
 				<key>scriptargtype</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>scriptfile</key>
 				<string></string>
 				<key>type</key>
@@ -636,7 +599,7 @@ fi</string>
 				<key>argumenttype</key>
 				<integer>0</integer>
 				<key>escaping</key>
-				<integer>102</integer>
+				<integer>126</integer>
 				<key>keyword</key>
 				<string>todos</string>
 				<key>queuedelaycustom</key>
@@ -650,7 +613,16 @@ fi</string>
 				<key>runningsubtext</key>
 				<string>Hold on, while I get your tasks</string>
 				<key>script</key>
-				<string>/usr/local/bin/node index.js "searchTasks" "{query}"</string>
+				<string>#!/usr/bin/env bash
+
+###############################################################################
+# Author: M. Oranje
+# Licence: MIT
+###############################################################################
+
+export PATH="$PATH:/usr/local/bin:/usr/bin"
+
+/usr/bin/env node js/index.js "searchTasks" "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -706,18 +678,14 @@ fi</string>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string># author: M. Oranje
-. settings.sh
-query=$1
-notification="Error: not a valid token"
+				<string>#!/usr/bin/env bash
 
-if [[ "$query" =~ ^[0-9a-f]{40}$ ]]
-then
-  # Set a variable
-  notification=`./settings.sh token $query`
-fi
+###############################################################################
+# Author: M. Oranje
+# Licence: MIT
+###############################################################################
 
-echo -n "$notification"</string>
+./shell/t.setting.sh "token" "$1" ^[0-9a-f]{40}$ "New token stored" "Error: not a valid token" "$alfred_workflow_data"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -801,20 +769,14 @@ echo -n "$notification"</string>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string># author: M. Oranje
-. settings.sh
-query=$1
-match="^(en|da|pl|zh|ko|de|pt|ja|it|fr|sv|ru|es|nl)$"
-notification="Error: invalid language"
+				<string>#!/usr/bin/env bash
 
-if [[ "$query" =~ $match ]]
-then
+###############################################################################
+# Author: M. Oranje
+# Licence: MIT
+###############################################################################
 
-  # Replace variable in settings.json
-  notification=`./settings.sh language $query`
-fi
-
-echo -n "$notification"</string>
+./shell/t.setting.sh "language" "$1" "^(en|da|pl|zh|ko|de|pt|ja|it|fr|sv|ru|es|nl)$" "Language set to $1" "Error: invalid language" "$alfred_workflow_data"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -853,6 +815,36 @@ echo -n "$notification"</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>#!/usr/bin/env bash
+
+###############################################################################
+# Author: M. Oranje
+# Licence: MIT
+###############################################################################
+
+./shell/t.setting.sh "max_items" "$1" ^[0-9]+$ "Max. items is now $1" "Error: not a valid number" "$alfred_workflow_data"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>39F2AAD4-9A9E-49CD-9445-D103FC5B89B1</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>argumenttype</key>
 				<integer>0</integer>
 				<key>keyword</key>
@@ -879,69 +871,17 @@ echo -n "$notification"</string>
 				<key>escaping</key>
 				<integer>102</integer>
 				<key>script</key>
-				<string># author: M. Oranje
-. settings.sh
-query=$1
-notification="Error: not a valid number"
+				<string>#!/usr/bin/env bash
 
-if [[ "$query" =~ ^[0-9]+$ ]]
-then
-  # Set a variable
-  notification=`./settings.sh max_items $query`
-fi
-
-echo -n "$notification"</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>39F2AAD4-9A9E-49CD-9445-D103FC5B89B1</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>notification="Error: node.js was already installed"
+###############################################################################
+# Author: M. Oranje
+# Licence: MIT
+###############################################################################
 
 # set PATH so brew command can be found
 PATH=/usr/local/bin:/usr/local/homebrew/bin:$PATH
 
-if ! type "node" &gt; /dev/null
-then
-
-	if ! type "brew" &gt; /dev/null
-	then
-		# install homebrew
-		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-	fi	
-
-	# update home brew's formula's
-	brew update &gt; /dev/null
-
-	# install node.js
-	brew install node &gt; /dev/null
-
-	if type "node" &gt; /dev/null
-	then
-		notification="Node.js succesfully installed"
-	else
-		notification="Error: tried to install node but failed"
-	fi
-fi
-
-echo -n $notification</string>
+./shell/t.node.sh</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -974,6 +914,94 @@ echo -n $notification</string>
 			<string>alfred.workflow.input.keyword</string>
 			<key>uid</key>
 			<string>86944C36-38BC-4A53-A112-3587F01E500C</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>browser</key>
+				<string></string>
+				<key>spaces</key>
+				<string></string>
+				<key>url</key>
+				<string>https://github.com/moranje/alfred-workflow-todoist/raw/master/dist/Alfred%20Workflow%20Todoist.alfredworkflow</string>
+				<key>utf8</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.openurl</string>
+			<key>uid</key>
+			<string>28725829-55E1-4CC7-9A6C-795EC2DC91E7</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>t:update</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Fetching version information</string>
+				<key>script</key>
+				<string>#!/usr/bin/env bash
+
+###############################################################################
+# Author: M. Oranje
+# Licence: MIT
+###############################################################################
+
+./shell/t.update.sh</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>See if a newer version is available</string>
+				<key>title</key>
+				<string>Check for updates</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>63627FD3-3FF2-4279-95A2-F85FA35D6BDA</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>inputstring</key>
+				<string>{query}</string>
+				<key>matchcasesensitive</key>
+				<false/>
+				<key>matchmode</key>
+				<integer>0</integer>
+				<key>matchstring</key>
+				<string>update_workflow</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.filter</string>
+			<key>uid</key>
+			<string>45051E37-E864-459C-A12B-6FC80705321C</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
@@ -1013,13 +1041,6 @@ echo -n $notification</string>
 			<key>ypos</key>
 			<integer>1200</integer>
 		</dict>
-		<key>20F91B2A-B330-42C1-A897-E7B3E317C377</key>
-		<dict>
-			<key>xpos</key>
-			<integer>250</integer>
-			<key>ypos</key>
-			<integer>220</integer>
-		</dict>
 		<key>23CD40A6-624D-4A89-952B-8D225CB9A461</key>
 		<dict>
 			<key>colorindex</key>
@@ -1037,6 +1058,13 @@ echo -n $notification</string>
 			<integer>80</integer>
 			<key>ypos</key>
 			<integer>220</integer>
+		</dict>
+		<key>28725829-55E1-4CC7-9A6C-795EC2DC91E7</key>
+		<dict>
+			<key>xpos</key>
+			<integer>600</integer>
+			<key>ypos</key>
+			<integer>1370</integer>
 		</dict>
 		<key>2D712B58-55EB-4860-8AD1-39D34D41784F</key>
 		<dict>
@@ -1071,12 +1099,32 @@ echo -n $notification</string>
 			<key>ypos</key>
 			<integer>1030</integer>
 		</dict>
+		<key>3B253BFA-8E99-4D9C-819A-36643869F629</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>note</key>
+			<string>Parse todo</string>
+			<key>xpos</key>
+			<integer>250</integer>
+			<key>ypos</key>
+			<integer>220</integer>
+		</dict>
 		<key>3B29E17F-D8CB-4FCC-B2F3-CFFC7E81064B</key>
 		<dict>
 			<key>xpos</key>
 			<integer>610</integer>
 			<key>ypos</key>
 			<integer>650</integer>
+		</dict>
+		<key>45051E37-E864-459C-A12B-6FC80705321C</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>4</integer>
+			<key>xpos</key>
+			<integer>470</integer>
+			<key>ypos</key>
+			<integer>1400</integer>
 		</dict>
 		<key>4779F81C-8B78-452A-A546-C1695AF4E84A</key>
 		<dict>
@@ -1095,6 +1143,13 @@ echo -n $notification</string>
 			<integer>250</integer>
 			<key>ypos</key>
 			<integer>1030</integer>
+		</dict>
+		<key>63627FD3-3FF2-4279-95A2-F85FA35D6BDA</key>
+		<dict>
+			<key>xpos</key>
+			<integer>250</integer>
+			<key>ypos</key>
+			<integer>1370</integer>
 		</dict>
 		<key>63E741AD-4AD6-4D29-A56A-D956D363C24D</key>
 		<dict>
@@ -1175,7 +1230,7 @@ echo -n $notification</string>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>3.1.3</string>
+	<string>3.1.4beta</string>
 	<key>webaddress</key>
 	<string>https://github.com/moranje/alfred-workflow-todoist</string>
 </dict>
