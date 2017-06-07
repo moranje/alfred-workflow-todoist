@@ -1,11 +1,13 @@
 // author: M. Oranje
 // licence: MIT
 
-var CACHE_PATH = process.env.HOME + '/Library/Caches/com.runningwithcrayons.Alfred-3/Workflow Data/com.alfred-workflow-todoist';
+var CACHE_PATH =
+  process.env.HOME +
+  '/Library/Caches/com.runningwithcrayons.Alfred-3/Workflow Data/com.alfred-workflow-todoist';
 
-var https = require( 'https' );
-var querystring = require( 'querystring' );
-var cache = require( CACHE_PATH + '/todoist.json' );
+var https = require('https');
+var querystring = require('querystring');
+var cache = require(CACHE_PATH + '/todoist.json');
 
 /**
  * Build the url to the Todoist API.
@@ -15,10 +17,10 @@ var cache = require( CACHE_PATH + '/todoist.json' );
  * @param  {Object}   queryParams API params.
  * @return {Object}
  */
-function buildUrl( queryParams ) {
+function buildUrl(queryParams) {
   return {
     hostname: 'todoist.com',
-    path: '/API/v7/sync?' + querystring.stringify( queryParams )
+    path: '/API/v7/sync?' + querystring.stringify(queryParams)
   };
 }
 
@@ -30,10 +32,10 @@ function buildUrl( queryParams ) {
  * @return {String}
  */
 function uuid() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace( /[xy]/g, function( c ) {
-    var r = Math.random() * 16|0, v = c == 'x' ? r : ( r&0x3|0x8 );
-    return v.toString( 16 );
-  } );
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = (Math.random() * 16) | 0, v = c == 'x' ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
 }
 
 /**
@@ -46,28 +48,28 @@ function uuid() {
  * @param  {Function} error       The error callback.
  * @return {[type]}
  */
-function api( queryParams, success, error ) {
-  var req = https.get( buildUrl( queryParams ), function( res ) {
+function api(queryParams, success, error) {
+  var req = https.get(buildUrl(queryParams), function(res) {
     var data = '';
 
-    res.on('data', function( chunk ) {
+    res.on('data', function(chunk) {
       data += chunk;
-    } );
+    });
 
-    res.on( 'end', function() {
-      success( JSON.parse( data ) );
-    } );
+    res.on('end', function() {
+      success(JSON.parse(data));
+    });
 
     // Return response errors
-    res.on( 'error', function( err ) {
-      error( err );
-    } )
-  } );
+    res.on('error', function(err) {
+      error(err);
+    });
+  });
 
   // Return request errors
-  req.on( 'error', function( err ) {
-    error( err );
-  } )
+  req.on('error', function(err) {
+    error(err);
+  });
 }
 
 /**
@@ -80,12 +82,16 @@ function api( queryParams, success, error ) {
  * @param  {Function} error   The error callback.
  * @return {String}
  */
-function getAll( token, success, error ) {
-  return api( {
-    token: token,
-    seq_no: 0,
-    resource_types: '["projects","items","labels"]'
-  }, success, error );
+function getAll(token, success, error) {
+  return api(
+    {
+      token: token,
+      seq_no: 0,
+      resource_types: '["projects","items","labels"]'
+    },
+    success,
+    error
+  );
 }
 
 /**
@@ -98,16 +104,20 @@ function getAll( token, success, error ) {
  * @param  {Function} error   The error callback.
  * @return {String}
  */
-function getTasks( token, success, error ) {
-  if ( cache.seq_no_global ) {
-    return success( cache );
+function getTasks(token, success, error) {
+  if (cache.seq_no_global) {
+    return success(cache);
   }
 
-  return api( {
-    token: token,
-    seq_no: 0,
-    resource_types: '["items"]'
-  }, success, error );
+  return api(
+    {
+      token: token,
+      seq_no: 0,
+      resource_types: '["items"]'
+    },
+    success,
+    error
+  );
 }
 
 /**
@@ -120,16 +130,20 @@ function getTasks( token, success, error ) {
  * @param  {Function} error   The error callback.
  * @return {String}
  */
-function getProjects( token, success, error ) {
-  if ( cache.seq_no_global ) {
-    return success( cache );
+function getProjects(token, success, error) {
+  if (cache.seq_no_global) {
+    return success(cache);
   }
 
-  return api( {
-    token: token,
-    seq_no: 0,
-    resource_types: '["projects"]'
-  }, success, error );
+  return api(
+    {
+      token: token,
+      seq_no: 0,
+      resource_types: '["projects"]'
+    },
+    success,
+    error
+  );
 }
 
 /**
@@ -142,16 +156,20 @@ function getProjects( token, success, error ) {
  * @param  {Function} error   The error callback.
  * @return {String}
  */
-function getLabels( token, success, error ) {
-  if ( cache.seq_no_global ) {
-    return success( cache );
+function getLabels(token, success, error) {
+  if (cache.seq_no_global) {
+    return success(cache);
   }
 
-  return api( {
-    token: token,
-    seq_no: 0,
-    resource_types: '["labels"]'
-  }, success, error );
+  return api(
+    {
+      token: token,
+      seq_no: 0,
+      resource_types: '["labels"]'
+    },
+    success,
+    error
+  );
 }
 
 /**
@@ -165,17 +183,23 @@ function getLabels( token, success, error ) {
  * @param  {Function} error   The error callback.
  * @return {String}
  */
-function markTaskDone( id, token, success, error ) {
-  return api( {
-    token: token,
-    commands: JSON.stringify( [ {
-      type: 'item_complete',
-      uuid: uuid(),
-      args: {
-        ids: '[' + id + ']'
-      }
-    } ] )
-  }, success, error );
+function markTaskDone(id, token, success, error) {
+  return api(
+    {
+      token: token,
+      commands: JSON.stringify([
+        {
+          type: 'item_complete',
+          uuid: uuid(),
+          args: {
+            ids: '[' + id + ']'
+          }
+        }
+      ])
+    },
+    success,
+    error
+  );
 }
 
 module.exports = {
