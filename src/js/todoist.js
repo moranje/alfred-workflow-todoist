@@ -189,10 +189,10 @@ function markTaskDone(id, token, success, error) {
       token: token,
       commands: JSON.stringify([
         {
-          type: 'item_complete',
+          type: 'item_close',
           uuid: uuid(),
           args: {
-            ids: '[' + id + ']'
+            id: id
           }
         }
       ])
