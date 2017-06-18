@@ -412,6 +412,8 @@ export PATH="$PATH:/usr/local/bin:/usr/bin"
 # Licence: MIT
 ###############################################################################
 
+export PATH="$PATH:/usr/local/bin:/usr/bin"
+
 ./shell/todo.add.sh "{query}" "$alfred_workflow_data"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
@@ -551,6 +553,8 @@ export PATH="$PATH:/usr/local/bin:/usr/bin"
 # Author: M. Oranje
 # Licence: MIT
 ###############################################################################
+
+export PATH="$PATH:/usr/local/bin:/usr/bin"
 
 # Imports
 . shell/utilities.sh
@@ -815,6 +819,27 @@ export PATH="$PATH:/usr/local/bin:/usr/bin"
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>t:items</string>
+				<key>subtext</key>
+				<string>t:items &lt;amount&gt;</string>
+				<key>text</key>
+				<string>Store Item Amount</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>4DC1E42F-29F2-4C92-A04A-67E33CF53AEF</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -841,27 +866,6 @@ export PATH="$PATH:/usr/local/bin:/usr/bin"
 			<string>39F2AAD4-9A9E-49CD-9445-D103FC5B89B1</string>
 			<key>version</key>
 			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>keyword</key>
-				<string>t:items</string>
-				<key>subtext</key>
-				<string>t:items &lt;amount&gt;</string>
-				<key>text</key>
-				<string>Store Item Amount</string>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>4DC1E42F-29F2-4C92-A04A-67E33CF53AEF</string>
-			<key>version</key>
-			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>

@@ -109,9 +109,9 @@ then
 fi
 
 # Refresh Todoist data cache
-if [ -f "/usr/local/bin/node" ]
+if type node 2>/dev/null
 then
-  /usr/local/bin/node js/index.js "refreshCache"
+  node js/index.js "refreshCache"
 fi
 
 ###############################################################################

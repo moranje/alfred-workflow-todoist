@@ -27,10 +27,10 @@ labels=$(json_find "$QUERY" "labels") # Array
 
 # This part relies on Node.js because it interacts with a JSON API
 label_ids="[]"
-if [ -f "/usr/bin/env node" ]
+if type node 2>/dev/null
 then
-  project_id=$(/usr/bin/env node js/index.js "getProjects" "$project")
-  label_ids=$(/usr/bin/env node js/index.js "getLabels" "$labels")
+  project_id=$(node js/index.js "getProjectId" "$project")
+  label_ids=$(node js/index.js "getLabelIds" "$labels")
 fi
 
 # Adding task
@@ -45,9 +45,9 @@ then
   echo -n "Error: ${BASH_REMATCH[1]}"
 
   # Refresh Todoist data cache
-  if [ -f "/usr/bin/env node" ]
+  if type node 2>/dev/null
   then
-    /usr/bin/env node index.js "refreshCache"
+    node index.js "refreshCache"
   fi
 else
   echo -n "Task was added to $project"
