@@ -3,5 +3,5 @@ todo.upgrade
 data
 cache
 debug
-.sublime-*
+*.sublime-*
 node_modules
