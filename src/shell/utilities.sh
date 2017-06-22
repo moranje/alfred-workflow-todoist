@@ -28,10 +28,13 @@ function json_create () {
 
 function json_find () {
   string="$1"
-  regex="\"$2\": *\"*([^\",]*)\"*"
+  regex="\"$2\": *\"*([^\"\}]*)\"*"
   if [[ $string =~ $regex ]]
   then
-    echo "${BASH_REMATCH[1]}"
+    # The above regex ingnores comma's since comma's can also be inside the values
+    # of a JSON string, so this deletes any trailing whitespace and comma's that
+    # Are left in. I'm not smart enough to come up with a better regex match.
+    echo "${BASH_REMATCH[1]}" | xargs | sed 's/,$//g'
   else
     echo "FALSE"
   fi
