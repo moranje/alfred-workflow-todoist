@@ -38,18 +38,43 @@ function uuid() {
  *
  * @author moranje
  * @since  2017-06-17
- * @param  {Object}      apiResponse A task object.
+ * @param  {Object}      task A task object.
  * @return {String}                  A subtitle string.
  */
-function taskString(apiResponse) {
-  var string = "";
-  var space = "          ";
-  if (apiResponse.due_date_utc) {
-    string += "Date: " + space;
-  } else if (apiResponse.due_date_utc) {
-    string += "Time: " + space;
+function taskString(task, projects, labels) {
+  if (projects === void 0) {
+    projects = [];
   }
-  return string;
+  if (labels === void 0) {
+    labels = [];
+  }
+  var space = "          ";
+  var string = "";
+  var projectName = "INBOX";
+  var labelNames = [];
+  labels.forEach(function(label) {
+    task.labels.forEach(function(id) {
+      if (id === label.id) {
+        labelNames.push(label.name);
+      }
+    });
+  });
+  projects.forEach(function(project) {
+    if (project.id === task.project_id) {
+      projectName = "" + project.name.toUpperCase();
+    }
+  });
+  string += "" + projectName + space;
+  if (task.date_string) {
+    string += "" + task.date_string + space;
+  }
+  if (task.priority > 1) {
+    string += "\u203C " + task.priority + space;
+  }
+  if (labelNames.length > 0) {
+    string += "\uFF20 " + labelNames.join(",") + space;
+  }
+  return string + " (\u21B5 to complete)";
 }
 /**
  * Async call to the Todoist API.
@@ -120,7 +145,7 @@ function markTaskDone(id, token, fn) {
         {
           type: "item_close",
           uuid: uuid(),
-          args: { id: id }
+          args: { id: +id }
         }
       ])
     },
@@ -133,14 +158,15 @@ exports.markTaskDone = markTaskDone;
  *
  * @author moranje
  * @since  2017-06-17
- * @param  {Object}       apiResponse An item (task) object from todoist.
+ * @param  {Object}       tasks An item (task) object from todoist.
  * @return {WorkflowItem}             An Alfred workflow item.
  */
-function taskAdapter(apiResponse) {
+function taskAdapter(tasks, projects, labels) {
   return {
-    title: apiResponse.content,
-    subtitle: taskString(apiResponse),
-    arg: apiResponse.id
+    title: tasks.content,
+    subtitle: taskString(tasks, projects, labels),
+    arg: JSON.stringify({ id: tasks.id }),
+    valid: true
   };
 }
 exports.taskAdapter = taskAdapter;
