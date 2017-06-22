@@ -34,32 +34,6 @@
 				<false/>
 			</dict>
 		</array>
-		<key>1511F8D7-86F9-4FA0-892A-61A9B0A59071</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>3B29E17F-D8CB-4FCC-B2F3-CFFC7E81064B</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
-		<key>23CD40A6-624D-4A89-952B-8D225CB9A461</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>3B29E17F-D8CB-4FCC-B2F3-CFFC7E81064B</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
 		<key>27DA9968-06F7-4EE1-BE4B-E9E019851DCC</key>
 		<array>
 			<dict>
@@ -73,33 +47,7 @@
 				<false/>
 			</dict>
 		</array>
-		<key>2D712B58-55EB-4860-8AD1-39D34D41784F</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>3B29E17F-D8CB-4FCC-B2F3-CFFC7E81064B</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
 		<key>329F88DE-5F91-459A-8CA3-9471677B3673</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>3B29E17F-D8CB-4FCC-B2F3-CFFC7E81064B</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
-		<key>39F2AAD4-9A9E-49CD-9445-D103FC5B89B1</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
@@ -174,19 +122,6 @@
 				<false/>
 			</dict>
 		</array>
-		<key>4DC1E42F-29F2-4C92-A04A-67E33CF53AEF</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>39F2AAD4-9A9E-49CD-9445-D103FC5B89B1</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
 		<key>63627FD3-3FF2-4279-95A2-F85FA35D6BDA</key>
 		<array>
 			<dict>
@@ -202,26 +137,13 @@
 		</array>
 		<key>63E741AD-4AD6-4D29-A56A-D956D363C24D</key>
 		<array/>
-		<key>86944C36-38BC-4A53-A112-3587F01E500C</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>1511F8D7-86F9-4FA0-892A-61A9B0A59071</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
 		<key>8AEEA89D-31CD-4742-ABF4-E4E84DBA7647</key>
 		<array/>
-		<key>8B26117D-DC05-4B02-B59A-61E240EA1545</key>
+		<key>8C6C6B42-B4E5-4077-841E-3D5378212F64</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>2D712B58-55EB-4860-8AD1-39D34D41784F</string>
+				<string>3B29E17F-D8CB-4FCC-B2F3-CFFC7E81064B</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -256,11 +178,11 @@
 				<false/>
 			</dict>
 		</array>
-		<key>D0A0F0C0-08A8-46B6-A84A-EBBB0D1B6633</key>
+		<key>B447C7A9-4CEC-457F-B711-65D07976721C</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>23CD40A6-624D-4A89-952B-8D225CB9A461</string>
+				<string>8C6C6B42-B4E5-4077-841E-3D5378212F64</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -300,6 +222,8 @@
 			<dict>
 				<key>alfredfiltersresults</key>
 				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>escaping</key>
@@ -323,6 +247,8 @@
 # Author: M. Oranje
 # Licence: MIT
 ###############################################################################
+
+export PATH="$PATH:/usr/local/bin:/usr/bin"
 
 ./shell/t.configuration.sh "$alfred_workflow_data" "$alfred_workflow_cache"</string>
 				<key>scriptargtype</key>
@@ -350,6 +276,8 @@
 			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
 				<key>argumenttype</key>
 				<integer>1</integer>
 				<key>escaping</key>
@@ -461,37 +389,10 @@ export PATH="$PATH:/usr/local/bin:/usr/bin"
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>action</key>
-				<integer>0</integer>
-				<key>argument</key>
-				<integer>0</integer>
-				<key>focusedappvariable</key>
-				<false/>
-				<key>focusedappvariablename</key>
-				<string></string>
-				<key>hotkey</key>
-				<integer>0</integer>
-				<key>hotmod</key>
-				<integer>0</integer>
-				<key>leftcursor</key>
-				<false/>
-				<key>modsmode</key>
-				<integer>0</integer>
-				<key>relatedAppsMode</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.hotkey</string>
-			<key>uid</key>
-			<string>FA3C3BCC-9F60-4F28-ACBF-FA4AAF3442DA</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>escaping</key>
@@ -518,7 +419,7 @@ export PATH="$PATH:/usr/local/bin:/usr/bin"
 
 export PATH="$PATH:/usr/local/bin:/usr/bin"
 
-/usr/bin/env node js/index.js "getTasksCapped"</string>
+node js/index.js "getTasksCapped"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -559,7 +460,7 @@ export PATH="$PATH:/usr/local/bin:/usr/bin"
 # Imports
 . shell/utilities.sh
 
-/usr/bin/env node js/index.js "markDone" "$(json_find "$1" "id")"</string>
+node js/index.js "markDone" "$(json_find "$1" "id")"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -577,29 +478,39 @@ export PATH="$PATH:/usr/local/bin:/usr/bin"
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>lastpathcomponent</key>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>0</integer>
+				<key>focusedappvariable</key>
 				<false/>
-				<key>onlyshowifquerypopulated</key>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>hotkey</key>
+				<integer>0</integer>
+				<key>hotmod</key>
+				<integer>0</integer>
+				<key>leftcursor</key>
 				<false/>
-				<key>removeextension</key>
-				<false/>
-				<key>text</key>
-				<string>{query}</string>
-				<key>title</key>
-				<string>Failure</string>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
+			<string>alfred.workflow.trigger.hotkey</string>
 			<key>uid</key>
-			<string>63E741AD-4AD6-4D29-A56A-D956D363C24D</string>
+			<string>FA3C3BCC-9F60-4F28-ACBF-FA4AAF3442DA</string>
 			<key>version</key>
-			<integer>1</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
 				<key>argumenttype</key>
 				<integer>0</integer>
 				<key>escaping</key>
@@ -626,7 +537,7 @@ export PATH="$PATH:/usr/local/bin:/usr/bin"
 
 export PATH="$PATH:/usr/local/bin:/usr/bin"
 
-/usr/bin/env node js/index.js "searchTasks" "{query}"</string>
+node js/index.js "searchTasks" "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -646,6 +557,27 @@ export PATH="$PATH:/usr/local/bin:/usr/bin"
 			<string>0E0DCF99-35B9-4513-B0D9-E6020C48ED1E</string>
 			<key>version</key>
 			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Failure</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>63E741AD-4AD6-4D29-A56A-D956D363C24D</string>
+			<key>version</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -677,6 +609,63 @@ export PATH="$PATH:/usr/local/bin:/usr/bin"
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>t:</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Hold on...</string>
+				<key>script</key>
+				<string>#!/usr/bin/env bash
+
+###############################################################################
+# Author: M. Oranje
+# Licence: MIT
+###############################################################################
+
+export PATH="$PATH:/usr/local/bin:/usr/bin"
+
+# Imports
+. shell/utilities.sh
+
+./shell/t.setting-menu.sh {query}</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Select an option</string>
+				<key>title</key>
+				<string>Configure Workflow</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>B447C7A9-4CEC-457F-B711-65D07976721C</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -689,7 +678,20 @@ export PATH="$PATH:/usr/local/bin:/usr/bin"
 # Licence: MIT
 ###############################################################################
 
-./shell/t.setting.sh "token" "$1" ^[0-9a-f]{40}$ "New token stored" "Error: not a valid token" "$alfred_workflow_data"</string>
+export PATH="$PATH:/usr/local/bin:/usr/bin"
+
+# Imports
+. shell/utilities.sh
+
+# Variables
+file=$(json_find "$1" "file")
+call=$(json_find "$1" "call")
+argument=$(json_find "$1" "argument")
+match=$(json_find "$1" "match")
+success=$(json_find "$1" "success")
+error=$(json_find "$1" "error")
+
+./shell/$file "$call" "$argument" "$match" "$success" "$error" "$alfred_workflow_data"</string>
 				<key>scriptargtype</key>
 				<integer>1</integer>
 				<key>scriptfile</key>
@@ -700,30 +702,9 @@ export PATH="$PATH:/usr/local/bin:/usr/bin"
 			<key>type</key>
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>23CD40A6-624D-4A89-952B-8D225CB9A461</string>
+			<string>8C6C6B42-B4E5-4077-841E-3D5378212F64</string>
 			<key>version</key>
 			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>keyword</key>
-				<string>t:token</string>
-				<key>subtext</key>
-				<string>t:token &lt;token&gt;</string>
-				<key>text</key>
-				<string>Store Token</string>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>D0A0F0C0-08A8-46B6-A84A-EBBB0D1B6633</string>
-			<key>version</key>
-			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -768,162 +749,6 @@ export PATH="$PATH:/usr/local/bin:/usr/bin"
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>#!/usr/bin/env bash
-
-###############################################################################
-# Author: M. Oranje
-# Licence: MIT
-###############################################################################
-
-./shell/t.setting.sh "language" "$1" "^(en|da|pl|zh|ko|de|pt|ja|it|fr|sv|ru|es|nl)$" "Language set to $1" "Error: invalid language" "$alfred_workflow_data"</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>2D712B58-55EB-4860-8AD1-39D34D41784F</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>keyword</key>
-				<string>t:language</string>
-				<key>subtext</key>
-				<string>t:language &lt;language&gt;</string>
-				<key>text</key>
-				<string>Store Language</string>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>8B26117D-DC05-4B02-B59A-61E240EA1545</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>keyword</key>
-				<string>t:items</string>
-				<key>subtext</key>
-				<string>t:items &lt;amount&gt;</string>
-				<key>text</key>
-				<string>Store Item Amount</string>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>4DC1E42F-29F2-4C92-A04A-67E33CF53AEF</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>#!/usr/bin/env bash
-
-###############################################################################
-# Author: M. Oranje
-# Licence: MIT
-###############################################################################
-
-./shell/t.setting.sh "max_items" "$1" ^[0-9]+$ "Max. items is now $1" "Error: not a valid number" "$alfred_workflow_data"</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>39F2AAD4-9A9E-49CD-9445-D103FC5B89B1</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>#!/usr/bin/env bash
-
-###############################################################################
-# Author: M. Oranje
-# Licence: MIT
-###############################################################################
-
-# set PATH so brew command can be found
-PATH=/usr/local/bin:/usr/local/homebrew/bin:$PATH
-
-./shell/t.node.sh</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>5</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>1511F8D7-86F9-4FA0-892A-61A9B0A59071</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>2</integer>
-				<key>keyword</key>
-				<string>t:nodejs</string>
-				<key>subtext</key>
-				<string>Are you sure?</string>
-				<key>text</key>
-				<string>Install Node.js</string>
-				<key>withspace</key>
-				<false/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>86944C36-38BC-4A53-A112-3587F01E500C</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>browser</key>
 				<string></string>
 				<key>spaces</key>
@@ -945,6 +770,8 @@ PATH=/usr/local/bin:/usr/local/homebrew/bin:$PATH
 			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>escaping</key>
@@ -975,9 +802,9 @@ PATH=/usr/local/bin:/usr/local/homebrew/bin:$PATH
 				<key>scriptfile</key>
 				<string></string>
 				<key>subtext</key>
-				<string>See if a newer version is available</string>
+				<string>Who knows...</string>
 				<key>title</key>
-				<string>Check for updates</string>
+				<string>Check for workflow updates</string>
 				<key>type</key>
 				<integer>0</integer>
 				<key>withspace</key>
@@ -1034,28 +861,6 @@ PATH=/usr/local/bin:/usr/local/homebrew/bin:$PATH
 			<key>ypos</key>
 			<integer>540</integer>
 		</dict>
-		<key>1511F8D7-86F9-4FA0-892A-61A9B0A59071</key>
-		<dict>
-			<key>colorindex</key>
-			<integer>3</integer>
-			<key>note</key>
-			<string>Install Node.js</string>
-			<key>xpos</key>
-			<integer>420</integer>
-			<key>ypos</key>
-			<integer>1200</integer>
-		</dict>
-		<key>23CD40A6-624D-4A89-952B-8D225CB9A461</key>
-		<dict>
-			<key>colorindex</key>
-			<integer>3</integer>
-			<key>note</key>
-			<string>Set token</string>
-			<key>xpos</key>
-			<integer>420</integer>
-			<key>ypos</key>
-			<integer>700</integer>
-		</dict>
 		<key>27DA9968-06F7-4EE1-BE4B-E9E019851DCC</key>
 		<dict>
 			<key>xpos</key>
@@ -1066,18 +871,7 @@ PATH=/usr/local/bin:/usr/local/homebrew/bin:$PATH
 		<key>28725829-55E1-4CC7-9A6C-795EC2DC91E7</key>
 		<dict>
 			<key>xpos</key>
-			<integer>600</integer>
-			<key>ypos</key>
-			<integer>1370</integer>
-		</dict>
-		<key>2D712B58-55EB-4860-8AD1-39D34D41784F</key>
-		<dict>
-			<key>colorindex</key>
-			<integer>3</integer>
-			<key>note</key>
-			<string>Set language</string>
-			<key>xpos</key>
-			<integer>420</integer>
+			<integer>540</integer>
 			<key>ypos</key>
 			<integer>860</integer>
 		</dict>
@@ -1091,17 +885,6 @@ PATH=/usr/local/bin:/usr/local/homebrew/bin:$PATH
 			<integer>420</integer>
 			<key>ypos</key>
 			<integer>220</integer>
-		</dict>
-		<key>39F2AAD4-9A9E-49CD-9445-D103FC5B89B1</key>
-		<dict>
-			<key>colorindex</key>
-			<integer>3</integer>
-			<key>note</key>
-			<string>Set max. tasks shown</string>
-			<key>xpos</key>
-			<integer>420</integer>
-			<key>ypos</key>
-			<integer>1030</integer>
 		</dict>
 		<key>3B253BFA-8E99-4D9C-819A-36643869F629</key>
 		<dict>
@@ -1126,9 +909,9 @@ PATH=/usr/local/bin:/usr/local/homebrew/bin:$PATH
 			<key>colorindex</key>
 			<integer>4</integer>
 			<key>xpos</key>
-			<integer>470</integer>
+			<integer>430</integer>
 			<key>ypos</key>
-			<integer>1400</integer>
+			<integer>890</integer>
 		</dict>
 		<key>4779F81C-8B78-452A-A546-C1695AF4E84A</key>
 		<dict>
@@ -1141,19 +924,16 @@ PATH=/usr/local/bin:/usr/local/homebrew/bin:$PATH
 			<key>ypos</key>
 			<integer>380</integer>
 		</dict>
-		<key>4DC1E42F-29F2-4C92-A04A-67E33CF53AEF</key>
-		<dict>
-			<key>xpos</key>
-			<integer>250</integer>
-			<key>ypos</key>
-			<integer>1030</integer>
-		</dict>
 		<key>63627FD3-3FF2-4279-95A2-F85FA35D6BDA</key>
 		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>note</key>
+			<string>Update</string>
 			<key>xpos</key>
 			<integer>250</integer>
 			<key>ypos</key>
-			<integer>1370</integer>
+			<integer>860</integer>
 		</dict>
 		<key>63E741AD-4AD6-4D29-A56A-D956D363C24D</key>
 		<dict>
@@ -1163,13 +943,6 @@ PATH=/usr/local/bin:/usr/local/homebrew/bin:$PATH
 			<integer>790</integer>
 			<key>ypos</key>
 			<integer>540</integer>
-		</dict>
-		<key>86944C36-38BC-4A53-A112-3587F01E500C</key>
-		<dict>
-			<key>xpos</key>
-			<integer>250</integer>
-			<key>ypos</key>
-			<integer>1200</integer>
 		</dict>
 		<key>8AEEA89D-31CD-4742-ABF4-E4E84DBA7647</key>
 		<dict>
@@ -1182,12 +955,14 @@ PATH=/usr/local/bin:/usr/local/homebrew/bin:$PATH
 			<key>ypos</key>
 			<integer>60</integer>
 		</dict>
-		<key>8B26117D-DC05-4B02-B59A-61E240EA1545</key>
+		<key>8C6C6B42-B4E5-4077-841E-3D5378212F64</key>
 		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
 			<key>xpos</key>
-			<integer>250</integer>
+			<integer>430</integer>
 			<key>ypos</key>
-			<integer>860</integer>
+			<integer>700</integer>
 		</dict>
 		<key>AAA14883-904F-4837-9B4B-96B2C68EB5FA</key>
 		<dict>
@@ -1209,8 +984,12 @@ PATH=/usr/local/bin:/usr/local/homebrew/bin:$PATH
 			<key>ypos</key>
 			<integer>740</integer>
 		</dict>
-		<key>D0A0F0C0-08A8-46B6-A84A-EBBB0D1B6633</key>
+		<key>B447C7A9-4CEC-457F-B711-65D07976721C</key>
 		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>note</key>
+			<string>Configure</string>
 			<key>xpos</key>
 			<integer>250</integer>
 			<key>ypos</key>

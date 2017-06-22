@@ -51,6 +51,10 @@ function json_update () {
   fi
 }
 
+json_escape() {
+  echo ${1//\"/\\\"} 
+}
+
 function strip_string() {
   string="$2"
   regex="(^.*)$1(.*$)"
@@ -135,4 +139,16 @@ character_trigger() {
   then
     menu "$menu_name" "$query"
   fi
+}
+
+workflow_item() {
+  title=$(if_unset "$1" "")
+  subtitle=$(if_unset "$2" "Hit ENTER")
+  uid=$(if_unset "$3" "$title")
+  autocomplete=$(if_unset "$4" "")
+  arg=$(if_unset "$5" "")
+  valid=$(if_unset "$6" true)
+  icon=$(if_unset "$7" "icon.png")
+  
+  echo '{"uid":"'$uid'","arg":"'$(json_escape  "$arg")'","valid":'$valid',"autocomplete":"'"$autocomplete"'","icon":"'$icon'","title":"'"$title"'","subtitle":"'"$subtitle"'"}'
 }
