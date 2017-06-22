@@ -127,6 +127,6 @@ fi
 if [[ "$(json_find "$settings" "anonymous_statistics")" = "true" && "$(json_find "$package" "first")" = "true" ]]
 then
   uuid=$(json_find "$settings" "uuid")
-  curl -Ls "https://script.google.com/macros/s/AKfycbwB-_8anBZGdTKZYUXNfMp86KkEA8Ht1W88TCNlsyehRwrPZoY/exec?uuid=$uuid&language=$language&max_items=$max_items&version=$version"
+  curl -Ls "https://script.google.com/macros/s/AKfycbwB-_8anBZGdTKZYUXNfMp86KkEA8Ht1W88TCNlsyehRwrPZoY/exec?uuid=$uuid&language=$language&max_items=$max_items&version=$version&nodejs=$nodejs"
   json_update "$package" "first" "false" > "package.json"
 fi
