@@ -1,6 +1,6 @@
 {
   "name": "alfred-workflow-todoist",
-  "version": "3.1.4",
+  "version": "3.1.5",
   "description": "An Alfred workflow for Todoist",
   "main": "index.js",
   "first": "true",
