@@ -27,7 +27,7 @@ labels=$(json_find "$QUERY" "labels") # Array
 
 # This part relies on Node.js because it interacts with a JSON API
 label_ids="[]"
-if type node 2>/dev/null
+if hash node 2>/dev/null
 then
   project_id=$(node js/index.js "getProjectId" "$project")
   label_ids=$(node js/index.js "getLabelIds" "$labels")
@@ -45,7 +45,7 @@ then
   echo -n "Error: ${BASH_REMATCH[1]}"
 
   # Refresh Todoist data cache
-  if type node 2>/dev/null
+  if hash node 2>/dev/null
   then
     node index.js "refreshCache"
   fi

@@ -7,10 +7,10 @@
 
 notification="Error: node.js was already installed"
 
-if ! type "node" > /dev/null
+if ! hash "node" > /dev/null
 then
 
-  if ! type "brew" > /dev/null
+  if ! hash "brew" > /dev/null
   then
     # install homebrew
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -22,7 +22,7 @@ then
   # install node.js
   brew install node > /dev/null
 
-  if type "node" > /dev/null
+  if hash "node" > /dev/null
   then
     notification="Node.js succesfully installed"
   else

@@ -22,6 +22,12 @@ anonymous_statistics="true"
 package=$(cat "package.json")
 settings=$(cat "$SETTINGS_PATH")
 version=$(json_find "$package" "version")
+nodejs="Not installed"
+
+if hash node 2> /dev/null 2>&1
+then
+  nodejs="$(node -v)"
+fi
 
 ###############################################################################
 # Configure default settings
@@ -109,7 +115,7 @@ then
 fi
 
 # Refresh Todoist data cache
-if type node 2>/dev/null
+if hash node 2> /dev/null 2>&1
 then
   node js/index.js "refreshCache"
 fi
