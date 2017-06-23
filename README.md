@@ -1,112 +1,144 @@
-# ALFRED TODOIST WORKFLOW
-Add tasks to your [Todoist](https://todoist.com/ "Todoist") inbox or list upcoming tasks straight from [Alfred](https://www.alfredapp.com "Alfred"). I nicked the idea from [Ruben Schmidtmann](https://github.com/rubenschmidtmann "Ruben Schmidtmann")'s [todoist-alfred-workflow](https://github.com/rubenschmidtmann/todoist-alfred-workflow "todoist-alfred-workflow"), and further expanded on it. It uses Todoist `v7` API. For this workflow to work you need version `3.x` of Alfred.
+ALFRED TODOIST WORKFLOW
+=======================
 
-The task listing feature, adding project and labels to tasks relies on javascript (sorry no PHP, perl of ruby foo) which means it needs node.js to function (OSX javascript proved to be clunky for modules and file io). The task adding feature should work on any Mac OSX version.
+Add and search [Todoist](https://todoist.com/) tasks straight from [Alfred](https://www.alfredapp.com). It uses Todoist `v7` API.
 
-## Installation
+| Jump to: | [Prerequisites](#prerequisites) | [Installation](#installation) | [Add Tasks](#add-tasks) | [Search and Browse Tasks](#search-and-browse-tasks) | [Configuration](#configuration) |
+|:--------:|:-------------------------------:|:-----------------------------:|:-----------------------:|:---------------------------------------------------:|:-------------------------------:|
+
+Prerequisites
+-------------
+
+-	For this workflow to work you need version `3.x` of Alfred and a powerpack licence.
+-	For adding projects or labels to a new task and for searching for a task, the project uses use Node.js. If you want these features, an installation command is provided.
+
+Installation
+------------
+
 [Download](https://github.com/moranje/alfred-workflow-todoist/raw/master/dist/Alfred%20Workflow%20Todoist.alfredworkflow) and import workflow.
 
-## COMMAND `t` 
-Some magic will happen when you run the `t` command, like creation of files and refreshing of todoist data cache. Other than that use it to configure the workflow.
+For updates use the `t:update` command.
 
-**One Time Config**  
-`t:token {api token}` (no default)  
-Example: _t:token 2d2e2a334c5f36e7a7c43b46e_
+Add Tasks
+---------
 
-`t:language {language}` (default: en)  
-Example: _t:language nl_
+<!-- Renew photo to(gif?) -->
 
-`t:items {max list items}` (default: 9)  
-Example: _t:items 9_
+![](https://raw.githubusercontent.com/moranje/alfred-workflow-todoist/master/images/add-task.gif)
 
-### Token*
-Your Todoist api token, get it from Todoist Preferences => Account => API-token (should be 40 characters)
+### Alfred command
 
-### Language
-This is relevant for parsing date strings ('tomorrow @ 9pm', in `en`). Valid languages are: `en`, `da`, `pl`, `zh`, `ko`, `de`, `pt`, `ja`, `it`, `fr`, `sv`, `ru`, `es`, `nl`.
+`todo {task}, {date}, {project}`
 
-### Max List Items
-This parameter limits the amount of tasks shown when using the `todo` command. Node.js is **required** for listing todos
+Example: *todo Get things done, tomorrow @ 9, work*  
+Example: *todo Build tree house #home !!2 @15min, tomorrow @ 9*  
+\* *#project @label and !!priority will be parsed from anywhere in the text*
 
-### Node.js
-Node.js is required for listing todo's. Working with JSON API's in batch is no fun and the JavaScript force is strong in my, yet none of the other forces (ruby, PHP, python etc.) are. If you decide you want this feature there is an install function included. This will install **Node.js** as well as a package manager called **Homebrew** to install Node (all other ways of installing node require admin permissions or leave files on your computer). This has the added benefit of making it easy to uninstall as well.
+#### Task
 
-Example: _t:nodejs_ => ENTER  
+Can be any string as long as there are no comma's in it. Markdown in the string will be parsed (in the Todoist app), but anything else won't.
 
-**Uninstall Node (terminal):**  
-_brew uninstall node_  
+#### Date
 
-**Uninstall Homebrew (terminal):**  
-_ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"_  
+See the [Todoist documentation](https://support.todoist.com/hc/en-us/articles/205325931-Dates-and-Times) for supported date formats.
 
-\* _Required_  
+#### Project\*
 
-## COMMAND `todo`
-![](https://raw.githubusercontent.com/moranje/alfred-workflow-todoist/master/images/add-task.png "Add a task to your Todoist Inbox")  
+Add task to an existing project. If no project is selected the task will be added to your inbox. Use either the hashtag notation `#project` (preferred) or the comma-separated 3rd `{project}` argument. Project names are case insensitive and (for now) can't contain any whitespace characters.
 
-**Add a task**  
-`todo {task}, {date}, {project}` _{priority} and {labels} can go anywhere_  
-Example: _todo Get stuff done, tomorrow @ 9, work_  
-Example: _todo Build tree house, tomorrow @ 9, home !!2_  
-Example: _todo Get milk, tomorrow @ 9, home @on_road @5min  
+#### Labels\*
 
-### Task
-Can be any string as long as there are no comma's in it. Markdown in the string will be parsed, but anything else won't.
+You can add labels to your tasks using the `@` character. Label names are case insensitive and can't contain any whitespace characters.
 
-### Date
-See the [Todoist documentation](https://support.todoist.com/hc/en-us/articles/205325931-Dates-and-Times "Todoist documentation") for supported date formats.
+#### Priority
 
-### Project*
-Add task to an existing project. If no project is selected the task will be added to your inbox.
+A number between `1` and `4`, where `1` is the lowest and `4` would be the highest priority.
 
-### Labels*
-You can now add labels to your tasks. Any string that has a `@` before it will be checked against your existing labels. If it matches (case insensitive) the label will be added. The labels can be added anywhere in the todo command so these are all valid:  
-Example: _todo Get stuff done, tomorrow @ 9, work @delayed_  
-Example: _todo Get stuff done , tomorrow @ 9 @delayed, work_  
-Example: _todo Get stuff done @delayed, tomorrow @ 9, work @delayed_  
+\* *Relies on node.js to work*
 
-### Priority
-A number between 1 and 4, where 1 is the lowest and 4 would be the highest priority. The priority tags can be added anywhere in the todo command so these are all valid:  
-Example: _todo Get stuff done, tomorrow @ 9, work !!2_  
-Example: _todo Get stuff done , tomorrow @ 9 !!2, work_  
-Example: _todo Get stuff done !!2, tomorrow @ 9, work_  
+Search and Browse Tasks
+-----------------------
 
-\* _Relies on node.js to work_  
+<!-- Renew photo (gif?) -->
 
-### Hacks
-Use a comma to separate the parameters, leading or trailing whitespace is ignored. If you wish to change the delimiter with which the parameters (task, date and priority) are separated, you'll need to change a line in the bash script. For instance if you'd like to use ';' as a delimiter, change:  
-```bash
-IFS=',' read -r -a items <<< "$query"
-```  
-to:  
-```bash
-IFS=':' read -r -a items <<< "$query"
-```  
+![](https://raw.githubusercontent.com/moranje/alfred-workflow-todoist/master/images/search-tasks.gif)
 
-## COMMAND `todos`
-![](https://raw.githubusercontent.com/moranje/alfred-workflow-todoist/master/images/list-tasks.png "List your Todoist tasks ")  
+### Alfred command
 
-**List tasks (and mark done)**  
-`todos` (+ navigate and hit ENTER)  
-
-**Search tasks (and mark done)**  
-`todos + {query}` (+ navigate and hit ENTER)  
+`todos {query}`
 
 ### Query
-Any search query one character or longer. Uses fuzzy search to find the tasks.  
 
-Example: _todos car_ => finds (because of fuzzy search):  
-* _Rent car_
-* _New cat recipe's_
-* _Cut Gras tomorrow_
+Any search query one character or longer. Uses fuzzy search to find the tasks.
 
-## Changelog
-View [CHANGELOG.md](https://github.com/moranje/alfred-workflow-todoist/blob/master/CHANGELOG.md "Changelog")
+Example: `todos car` => returns (because of fuzzy search):  
+- *Rent car*  
+- *New cat recipe's*  
+- *Cut Gras tomorrow*
 
-## License
+Configuration
+-------------
+
+Some magic will happen when you run the `t` command, like creation of files and refreshing of todoist data cache. Other than that use it to configure the workflow.
+
+### Alfred commands
+
+`t:token {api token}` (no default)  
+Example: *t:token 2d2e2a334c5f36e7a7c43b46e*
+
+`t:language {language}` (default: en)  
+Example: *t:language nl*
+
+`t:items {max list items}` (default: 9)  
+Example: *t:items 9*
+
+`t:update`  
+Example: *t:update*
+
+`t:node`  
+Example: *t:node*
+
+#### Token\*
+
+Your Todoist api token, get it from Todoist Preferences => Account => API-token (should be 40 characters)
+
+#### Language
+
+This is relevant for parsing date strings ('tomorrow @ 9pm', in `en`). Valid languages are: `en`, `da`, `pl`, `zh`, `ko`, `de`, `pt`, `ja`, `it`, `fr`, `sv`, `ru`, `es`, `nl`.
+
+#### Max Items to Show
+
+This parameter limits the amount of tasks shown when using the `todo` command. Node.js is **required** for listing todos
+
+#### Check for updates
+
+Checks current version against latest online version and download if a newer version is available.
+
+#### Node.js
+
+Node.js is required for listing todo's. Working with JSON API's in batch is no fun and the JavaScript force is strong in my, yet none of the other forces (ruby, PHP, python etc.) are. If you decide you want this feature there is an install function included. This will install **[Node.js](https://nodejs.org/en/)** as well as a package manager called **[Homebrew](https://brew.sh/index_nl.html)** to install Node (all other ways of installing node require admin permissions or leave files on your computer). This has the added benefit of making it easy to uninstall as well.
+
+Example: *t:nodejs* => ENTER
+
+**Uninstall Node (terminal):**  
+*brew uninstall node*
+
+**Uninstall Homebrew (terminal):**  
+*ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"*
+
+\* *Required*
+
+Changelog
+---------
+
+View [CHANGELOG](https://github.com/moranje/alfred-workflow-todoist/blob/master/CHANGELOG.md)
+
+License
+-------
+
 The MIT License (MIT)
 
-Copyright (c) 2016 [Martien Oranje](https://github.com/moranje)
+Copyright (c) 2017 [Martien Oranje](https://github.com/moranje)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
