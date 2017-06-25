@@ -161,11 +161,10 @@ export function markDone(id: number): void {
   markTaskDone(id, settings.token, (err, data) => {
     if (err) return writeError(err);
     var string = JSON.stringify(data);
-    var match;
 
     if (string.match(/"error":/)) {
-      match = string.match(/"error": ?"(.*?)"/);
-      writeError(match[1]);
+      let match = string.match(/"error": ?"(.*?)"/);
+      return writeError(match[1]); // match![1] to silence this warning
     }
 
     // Notification message.

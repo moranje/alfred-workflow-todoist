@@ -8,7 +8,7 @@ import { WorkflowItem } from './interfaces';
  * @author moranje
  * @since  2017-06-12
  * @param  {Object|String}   output Any output.
- * @return {String}          Stringified output.
+ * @return {String}                 Stringified output.
  */
 export function write(output: any): void {
   return console.log(JSON.stringify(output));
@@ -23,7 +23,7 @@ export function write(output: any): void {
  * @return {String}               The error string output
  */
 export function writeError(output: any): void {
-  console.error('Error', JSON.stringify(output));
+  console.log('Error:', JSON.stringify(output));
 }
 
 /**
@@ -77,18 +77,45 @@ export class Item {
     this.subtitle = options.subtitle || 'Hit ENTER';
   }
 
+  /**
+   * Set workflow item title.
+   *
+   * @author moranje
+   * @since  2017-06-20
+   * @param  {String}   title The title name.
+   */
   setTitle(title: string): void {
     this.title = title;
   }
 
+  /**
+   * Set workflow item subtitle.
+   *
+   * @author moranje
+   * @since  2017-06-20
+   * @param  {String}   subtitle The subtitle name.
+   */
   setSubtitle(subtitle: string): void {
     this.subtitle = subtitle;
   }
 
+  /**
+   * Set workflow item argument.
+   *
+   * @author moranje
+   * @since  2017-06-20
+   * @param  {String}   arg The workflow argument.
+   */
   setArg(arg: string): void {
     this.arg = arg;
   }
 
+  /**
+   * Output item instance to console.
+   *
+   * @author moranje
+   * @since  2017-06-20
+   */
   write(): void {
     write(this);
   }
@@ -112,14 +139,35 @@ export class List {
     });
   }
 
+  /**
+   * Add a workflow item to the list.
+   *
+   * @author moranje
+   * @since  2017-06-20
+   * @param  {WorkflowItem} item An Alfred workflow item.
+   */
   add(item: WorkflowItem): void {
     this.items.push(new Item(item));
   }
 
+  /**
+   * Return a list with a secified number of items.
+   *
+   * @author moranje
+   * @since  2017-06-20
+   * @param  {Number}   number The amount of items.
+   * @return {List}            A List instance.
+   */
   capAt(number: number): List {
     return new List(this.items.slice(0, number));
   }
 
+  /**
+   * Output list instance to console.
+   *
+   * @author moranje
+   * @since  2017-06-20
+   */
   write(): void {
     write({ items: this.items });
   }
