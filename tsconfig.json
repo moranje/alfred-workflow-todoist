@@ -1,18 +1,23 @@
 {
   "compilerOptions": {
-    "outDir": "./src/js",
     "allowJs": true,
-    // "checkJs": true,
+    "checkJs": true,
     "module": "commonjs",
-    // "removeComments": true,
-    // "pretty": true,
-    "suppressImplicitAnyIndexErrors": true,
     "noImplicitAny": true,
+    "outDir": "src/js",
+    "removeComments": false,
+    "sourceMap": false,
+    "strict": true,
+    "suppressImplicitAnyIndexErrors": true,
     "target": "es5"
   },
+  
+  "compileOnSave": false,
+  
   "include": [
-    "./src/ts/**/*"
+    "src/ts/**/*"
   ],
+  
   "exclude": [
     "node_modules"
   ]
