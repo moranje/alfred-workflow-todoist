@@ -52,14 +52,39 @@ function taskString(
   labels: Array<Label> = []
 ): string {
   let space = '          ';
+  let string = '';
+  let projectName = 'INBOX';
+  let labelNames: Array<string> = [];
 
-  if (apiResponse.due_date_utc) {
-    string += `Date: ${space}`;
-  } else if (apiResponse.due_date_utc) {
-    string += `Time: ${space}`;
+  labels.forEach(label => {
+    task.labels.forEach((id: number) => {
+      if (id === label.id) {
+        labelNames.push(label.name);
+      }
+    });
+  });
+
+  projects.forEach(project => {
+    if (project.id === task.project_id) {
+      projectName = `${project.name.toUpperCase()}`;
+    }
+  });
+
+  string += `${projectName}${space}`;
+
+  if (task.date_string) {
+    string += `${task.date_string}${space}`;
   }
 
-  return string;
+  if (task.priority > 1) {
+    string += `\u203C ${task.priority}${space}`;
+  }
+
+  if (labelNames.length > 0) {
+    string += `\uFF20 ${labelNames.join(',')}${space}`;
+  }
+
+  return `${string} (\u21B5 to complete)`;
 }
 
 /**
@@ -144,7 +169,7 @@ export function markTaskDone(
         {
           type: 'item_close',
           uuid: uuid(),
-          args: { id }
+          args: { id: +id }
         }
       ])
     },
