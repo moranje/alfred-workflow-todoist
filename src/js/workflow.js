@@ -8,7 +8,7 @@ var fs = require("fs");
  * @author moranje
  * @since  2017-06-12
  * @param  {Object|String}   output Any output.
- * @return {String}          Stringified output.
+ * @return {String}                 Stringified output.
  */
 function write(output) {
   return console.log(JSON.stringify(output));
@@ -23,7 +23,7 @@ exports.write = write;
  * @return {String}               The error string output
  */
 function writeError(output) {
-  console.error("Error", JSON.stringify(output));
+  console.log("Error:", JSON.stringify(output));
 }
 exports.writeError = writeError;
 /**
@@ -66,15 +66,42 @@ var Item = (function() {
     this.icon = options.icon || "icon.png";
     this.subtitle = options.subtitle || "Hit ENTER";
   }
+  /**
+     * Set workflow item title.
+     *
+     * @author moranje
+     * @since  2017-06-20
+     * @param  {String}   title The title name.
+     */
   Item.prototype.setTitle = function(title) {
     this.title = title;
   };
+  /**
+     * Set workflow item subtitle.
+     *
+     * @author moranje
+     * @since  2017-06-20
+     * @param  {String}   subtitle The subtitle name.
+     */
   Item.prototype.setSubtitle = function(subtitle) {
     this.subtitle = subtitle;
   };
+  /**
+     * Set workflow item argument.
+     *
+     * @author moranje
+     * @since  2017-06-20
+     * @param  {String}   arg The workflow argument.
+     */
   Item.prototype.setArg = function(arg) {
     this.arg = arg;
   };
+  /**
+     * Output item instance to console.
+     *
+     * @author moranje
+     * @since  2017-06-20
+     */
   Item.prototype.write = function() {
     write(this);
   };
@@ -100,12 +127,33 @@ var List = (function() {
       _this.items.push(new Item(item));
     });
   }
+  /**
+     * Add a workflow item to the list.
+     *
+     * @author moranje
+     * @since  2017-06-20
+     * @param  {WorkflowItem} item An Alfred workflow item.
+     */
   List.prototype.add = function(item) {
     this.items.push(new Item(item));
   };
+  /**
+     * Return a list with a secified number of items.
+     *
+     * @author moranje
+     * @since  2017-06-20
+     * @param  {Number}   number The amount of items.
+     * @return {List}            A List instance.
+     */
   List.prototype.capAt = function(number) {
     return new List(this.items.slice(0, number));
   };
+  /**
+     * Output list instance to console.
+     *
+     * @author moranje
+     * @since  2017-06-20
+     */
   List.prototype.write = function() {
     write({ items: this.items });
   };
