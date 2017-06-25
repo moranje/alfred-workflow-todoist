@@ -1,6 +1,16 @@
 Changelog
 =========
 
+### 3.1.5
+
+-	[FEATURE] Task information is shown in subtitles when a new task is created a a task search is performed
+-	[FEATURE] Projects are now parsed with `#` notation in task creation
+-	[FEATURE] Dropdown menu's for projects, labels and priorities in task creation
+-	[FEATURE] Added update checking with `t:update`
+-	[FEATURE] Changing to item_close to support recurring task completion @stphnlwlsh
+-	[CHORE] Switched to [typescript](https://www.typescriptlang.org/index.html)
+-	[STATISTICS] Statistics added to get feedback on Node.js usage, version and to get an idea of which settings (token excluded) are used. Activated only one time with `t` command.
+
 ### 3.1.4
 
 -	[FIX] Introduced a bug in last version where labels and projects weren't added to a task
