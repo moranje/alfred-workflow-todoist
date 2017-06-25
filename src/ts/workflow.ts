@@ -1,5 +1,6 @@
 import crypto = require('crypto');
 import fs = require('fs');
+import { WorkflowItem } from './interfaces';
 
 /**
  * Output to the workflow console

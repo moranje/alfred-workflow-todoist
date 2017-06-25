@@ -9,6 +9,7 @@ import {
   projectAdapter,
   priorityAdapter
 } from './todoist';
+import { Task, Project, Label } from './interfaces';
 
 const settings = require(`${process.env
   .HOME}/Library/Application Support/Alfred 3/Workflow Data/com.alfred-workflow-todoist/settings.json`);
@@ -35,10 +36,10 @@ export function refreshCache(): void {
   getResources(settings.token, ['projects', 'items', 'labels'], (err, data) => {
     if (err) return writeError(err);
     let labelList = new List(
-      data.labels.map((apiItem: any) => labelAdapter(apiItem))
+      data.labels.map((label: Label) => labelAdapter(label))
     );
     let projectList = new List(
-      data.projects.map((apiItem: any) => projectAdapter(apiItem))
+      data.projects.map((project: Project) => projectAdapter(project))
     );
     let priorityList = new List(
       priorities.map((priority: any) => priorityAdapter(priority))
@@ -59,10 +60,14 @@ export function refreshCache(): void {
  * @return {void}
  */
 export function getTasksCapped(): void {
-  getResources(settings.token, ['items'], (err, data) => {
+  getResources(settings.token, ['items', 'projects', 'labels'], (err, data) => {
     if (err) return writeError(err);
     if (!Array.isArray(data.items)) return writeError(data);
-    var list = new List(data.items.map((apiItem: any) => taskAdapter(apiItem)));
+    var list = new List(
+      data.items.map((task: Task) =>
+        taskAdapter(task, data.projects, data.labels)
+      )
+    );
 
     return list.capAt(settings.max_items).write();
   });
@@ -77,15 +82,15 @@ export function getTasksCapped(): void {
  * @return {void}
  */
 export function searchTasks(query: string): void {
-  getResources(settings.token, ['items'], (err, data) => {
+  getResources(settings.token, ['items', 'projects', 'labels'], (err, data) => {
     if (err) return writeError(err);
     if (!Array.isArray(data.items)) return writeError(data);
 
     let list = new List();
 
-    data.items.forEach((task: any) => {
+    data.items.forEach((task: Task) => {
       if (fuzzy(query.toLowerCase(), task.content.toLowerCase())) {
-        list.add({ title: task.content });
+        list.add(taskAdapter(task, data.projects, data.labels));
       }
     });
 
@@ -108,7 +113,7 @@ export function getProjectId(name: string): void {
 
     let projects: any = {};
 
-    data.projects.forEach((project: any) => {
+    data.projects.forEach((project: Project) => {
       projects[project.name.toLowerCase()] = project.id;
     });
 
@@ -132,7 +137,7 @@ export function getLabelIds(labelString: string): void {
     var names: Array<string> = labelString.split(',');
     var labels: Array<number> = [];
 
-    data.labels.forEach((label: any) => {
+    data.labels.forEach((label: Label) => {
       names.forEach(name => {
         if (labelString && name === label.name) {
           labels.push(label.id);

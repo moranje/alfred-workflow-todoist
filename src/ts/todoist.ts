@@ -1,5 +1,6 @@
 import https = require('https');
 import querystring = require('querystring');
+import { WorkflowItem, NodeCallback, Task, Project, Label } from './interfaces';
 
 const settings = require(`${process.env
   .HOME}/Library/Application Support/Alfred 3/Workflow Data/com.alfred-workflow-todoist/settings.json`);
@@ -40,11 +41,16 @@ function uuid(): string {
  *
  * @author moranje
  * @since  2017-06-17
- * @param  {Object}      apiResponse A task object.
- * @return {String}                  A subtitle string.
+ * @param  {Task}         task     An item (task) object from todoist.
+ * @param  {Array}        projects An array of projects from todoist.
+ * @param  {Array}        labels   An array of labels from todoist.
+ * @return {String}                A subtitle string.
  */
-function taskString(apiResponse: any): string {
-  let string = '';
+function taskString(
+  task: Task,
+  projects: Array<Project> = [],
+  labels: Array<Label> = []
+): string {
   let space = '          ';
 
   if (apiResponse.due_date_utc) {
@@ -151,14 +157,21 @@ export function markTaskDone(
  *
  * @author moranje
  * @since  2017-06-17
- * @param  {Object}       apiResponse An item (task) object from todoist. 
- * @return {WorkflowItem}             An Alfred workflow item.
+ * @param  {Task}         task     An item (task) object from todoist.
+ * @param  {Array}        projects An array of projects from todoist.
+ * @param  {Array}        labels   An array of labels from todoist.
+ * @return {WorkflowItem}          An Alfred workflow item.
  */
-export function taskAdapter(apiResponse: any): WorkflowItem {
+export function taskAdapter(
+  task: Task,
+  projects: Array<Project>,
+  labels: Array<Label>
+): WorkflowItem {
   return {
-    title: apiResponse.content,
-    subtitle: taskString(apiResponse),
-    arg: apiResponse.id
+    title: task.content,
+    subtitle: taskString(task, projects, labels),
+    arg: JSON.stringify({ id: task.id }),
+    valid: true
   };
 }
 
@@ -167,16 +180,16 @@ export function taskAdapter(apiResponse: any): WorkflowItem {
  *
  * @author moranje
  * @since  2017-06-17
- * @param  {Object}        apiResponse A project object from todoist.
- * @return {WorkflowItem}              An Alfred workflow item.
+ * @param  {Project}       project A project object from todoist.
+ * @return {WorkflowItem}          An Alfred workflow item.
  */
-export function projectAdapter(apiResponse: any): WorkflowItem {
+export function projectAdapter(project: Project): WorkflowItem {
   return {
-    title: apiResponse.name,
-    subtitle: `Add to ${apiResponse.name}`,
-    arg: apiResponse.id,
+    title: project.name,
+    subtitle: `Add to ${project.name}`,
+    arg: JSON.stringify({ id: project.id }),
     valid: false,
-    autocomplete: apiResponse.name
+    autocomplete: project.name
   };
 }
 
@@ -185,16 +198,16 @@ export function projectAdapter(apiResponse: any): WorkflowItem {
  *
  * @author moranje
  * @since  2017-06-17
- * @param  {Object}        apiResponse A label object from todoist
- * @return {WorkflowItem}              An Alfred workflow item.
+ * @param  {Label}        label A label object from todoist
+ * @return {WorkflowItem}       An Alfred workflow item.
  */
-export function labelAdapter(apiResponse: any): WorkflowItem {
+export function labelAdapter(label: Label): WorkflowItem {
   return {
-    title: apiResponse.name,
-    subtitle: `Add ${apiResponse.name} to task`,
-    arg: apiResponse.id,
+    title: label.name,
+    subtitle: `Add ${label.name} to task`,
+    arg: JSON.stringify({ id: label.id }),
     valid: false,
-    autocomplete: apiResponse.name
+    autocomplete: label.name
   };
 }
 
