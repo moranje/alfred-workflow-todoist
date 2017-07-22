@@ -5,6 +5,10 @@
 # Licence: MIT
 ###############################################################################
 
+STRING="[^\"]*"
+NUMBER="-?[0-9]+([.][0-9]+)?"
+BOOLEAN="true|false"
+
 function args() {
   if test -s /dev/stdin
   then
@@ -20,21 +24,38 @@ function json_create () {
   regex="({\".+)(}$)"
   if [[ $string =~ $regex ]]
   then
-    echo "${BASH_REMATCH[1]}, \"$2\": \"$3\"${BASH_REMATCH[2]}"
+    prefix=${BASH_REMATCH[1]}
+    postfix=${BASH_REMATCH[2]}
+    if [[ "$3" == "$NUMBER" || "$3" == "$BOOLEAN" ]]
+    then
+      echo "$prefix, \"$2\": $3$postfix"
+    else
+      echo "$prefix, \"$2\": \"$3\"$postfix"
+    fi
   else
-    echo "{\"$2\": \"$3\"}"
+    if [[ $3 =~ $NUMBER || $3 =~ $BOOLEAN ]]
+    then
+      echo "{\"$2\": $3}"
+    else
+      echo "{\"$2\": \"$3\"}"
+    fi
   fi
 }
 
 function json_find () {
   string="$1"
-  regex="\"$2\": *\"*([^\"\}]*)\"*"
-  if [[ $string =~ $regex ]]
+  regex_string="\"$2\": *\"($STRING)\",?"
+  regex_number="\"$2\": *($NUMBER)"
+  regex_boolean="\"$2\": *($BOOLEAN)"
+  if [[ $string =~ $regex_string ]]
   then
-    # The above regex ingnores comma's since comma's can also be inside the values
-    # of a JSON string, so this deletes any trailing whitespace and comma's that
-    # Are left in. I'm not smart enough to come up with a better regex match.
-    echo "${BASH_REMATCH[1]}" | xargs | sed 's/,$//g'
+    echo "${BASH_REMATCH[1]}" | xargs
+  elif [[ $string =~ $regex_number ]]
+  then
+    echo "${BASH_REMATCH[1]}" | xargs
+  elif [[ $string =~ $regex_boolean ]]
+  then
+    echo "${BASH_REMATCH[1]}" | xargs
   else
     echo "FALSE"
   fi
@@ -42,10 +63,15 @@ function json_find () {
 
 function json_update () {
   string="$1"
-  regex="(.+)\"$2\": *\"*[^\",]*\"*(,?.+)"
-  if [[ $string =~ $regex ]]
+  regex_string="(.+)\"$2\": *\"$STRING\"(,?.+)"
+  regex_number="(.+)\"$2\": *$NUMBER(,?.+)"
+  regex_boolean="(.+)\"$2\": *$BOOLEAN(,?.+)"
+  if [[ $string =~ $regex_string ]]
   then
     echo "${BASH_REMATCH[1]}\"$2\": \"$3\"${BASH_REMATCH[2]}"
+  elif [[ $string =~ $regex_number || $string =~ $regex_boolean ]]
+  then
+    echo "${BASH_REMATCH[1]}\"$2\": $3${BASH_REMATCH[2]}"
   else
     echo "Error: Key ($2) not present in JSON, use create() to add new keys"
   fi
