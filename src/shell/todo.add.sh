@@ -47,7 +47,7 @@ then
   # Refresh Todoist data cache
   if hash node 2>/dev/null
   then
-    node index.js "refreshCache"
+    node js/index.js "refreshCache"
   fi
 else
   echo -n "Task was added to $project"
