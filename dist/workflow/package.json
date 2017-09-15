@@ -1,12 +1,10 @@
 {
   "name": "alfred-workflow-todoist",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "An Alfred workflow for Todoist",
   "main": "index.js",
   "first": true,
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": { "test": "echo \"Error: no test specified\" && exit 1" },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/moranje/alfred-workflow-todoist.git"
