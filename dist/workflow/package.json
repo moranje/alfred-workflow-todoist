@@ -1,9 +1,9 @@
 {
   "name": "alfred-workflow-todoist",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "An Alfred workflow for Todoist",
   "main": "index.js",
-  "first": false,
+  "first": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
