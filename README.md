@@ -15,7 +15,11 @@ Prerequisites
 Installation
 ------------
 
-[Download](https://github.com/moranje/alfred-workflow-todoist/raw/master/dist/Alfred%20Workflow%20Todoist.alfredworkflow) and import workflow.
+1. [Download](https://github.com/moranje/alfred-workflow-todoist/raw/master/dist/Alfred%20Workflow%20Todoist.alfredworkflow) the workflow
+2. Import the downloaded workflow e.g. by dragging it onto the Workflow list in Alfred Preferences
+3. Install Node.js (see below)
+4. Get your Todoist API token (Todoist > Settings > Integrations)
+5. Run `t:token <your todoist api token string>` to enable access to your Todoist
 
 For updates use the `t:update` command.
 
@@ -100,7 +104,7 @@ Example: *t:node*
 
 #### Token\*
 
-Your Todoist api token, get it from Todoist Preferences => Account => API-token (should be 40 characters)
+Your Todoist api token, get it from Todoist Preferences => Integrations => API-token (should be 40 characters)
 
 #### Language
 
