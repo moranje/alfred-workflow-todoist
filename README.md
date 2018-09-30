@@ -21,10 +21,6 @@ For updates use the `todo:update` command.
 
 ## Add Tasks
 
-<!-- Renew photo to(gif?) -->
-
-![](https://raw.githubusercontent.com/moranje/alfred-workflow-todoist/master/images/add-task.gif)
-
 ### Alfred command
 
 `todo {task}, {date}`
