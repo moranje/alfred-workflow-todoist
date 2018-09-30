@@ -1,26 +1,25 @@
-ALFRED TODOIST WORKFLOW
-=======================
+[![Build Status](https://travis-ci.org/moranje/alfred-workflow-todoist.svg?branch=master)](https://travis-ci.org/moranje/alfred-workflow-todoist)
 
-Add and search [Todoist](https://todoist.com/) tasks straight from [Alfred](https://www.alfredapp.com). It uses Todoist `v7` API.
+# ALFRED TODOIST WORKFLOW
+
+Add and search [Todoist](https://todoist.com/) tasks straight from [Alfred](https://www.alfredapp.com). It uses Todoist `v8` REST API.
 
 | Jump to: | [Prerequisites](#prerequisites) | [Installation](#installation) | [Add Tasks](#add-tasks) | [Search and Browse Tasks](#search-and-browse-tasks) | [Configuration](#configuration) |
-|:--------:|:-------------------------------:|:-----------------------------:|:-----------------------:|:---------------------------------------------------:|:-------------------------------:|
+| :------: | :-----------------------------: | :---------------------------: | :---------------------: | :-------------------------------------------------: | :-----------------------------: |
 
-Prerequisites
--------------
 
--	For this workflow to work you need version `3.x` of Alfred and a powerpack licence.
--	For adding projects or labels to a new task and for searching for a task, the project uses use Node.js. If you want these features, an installation command is provided.
+## Prerequisites
 
-Installation
-------------
+- For this workflow to work you need version `3.x` of Alfred and a powerpack licence.
+- [Node.js](https://nodejs.org/en/download/)
+
+## Installation
 
 [Download](https://github.com/moranje/alfred-workflow-todoist/raw/master/dist/Alfred%20Workflow%20Todoist.alfredworkflow) and import workflow.
 
-For updates use the `t:update` command.
+For updates use the `todo:update` command.
 
-Add Tasks
----------
+## Add Tasks
 
 <!-- Renew photo to(gif?) -->
 
@@ -28,11 +27,10 @@ Add Tasks
 
 ### Alfred command
 
-`todo {task}, {date}, {project}`
+`todo {task}, {date}`
 
-Example: *todo Get things done, tomorrow @ 9, work*  
-Example: *todo Build tree house #home !!2 @15min, tomorrow @ 9*  
-\* *#project @label and !!priority will be parsed from anywhere in the text*
+Example: _todo Get things done, tomorrow @ 9_  
+Example: _todo Build tree house #home !!2 @15min, tomorrow @ 9_
 
 #### Task
 
@@ -44,7 +42,7 @@ See the [Todoist documentation](https://support.todoist.com/hc/en-us/articles/20
 
 #### Project\*
 
-Add task to an existing project. If no project is selected the task will be added to your inbox. Use either the hashtag notation `#project` (preferred) or the comma-separated 3rd `{project}` argument. Project names are case insensitive and (for now) can't contain any whitespace characters.
+Add task to an existing project. If no project is selected the task will be added to your inbox. Use either the hashtag notation `#project` or if the project has spaces in it `#[in box]`. Project names are case insensitive.
 
 #### Labels\*
 
@@ -52,16 +50,9 @@ You can add labels to your tasks using the `@` character. Label names are case i
 
 #### Priority
 
-A number between `1` and `4`, where `1` is the lowest and `4` would be the highest priority.
+A number between `1` and `4`, where `1` is the highest and `4` would be the lowest (and default) priority.
 
-\* *Relies on node.js to work*
-
-Search and Browse Tasks
------------------------
-
-<!-- Renew photo (gif?) -->
-
-![](https://raw.githubusercontent.com/moranje/alfred-workflow-todoist/master/images/search-tasks.gif)
+## Search and Browse Tasks
 
 ### Alfred command
 
@@ -71,32 +62,32 @@ Search and Browse Tasks
 
 Any search query one character or longer. Uses fuzzy search to find the tasks.
 
-Example: `todos car` => returns (because of fuzzy search):  
-- *Rent car*  
-- *New cat recipe's*  
-- *Cut Gras tomorrow*
+Example: `todos car` => returns (because of fuzzy search):
 
-Configuration
--------------
+- _Rent_ **car**
+- _New_ **ca**_t_ **r**_ecipe's_
+- **C**_ut Gr_**a**_s tomo_**r**_row_
+
+## Configuration
 
 Some magic will happen when you run the `t` command, like creation of files and refreshing of todoist data cache. Other than that use it to configure the workflow.
 
 ### Alfred commands
 
-`t:token {api token}` (no default)  
-Example: *t:token 2d2e2a334c5f36e7a7c43b46e*
+`todo:setting token {api token}` (no default)  
+Example: _todo:setting token 2d2e2a334c5f36e7a7c43b46e_
 
-`t:language {language}` (default: en)  
-Example: *t:language nl*
+`todo:setting language {language}` (default: en)  
+Example: _todo:setting language nl_
 
-`t:items {max list items}` (default: 9)  
-Example: *t:items 9*
+`todo:setting items {max list items}` (default: 9)  
+Example: _todo:setting items 9_
 
-`t:update`  
-Example: *t:update*
+`todo:setting cache_timeout {time in seconds}` (default: 3600)  
+Example: _todo:setting cache_timeout 13_
 
-`t:node`  
-Example: *t:node*
+`todo:setting anonymous_statistics {true or false}` (default: true)  
+Example: _todo:setting anonymous_statistics false_
 
 #### Token\*
 
@@ -110,35 +101,15 @@ This is relevant for parsing date strings ('tomorrow @ 9pm', in `en`). Valid lan
 
 This parameter limits the amount of tasks shown when using the `todo` command. Node.js is **required** for listing todos
 
-#### Check for updates
+## Changelog
 
-Checks current version against latest online version and download if a newer version is available.
+View [CHANGELOG.md](https://github.com/moranje/alfred-workflow-todoist/blob/master/CHANGELOG.md)
 
-#### Node.js
-
-Node.js is required for listing todo's. Working with JSON API's in batch is no fun and the JavaScript force is strong in my, yet none of the other forces (ruby, PHP, python etc.) are. If you decide you want this feature there is an install function included. This will install **[Node.js](https://nodejs.org/en/)** as well as a package manager called **[Homebrew](https://brew.sh/index_nl.html)** to install Node (all other ways of installing node require admin permissions or leave files on your computer). This has the added benefit of making it easy to uninstall as well.
-
-Example: *t:nodejs* => ENTER
-
-**Uninstall Node (terminal):**  
-*brew uninstall node*
-
-**Uninstall Homebrew (terminal):**  
-*ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"*
-
-\* *Required*
-
-Changelog
----------
-
-View [CHANGELOG](https://github.com/moranje/alfred-workflow-todoist/blob/master/CHANGELOG.md)
-
-License
--------
+## License
 
 The MIT License (MIT)
 
-Copyright (c) 2017 [Martien Oranje](https://github.com/moranje)
+Copyright (c) 2018 [Martien Oranje](https://github.com/moranje)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
