@@ -23,10 +23,8 @@ inquirer
   ])
   .then((answers: any) => {
     shell.exec(
-      `ndb dist/workflow/alfred-workflow-todoist.js ${
+      `node --inspect-brk dist/workflow/alfred-workflow-todoist.js ${
         answers.call
       } "${dataPath}" "${cachePath}" "${answers.query.replace(/"/g, '\\"')}"`
     )
   })
-
-// "{\"content\":\"Get milk\",\"priority\":3,\"due_string\":\"morgen\"}"

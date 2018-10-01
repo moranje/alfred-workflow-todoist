@@ -3,10 +3,13 @@ branches:
   only:
     - master
     - /^greenkeeper/.*$/
+cache:
+  directories:
+    - ~/.npm
 notifications:
   email: false
 node_js:
-  - node
+  - '10'
 script:
   - npm run test:prod && npm run build
 after_success:
