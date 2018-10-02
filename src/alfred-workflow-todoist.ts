@@ -6,9 +6,8 @@ import { Notification } from './workflow/workflow'
 const argv = Object.assign([], process.argv)
 argv.splice(0, 2)
 const type = argv.shift()
-const paths = { cache: argv.shift(), data: argv.shift() }
 const query = argv.join(' ')
-const todoistWorkflow = TodoistWorkflow(paths)
+const todoistWorkflow = TodoistWorkflow()
 
 function handleError(err: Error) {
   return Notification().write(err)

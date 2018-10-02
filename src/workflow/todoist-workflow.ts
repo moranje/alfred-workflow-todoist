@@ -12,8 +12,15 @@ interface Workflow {
 
 // import { Item } from './workflow';
 export const TodoistWorkflow = compose({
-  init(this: Workflow, paths: { data: string; cache: string }) {
-    this.paths = paths
+  init(this: Workflow) {
+    this.paths = {
+      data: `${
+        process.env.HOME
+      }/Library/Application Support/Alfred 3/Workflow Data/com.alfred-workflow-todoist`,
+      cache: `${
+        process.env.HOME
+      }/Library/Caches/com.runningwithcrayons.Alfred-3/Workflow Data/com.alfred-workflow-todoist`
+    }
   },
 
   methods: {
