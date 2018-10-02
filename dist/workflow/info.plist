@@ -167,7 +167,7 @@
 
 export PATH="$PATH:/usr/local/bin:/usr/bin"
 
-node alfred-workflow-todoist.js remove "$alfred_workflow_cache" "$alfred_workflow_data" "{query}"</string>
+node alfred-workflow-todoist.js remove "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -238,7 +238,7 @@ node alfred-workflow-todoist.js remove "$alfred_workflow_cache" "$alfred_workflo
 
 export PATH="$PATH:/usr/local/bin:/usr/bin"
 
-node alfred-workflow-todoist.js read "$alfred_workflow_cache" "$alfred_workflow_data" "{query}"</string>
+node alfred-workflow-todoist.js read "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -295,7 +295,7 @@ node alfred-workflow-todoist.js read "$alfred_workflow_cache" "$alfred_workflow_
 
 export PATH="$PATH:/usr/local/bin:/usr/bin"
 
-node alfred-workflow-todoist.js submit "$alfred_workflow_cache" "$alfred_workflow_data" "{query}"</string>
+node alfred-workflow-todoist.js submit "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -345,7 +345,7 @@ node alfred-workflow-todoist.js submit "$alfred_workflow_cache" "$alfred_workflo
 
 export PATH="$PATH:/usr/local/bin:/usr/bin"
 
-node alfred-workflow-todoist.js create "$alfred_workflow_cache" "$alfred_workflow_data" "{query}"</string>
+node alfred-workflow-todoist.js create "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -410,7 +410,7 @@ node alfred-workflow-todoist.js create "$alfred_workflow_cache" "$alfred_workflo
 
 export PATH="$PATH:/usr/local/bin:/usr/bin"
 
-node alfred-workflow-todoist.js settings:store "$alfred_workflow_cache" "$alfred_workflow_data" "{query}"</string>
+node alfred-workflow-todoist.js settings:store "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -462,7 +462,7 @@ export PATH="$PATH:/usr/local/bin:/usr/bin"
 
 # IDEA: should return a list with options (eg: settings, (check for) update, install, refresh_cache)
 
-node alfred-workflow-todoist.js settings "$alfred_workflow_cache" "$alfred_workflow_data" "{query}"</string>
+node alfred-workflow-todoist.js settings "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
