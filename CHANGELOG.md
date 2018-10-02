@@ -1,3 +1,10 @@
+## [5.0.3](https://github.com/moranje/alfred-workflow-todoist/compare/v5.0.2...v5.0.3) (2018-10-02)
+
+
+### Bug Fixes
+
+* hopefully fixes automated version bumping in package.json ([1c631cd](https://github.com/moranje/alfred-workflow-todoist/commit/1c631cd))
+
 ## [5.0.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.0.1...v5.0.2) (2018-10-02)
 
 
