@@ -4,6 +4,7 @@
 .nyc_output
 .rpt2_cache
 .vscode
+.env
 *.log
 cache
 compiled
@@ -11,7 +12,5 @@ coverage
 data
 dist/*.js
 dist/*.map
-dist/types
-dist/workflow
 docs
 node_modules
