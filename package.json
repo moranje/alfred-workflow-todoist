@@ -109,6 +109,8 @@
     "@babel/polyfill": "7.0.0",
     "@commitlint/cli": "7.1.2",
     "@commitlint/config-conventional": "7.1.2",
+    "@semantic-release/changelog": "3.0.0",
+    "@semantic-release/git": "7.0.4",
     "@types/app-root-path": "1.2.4",
     "@types/fuzzaldrin": "2.1.0",
     "@types/got": "8.3.3",
