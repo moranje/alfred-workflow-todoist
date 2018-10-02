@@ -10,7 +10,7 @@ cache
 compiled
 coverage
 data
-dist/*.js
-dist/*.map
+alfred-workflow-todoist.js
+alfred-workflow-todoist.js.map
 docs
 node_modules
