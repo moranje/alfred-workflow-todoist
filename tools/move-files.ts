@@ -1,3 +1,4 @@
+const mkdirp = require('mkdirp')
 const shell = require('shelljs')
 
 const argv = Object.assign([], process.argv)
@@ -18,12 +19,14 @@ function noop() {
 }
 
 function moveToTemp() {
+  mkdirp(`${TEMP_FOLDER}`)
   shell.cp('dist/workflow/info.plist', `${TEMP_FOLDER}/info.plist`)
   shell.cp('dist/workflow/icon.png', `${TEMP_FOLDER}/icon.png`)
   // shell.cp('-R', 'dist/workflow/images/', `${TEMP_FOLDER}/images`)
 }
 
 function moveFromTemp() {
+  mkdirp(`dist/workflow`)
   shell.cp(`${TEMP_FOLDER}/info.plist`, 'dist/workflow/info.plist')
   shell.cp(`${TEMP_FOLDER}/icon.png`, 'dist/workflow/icon.png')
   // shell.cp('-R', `${TEMP_FOLDER}/images/`, 'dist/workflow/images/')
