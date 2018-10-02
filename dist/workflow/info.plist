@@ -620,7 +620,7 @@ node alfred-workflow-todoist.js settings "$alfred_workflow_cache" "$alfred_workf
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>5.0.0-development</string>
+	<string>5.0.0</string>
 	<key>webaddress</key>
 	<string>https://github.com/moranje/alfred-workflow-todoist</string>
 </dict>

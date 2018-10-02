@@ -23,7 +23,6 @@
     "lint": "tslint  --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "ts-node tools/move-files.ts moveToTemp && rimraf dist",
     "build": "ts-node tools/build.ts",
-    "postbuild": "ts-node tools/move-files.ts moveFromTemp",
     "build:grammar": "npx nearleyc src/todoist/grammar.ne -o src/todoist/grammar.ts",
     "restore": "mkdir -p dist/workflow && npm run postbuild",
     "start": "rollup -c rollup.config.ts -w",
