@@ -1,3 +1,10 @@
+## [5.0.5](https://github.com/moranje/alfred-workflow-todoist/compare/v5.0.4...v5.0.5) (2018-10-03)
+
+
+### Bug Fixes
+
+* the .aflredworkflow not being updated ([fac7e6f](https://github.com/moranje/alfred-workflow-todoist/commit/fac7e6f))
+
 ## [5.0.4](https://github.com/moranje/alfred-workflow-todoist/compare/v5.0.3...v5.0.4) (2018-10-03)
 
 
