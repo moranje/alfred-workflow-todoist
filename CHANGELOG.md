@@ -1,3 +1,10 @@
+## [5.0.4](https://github.com/moranje/alfred-workflow-todoist/compare/v5.0.3...v5.0.4) (2018-10-03)
+
+
+### Bug Fixes
+
+* include version number in workflow ([01d56d3](https://github.com/moranje/alfred-workflow-todoist/commit/01d56d3))
+
 ## [5.0.3](https://github.com/moranje/alfred-workflow-todoist/compare/v5.0.2...v5.0.3) (2018-10-02)
 
 
