@@ -1,3 +1,4 @@
+os: osx
 language: node_js
 branches:
   only:
