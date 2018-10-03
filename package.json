@@ -62,6 +62,10 @@
       "@semantic-release/changelog",
       "@semantic-release/npm",
       {
+        "path": "@semantic-release/exec",
+        "cmd": "npm run build:workflow"
+      },
+      {
         "path": "@semantic-release/git",
         "assets": [
           "CHANGELOG.md",
