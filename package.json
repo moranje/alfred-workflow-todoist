@@ -24,6 +24,7 @@
     "prebuild": "ts-node tools/move-files.ts moveToTemp && rimraf dist",
     "build": "ts-node tools/build.ts",
     "build:grammar": "npx nearleyc src/todoist/grammar.ne -o src/todoist/grammar.ts",
+    "build:workflow": "ts-node tools/build-workflow.ts",
     "restore": "mkdir -p dist/workflow && npm run postbuild",
     "start": "rollup -c rollup.config.ts -w",
     "test": "jest",
@@ -69,6 +70,10 @@
           "dist/Alfred Workflow Todoist.alfredworkflow"
         ],
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      },
+      {
+        "path": "@semantic-release/exec",
+        "cmd": "npm run build:workflow"
       }
     ],
     "publish": [
@@ -133,6 +138,7 @@
     "@commitlint/cli": "7.1.2",
     "@commitlint/config-conventional": "7.1.2",
     "@semantic-release/changelog": "3.0.0",
+    "@semantic-release/exec": "3.1.3",
     "@semantic-release/git": "7.0.4",
     "@types/app-root-path": "1.2.4",
     "@types/fuzzaldrin": "2.1.0",
