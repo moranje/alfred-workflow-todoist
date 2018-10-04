@@ -1,8 +1,13 @@
+import plist from 'fast-plist'
+import { readFileSync } from 'fs'
 import md5 from 'md5'
 import osName from 'os-name'
 import compose from 'stampit'
 
-const pkg = require('../../package.json')
+const infoPlist: any = plist.parse(readFileSync(`${process.cwd()}/info.plist`, 'utf8'))
+const alfredPlist: any = plist.parse(
+  readFileSync('/Applications/Alfred 3.app/Contents/Info.plist', 'utf8')
+)
 
 export interface Writable {
   write: (...params: any[]) => void
@@ -66,7 +71,8 @@ export const Writable = compose({
         `os: ${osName()}`,
         `query: ${err.query}`,
         `node.js: ${process.version}`,
-        `workflow: ${pkg.version}`,
+        `alfred: ${alfredPlist.CFBundleShortVersionString}`,
+        `workflow: ${infoPlist.version}`,
         `Stack: ${err.stack}`
       ].join('\n')
     }
@@ -176,5 +182,3 @@ export const Query = compose({
 
   methods: {}
 })
-
-export const Notification = compose(Writable)
