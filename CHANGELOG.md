@@ -1,3 +1,10 @@
+# [5.1.0](https://github.com/moranje/alfred-workflow-todoist/compare/v5.0.5...v5.1.0) (2018-10-04)
+
+
+### Features
+
+* **workflow:** better error reporting ([52c132b](https://github.com/moranje/alfred-workflow-todoist/commit/52c132b))
+
 ## [5.0.5](https://github.com/moranje/alfred-workflow-todoist/compare/v5.0.4...v5.0.5) (2018-10-03)
 
 
