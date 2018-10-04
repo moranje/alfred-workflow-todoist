@@ -3,8 +3,9 @@ import jsonfile from 'jsonfile'
 import compose from 'stampit'
 
 import { uuid } from '../todoist/rest-api-v8'
+import { Notification } from './notifier'
 import { Schema } from './settings-schema'
-import { Item, List, Notification } from './workflow'
+import { Item, List } from './workflow'
 
 const path = `${
   process.env.HOME
@@ -55,7 +56,7 @@ const SettingList = compose(
     ) {
       this.items = this.items || []
       let subtitle = `Current value: ${settings[key]}`
-      let valid = `\u2713`
+      let valid = '\u2713'
 
       // Type cast value to a number
       if (Schema.properties[key].type === 'number') {
@@ -64,20 +65,20 @@ const SettingList = compose(
 
       if (!isValid(key, value, settings)) {
         subtitle += ` (${Schema.properties[key].explanation})`
-        valid = `\u2715`
+        valid = '\u2715'
       }
 
       if (Schema.properties[key].type === 'boolean') {
         this.items.push(
           Item({
-            title: `New: true`,
+            title: 'New: true',
             subtitle: `Current value: ${settings[key]}`,
             arg: { key, value: true }
           })
         )
         this.items.push(
           Item({
-            title: `New: false `,
+            title: 'New: false ',
             subtitle: `Current value: ${settings[key]}`,
             arg: { key, value: false }
           })
@@ -153,10 +154,10 @@ export async function update({ key, value }: { key: string; value: string | numb
   if (isValid(key, value, settings)) {
     jsonfile.writeFileSync(`${path}/settings.json`, Object.assign(settings, { [key]: value }))
 
-    return Notification().write('Setting updated')
+    return Notification({ message: 'Setting updated' }).write()
   }
 
-  return Notification().write(new Error(`Can't set ${key} to ${value}`))
+  return Notification(new Error(`Can't set ${key} to ${value}`)).write()
 }
 
 export function isValid(key: string, value: string | number | boolean, settings: Settings) {

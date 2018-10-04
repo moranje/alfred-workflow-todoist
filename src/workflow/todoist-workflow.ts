@@ -3,8 +3,8 @@ import compose from 'stampit'
 import { init } from '../todoist/query'
 import { TaskAdapter } from '../todoist/rest-api-v8'
 import { Task, TaskList } from '../todoist/task'
+import { Notification } from './notifier'
 import { edit, getSettings, list, update } from './settings'
-import { Notification } from './workflow'
 
 interface Workflow {
   paths: { data: string; cache: string }
@@ -36,10 +36,10 @@ export const TodoistWorkflow = compose({
         .create(task)
         .then(({ statusCode, body }: any) => {
           if (statusCode === 200) {
-            return Notification().write(`Task added`)
+            return Notification({ message: 'Task added', open: body.url }).write()
           }
 
-          return Notification().write(`Task probably added`)
+          return Notification({ message: 'Task probably added', open: body.url }).write()
         })
     },
 
@@ -48,10 +48,10 @@ export const TodoistWorkflow = compose({
         .remove(task.id)
         .then(({ statusCode }: any) => {
           if (statusCode === 204) {
-            return Notification().write(`Task completed`)
+            return Notification({ message: 'Task completed' }).write()
           }
 
-          return Notification().write(`Task probably completed`)
+          return Notification({ message: 'Task probably completed' }).write()
         })
     },
 

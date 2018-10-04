@@ -1,7 +1,7 @@
 import '@babel/polyfill'
 
+import { Notification } from './workflow/notifier'
 import { TodoistWorkflow } from './workflow/todoist-workflow'
-import { Notification } from './workflow/workflow'
 
 const argv = Object.assign([], process.argv)
 argv.splice(0, 2)
@@ -10,7 +10,7 @@ const query = argv.join(' ')
 const todoistWorkflow = TodoistWorkflow()
 
 function handleError(err: Error) {
-  return Notification().write(err)
+  return Notification(Object.assign(err, { query })).write()
 }
 
 if (type === 'read') {

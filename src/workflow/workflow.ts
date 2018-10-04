@@ -1,13 +1,7 @@
-import plist from 'fast-plist'
-import { readFileSync } from 'fs'
 import md5 from 'md5'
-import osName from 'os-name'
 import compose from 'stampit'
 
-const infoPlist: any = plist.parse(readFileSync(`${process.cwd()}/info.plist`, 'utf8'))
-const alfredPlist: any = plist.parse(
-  readFileSync('/Applications/Alfred 3.app/Contents/Info.plist', 'utf8')
-)
+import { Notification } from './notifier'
 
 export interface Writable {
   write: (...params: any[]) => void
@@ -62,20 +56,6 @@ export interface View {
 export const Writable = compose({
   init(this: Writable) {
     // Private methods
-    this.error = (err: AlfredError) => {
-      let type = err.name.charAt(0).toUpperCase() + err.name.substring(1) || 'Error'
-      return [
-        `${type}: ${err.message}\n`,
-        'ALFRED WORKFLOW TODOIST',
-        '----------------------------------------',
-        `os: ${osName()}`,
-        `query: ${err.query}`,
-        `node.js: ${process.version}`,
-        `alfred: ${alfredPlist.CFBundleShortVersionString}`,
-        `workflow: ${infoPlist.version}`,
-        `Stack: ${err.stack}`
-      ].join('\n')
-    }
     this.object = (arg: Object) => JSON.stringify(arg)
   },
 
@@ -85,7 +65,7 @@ export const Writable = compose({
 
       const mapped: string[] = args.map((arg: any) => {
         // @ts-ignore: should implement a real AlfreError
-        if (arg instanceof Error) return this.error(arg)
+        if (arg instanceof Error) return Notification(arg).write()
 
         if (typeof arg === 'object') return this.object(arg)
 
