@@ -131,6 +131,7 @@
     "mkdirp": "0.5.1",
     "moo": "github:no-context/moo#master",
     "nearley": "2.15.1",
+    "os-name": "2.0.1",
     "stampit": "4.2.0"
   },
   "devDependencies": {
@@ -152,6 +153,7 @@
     "@types/moo": "0.4.1",
     "@types/nearley": "2.11.0",
     "@types/node": "*",
+    "@types/os-name": "2.0.0",
     "@types/shelljs": "0.8.0",
     "@types/stampit": "3.0.2",
     "bestzip": "2.1.1",

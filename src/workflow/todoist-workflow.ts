@@ -12,25 +12,14 @@ interface Workflow {
 
 // import { Item } from './workflow';
 export const TodoistWorkflow = compose({
-  init(this: Workflow) {
-    this.paths = {
-      data: `${
-        process.env.HOME
-      }/Library/Application Support/Alfred 3/Workflow Data/com.alfred-workflow-todoist`,
-      cache: `${
-        process.env.HOME
-      }/Library/Caches/com.runningwithcrayons.Alfred-3/Workflow Data/com.alfred-workflow-todoist`
-    }
-  },
-
   methods: {
     async read(this: Workflow) {
-      return TaskAdapter({ token: (await getSettings(this.paths.data)).token })
+      return TaskAdapter({ token: (await getSettings()).token })
         .findAll()
         .then(async (tasks: any) => {
           let taskList: TaskList = TaskList({
             tasks,
-            locale: (await getSettings(this.paths.data)).language
+            locale: (await getSettings()).language
           })
 
           taskList.write({ items: taskList.items })
@@ -38,12 +27,12 @@ export const TodoistWorkflow = compose({
     },
 
     async create(this: Workflow, query: string) {
-      let locale = (await getSettings(this.paths.data)).language
+      let locale = (await getSettings()).language
       return init(query, locale)
     },
 
     async submit(this: Workflow, task: Task) {
-      return TaskAdapter({ token: (await getSettings(this.paths.data)).token })
+      return TaskAdapter({ token: (await getSettings()).token })
         .create(task)
         .then(({ statusCode, body }: any) => {
           if (statusCode === 200) {
@@ -55,7 +44,7 @@ export const TodoistWorkflow = compose({
     },
 
     async remove(this: Workflow, task: Task) {
-      return TaskAdapter({ token: (await getSettings(this.paths.data)).token })
+      return TaskAdapter({ token: (await getSettings()).token })
         .remove(task.id)
         .then(({ statusCode }: any) => {
           if (statusCode === 204) {
@@ -67,15 +56,15 @@ export const TodoistWorkflow = compose({
     },
 
     settings(this: Workflow) {
-      return list(this.paths.data)
+      return list()
     },
 
     editSetting(this: Workflow, key: string, value: string | number | boolean) {
-      return edit(key, value, this.paths.data)
+      return edit(key, value)
     },
 
     storeSetting(this: Workflow, setting: { key: string; value: string | number | boolean }) {
-      return update(Object.assign(setting, { path: this.paths.data }))
+      return update(Object.assign(setting))
     }
   }
 })

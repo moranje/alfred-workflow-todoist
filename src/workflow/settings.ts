@@ -6,6 +6,9 @@ import { uuid } from '../todoist/rest-api-v8'
 import { Schema } from './settings-schema'
 import { Item, List, Notification } from './workflow'
 
+const path = `${
+  process.env.HOME
+}/Library/Application Support/Alfred 3/Workflow Data/com.alfred-workflow-todoist`
 export interface Settings {
   [index: string]: string | number | boolean
   token: string
@@ -117,7 +120,7 @@ function createDefault() {
   throw validate.errors
 }
 
-export async function getSettings(path: string) {
+export async function getSettings() {
   let settings: Settings
 
   try {
@@ -130,30 +133,22 @@ export async function getSettings(path: string) {
   return Object.assign(createDefault(), settings)
 }
 
-export async function list(path: string) {
-  let settings: Settings = await getSettings(path)
+export async function list() {
+  let settings: Settings = await getSettings()
   let settingsList = SettingsList({ settings })
 
   return settingsList.write()
 }
 
-export async function edit(key: string, value: string | number | boolean, path: string) {
-  let settings: Settings = await getSettings(path)
+export async function edit(key: string, value: string | number | boolean) {
+  let settings: Settings = await getSettings()
   let settingList = SettingList({ key, value, settings })
 
   return settingList.write()
 }
 
-export async function update({
-  key,
-  value,
-  path
-}: {
-  key: string
-  value: string | number | boolean
-  path: string
-}) {
-  let settings: Settings = await getSettings(path)
+export async function update({ key, value }: { key: string; value: string | number | boolean }) {
+  let settings: Settings = await getSettings()
 
   if (isValid(key, value, settings)) {
     jsonfile.writeFileSync(`${path}/settings.json`, Object.assign(settings, { [key]: value }))

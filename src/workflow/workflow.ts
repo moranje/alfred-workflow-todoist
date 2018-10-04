@@ -1,11 +1,17 @@
-// @ts-ignore: no declaration for v4 yet
 import md5 from 'md5'
+import osName from 'os-name'
 import compose from 'stampit'
+
+const pkg = require('../../package.json')
 
 export interface Writable {
   write: (...params: any[]) => void
-  error: (arg: Error) => string
+  error: (arg: AlfredError) => string
   object: (arg: Object) => string
+}
+
+export interface List extends Writable {
+  items: Item[]
 }
 
 export interface Item {
@@ -19,8 +25,8 @@ export interface Item {
   icon: { path: string }
 }
 
-export interface List extends Writable {
-  items: Item[]
+interface AlfredError extends Error {
+  query: string
 }
 
 export interface View {
@@ -51,9 +57,18 @@ export interface View {
 export const Writable = compose({
   init(this: Writable) {
     // Private methods
-    this.error = (arg: Error) => {
-      let type = arg.name.charAt(0).toUpperCase() + arg.name.substring(1) || 'Error'
-      return `${type}: ${arg.message}\nStack: ${arg.stack}`
+    this.error = (err: AlfredError) => {
+      let type = err.name.charAt(0).toUpperCase() + err.name.substring(1) || 'Error'
+      return [
+        `${type}: ${err.message}\n`,
+        'ALFRED WORKFLOW TODOIST',
+        '----------------------------------------',
+        `os: ${osName()}`,
+        `query: ${err.query}`,
+        `node.js: ${process.version}`,
+        `workflow: ${pkg.version}`,
+        `Stack: ${err.stack}`
+      ].join('\n')
     }
     this.object = (arg: Object) => JSON.stringify(arg)
   },
@@ -63,6 +78,7 @@ export const Writable = compose({
       const args: any[] = params.length > 0 ? params : [this]
 
       const mapped: string[] = args.map((arg: any) => {
+        // @ts-ignore: should implement a real AlfreError
         if (arg instanceof Error) return this.error(arg)
 
         if (typeof arg === 'object') return this.object(arg)
