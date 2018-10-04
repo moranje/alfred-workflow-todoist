@@ -27,13 +27,15 @@ function moveToTemp() {
 
 function moveFromTemp() {
   mkdirp(`dist/workflow`)
-  shell.cp(`${TEMP_FOLDER}/info.plist`, 'dist/workflow/info.plist')
-  shell.cp(`${TEMP_FOLDER}/icon.png`, 'dist/workflow/icon.png')
+  let plist = shell.cp(`${TEMP_FOLDER}/info.plist`, 'dist/workflow/info.plist').stderr
+  let icon = shell.cp(`${TEMP_FOLDER}/icon.png`, 'dist/workflow/icon.png').stderr
   // shell.cp('-R', `${TEMP_FOLDER}/images/`, 'dist/workflow/images/')
 
-  shell.rm('-rf', `${TEMP_FOLDER}/info.plist`)
-  shell.rm('-rf', `${TEMP_FOLDER}/icon.png`)
-  // shell.rm('-rf', `${TEMP_FOLDER}/images/`)
+  if (!plist && !icon) {
+    shell.rm('-rf', `${TEMP_FOLDER}/info.plist`)
+    shell.rm('-rf', `${TEMP_FOLDER}/icon.png`)
+    // shell.rm('-rf', `${TEMP_FOLDER}/images/`)
+  }
 }
 
 if (call === 'moveToTemp') {
