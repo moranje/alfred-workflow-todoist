@@ -1,3 +1,10 @@
+## [5.1.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.1.0...v5.1.1) (2018-10-04)
+
+
+### Bug Fixes
+
+* **workflow:** invalid reference to package.json ([a8a9ccf](https://github.com/moranje/alfred-workflow-todoist/commit/a8a9ccf))
+
 # [5.1.0](https://github.com/moranje/alfred-workflow-todoist/compare/v5.0.5...v5.1.0) (2018-10-04)
 
 
