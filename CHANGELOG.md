@@ -1,3 +1,10 @@
+## [5.1.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.1.1...v5.1.2) (2018-10-04)
+
+
+### Bug Fixes
+
+* unwanted deletion of plist and icon files ([9093f6f](https://github.com/moranje/alfred-workflow-todoist/commit/9093f6f))
+
 ## [5.1.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.1.0...v5.1.1) (2018-10-04)
 
 
