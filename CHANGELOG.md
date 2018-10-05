@@ -1,3 +1,10 @@
+## [5.1.3](https://github.com/moranje/alfred-workflow-todoist/compare/v5.1.2...v5.1.3) (2018-10-05)
+
+
+### Bug Fixes
+
+* not being able to define a workflow setting ([5c042ea](https://github.com/moranje/alfred-workflow-todoist/commit/5c042ea))
+
 ## [5.1.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.1.1...v5.1.2) (2018-10-04)
 
 
