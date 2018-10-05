@@ -27,7 +27,7 @@ const SettingsList = compose(
     init(this: List, { settings }: { settings: Settings }) {
       this.items = this.items || []
 
-      Object.keys(settings).forEach((key: string) => {
+      Object.keys(Schema.properties).forEach((key: string) => {
         if (key !== 'uuid') {
           this.items.push(
             Item({
@@ -55,50 +55,60 @@ const SettingList = compose(
       }: { key: string; value: string | number | boolean; settings: Settings }
     ) {
       this.items = this.items || []
-      let subtitle = `Current value: ${settings[key]}`
-      let valid = '\u2713'
+      if (!Schema.properties[key]) {
+        this.items.push(
+          Item({
+            title: `NO SUCH SETTING`,
+            subtitle: `Alas, but dust yourself off and try again`,
+            valid: false
+          })
+        )
+      } else {
+        let subtitle = `Current value: ${settings[key]}`
+        let valid = '\u2713'
 
-      // Type cast value to a number
-      if (Schema.properties[key].type === 'number') {
-        value = +value
-      }
+        // Type cast value to a number
+        if (Schema.properties[key].type === 'number') {
+          value = +value
+        }
 
-      if (!isValid(key, value, settings)) {
-        subtitle += ` (${Schema.properties[key].explanation})`
-        valid = '\u2715'
-      }
+        if (!isValid(key, value, settings)) {
+          subtitle += ` (${Schema.properties[key].explanation})`
+          valid = '\u2715'
+        }
 
-      if (Schema.properties[key].type === 'boolean') {
-        this.items.push(
-          Item({
-            title: 'New: true',
-            subtitle: `Current value: ${settings[key]}`,
-            arg: { key, value: true }
-          })
-        )
-        this.items.push(
-          Item({
-            title: 'New: false ',
-            subtitle: `Current value: ${settings[key]}`,
-            arg: { key, value: false }
-          })
-        )
-      } else if (Schema.properties[key].type === 'string') {
-        this.items.push(
-          Item({
-            title: `New: ${value} (${valid})`,
-            subtitle,
-            arg: { key, value }
-          })
-        )
-      } else if (Schema.properties[key].type === 'number') {
-        this.items.push(
-          Item({
-            title: `New: ${value} (${valid})`,
-            subtitle,
-            arg: { key, value: +value }
-          })
-        )
+        if (Schema.properties[key].type === 'boolean') {
+          this.items.push(
+            Item({
+              title: 'New: true',
+              subtitle: `Current value: ${settings[key]}`,
+              arg: { key, value: true }
+            })
+          )
+          this.items.push(
+            Item({
+              title: 'New: false ',
+              subtitle: `Current value: ${settings[key]}`,
+              arg: { key, value: false }
+            })
+          )
+        } else if (Schema.properties[key].type === 'string') {
+          this.items.push(
+            Item({
+              title: `New: ${value} (${valid})`,
+              subtitle,
+              arg: { key, value }
+            })
+          )
+        } else if (Schema.properties[key].type === 'number') {
+          this.items.push(
+            Item({
+              title: `New: ${value} (${valid})`,
+              subtitle,
+              arg: { key, value: +value }
+            })
+          )
+        }
       }
     }
   }
