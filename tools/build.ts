@@ -8,5 +8,8 @@ shell.sed(
   '../../node_modules/node-notifier/vendor/',
   'dist/workflow/alfred-workflow-todoist.js'
 )
-shell.exec('typedoc --out docs --target es6 --theme minimal --mode file src', { silent: true })
+shell.exec(
+  'typedoc --out docs --name "Alfred Workflow Todoist" --readme README.md --target es6 --theme minimal --exclude "grammer.ts" --mode file src',
+  { silent: true }
+)
 shell.exec('ts-node tools/move-files.ts moveFromTemp', { silent: true })

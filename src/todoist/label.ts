@@ -9,7 +9,13 @@ export interface Label {
   id: number
 }
 
+export interface LabelList extends List {}
+
 export const Label = compose({
+  /**
+   * @constructor
+   * @param {Label} label A new label
+   */
   init(this: Label, label: Label = { name: '', id: -1 }) {
     if (!label.name && label.name === '') {
       throw new AlfredError(`A label must have a name (${label.name}) property`)
