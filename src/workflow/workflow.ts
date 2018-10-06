@@ -1,3 +1,4 @@
+import { AlfredError } from '@/workflow/error'
 import md5 from 'md5'
 import compose from 'stampit'
 
@@ -22,10 +23,6 @@ export interface Item {
   title: string
   subtitle: string
   icon: { path: string }
-}
-
-interface AlfredError extends Error {
-  query: string
 }
 
 export interface View {
