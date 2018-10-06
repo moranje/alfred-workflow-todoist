@@ -66,7 +66,11 @@ function notification(
   onTimeout?: (notifierObject: any, option: any, meta: any) => void
 ) {
   let onClickFallback = (notifier: any, opts: any, meta: any) => {
-    if (opts.open) open(opts.open)
+    if (opts.open) {
+      open(opts.open).catch(openError => {
+        logError(new AlfredError(openError.name, openError.message, openError.stack))
+      })
+    }
   }
 
   notifier.notify(_.omit(options, ['error']), (err, response) => {

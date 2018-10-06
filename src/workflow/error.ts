@@ -4,7 +4,7 @@ import osName from 'os-name'
 
 const argv = Object.assign([], process.argv)
 argv.splice(0, 2)
-const type = argv.shift()
+argv.shift()
 const query = argv.join(' ')
 const ERROR_ENV = {
   QUERY: query,
@@ -33,10 +33,8 @@ export class AlfredError extends Error {
 
     if (stack) {
       this.stack = stack
-    } else if (typeof Error.captureStackTrace === 'function') {
-      Error.captureStackTrace(this, this.constructor)
     } else {
-      this.stack = new AlfredError(message).stack
+      Error.captureStackTrace(this, this.constructor)
     }
   }
 }
