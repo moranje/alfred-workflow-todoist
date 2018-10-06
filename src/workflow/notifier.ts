@@ -15,7 +15,7 @@ const NOTIFICATION_DEFAULTS = {
   contentImage: '',
   open: '',
   wait: void 0,
-  timeout: 5,
+  timeout: void 0,
   closeLabel: void 0,
   actions: '',
   dropdownLabel: '',
@@ -55,6 +55,7 @@ function logError(error: AlfredError) {
       `Stack: ${error.stack}`
     ]
       .join('\n')
+      // Hide token from log by default
       .replace(/[0-9a-fA-F]{40}/gm, '<token>')
   )
 }
@@ -64,25 +65,28 @@ function notification(
   onClick?: (notifierObject: any, option: any, meta: any) => void,
   onTimeout?: (notifierObject: any, option: any, meta: any) => void
 ) {
+  let onClickFallback = (notifier: any, opts: any, meta: any) => {
+    if (opts.open) open(opts.open)
+  }
+
   notifier.notify(_.omit(options, ['error']), (err, response) => {
     // Response is response from notification
-    console.log('Something went wrong\n')
     if (err) {
+      console.log('Something went wrong\n', err)
       logError(new AlfredError(err.name, err.message, err.stack))
     }
 
     if (options.error) {
+      console.log('Something went wrong\n')
       logError(options.error)
     }
   })
 
-  notifier.on('click', (notifierObject: any, opts: any, meta: any) => {
-    console.log('Click\n')
-    // open(options.open)
-  })
-  notifier.on('timeout', (notifierObject: any, opts: any, meta: any) => {
-    console.log('Timeout\n')
-  })
+  notifier.on('click', onClick || onClickFallback)
+
+  // notifier.on('timeout', (notifierObject: any, opts: any, meta: any) => {
+  //   // console.log('Timeout\n')
+  // })
 }
 
 export const Notification = compose({

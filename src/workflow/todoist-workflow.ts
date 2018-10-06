@@ -36,10 +36,16 @@ export const TodoistWorkflow = compose({
         .create(task)
         .then(({ statusCode, body }: any) => {
           if (statusCode === 200) {
-            return Notification({ message: 'Task added', open: body.url }).write()
+            return Notification({
+              message: 'Task added',
+              open: `https://todoist.com/showTask?id=${body.id}`
+            }).write()
           }
 
-          return Notification({ message: 'Task probably added', open: body.url }).write()
+          return Notification({
+            message: 'Task probably added',
+            open: `https://todoist.com/showTask?id=${body.id}`
+          }).write()
         })
     },
 
