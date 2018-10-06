@@ -1,3 +1,4 @@
+import { AlfredError } from '@/workflow/error'
 import Ajv from 'ajv'
 import jsonfile from 'jsonfile'
 import compose from 'stampit'
@@ -167,7 +168,7 @@ export async function update({ key, value }: { key: string; value: string | numb
     return Notification({ message: 'Setting updated' }).write()
   }
 
-  return Notification(new Error(`Can't set ${key} to ${value}`)).write()
+  return Notification(new AlfredError(`Can't set ${key} to ${value}`)).write()
 }
 
 export function isValid(key: string, value: string | number | boolean, settings: Settings) {

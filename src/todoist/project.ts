@@ -1,3 +1,4 @@
+import { AlfredError } from '@/workflow/error'
 import compose from 'stampit'
 
 import { List } from '../workflow/workflow'
@@ -12,11 +13,11 @@ export interface Project {
 export const Project = compose({
   init(this: Project, project: Project = { name: '', id: -1 }) {
     if (!project.name && project.name === '') {
-      throw new Error(`A project must have a name (${project.name}) property`)
+      throw new AlfredError(`A project must have a name (${project.name}) property`)
     }
 
     if (!project.id || project.id === -1) {
-      throw new Error(`A project must have a id (${project.id}) property`)
+      throw new AlfredError(`A project must have a id (${project.id}) property`)
     }
 
     Object.assign(this, project)

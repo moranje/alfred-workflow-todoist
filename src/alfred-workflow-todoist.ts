@@ -1,5 +1,6 @@
 import '@babel/polyfill'
 
+import { AlfredError } from './workflow/error'
 import { Notification } from './workflow/notifier'
 import { TodoistWorkflow } from './workflow/todoist-workflow'
 
@@ -10,7 +11,8 @@ const query = argv.join(' ')
 const todoistWorkflow = TodoistWorkflow()
 
 function handleError(err: Error) {
-  return Notification(Object.assign(err, { query })).write()
+  let error = new AlfredError(err.message, err.name, err.stack)
+  return Notification(Object.assign(error, { query })).write()
 }
 
 if (type === 'read') {

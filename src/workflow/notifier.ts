@@ -1,13 +1,10 @@
-import plist from 'fast-plist'
-import { readFileSync } from 'fs'
+import _ from 'lodash'
+import notifier from 'node-notifier'
+import open from 'opn'
 import osName from 'os-name'
 import compose from 'stampit'
 
-// import notifier from 'node-notifier';
-const infoPlist: any = plist.parse(readFileSync(`${process.cwd()}/info.plist`, 'utf8'))
-const alfredPlist: any = plist.parse(
-  readFileSync('/Applications/Alfred 3.app/Contents/Info.plist', 'utf8')
-)
+import { AlfredError } from './error'
 
 const NOTIFICATION_DEFAULTS = {
   title: 'ALFRED WORKFLOW TODOIST',
@@ -18,14 +15,11 @@ const NOTIFICATION_DEFAULTS = {
   contentImage: '',
   open: '',
   wait: void 0,
-  timeout: void 0,
-  closeLabel: '',
+  timeout: 5,
+  closeLabel: void 0,
   actions: '',
   dropdownLabel: '',
-  reply: false,
-  type: 'notification',
-  query: '',
-  stack: ''
+  reply: false
 }
 
 export interface NotificationOptions {
@@ -44,32 +38,52 @@ export interface NotificationOptions {
   actions: string // String | Array<String>. Action label or list of labels in case of dropdown
   dropdownLabel: string // String. Label to be used if multiple actions
   reply: boolean // Boolean. If notification should take input. Value passed as third argument in callback and event emitter.
-  type?: 'notification' | 'error'
-  query?: string
-  stack?: string
+  error?: AlfredError
 }
 
-interface AlfredError extends Error {
-  query: string
+function logError(error: AlfredError) {
+  console.log(
+    [
+      `${error.name}: ${error.message}\n`,
+      'ALFRED WORKFLOW TODOIST',
+      '----------------------------------------',
+      `os: ${osName()}`,
+      `query: ${error.QUERY}`,
+      `node.js: ${error.NODE_VERSION}`,
+      `alfred: ${error.ALFRED_VERSION}`,
+      `workflow: ${error.WORKFLOW_VERSION}`,
+      `Stack: ${error.stack}`
+    ]
+      .join('\n')
+      .replace(/[0-9a-fA-F]{40}/gm, '<token>')
+  )
 }
 
-// export function notification(
-//   options: NotificationOptions
-//   // onClick: (notifierObject: any, option: any) => void,
-//   // onTimeout: (notifierObject: any, option: any) => void
-// ) {
-//   notifier.notify(options, function(err, response) {
-//     // Response is response from notification
-//     return console.log(err, response)
-//   })
+function notification(
+  options: NotificationOptions,
+  onClick?: (notifierObject: any, option: any, meta: any) => void,
+  onTimeout?: (notifierObject: any, option: any, meta: any) => void
+) {
+  notifier.notify(_.omit(options, ['error']), (err, response) => {
+    // Response is response from notification
+    console.log('Something went wrong\n')
+    if (err) {
+      logError(new AlfredError(err.name, err.message, err.stack))
+    }
 
-//   notifier.on('click', function() {
-//     return console.log(arguments)
-//   })
-//   notifier.on('timeout', function() {
-//     return console.log(arguments)
-//   })
-// }
+    if (options.error) {
+      logError(options.error)
+    }
+  })
+
+  notifier.on('click', (notifierObject: any, opts: any, meta: any) => {
+    console.log('Click\n')
+    // open(options.open)
+  })
+  notifier.on('timeout', (notifierObject: any, opts: any, meta: any) => {
+    console.log('Timeout\n')
+  })
+}
 
 export const Notification = compose({
   init(output: AlfredError | NotificationOptions) {
@@ -82,9 +96,7 @@ export const Notification = compose({
         title: 'ALFRED WORKFLOW TODOIST',
         subtitle: '✕ How unfortunate...',
         message: `${name}: ${output.message}`,
-        query: output.query,
-        stack: output.stack,
-        type: 'error'
+        error: output
       })
     }
 
@@ -92,24 +104,8 @@ export const Notification = compose({
   },
 
   methods: {
-    write(this: NotificationOptions) {
-      if (this.type === 'error') {
-        console.log(
-          [
-            `${this.message}\n`,
-            'ALFRED WORKFLOW TODOIST',
-            '----------------------------------------',
-            `os: ${osName()}`,
-            `query: ${this.query}`,
-            `node.js: ${process.version}`,
-            `alfred: ${alfredPlist.CFBundleShortVersionString}`,
-            `workflow: ${infoPlist.version}`,
-            `Stack: ${this.stack}`
-          ].join('\n')
-        )
-      } else {
-        console.log(this.message)
-      }
+    write(this: NotificationOptions, onClick?: any, onTimeout?: any) {
+      notification(this, onClick, onTimeout)
     }
   }
 })

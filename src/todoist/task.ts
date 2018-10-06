@@ -1,3 +1,4 @@
+import { AlfredError } from '@/workflow/error'
 import formatDistance from 'date-fns/formatDistance'
 import { de, enUS, es, fr, it, nl, ptBR, ru, sv, zhCN } from 'date-fns/locale'
 import compose from 'stampit'
@@ -112,7 +113,7 @@ export interface TaskList extends List {}
 export const Task = compose({
   init(this: Task, task: Task = { content: '' }) {
     if (!task.content || task.content === '') {
-      throw new Error(`A task must have a content (${task.content}) property`)
+      throw new AlfredError(`A task must have a content (${task.content}) property`)
     }
 
     // Store tasks properties as private ("_"-prefixed) properties
