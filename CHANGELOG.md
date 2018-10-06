@@ -1,3 +1,15 @@
+# [5.2.0](https://github.com/moranje/alfred-workflow-todoist/compare/v5.1.3...v5.2.0) (2018-10-06)
+
+
+### Bug Fixes
+
+* better error logging ([bd7c907](https://github.com/moranje/alfred-workflow-todoist/commit/bd7c907))
+
+
+### Features
+
+* **workflow:** notification now links to created task ([244eb95](https://github.com/moranje/alfred-workflow-todoist/commit/244eb95))
+
 ## [5.1.3](https://github.com/moranje/alfred-workflow-todoist/compare/v5.1.2...v5.1.3) (2018-10-05)
 
 
