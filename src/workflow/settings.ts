@@ -161,11 +161,18 @@ export async function edit(key: string, value: string | number | boolean) {
 
 export async function update({ key, value }: { key: string; value: string | number | boolean }) {
   let settings: Settings = await getSettings()
+  let notification
 
   if (isValid(key, value, settings)) {
-    jsonfile.writeFileSync(`${path}/settings.json`, Object.assign(settings, { [key]: value }))
+    notification = Notification({ message: 'Setting updated' })
 
-    return Notification({ message: 'Setting updated' }).write()
+    try {
+      jsonfile.writeFileSync(`${path}/settings.json`, Object.assign(settings, { [key]: value }))
+    } catch (err) {
+      notification = Notification(new AlfredError(err.message, err.name, err.stack))
+    }
+
+    return notification.write()
   }
 
   return Notification(new AlfredError(`Can't set ${key} to ${value}`)).write()
