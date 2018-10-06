@@ -36,6 +36,10 @@ inquirer
 
     shelljs.mkdir('-p', cachePath)
     shelljs.mkdir('-p', dataPath)
-    shelljs.ln('-s', cachePath, `cache`)
+    shelljs.rm('-rf', 'data', 'cache')
     shelljs.ln('-s', dataPath, `data`)
+    shelljs.ln('-s', cachePath, `cache`)
+  })
+  .catch((err: Error) => {
+    console.error("That didn't go as planned\n", err)
   })
