@@ -1,8 +1,21 @@
 const shell = require('shelljs')
 const zip = require('bestzip')
 const mkdirp = require('mkdirp')
+const fs = require('fs')
 
-shell.exec('rollup -c rollup.config.ts', { silent: true })
+const WHITE_LIST = [
+  'dist/workflow/notifier/terminal-notifier.app/Contents/MacOS/terminal-notifier',
+  'dist/workflow/alfred-workflow-todoist.js',
+  'dist/workflow/alfred-workflow-todoist.js.map',
+  'dist/workflow/icon.png',
+  'dist/workflow/info.plist'
+]
+
+let err = shell.exec('rollup -c rollup.config.ts', { silent: true }).stderr
+
+if (err) {
+  shell.exec('ts-node tools/move-files.ts moveFromTemp', { silent: true })
+}
 
 mkdirp('dist/workflow/notifier')
 shell.cp(
@@ -16,3 +29,11 @@ shell.exec(
   { silent: true }
 )
 shell.exec('ts-node tools/move-files.ts moveFromTemp', { silent: true })
+
+WHITE_LIST.forEach((path: string) => {
+  if (!fs.existsSync(`${process.cwd()}/${path}`)) {
+    throw new Error(`Missing file after build: ${process.cwd()}/${path}`)
+  }
+})
+
+console.log('Build completed succesfully')
