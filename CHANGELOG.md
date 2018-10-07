@@ -1,3 +1,10 @@
+## [5.3.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.3.0...v5.3.1) (2018-10-07)
+
+
+### Bug Fixes
+
+* add missing refrence ([53b13cc](https://github.com/moranje/alfred-workflow-todoist/commit/53b13cc))
+
 # [5.3.0](https://github.com/moranje/alfred-workflow-todoist/compare/v5.2.0...v5.3.0) (2018-10-07)
 
 
