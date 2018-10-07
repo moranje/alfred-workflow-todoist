@@ -1,3 +1,17 @@
+# [5.3.0](https://github.com/moranje/alfred-workflow-todoist/compare/v5.2.0...v5.3.0) (2018-10-07)
+
+
+### Bug Fixes
+
+* **notifications:** notifications not being shown ([d158f02](https://github.com/moranje/alfred-workflow-todoist/commit/d158f02))
+* **settings:** fix silent failure when applying a setting ([8b113fc](https://github.com/moranje/alfred-workflow-todoist/commit/8b113fc)), closes [#40](https://github.com/moranje/alfred-workflow-todoist/issues/40)
+* **testing:** `npm run debug` now works as intended ([58c07ba](https://github.com/moranje/alfred-workflow-todoist/commit/58c07ba))
+
+
+### Features
+
+* tasks are now (fuzzily) searchable ([d4cfc5f](https://github.com/moranje/alfred-workflow-todoist/commit/d4cfc5f))
+
 # [5.2.0](https://github.com/moranje/alfred-workflow-todoist/compare/v5.1.3...v5.2.0) (2018-10-06)
 
 
