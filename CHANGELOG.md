@@ -1,3 +1,10 @@
+## [5.4.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.4.1...v5.4.2) (2018-10-07)
+
+
+### Bug Fixes
+
+* more consistent caching of todoist API calls ([f397593](https://github.com/moranje/alfred-workflow-todoist/commit/f397593))
+
 ## [5.4.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.4.0...v5.4.1) (2018-10-07)
 
 
