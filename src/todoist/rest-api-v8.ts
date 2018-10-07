@@ -1,5 +1,8 @@
+import { cache } from '@/todoist/cache'
+import { uuid } from '@/workflow/workflow'
 import { filter } from 'fuzzaldrin'
 import got from 'got'
+import { find, unionBy } from 'lodash-es'
 import compose from 'stampit'
 
 import { Label } from './label'
@@ -16,22 +19,6 @@ interface Adapter {
 
 export interface TaskAdapter extends Adapter {
   getRelationships: (task: Task) => Task
-}
-
-/**
- * Generate a UUID.
- *
- * @author moranje
- * @since  2016-07-03
- * @return {String}
- */
-export function uuid(): string {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-    const r = (Math.random() * 16) | 0
-
-    const v = c === 'x' ? r : (r & 0x3) | 0x8
-    return v.toString(16)
-  })
 }
 
 const Adapter = compose({
@@ -59,7 +46,7 @@ const Adapter = compose({
   },
 
   methods: {
-    async query(this: Adapter, query: string, key: string): Promise<any> {
+    async query(this: Adapter, query: string, key: string = 'content'): Promise<any> {
       return filter(await this.findAll(), query, { key })
     },
 
@@ -111,17 +98,36 @@ const ProjectAdapter = compose(
 
     methods: {
       async find(this: Adapter, id: number) {
+        // @ts-ignore: cache type definition is incorrect
+        let cachedProjects: Project[] = cache.get('projects') || []
+
+        if (find(cachedProjects, ['id', id])) {
+          return find(cachedProjects, ['id', id])
+        }
+
         let { body } = await this.got.get(`projects/${id}`)
+
+        cachedProjects.push(body)
+        cache.set('projects', unionBy(cachedProjects, 'id'))
 
         return Project(body)
       },
 
       async findAll(this: Adapter) {
-        let { body } = await this.got.get(`projects`)
+        // @ts-ignore: cache type definition is incorrect
+        let cachedProjects: Project[] = cache.get('projects') || []
 
-        return body.map((project: Project) => {
+        if (cachedProjects.length > 0) return cachedProjects
+
+        let { body } = await this.got.get('projects')
+
+        let projects: Project[] = body.map((project: Project) => {
           return Project(project)
         })
+
+        cache.set('projects', projects)
+
+        return projects
       }
     }
   }
@@ -136,17 +142,35 @@ const LabelAdapter = compose(
 
     methods: {
       async find(this: Adapter, id: number) {
+        // @ts-ignore: cache type definition is incorrect
+        let cachedLabels: Label[] = cache.get('labels') || []
+
+        if (find(cachedLabels, ['id', id])) {
+          return find(cachedLabels, ['id', id])
+        }
+
         let { body } = await this.got.get(`labels/${id}`)
+
+        cachedLabels.push(body)
+        cache.set('labels', unionBy(cachedLabels, 'id'))
 
         return Label(body)
       },
 
       async findAll(this: Adapter) {
-        let { body } = await this.got.get(`labels`)
+        // @ts-ignore: cache type definition is incorrect
+        let cachedLabels: Label[] = cache.get('projects') || []
 
-        return body.map((label: Label) => {
+        if (cachedLabels.length > 0) return cachedLabels
+
+        let { body } = await this.got.get('labels')
+        let labels: Label[] = body.map((label: Label) => {
           return Label(label)
         })
+
+        cache.set('labels', labels)
+
+        return labels
       }
     }
   }
@@ -165,18 +189,42 @@ export const TaskAdapter = compose(
 
     methods: {
       async find(this: TaskAdapter, id: number): Promise<Task> {
+        // @ts-ignore: cache type definition is incorrect
+        let cachedTasks: anTasky[] = cache.get('tasks') || []
+
+        if (find(cachedTasks, ['id', id])) {
+          return find(cachedTasks, ['id', id])
+        }
+
         let { body } = await this.got.get(`tasks/${id}`)
+
+        cachedTasks.push(body)
+        cache.set('tasks', unionBy(cachedTasks, 'id'))
 
         return Task(await this.getRelationships(body)) // tslint:disable-line
       },
 
       async findAll(this: TaskAdapter) {
-        let { body } = await this.got.get(`tasks`)
+        // @ts-ignore: cache type definition is incorrect
+        let cachedTasks: Task[] = cache.get('tasks') || []
+
+        if (cachedTasks.length > 0) return cachedTasks
+
+        let { body } = await this.got.get('tasks')
+
+        // Cache label and projects
+        ProjectAdapter({ token: this.token }).findAll()
+        LabelAdapter({ token: this.token }).findAll()
+
         let mapped = body.map(async (task: Task) => {
           return Task(await this.getRelationships(task)) // tslint:disable-line
         })
 
-        return Promise.all(mapped)
+        return Promise.all(mapped).then(([...tasks]: any) => {
+          cache.set('tasks', tasks)
+
+          return tasks
+        })
       },
 
       async getRelationships(this: TaskAdapter, task: Task): Promise<Task> {

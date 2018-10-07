@@ -3,10 +3,9 @@ import Ajv from 'ajv'
 import jsonfile from 'jsonfile'
 import compose from 'stampit'
 
-import { uuid } from '../todoist/rest-api-v8'
 import { Notification } from './notifier'
 import { Schema } from './settings-schema'
-import { Item, List } from './workflow'
+import { Item, List, uuid } from './workflow'
 
 const path = `${
   process.env.HOME
@@ -59,19 +58,14 @@ const SettingList = compose(
       if (!Schema.properties[key]) {
         this.items.push(
           Item({
-            title: `NO SUCH SETTING`,
-            subtitle: `Alas, but dust yourself off and try again`,
+            title: 'NO SUCH SETTING',
+            subtitle: 'Alas, but dust yourself off and try again',
             valid: false
           })
         )
       } else {
         let subtitle = `Current value: ${settings[key]}`
         let valid = '\u2713'
-
-        // Type cast value to a number
-        if (Schema.properties[key].type === 'number') {
-          value = +value
-        }
 
         if (!isValid(key, value, settings)) {
           subtitle += ` (${Schema.properties[key].explanation})`
@@ -132,6 +126,36 @@ function createDefault() {
   throw validate.errors
 }
 
+function castSettingTypes(settings: Settings) {
+  let typeCast: Settings = settings
+
+  Object.entries(settings).forEach(([key, value]) => {
+    if (Schema.properties[key].type === 'boolean') {
+      if (typeof value === 'boolean') {
+        typeCast[key] = value
+      } else if (value === 'true') {
+        typeCast[key] = true
+      } else if (value === 'false') {
+        typeCast[key] = false
+      } else {
+        throw new Error(`Setting ${key} should a boolean type, was ${value}`)
+      }
+    } else if (Schema.properties[key].type === 'number') {
+      if (typeof value === 'number') {
+        typeCast[key] = value
+      } else if (!isNaN(+value)) {
+        typeCast[key] = +value
+      } else {
+        throw new Error(`Setting ${key} should a number type, was ${value}`)
+      }
+    } else {
+      typeCast[key] = value
+    }
+  })
+
+  return typeCast
+}
+
 export async function getSettings() {
   let settings: Settings
 
@@ -146,31 +170,27 @@ export async function getSettings() {
 }
 
 export async function list() {
-  let settings: Settings = await getSettings()
+  let settings: Settings = castSettingTypes(await getSettings())
   let settingsList = SettingsList({ settings })
 
   return settingsList.write()
 }
 
 export async function edit(key: string, value: string | number | boolean) {
-  let settings: Settings = await getSettings()
+  let settings: Settings = castSettingTypes(await getSettings())
   let settingList = SettingList({ key, value, settings })
 
   return settingList.write()
 }
 
 export async function update({ key, value }: { key: string; value: string | number | boolean }) {
-  let settings: Settings = await getSettings()
+  let settings: Settings = castSettingTypes(await getSettings())
   let notification
 
   if (isValid(key, value, settings)) {
     notification = Notification({ message: 'Setting updated' })
 
-    try {
-      jsonfile.writeFileSync(`${path}/settings.json`, Object.assign(settings, { [key]: value }))
-    } catch (err) {
-      notification = Notification(new AlfredError(err.message, err.name, err.stack))
-    }
+    jsonfile.writeFileSync(`${path}/settings.json`, Object.assign(settings, { [key]: value }))
 
     return notification.write()
   }
@@ -180,8 +200,9 @@ export async function update({ key, value }: { key: string; value: string | numb
 
 export function isValid(key: string, value: string | number | boolean, settings: Settings) {
   let updated = Object.assign({}, settings, { [key]: value })
+  let typeCast = castSettingTypes(updated)
 
-  return validate(updated)
+  return validate(typeCast)
 }
 
 export function getErrors(key: string, value: string | number | boolean, settings: Settings) {
