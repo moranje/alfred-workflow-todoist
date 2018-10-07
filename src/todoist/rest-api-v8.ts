@@ -100,10 +100,9 @@ const ProjectAdapter = compose(
       async find(this: Adapter, id: number) {
         // @ts-ignore: cache type definition is incorrect
         let cachedProjects: Project[] = cache.get('projects') || []
+        let project = find(cachedProjects, ['id', id])
 
-        if (find(cachedProjects, ['id', id])) {
-          return find(cachedProjects, ['id', id])
-        }
+        if (project) return project
 
         let { body } = await this.got.get(`projects/${id}`)
 
@@ -144,10 +143,9 @@ const LabelAdapter = compose(
       async find(this: Adapter, id: number) {
         // @ts-ignore: cache type definition is incorrect
         let cachedLabels: Label[] = cache.get('labels') || []
+        let label = find(cachedLabels, ['id', id])
 
-        if (find(cachedLabels, ['id', id])) {
-          return find(cachedLabels, ['id', id])
-        }
+        if (label) return label
 
         let { body } = await this.got.get(`labels/${id}`)
 
@@ -159,7 +157,7 @@ const LabelAdapter = compose(
 
       async findAll(this: Adapter) {
         // @ts-ignore: cache type definition is incorrect
-        let cachedLabels: Label[] = cache.get('projects') || []
+        let cachedLabels: Label[] = cache.get('labels') || []
 
         if (cachedLabels.length > 0) return cachedLabels
 
@@ -190,18 +188,17 @@ export const TaskAdapter = compose(
     methods: {
       async find(this: TaskAdapter, id: number): Promise<Task> {
         // @ts-ignore: cache type definition is incorrect
-        let cachedTasks: anTasky[] = cache.get('tasks') || []
+        let cachedTasks: Task[] = cache.get('tasks') || []
+        let task = find(cachedTasks, ['id', id])
 
-        if (find(cachedTasks, ['id', id])) {
-          return find(cachedTasks, ['id', id])
-        }
+        if (task) return task
 
         let { body } = await this.got.get(`tasks/${id}`)
 
         cachedTasks.push(body)
         cache.set('tasks', unionBy(cachedTasks, 'id'))
 
-        return Task(await this.getRelationships(body)) // tslint:disable-line
+        return Task(body) // tslint:disable-line
       },
 
       async findAll(this: TaskAdapter) {
@@ -213,8 +210,8 @@ export const TaskAdapter = compose(
         let { body } = await this.got.get('tasks')
 
         // Cache label and projects
-        ProjectAdapter({ token: this.token }).findAll()
-        LabelAdapter({ token: this.token }).findAll()
+        await ProjectAdapter({ token: this.token }).findAll()
+        await LabelAdapter({ token: this.token }).findAll()
 
         let mapped = body.map(async (task: Task) => {
           return Task(await this.getRelationships(task)) // tslint:disable-line

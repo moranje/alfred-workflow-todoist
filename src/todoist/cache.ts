@@ -8,9 +8,8 @@ const path = `${
   process.env.HOME
 }/Library/Caches/com.runningwithcrayons.Alfred-3/Workflow Data/com.alfred-workflow-todoist/cache.json`
 const options = {
-  max: 500
-  // maxAge: 1000 * 60 * 60 * 24
-  // length: (n: string) => n.length
+  max: 500,
+  maxAge: 1000 * 60 * 60 * 24 // A day
 }
 const cache = LRU(options)
 
