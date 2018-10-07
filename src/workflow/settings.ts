@@ -143,7 +143,7 @@ function castSettingTypes(settings: Settings) {
     } else if (Schema.properties[key].type === 'number') {
       if (typeof value === 'number') {
         typeCast[key] = value
-      } else if (typeof +value === 'number') {
+      } else if (!isNaN(+value)) {
         typeCast[key] = +value
       } else {
         throw new Error(`Setting ${key} should a number type, was ${value}`)
