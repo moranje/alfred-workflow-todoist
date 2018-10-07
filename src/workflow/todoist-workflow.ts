@@ -6,16 +6,14 @@ import { Task, TaskList } from '../todoist/task'
 import { Notification } from './notifier'
 import { edit, getSettings, list, update } from './settings'
 
-interface Workflow {
-  paths: { data: string; cache: string }
-}
+interface Workflow {}
 
 // import { Item } from './workflow';
 export const TodoistWorkflow = compose({
   methods: {
-    async read(this: Workflow) {
+    async read(this: Workflow, query: string) {
       return TaskAdapter({ token: (await getSettings()).token })
-        .findAll()
+        .query(query)
         .then(async (tasks: any) => {
           let taskList: TaskList = TaskList({
             tasks,
