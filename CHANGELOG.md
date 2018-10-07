@@ -1,3 +1,15 @@
+## [5.4.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.4.0...v5.4.1) (2018-10-07)
+
+
+### Bug Fixes
+
+* add es version of lodash ([46d7ae3](https://github.com/moranje/alfred-workflow-todoist/commit/46d7ae3))
+
+
+### Reverts
+
+* files went missing after a failing build ([7c4af52](https://github.com/moranje/alfred-workflow-todoist/commit/7c4af52))
+
 # [5.4.0](https://github.com/moranje/alfred-workflow-todoist/compare/v5.3.2...v5.4.0) (2018-10-07)
 
 
