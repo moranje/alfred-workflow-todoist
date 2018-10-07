@@ -1,13 +1,6 @@
 const inquirer = require('inquirer')
 const shell = require('shelljs')
 
-const dataPath = `${
-  process.env.HOME
-}/Library/Application Support/Alfred 3/Workflow Data/com.alfred-workflow-todoist`
-const cachePath = `${
-  process.env.HOME
-}/Library/Caches/com.runningwithcrayons.Alfred-3/Workflow Data/com.alfred-workflow-todoist`
-
 inquirer
   .prompt([
     {
@@ -19,12 +12,20 @@ inquirer
       name: 'query',
       type: 'input',
       message: 'Enter your todoist query'
+    },
+    {
+      name: 'workflow',
+      type: 'input',
+      message: 'Enter the path of the workflow folder'
     }
   ])
   .then((answers: any) => {
+    process.chdir(answers.workflow)
+
     shell.exec(
-      `node --inspect-brk dist/workflow/alfred-workflow-todoist.js ${
-        answers.call
-      } "${dataPath}" "${cachePath}" "${answers.query.replace(/"/g, '\\"')}"`
+      `node --inspect-brk alfred-workflow-todoist.js ${answers.call} "${answers.query.replace(
+        /"/g,
+        '\\"'
+      )}"`
     )
   })
