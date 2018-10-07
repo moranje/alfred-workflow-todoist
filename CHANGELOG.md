@@ -1,3 +1,15 @@
+# [5.4.0](https://github.com/moranje/alfred-workflow-todoist/compare/v5.3.2...v5.4.0) (2018-10-07)
+
+
+### Bug Fixes
+
+* once again add missing file ([dc6379a](https://github.com/moranje/alfred-workflow-todoist/commit/dc6379a))
+
+
+### Features
+
+* cache Todoist API calls ([0946caa](https://github.com/moranje/alfred-workflow-todoist/commit/0946caa))
+
 ## [5.3.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.3.1...v5.3.2) (2018-10-07)
 
 
