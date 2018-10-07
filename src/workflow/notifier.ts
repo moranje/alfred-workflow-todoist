@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import { omit } from 'lodash-es'
 import notifier from 'node-notifier'
 import open from 'opn'
 import osName from 'os-name'
@@ -73,7 +73,7 @@ function notification(
     }
   }
 
-  notifier.notify(_.omit(options, ['error']), (err, response) => {
+  notifier.notify(omit(options, ['error']), (err, response) => {
     // Response is response from notification
     if (err) {
       console.log('Something went wrong\n', err)
