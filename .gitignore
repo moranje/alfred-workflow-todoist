@@ -13,5 +13,6 @@ data
 alfred-workflow-todoist.js
 alfred-workflow-todoist.js.map
 Alfred Workflow Todoist.alfredworkflow
+alfred-workflow-todoist.spec.ts
 docs
 node_modules
