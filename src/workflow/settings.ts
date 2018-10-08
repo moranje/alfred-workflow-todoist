@@ -130,7 +130,7 @@ function castSettingTypes(settings: Settings) {
   let typeCast: Settings = settings
 
   Object.entries(settings).forEach(([key, value]) => {
-    if (Schema.properties[key].type === 'boolean') {
+    if (Schema.properties[key] && Schema.properties[key].type === 'boolean') {
       if (typeof value === 'boolean') {
         typeCast[key] = value
       } else if (value === 'true') {
@@ -140,7 +140,7 @@ function castSettingTypes(settings: Settings) {
       } else {
         throw new Error(`Setting ${key} should a boolean type, was ${value}`)
       }
-    } else if (Schema.properties[key].type === 'number') {
+    } else if (Schema.properties[key] && Schema.properties[key].type === 'number') {
       if (typeof value === 'number') {
         typeCast[key] = value
       } else if (!isNaN(+value)) {
