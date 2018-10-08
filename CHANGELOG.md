@@ -1,3 +1,10 @@
+## [5.4.3](https://github.com/moranje/alfred-workflow-todoist/compare/v5.4.2...v5.4.3) (2018-10-08)
+
+
+### Bug Fixes
+
+* handle unknown settings in settings.json ([0680885](https://github.com/moranje/alfred-workflow-todoist/commit/0680885)), closes [#40](https://github.com/moranje/alfred-workflow-todoist/issues/40) [#41](https://github.com/moranje/alfred-workflow-todoist/issues/41)
+
 ## [5.4.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.4.1...v5.4.2) (2018-10-07)
 
 
