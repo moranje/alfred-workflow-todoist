@@ -7,8 +7,8 @@ argv.splice(0, 2)
 argv.shift()
 const query = argv.join(' ')
 
-let alfredVersion
-let workflowVersion
+let alfredVersion = 'unknown'
+let workflowVersion = 'unknown'
 
 try {
   workflowVersion = plist.parse(readFileSync(`${process.cwd()}/info.plist`, 'utf8')).version
@@ -23,8 +23,8 @@ const ERROR_ENV = {
   QUERY: query,
   OSX_VERSION: osName(),
   NODE_VERSION: process.version,
-  ALFRED_VERSION: alfredVersion || 'unknown',
-  WORKFLOW_VERSION: workflowVersion || 'unknown'
+  ALFRED_VERSION: alfredVersion,
+  WORKFLOW_VERSION: workflowVersion
 }
 
 /**

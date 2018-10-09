@@ -1,4 +1,4 @@
-import { omit } from 'lodash-es'
+import omit from 'lodash.omit'
 import notifier from 'node-notifier'
 import open from 'opn'
 import osName from 'os-name'
@@ -15,7 +15,7 @@ const NOTIFICATION_DEFAULTS = {
   contentImage: '',
   open: '',
   wait: void 0,
-  timeout: void 0,
+  timeout: 5,
   closeLabel: void 0,
   actions: '',
   dropdownLabel: '',
@@ -88,9 +88,9 @@ function notification(
 
   notifier.on('click', onClick || onClickFallback)
 
-  // notifier.on('timeout', (notifierObject: any, opts: any, meta: any) => {
-  //   // console.log('Timeout\n')
-  // })
+  notifier.on('timeout', (notifierObject: any, opts: any, meta: any) => {
+    // console.log('Timeout\n')
+  })
 }
 
 export const Notification = compose({
@@ -113,6 +113,8 @@ export const Notification = compose({
 
   methods: {
     write(this: NotificationOptions, onClick?: any, onTimeout?: any) {
+      // if (this.error) logError(this.error)
+
       notification(this, onClick, onTimeout)
     }
   }

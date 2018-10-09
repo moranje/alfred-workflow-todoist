@@ -19,17 +19,20 @@ function handleError(err: Error) {
 }
 
 function handleSerialization() {
-  serialize(cache.dump())
+  serialize(cache.dump(), handleError)
 }
 
 if (type === 'read') {
   todoistWorkflow.read(query).then(handleSerialization)
 } else if (type === 'create') {
-  todoistWorkflow.create(query).then(handleSerialization)
+  todoistWorkflow.create(query)
+  handleSerialization()
 } else if (type === 'submit') {
-  todoistWorkflow.submit(JSON.parse(query)).then(handleSerialization)
+  todoistWorkflow.submit(JSON.parse(query))
+  handleSerialization()
 } else if (type === 'remove') {
-  todoistWorkflow.remove(JSON.parse(query)).then(handleSerialization)
+  todoistWorkflow.remove(JSON.parse(query))
+  handleSerialization()
 } else if (type === 'settings' && query.trim() !== '') {
   let [key, value] = query.trim().split(' ')
   todoistWorkflow.editSetting(key, value)
@@ -37,6 +40,8 @@ if (type === 'read') {
   todoistWorkflow.settings()
 } else if (type === 'settings:store') {
   todoistWorkflow.storeSetting(JSON.parse(query))
+} else {
+  Notification(new AlfredError(`Invalid command ${type} (${query})`)).write()
 }
 
 process.on('uncaughtException', handleError)

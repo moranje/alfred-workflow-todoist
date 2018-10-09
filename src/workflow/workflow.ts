@@ -1,8 +1,7 @@
 import { AlfredError } from '@/workflow/error'
+import { Notification } from '@/workflow/notifier'
 import md5 from 'md5'
 import compose from 'stampit'
-
-import { Notification } from './notifier'
 
 export interface Writable {
   write: (...params: any[]) => void

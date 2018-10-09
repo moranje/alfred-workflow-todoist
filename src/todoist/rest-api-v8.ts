@@ -2,7 +2,8 @@ import { cache } from '@/todoist/cache'
 import { uuid } from '@/workflow/workflow'
 import { filter } from 'fuzzaldrin'
 import got from 'got'
-import { find, unionBy } from 'lodash-es'
+import find from 'lodash.find'
+import unionBy from 'lodash.unionby'
 import compose from 'stampit'
 
 import { Label } from './label'
@@ -92,8 +93,8 @@ const Adapter = compose({
 const ProjectAdapter = compose(
   Adapter,
   {
-    props: {
-      type: 'project'
+    init(this: Adapter) {
+      this.type = 'project'
     },
 
     methods: {
@@ -135,8 +136,8 @@ const ProjectAdapter = compose(
 const LabelAdapter = compose(
   Adapter,
   {
-    props: {
-      type: 'label'
+    init(this: Adapter) {
+      this.type = 'label'
     },
 
     methods: {
@@ -177,10 +178,6 @@ const LabelAdapter = compose(
 export const TaskAdapter = compose(
   Adapter,
   {
-    props: {
-      type: 'task'
-    },
-
     init(this: Adapter) {
       this.type = 'task'
     },
