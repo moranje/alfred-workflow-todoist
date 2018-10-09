@@ -1,3 +1,12 @@
+## [5.4.4](https://github.com/moranje/alfred-workflow-todoist/compare/v5.4.3...v5.4.4) (2018-10-09)
+
+
+### Bug Fixes
+
+* add extra space to prevent item list from remaining open ([d96b517](https://github.com/moranje/alfred-workflow-todoist/commit/d96b517))
+* allows for token setting to be empty (initial state) ([4140290](https://github.com/moranje/alfred-workflow-todoist/commit/4140290))
+* setting validation errors ([302d9b7](https://github.com/moranje/alfred-workflow-todoist/commit/302d9b7))
+
 ## [5.4.3](https://github.com/moranje/alfred-workflow-todoist/compare/v5.4.2...v5.4.3) (2018-10-08)
 
 
