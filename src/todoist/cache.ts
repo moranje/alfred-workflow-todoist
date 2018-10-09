@@ -1,28 +1,14 @@
-import { AlfredError } from '@/workflow/error'
-import { Notification } from '@/workflow/notifier'
-import { existsSync } from 'fs'
+import { CACHE_PATH } from '@/utils/references'
+import { files } from '@/workflow/files'
 import jsonfile from 'jsonfile'
 import LRU from 'lru-cache'
 
-const path = `${
-  process.env.HOME
-}/Library/Caches/com.runningwithcrayons.Alfred-3/Workflow Data/com.alfred-workflow-todoist/cache.json`
 const options = {
   max: 500,
   maxAge: 1000 * 60 * 60 * 24 // A day
 }
 const cache = LRU(options)
-
-// Pre-load cache
-let cacheEntries = []
-if (existsSync(path)) {
-  try {
-    cacheEntries = jsonfile.readFileSync(path)
-  } catch {
-    // Do nothing
-  }
-}
-cache.load(cacheEntries)
+cache.load(files.cache)
 
 /**
  * Pre-loaded disk cache
@@ -36,16 +22,8 @@ export { cache }
  * @param {LRU.LRUEntry<{}, {}>[]} dump
  * @returns
  */
-export function serialize(dump: LRU.LRUEntry<{}, {}>[]) {
-  return (
-    jsonfile
-      .writeFile(path, dump)
-      // @ts-ignore not in declaration file
-      .then((response: any) => {
-        return response
-      })
-      .catch((err: Error) => {
-        return Notification(new AlfredError(err.message, err.name, err.stack)).write()
-      })
-  )
+export function serialize(dump: LRU.LRUEntry<{}, {}>[], handleError: any) {
+  return jsonfile.writeFile(CACHE_PATH, dump, (err: Error) => {
+    if (err) handleError(err)
+  })
 }
