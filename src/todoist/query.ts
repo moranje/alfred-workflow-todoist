@@ -53,7 +53,7 @@ function showPriorities(query: string) {
       init(this: Item, title: number) {
         this.title = `${title}`
         this.subtitle = `Set priority to ${priorityNames[`${title}`]}`
-        this.autocomplete = `${query.replace(/!![1-4]/, '!!')}${title}`
+        this.autocomplete = `${query.replace(/!![1-4]/, '!!')}${title} `
         this.valid = false
       }
     }
