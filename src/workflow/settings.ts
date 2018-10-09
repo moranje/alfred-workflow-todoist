@@ -1,15 +1,14 @@
-import { AlfredError } from '@/workflow/error'
-import Ajv from 'ajv'
+import { SETTINGS_PATH } from '@/utils/references'
+import AJV from 'ajv'
 import jsonfile from 'jsonfile'
 import compose from 'stampit'
 
+import { AlfredError } from './error'
+import { files } from './files'
 import { Notification } from './notifier'
 import { Schema } from './settings-schema'
 import { Item, List, uuid } from './workflow'
 
-const path = `${
-  process.env.HOME
-}/Library/Application Support/Alfred 3/Workflow Data/com.alfred-workflow-todoist`
 export interface Settings {
   [index: string]: string | number | boolean
   token: string
@@ -19,8 +18,8 @@ export interface Settings {
   anonymous_statistics: boolean
 }
 
-const ajv = new Ajv({ allErrors: true })
-const validate = ajv.compile(Schema)
+const ajv = new AJV({ allErrors: true })
+
 const SettingsList = compose(
   List,
   {
@@ -67,7 +66,7 @@ const SettingList = compose(
         let subtitle = `Current value: ${settings[key]}`
         let valid = '\u2713'
 
-        if (!isValid(key, value, settings)) {
+        if (getErrors(key, value, settings).length > 0) {
           subtitle += ` (${Schema.properties[key].explanation})`
           valid = '\u2715'
         }
@@ -82,7 +81,7 @@ const SettingList = compose(
           )
           this.items.push(
             Item({
-              title: 'New: false ',
+              title: 'New: false',
               subtitle: `Current value: ${settings[key]}`,
               arg: { key, value: false }
             })
@@ -103,11 +102,27 @@ const SettingList = compose(
               arg: { key, value: +value }
             })
           )
+        } else {
+          this.items.push(
+            Item({
+              title: 'NO SUCH SETTING',
+              subtitle: 'Alas, but dust yourself off and try again',
+              valid: false
+            })
+          )
         }
       }
     }
   }
 )
+
+function formatValidationErrors(errors: any[]) {
+  return errors
+    .map((err: any) => {
+      return `${err.dataPath.replace('.', '')} ${err.message} (${err.params.allowedValues})`
+    })
+    .join('. ')
+}
 
 function createDefault() {
   const starter: Settings = {
@@ -118,12 +133,13 @@ function createDefault() {
     uuid: uuid(),
     anonymous_statistics: true
   }
+  let validate = ajv.compile(Schema)
 
-  if (!validate(starter)) {
+  if (validate(starter)) {
     return starter
   }
 
-  throw validate.errors
+  Notification(new AlfredError(formatValidationErrors(validate.errors || []))).write()
 }
 
 function castSettingTypes(settings: Settings) {
@@ -156,58 +172,54 @@ function castSettingTypes(settings: Settings) {
   return typeCast
 }
 
-export async function getSettings() {
-  let settings: Settings
+function getErrors(key: string, value: string | number | boolean, settings: Settings) {
+  let updated = Object.assign({}, settings, { [key]: value })
+  let validate = ajv.compile(Schema)
 
-  try {
-    settings = await import(`${path}/settings.json`)
-  } catch (err) {
-    settings = createDefault()
+  if (!validate(castSettingTypes(updated))) {
+    return validate.errors || []
   }
 
-  // Reintroduce defaults when a setting goes missing
-  return Object.assign(createDefault(), settings)
+  return []
 }
 
-export async function list() {
-  let settings: Settings = castSettingTypes(await getSettings())
+export function getSettings() {
+  // Reintroduce defaults when a setting goes missing
+  return castSettingTypes(Object.assign(createDefault(), files.settings))
+}
+
+export function list() {
+  let settings: Settings = getSettings()
   let settingsList = SettingsList({ settings })
 
   return settingsList.write()
 }
 
-export async function edit(key: string, value: string | number | boolean) {
-  let settings: Settings = castSettingTypes(await getSettings())
+export function edit(key: string, value: string | number | boolean) {
+  let settings: Settings = getSettings()
   let settingList = SettingList({ key, value, settings })
 
   return settingList.write()
 }
 
-export async function update({ key, value }: { key: string; value: string | number | boolean }) {
-  let settings: Settings = castSettingTypes(await getSettings())
+export function update({ key, value }: { key: string; value: string | number | boolean }) {
+  let settings: Settings = getSettings()
+  let errors = getErrors(key, value, settings)
   let notification
 
-  if (isValid(key, value, settings)) {
+  if (errors.length === 0) {
     notification = Notification({ message: 'Setting updated' })
 
-    jsonfile.writeFileSync(`${path}/settings.json`, Object.assign(settings, { [key]: value }))
+    jsonfile.writeFile(SETTINGS_PATH, Object.assign(settings, { [key]: value }), (err: Error) => {
+      if (err) {
+        let error = new AlfredError(err.message, err.name, err.stack)
+
+        return Notification(Object.assign(error)).write()
+      }
+    })
 
     return notification.write()
   }
 
-  return Notification(new AlfredError(`Can't set ${key} to ${value}`)).write()
-}
-
-export function isValid(key: string, value: string | number | boolean, settings: Settings) {
-  let updated = Object.assign({}, settings, { [key]: value })
-  let typeCast = castSettingTypes(updated)
-
-  return validate(typeCast)
-}
-
-export function getErrors(key: string, value: string | number | boolean, settings: Settings) {
-  let updated = Object.assign({}, settings, { [key]: value })
-  validate(updated)
-
-  return validate.errors
+  Notification(new AlfredError(formatValidationErrors(errors || []))).write()
 }
