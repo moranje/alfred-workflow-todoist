@@ -63,7 +63,7 @@ export const Schema: Schema = {
       description: 'A todoist API token',
       explanation: 'Must be a valid todoist token (40 chars and only 0-9 and a-f)',
       type: 'string',
-      pattern: '^[0-9a-fA-F]{40}$'
+      pattern: '(?:^[0-9a-fA-F]{40}$)|^$'
     },
 
     language: {
