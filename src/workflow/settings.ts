@@ -15,6 +15,7 @@ export interface Settings {
   language: string
   max_items: number
   uuid: string
+  cache_timeout: number
   anonymous_statistics: boolean
 }
 
