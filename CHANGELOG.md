@@ -1,3 +1,16 @@
+# [5.5.0](https://github.com/moranje/alfred-workflow-todoist/compare/v5.4.5...v5.5.0) (2018-10-10)
+
+
+### Bug Fixes
+
+* automatically create missing folders for workflow files ([6640fb8](https://github.com/moranje/alfred-workflow-todoist/commit/6640fb8))
+
+
+### Features
+
+* respect `cache_timeout` setting ([bf18000](https://github.com/moranje/alfred-workflow-todoist/commit/bf18000))
+* respect `language` setting when creating a task ([c09a903](https://github.com/moranje/alfred-workflow-todoist/commit/c09a903))
+
 ## [5.4.5](https://github.com/moranje/alfred-workflow-todoist/compare/v5.4.4...v5.4.5) (2018-10-10)
 
 
