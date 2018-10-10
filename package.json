@@ -1,6 +1,6 @@
 {
   "name": "alfred-workflow-todoist",
-  "version": "5.4.4",
+  "version": "5.4.5",
   "description": "",
   "keywords": [],
   "main": "dist/workflow/alfred-workflow-todoist.js",

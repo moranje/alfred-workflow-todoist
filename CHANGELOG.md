@@ -1,3 +1,10 @@
+## [5.4.5](https://github.com/moranje/alfred-workflow-todoist/compare/v5.4.4...v5.4.5) (2018-10-10)
+
+
+### Bug Fixes
+
+* **settings:** validation: allow uuid to be made up out `A-F` chars ([951bcf3](https://github.com/moranje/alfred-workflow-todoist/commit/951bcf3))
+
 ## [5.4.4](https://github.com/moranje/alfred-workflow-todoist/compare/v5.4.3...v5.4.4) (2018-10-09)
 
 
