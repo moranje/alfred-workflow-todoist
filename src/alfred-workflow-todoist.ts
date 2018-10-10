@@ -4,6 +4,7 @@ import { cache, serialize } from '@/todoist/cache'
 
 import { AlfredError } from './workflow/error'
 import { Notification } from './workflow/notifier'
+import { getSettings } from './workflow/settings'
 import { TodoistWorkflow } from './workflow/todoist-workflow'
 
 const argv = Object.assign([], process.argv)
@@ -28,7 +29,7 @@ if (type === 'read') {
   todoistWorkflow.create(query)
   handleSerialization()
 } else if (type === 'submit') {
-  todoistWorkflow.submit(JSON.parse(query))
+  todoistWorkflow.submit(Object.assign(JSON.parse(query), { due_lang: getSettings().language }))
   handleSerialization()
 } else if (type === 'remove') {
   todoistWorkflow.remove(JSON.parse(query))
