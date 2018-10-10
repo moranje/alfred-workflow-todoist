@@ -93,7 +93,7 @@ export const Schema: Schema = {
       description: 'A unique identifier',
       explanation: 'This should be left unchanged',
       type: 'string',
-      pattern: '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}',
+      pattern: '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}',
       format: 'uuid'
     },
 
