@@ -1,7 +1,7 @@
 import { CACHE_PATH } from '@/utils/references'
 import { files } from '@/workflow/files'
-import jsonfile from 'jsonfile'
 import LRU from 'lru-cache'
+import writeJsonFile from 'write-json-file'
 
 const options = {
   max: 500,
@@ -23,7 +23,7 @@ export { cache }
  * @returns
  */
 export function serialize(dump: LRU.LRUEntry<{}, {}>[], handleError: any) {
-  return jsonfile.writeFile(CACHE_PATH, dump, (err: Error) => {
-    if (err) handleError(err)
+  return writeJsonFile(CACHE_PATH, dump).catch((err: Error) => {
+    handleError(err)
   })
 }

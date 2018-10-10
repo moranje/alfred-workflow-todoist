@@ -1,7 +1,7 @@
 import { SETTINGS_PATH } from '@/utils/references'
 import AJV from 'ajv'
-import jsonfile from 'jsonfile'
 import compose from 'stampit'
+import writeJsonFile from 'write-json-file'
 
 import { AlfredError } from './error'
 import { files } from './files'
@@ -205,21 +205,19 @@ export function edit(key: string, value: string | number | boolean) {
 export function update({ key, value }: { key: string; value: string | number | boolean }) {
   let settings: Settings = getSettings()
   let errors = getErrors(key, value, settings)
-  let notification
+  let notification: Notification
 
   if (errors.length === 0) {
     notification = Notification({ message: 'Setting updated' })
 
-    jsonfile.writeFile(SETTINGS_PATH, Object.assign(settings, { [key]: value }), (err: Error) => {
-      if (err) {
-        let error = new AlfredError(err.message, err.name, err.stack)
-
-        return Notification(Object.assign(error)).write()
-      }
-    })
-
-    return notification.write()
+    writeJsonFile(SETTINGS_PATH, Object.assign(settings, { [key]: value }))
+      .then(() => {
+        return notification.write()
+      })
+      .catch((err: Error) => {
+        return Notification(new AlfredError(err.message, err.name, err.stack)).write()
+      })
+  } else {
+    Notification(new AlfredError(formatValidationErrors(errors || []))).write()
   }
-
-  Notification(new AlfredError(formatValidationErrors(errors || []))).write()
 }

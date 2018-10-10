@@ -1,11 +1,11 @@
 import { TodoistWorkflow } from '@/workflow/todoist-workflow'
 
 jest.mock('@/workflow/files')
-// jest.mock('@/workflow/notifier')
-jest.mock('jsonfile', () => {
-  return {
-    writeFile(path: string, data: any) {
-      console.log(data)
+jest.mock('write-json-file', () => {
+  return (path: string, data: any) => {
+    console.log(data)
+    return {
+      then: () => ({ catch: () => ({}) })
     }
   }
 })

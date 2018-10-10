@@ -128,7 +128,6 @@
     "fast-plist": "0.1.2",
     "fuzzaldrin": "2.1.0",
     "got": "9.2.2",
-    "jsonfile": "5.0.0",
     "lodash.find": "4.6.0",
     "lodash.omit": "4.5.0",
     "lodash.unionby": "4.8.0",
@@ -140,7 +139,8 @@
     "node-notifier": "5.2.1",
     "opn": "5.4.0",
     "os-name": "2.0.1",
-    "stampit": "4.2.0"
+    "stampit": "4.2.0",
+    "write-json-file": "3.0.2"
   },
   "devDependencies": {
     "@babel/polyfill": "7.0.0",
@@ -153,7 +153,6 @@
     "@types/got": "8.3.3",
     "@types/inquirer": "0.0.43",
     "@types/jest": "23.3.2",
-    "@types/jsonfile": "4.0.1",
     "@types/lodash.find": "4.6.4",
     "@types/lodash.omit": "4.5.4",
     "@types/lodash.unionby": "4.8.4",
@@ -168,6 +167,7 @@
     "@types/os-name": "2.0.0",
     "@types/shelljs": "0.8.0",
     "@types/stampit": "3.0.2",
+    "@types/write-json-file": "2.2.1",
     "bestzip": "2.1.1",
     "colors": "1.3.2",
     "commitizen": "^2.9.6",

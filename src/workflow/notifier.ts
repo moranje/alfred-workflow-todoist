@@ -93,6 +93,10 @@ function notification(
   })
 }
 
+export interface Notification {
+  write: (onClick?: any, onTimeout?: any) => void
+}
+
 export const Notification = compose({
   init(output: AlfredError | NotificationOptions) {
     let values = Object.assign({}, output)

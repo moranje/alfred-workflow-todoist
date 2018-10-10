@@ -153,7 +153,7 @@ export let files = {
           project: { id: 5, name: 'Work', order: 0, indent: 1, comment_count: 0 }
         }
       ],
-      e: 1539194254431
+      e: 32535126000000 // 3000-12-31T00:00:00
     },
     {
       k: 'labels',
@@ -169,7 +169,7 @@ export let files = {
         { id: 9, name: 'waiting_for', order: 9 },
         { id: 10, name: 'next_actions', order: 10 }
       ],
-      e: 1539194254414
+      e: 32535126000000 // 3000-12-31T00:00:00
     },
     {
       k: 'projects',
@@ -180,7 +180,7 @@ export let files = {
         { id: 4, name: 'Someday/Maybe', order: 3, indent: 1, comment_count: 0 },
         { id: 5, name: 'Work', order: 4, indent: 1, comment_count: 0 }
       ],
-      e: 1539194254239
+      e: 32535126000000 // 3000-12-31T00:00:00
     }
   ]
 }
