@@ -20,7 +20,7 @@ function handleError(err: Error) {
 }
 
 function handleSerialization() {
-  serialize(cache.dump(), handleError)
+  serialize(cache.dump()).catch(handleError)
 }
 
 if (type === 'read') {

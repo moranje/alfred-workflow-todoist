@@ -23,8 +23,6 @@ export { cache }
  * @param {LRU.LRUEntry<{}, {}>[]} dump
  * @returns
  */
-export function serialize(dump: LRU.LRUEntry<{}, {}>[], handleError: any) {
-  return writeJsonFile(CACHE_PATH, dump).catch((err: Error) => {
-    handleError(err)
-  })
+export function serialize(dump: LRU.LRUEntry<{}, {}>[]) {
+  return writeJsonFile(CACHE_PATH, dump)
 }
