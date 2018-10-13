@@ -15,6 +15,7 @@ const todoistWorkflow = TodoistWorkflow()
 
 function handleError(err: Error) {
   let error = new AlfredError(err.message, err.name, err.stack)
+  console.log('Error log', arguments)
 
   return Notification(Object.assign(error, { query })).write()
 }
@@ -24,16 +25,13 @@ function handleSerialization() {
 }
 
 if (type === 'read') {
-  todoistWorkflow.read(query).then(handleSerialization)
+  todoistWorkflow.read(query)
 } else if (type === 'create') {
   todoistWorkflow.create(query)
-  handleSerialization()
 } else if (type === 'submit') {
   todoistWorkflow.submit(Object.assign(JSON.parse(query), { due_lang: getSettings().language }))
-  handleSerialization()
 } else if (type === 'remove') {
   todoistWorkflow.remove(JSON.parse(query))
-  handleSerialization()
 } else if (type === 'settings' && query.trim() !== '') {
   let [key, value] = query.trim().split(' ')
   todoistWorkflow.editSetting(key, value)
@@ -45,5 +43,6 @@ if (type === 'read') {
   Notification(new AlfredError(`Invalid command ${type} (${query})`)).write()
 }
 
+process.on('beforeExit', handleSerialization)
 process.on('uncaughtException', handleError)
 process.on('unhandledRejection', handleError)
