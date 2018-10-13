@@ -52,7 +52,9 @@ function organize([results]: Token[][]) {
       return {
         content: this.content,
         priority: +(this.priority || 1),
-        due_string: this.due_string
+        due_string: this.due_string,
+        project: `${this.project}`,
+        labels: (this.labels || []).map(label => `${label}`)
       }
     }
   })

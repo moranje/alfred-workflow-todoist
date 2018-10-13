@@ -1,7 +1,7 @@
 import { AlfredError } from '@/workflow/error'
 import compose from 'stampit'
 
-import { List } from '../workflow/workflow'
+import { Item, List } from '../workflow/workflow'
 
 export interface Label {
   [index: string]: string | number
@@ -31,5 +31,18 @@ export const Label = compose({
 
 export const LabelList = compose(
   List,
-  {}
+  {
+    init(this: List, { labels = [], query }: { labels: Label[]; query: string }) {
+      labels.forEach((label: Label) => {
+        this.items.push(
+          Item({
+            title: label.name,
+            subtitle: `Add label ${label.name} to task`,
+            autocomplete: `${query.replace(/(^.*@).*/, '$1')}${label.name} `,
+            valid: false
+          })
+        )
+      })
+    }
+  }
 )

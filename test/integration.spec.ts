@@ -45,14 +45,16 @@ describe('Integration:', () => {
 
   describe('Create task', () => {
     it('should return a parsed JSON response', () => {
-      let query = 'Get milk @15min @at_home #Stuff p1, tomorrow'
+      let query = 'Get milk @15min @at_home #Work p1, tomorrow'
       TodoistWorkflow().create(query)
 
       let items = JSON.parse(spy.mock.calls[0][0]).items
       expect(JSON.parse(items[0].arg)).toEqual({
         content: 'Get milk',
         due_string: 'tomorrow',
-        priority: 4
+        labels: ['15min', 'at_home'],
+        priority: 4,
+        project: 'Work'
       })
     })
   })

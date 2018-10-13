@@ -1,7 +1,7 @@
 import { AlfredError } from '@/workflow/error'
 import compose from 'stampit'
 
-import { List } from '../workflow/workflow'
+import { Item, List } from '../workflow/workflow'
 
 // @ts-ignore: no declaration for v4 yet
 export interface Project {
@@ -26,5 +26,20 @@ export const Project = compose({
 
 export const ProjectList = compose(
   List,
-  {}
+  {
+    init(this: List, { projects = [], query }: { projects: Project[]; query: string }) {
+      projects.forEach((project: Project) => {
+        let name = project.name.indexOf(' ') !== -1 ? `[${project.name}]` : project.name
+
+        this.items.push(
+          Item({
+            title: project.name,
+            subtitle: `Move task to ${project.name}`,
+            autocomplete: `${query.replace(/(^.*#).*/, '$1')}${name} `,
+            valid: false
+          })
+        )
+      })
+    }
+  }
 )
