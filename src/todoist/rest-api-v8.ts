@@ -48,6 +48,8 @@ const Adapter = compose({
 
   methods: {
     async query(this: Adapter, query: string, key: string = 'content'): Promise<any> {
+      if (!query) return this.findAll()
+
       return filter(await this.findAll(), query, { key })
     },
 
@@ -90,7 +92,7 @@ const Adapter = compose({
   }
 })
 
-const ProjectAdapter = compose(
+export const ProjectAdapter = compose(
   Adapter,
   {
     init(this: Adapter) {
@@ -133,7 +135,7 @@ const ProjectAdapter = compose(
   }
 )
 
-const LabelAdapter = compose(
+export const LabelAdapter = compose(
   Adapter,
   {
     init(this: Adapter) {
