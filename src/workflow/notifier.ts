@@ -40,26 +40,6 @@ export interface NotificationOptions {
   error?: AlfredError
 }
 
-// function logError(error: AlfredError) {
-//   console.log('Something went wrong\n')
-//   console.log(
-//     [
-//       `${chalk.red(error.name)}: ${error.message}\n`,
-//       'ALFRED WORKFLOW TODOIST',
-//       '----------------------------------------',
-//       `${chalk.green('os:')} ${osName()}`,
-//       `${chalk.green('query:')} ${error.QUERY}`,
-//       `${chalk.green('node.js:')} ${error.NODE_VERSION}`,
-//       `${chalk.green('alfred:')} ${error.ALFRED_VERSION}`,
-//       `${chalk.green('workflow:')} ${error.WORKFLOW_VERSION}`,
-//       `${chalk.green('Stack:')} ${error.stack}`
-//     ]
-//       .join('\n')
-//       // Hide token from log by default
-//       .replace(/[0-9a-fA-F]{40}/gm, chalk.blue('<token hidden>'))
-//   )
-// }
-
 function logError(error: AlfredError) {
   console.log(
     [
