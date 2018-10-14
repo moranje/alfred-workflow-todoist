@@ -392,9 +392,9 @@ node alfred-workflow-todoist.js settings "{query}"</string>
 			<key>note</key>
 			<string>Search tasks</string>
 			<key>xpos</key>
-			<integer>210</integer>
+			<integer>240</integer>
 			<key>ypos</key>
-			<integer>100</integer>
+			<integer>40</integer>
 		</dict>
 		<key>26A65F76-FAD5-4949-AD59-81187A0A1484</key>
 		<dict>
@@ -403,9 +403,9 @@ node alfred-workflow-todoist.js settings "{query}"</string>
 			<key>note</key>
 			<string>Debug output</string>
 			<key>xpos</key>
-			<integer>600</integer>
+			<integer>630</integer>
 			<key>ypos</key>
-			<integer>290</integer>
+			<integer>230</integer>
 		</dict>
 		<key>329F88DE-5F91-459A-8CA3-9471677B3673</key>
 		<dict>
@@ -414,9 +414,9 @@ node alfred-workflow-todoist.js settings "{query}"</string>
 			<key>note</key>
 			<string>Submit task</string>
 			<key>xpos</key>
-			<integer>390</integer>
+			<integer>420</integer>
 			<key>ypos</key>
-			<integer>260</integer>
+			<integer>200</integer>
 		</dict>
 		<key>853C0BDB-9C62-4715-86A4-E71735849C80</key>
 		<dict>
@@ -425,9 +425,9 @@ node alfred-workflow-todoist.js settings "{query}"</string>
 			<key>note</key>
 			<string>Create task</string>
 			<key>xpos</key>
-			<integer>210</integer>
+			<integer>240</integer>
 			<key>ypos</key>
-			<integer>260</integer>
+			<integer>200</integer>
 		</dict>
 		<key>8B6F091D-CDC6-443D-8610-E40C33A9D389</key>
 		<dict>
@@ -436,9 +436,9 @@ node alfred-workflow-todoist.js settings "{query}"</string>
 			<key>note</key>
 			<string>Submit setting</string>
 			<key>xpos</key>
-			<integer>390</integer>
-			<key>ypos</key>
 			<integer>420</integer>
+			<key>ypos</key>
+			<integer>360</integer>
 		</dict>
 		<key>AAA14883-904F-4837-9B4B-96B2C68EB5FA</key>
 		<dict>
@@ -447,9 +447,9 @@ node alfred-workflow-todoist.js settings "{query}"</string>
 			<key>note</key>
 			<string>Complete task</string>
 			<key>xpos</key>
-			<integer>390</integer>
+			<integer>420</integer>
 			<key>ypos</key>
-			<integer>100</integer>
+			<integer>40</integer>
 		</dict>
 		<key>B447C7A9-4CEC-457F-B711-65D07976721C</key>
 		<dict>
@@ -458,13 +458,13 @@ node alfred-workflow-todoist.js settings "{query}"</string>
 			<key>note</key>
 			<string>Update setting</string>
 			<key>xpos</key>
-			<integer>210</integer>
+			<integer>240</integer>
 			<key>ypos</key>
-			<integer>420</integer>
+			<integer>360</integer>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>5.5.0-debug.1</string>
+	<string>5.5.0</string>
 	<key>webaddress</key>
 	<string>https://github.com/moranje/alfred-workflow-todoist</string>
 </dict>
