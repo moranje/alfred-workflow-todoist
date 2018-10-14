@@ -1,3 +1,16 @@
+# [5.6.0](https://github.com/moranje/alfred-workflow-todoist/compare/v5.5.0...v5.6.0) (2018-10-14)
+
+
+### Bug Fixes
+
+* prevent error message on notification without url ([40d821a](https://github.com/moranje/alfred-workflow-todoist/commit/40d821a))
+
+
+### Features
+
+* add label and project suggestions on task creation ([9478347](https://github.com/moranje/alfred-workflow-todoist/commit/9478347))
+* allow created tasks to assign project and labels ([550b15b](https://github.com/moranje/alfred-workflow-todoist/commit/550b15b))
+
 # [5.5.0](https://github.com/moranje/alfred-workflow-todoist/compare/v5.4.5...v5.5.0) (2018-10-10)
 
 
