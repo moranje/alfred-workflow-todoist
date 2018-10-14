@@ -1,3 +1,4 @@
+import { Notification } from '@/workflow/notifier'
 import plist from 'fast-plist'
 import { readFileSync } from 'fs'
 import osName from 'os-name'
@@ -56,4 +57,11 @@ export class AlfredError extends Error {
       Error.captureStackTrace(this, this.constructor)
     }
   }
+}
+
+export function handleError(err: Error) {
+  let error = new AlfredError(err.message, err.name, err.stack)
+  console.log('Error log', arguments)
+
+  return Notification(Object.assign(error, { query })).write()
 }
