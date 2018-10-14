@@ -1,10 +1,9 @@
+import { AlfredError } from '@/workflow/error'
 import omit from 'lodash.omit'
 import notifier from 'node-notifier'
 import open from 'opn'
 import osName from 'os-name'
 import compose from 'stampit'
-
-import { AlfredError } from './error'
 
 const NOTIFICATION_DEFAULTS = {
   title: 'ALFRED WORKFLOW TODOIST',
@@ -13,7 +12,7 @@ const NOTIFICATION_DEFAULTS = {
   sound: false,
   icon: `${process.cwd()}/icon.png`,
   contentImage: '',
-  open: '',
+  open: void 0,
   wait: void 0,
   timeout: 5,
   closeLabel: void 0,
@@ -41,6 +40,26 @@ export interface NotificationOptions {
   error?: AlfredError
 }
 
+// function logError(error: AlfredError) {
+//   console.log('Something went wrong\n')
+//   console.log(
+//     [
+//       `${chalk.red(error.name)}: ${error.message}\n`,
+//       'ALFRED WORKFLOW TODOIST',
+//       '----------------------------------------',
+//       `${chalk.green('os:')} ${osName()}`,
+//       `${chalk.green('query:')} ${error.QUERY}`,
+//       `${chalk.green('node.js:')} ${error.NODE_VERSION}`,
+//       `${chalk.green('alfred:')} ${error.ALFRED_VERSION}`,
+//       `${chalk.green('workflow:')} ${error.WORKFLOW_VERSION}`,
+//       `${chalk.green('Stack:')} ${error.stack}`
+//     ]
+//       .join('\n')
+//       // Hide token from log by default
+//       .replace(/[0-9a-fA-F]{40}/gm, chalk.blue('<token hidden>'))
+//   )
+// }
+
 function logError(error: AlfredError) {
   console.log(
     [
@@ -56,7 +75,7 @@ function logError(error: AlfredError) {
     ]
       .join('\n')
       // Hide token from log by default
-      .replace(/[0-9a-fA-F]{40}/gm, '<token>')
+      .replace(/[0-9a-fA-F]{40}/gm, '<token hidden>')
   )
 }
 
@@ -76,14 +95,13 @@ function notification(
   notifier.notify(omit(options, ['error']), (err, response) => {
     // Response is response from notification
     if (err) {
-      console.log('Something went wrong\n', err)
       logError(new AlfredError(err.name, err.message, err.stack))
     }
 
-    if (options.error) {
-      console.log('Something went wrong\n')
-      logError(options.error)
-    }
+    // if (options.error) {
+    //   console.log('Something went wrong\n', options.error)
+    //   logError(options.error)
+    // }
   })
 
   notifier.on('click', onClick || onClickFallback)
@@ -117,7 +135,7 @@ export const Notification = compose({
 
   methods: {
     write(this: NotificationOptions, onClick?: any, onTimeout?: any) {
-      // if (this.error) logError(this.error)
+      if (this.error) logError(this.error)
 
       notification(this, onClick, onTimeout)
     }
