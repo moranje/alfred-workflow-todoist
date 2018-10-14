@@ -1,11 +1,10 @@
+import { Label } from '@/todoist/label'
+import { Project } from '@/todoist/project'
 import { AlfredError } from '@/workflow/error'
+import { Item, List, View } from '@/workflow/workflow'
 import formatDistance from 'date-fns/formatDistance'
 import { de, enUS, es, fr, it, nl, ptBR, ru, sv, zhCN } from 'date-fns/locale'
 import compose from 'stampit'
-
-import { Item, List, View } from '../workflow/workflow'
-import { Label } from './label'
-import { Project } from './project'
 
 // import da from 'date-fns/locale/da'
 // import ko from 'date-fns/locale/ko'
@@ -78,36 +77,6 @@ export interface Task {
   labels?: Label[]
 }
 
-// interface TaskPrivate {
-//   [index: string]:
-//     | undefined
-//     | string
-//     | number
-//     | number[]
-//     | {
-//         date?: string
-//         recurring?: boolean
-//         datetime?: string
-//         string?: string
-//         timezone?: string
-//       }
-//   _content?: string
-//   _due?: {
-//     date?: string
-//     recurring?: boolean
-//     datetime?: string
-//     string?: string
-//     timezone?: string
-//   }
-//   _due_string?: string
-//   _due_lang?: string
-//   _id?: number
-//   _label_ids?: number[]
-//   _project_id?: number
-//   _url?: string
-//   _priority?: number
-// }
-
 export interface TaskList extends List {}
 
 export const Task = compose({
@@ -116,10 +85,6 @@ export const Task = compose({
       throw new AlfredError(`A task must have a content (${task.content}) property`)
     }
 
-    // Store tasks properties as private ("_"-prefixed) properties
-    // for (let prop in task) {
-    //   Object.assign(this, { [`_${prop}`]: task[prop] })
-    // }
     Object.assign(this, task)
   }
 })

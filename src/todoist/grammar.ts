@@ -2,7 +2,7 @@
 // http://github.com/Hardmath123/nearley
 // Bypasses TS6133. Allow declared but unused functions.
 // @ts-ignore
-import lexer from './lexer'
+import lexer from '@/todoist/lexer'
 
 function id(d: any[]): any {
   return d[0]

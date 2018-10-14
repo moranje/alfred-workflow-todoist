@@ -1,7 +1,6 @@
 import { AlfredError } from '@/workflow/error'
+import { Item, List } from '@/workflow/workflow'
 import compose from 'stampit'
-
-import { Item, List } from '../workflow/workflow'
 
 // @ts-ignore: no declaration for v4 yet
 export interface Project {

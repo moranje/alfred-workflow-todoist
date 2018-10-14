@@ -1,12 +1,11 @@
+import { LabelList } from '@/todoist/label'
+import parser from '@/todoist/parser'
+import { ProjectList } from '@/todoist/project'
 import { LabelAdapter, ProjectAdapter } from '@/todoist/rest-api-v8'
+import { Task, TaskList } from '@/todoist/task'
 import { getSetting } from '@/workflow/settings'
+import { Item, List } from '@/workflow/workflow'
 import compose from 'stampit'
-
-import { Item, List } from '../workflow/workflow'
-import { LabelList } from './label'
-import parser from './parser'
-import { ProjectList } from './project'
-import { Task, TaskList } from './task'
 
 interface ParsedTask {}
 

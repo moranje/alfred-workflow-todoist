@@ -1,6 +1,6 @@
 @preprocessor typescript
 
-@{% import lexer from './lexer'; %}
+@{% import lexer from '@/todoist/lexer'; %}
 
 # Use moo tokenizer
 @lexer lexer

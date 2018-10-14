@@ -1,13 +1,12 @@
 import { SETTINGS_PATH } from '@/utils/references'
+import { AlfredError } from '@/workflow/error'
+import { files } from '@/workflow/files'
+import { Notification } from '@/workflow/notifier'
+import { Schema } from '@/workflow/settings-schema'
+import { Item, List, uuid } from '@/workflow/workflow'
 import AJV from 'ajv'
 import compose from 'stampit'
 import writeJsonFile from 'write-json-file'
-
-import { AlfredError } from './error'
-import { files } from './files'
-import { Notification } from './notifier'
-import { Schema } from './settings-schema'
-import { Item, List, uuid } from './workflow'
 
 export interface Settings {
   [index: string]: string | number | boolean
