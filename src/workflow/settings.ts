@@ -1,12 +1,12 @@
-import { SETTINGS_PATH } from '@/utils/references'
-import { AlfredError } from '@/workflow/error'
-import { files } from '@/workflow/files'
-import { Notification } from '@/workflow/notifier'
-import { Schema } from '@/workflow/settings-schema'
-import { Item, List, uuid } from '@/workflow/workflow'
-import AJV from 'ajv'
-import compose from 'stampit'
-import writeJsonFile from 'write-json-file'
+import { SETTINGS_PATH } from '@/utils/references';
+import { AlfredError } from '@/workflow/error';
+import { files } from '@/workflow/files';
+import { Notification } from '@/workflow/notifier';
+import { Schema } from '@/workflow/settings-schema';
+import { Item, List, uuid } from '@/workflow/workflow';
+import AJV from 'ajv';
+import compose from 'stampit';
+import writeJsonFile from 'write-json-file';
 
 export interface Settings {
   [index: string]: string | number | boolean
@@ -208,15 +208,15 @@ export function edit(key: string, value: string | number | boolean) {
   return settingList.write()
 }
 
-export function update({ key, value }: { key: string; value: string | number | boolean }) {
+export async function update({ key, value }: { key: string; value: string | number | boolean }) {
   let settings = getSettings()
   let errors = getErrors(key, value, settings)
 
   if (errors.length === 0) {
-    return writeJsonFile(SETTINGS_PATH, Object.assign(settings, { [key]: value })).then(() => {
-      return Notification({ message: 'Setting updated' }).write()
-    })
+    await writeJsonFile(SETTINGS_PATH, Object.assign(settings, { [key]: value }))
+
+    return Notification({ message: 'Setting updated' }).write()
   } else {
-    return Promise.reject(new AlfredError(formatValidationErrors(errors || [])))
+    throw new AlfredError(formatValidationErrors(errors || []))
   }
 }
