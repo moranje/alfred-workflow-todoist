@@ -2,13 +2,13 @@
 
 # ALFRED TODOIST WORKFLOW
 
-Add and search [Todoist](https://todoist.com/) tasks straight from [Alfred](https://www.alfredapp.com). It uses Todoist `v8` REST API.
+Add and search [Todoist](https://todoist.com/) tasks straight from [Alfred](https://www.alfredapp.com). It uses Todoist `v8` [REST API](https://developer.todoist.com/rest/v8/).
 
-| Jump to: | [Prerequisites](#prerequisites) | [Installation](#installation) | [Add Tasks](#add-tasks) | [Search and Browse Tasks](#search-and-browse-tasks) | [Configuration](#configuration) |
-| :------: | :-----------------------------: | :---------------------------: | :---------------------: | :-------------------------------------------------: | :-----------------------------: |
+| [Getting started](#getting-started) | [Installation](#installation) | [Configuration](#configuration) | [Usage](#usage) | [Contributing](#contributing) |
+| :---------------------------------: | :---------------------------: | :-----------------------------: | :-------------: | :---------------------------: |
 
 
-## Prerequisites
+## Getting started
 
 - For this workflow to work you need version `3.x` of Alfred and a powerpack licence.
 - [Node.js](https://nodejs.org/en/download/)
@@ -17,40 +17,38 @@ Add and search [Todoist](https://todoist.com/) tasks straight from [Alfred](http
 
 [Download](https://github.com/moranje/alfred-workflow-todoist/raw/master/dist/Alfred%20Workflow%20Todoist.alfredworkflow) and import workflow.
 
-For updates use the `todo:update` command.
+## Configuration
 
-## Add Tasks
+| Name                   | Notation                                                                                          | Explanation                                                                                                                               |
+| ---------------------- | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| _token_                | `^[0-9a-fA-F]{40}$` (default empty)                                                               | The todoist API token.                                                                                                                    |
+| _language_             | `en`, `da`, `pl`, `zh`, `ko`, `de`, `pt`, `ja`, `it`, `fr`, `sv`, `ru`, `es`, `nl` (default `en`) | The language for natural language date processing (by todoist) and to calculate time to complete a task.                                  |
+| _cache_timeout_        | A positive number (default `3600`, an hour)                                                       | The time (in seconds) until the cache is refreshed (until that time todoist information is stored locally to make things a little faster) |
+| _anonymous_statistics_ | `true` or `false` (default `true`)                                                                | Doesn't do much at the moment but I intent to use it to track installs                                                                    |
 
-### Alfred command
+`todo:setting token {api token}`  
+Example: _todo:setting token 2d2e2a334c5f36e7a7c43b46e_
 
-`todo {task}, {date}`
+`todo:setting language {language}`  
+Example: _todo:setting language nl_
 
-Example: _todo Get things done, tomorrow @ 9_  
-Example: _todo Build tree house #home !!2 @15min, tomorrow @ 9_
+`todo:setting cache_timeout {time in seconds}`  
+Example: _todo:setting cache_timeout 13_
 
-#### Task
+`todo:setting anonymous_statistics {true or false}`  
+Example: _todo:setting anonymous_statistics false_
 
-Can be any string as long as there are no comma's in it. Markdown in the string will be parsed (in the Todoist app), but anything else won't.
+## Usage
 
-#### Date
+| Name       | Notation                                | Explanation                                                                                                                          |
+| ---------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| _task_     | Any text except `,`                     | The task title.                                                                                                                      |
+| _date_     | A date string                           | See the [Todoist documentation](https://support.todoist.com/hc/en-us/articles/205325931-Dates-and-Times) for supported date formats. |
+| _project_  | Either `#personal` or `#[next actions]` | Use either the hashtag notation or bracket notation if the project name has spaces in it. The project name is case insensitive.      |
+| _label_    | `@label`                                | Label names can't contain any whitespace characters. Labels are case insensitive.                                                    |
+| _priority_ | Either `p2` or `!!2`                    | A value between `1` (urgent) and `4` (normal)                                                                                        |
 
-See the [Todoist documentation](https://support.todoist.com/hc/en-us/articles/205325931-Dates-and-Times) for supported date formats.
-
-#### Project\*
-
-Add task to an existing project. If no project is selected the task will be added to your inbox. Use either the hashtag notation `#project` or if the project has spaces in it `#[in box]`. Project names are case insensitive.
-
-#### Labels\*
-
-You can add labels to your tasks using the `@` character. Label names are case insensitive and can't contain any whitespace characters.
-
-#### Priority
-
-A number between `1` and `4`, where `1` is the highest and `4` would be the lowest (and default) priority.
-
-## Search and Browse Tasks
-
-### Alfred command
+### Search for tasks
 
 `todos {query}`
 
@@ -64,51 +62,60 @@ Example: `todos car` => returns (because of fuzzy search):
 - _New_ **ca**_t_ **r**_ecipe's_
 - **C**_ut Gr_**a**_s tomo_**r**_row_
 
-## Configuration
+### Create task
 
-Some magic will happen when you run the `t` command, like creation of files and refreshing of todoist data cache. Other than that use it to configure the workflow.
+`todo {task}, {date}`
 
-### Alfred commands
-
-`todo:setting token {api token}` (no default)  
-Example: _todo:setting token 2d2e2a334c5f36e7a7c43b46e_
-
-`todo:setting language {language}` (default: en)  
-Example: _todo:setting language nl_
-
-`todo:setting items {max list items}` (default: 9)  
-Example: _todo:setting items 9_
-
-`todo:setting cache_timeout {time in seconds}` (default: 3600)  
-Example: _todo:setting cache_timeout 13_
-
-`todo:setting anonymous_statistics {true or false}` (default: true)  
-Example: _todo:setting anonymous_statistics false_
-
-#### Token\*
-
-Your Todoist api token, get it from Todoist Preferences => Account => API-token (should be 40 characters)
-
-#### Language
-
-This is relevant for parsing date strings ('tomorrow @ 9pm', in `en`). Valid languages are: `en`, `da`, `pl`, `zh`, `ko`, `de`, `pt`, `ja`, `it`, `fr`, `sv`, `ru`, `es`, `nl`.
-
-#### Max Items to Show
-
-This parameter limits the amount of tasks shown when using the `todo` command. Node.js is **required** for listing todos
+Example: _todo Get things done, tomorrow @ 9_  
+Example: _todo Build tree house #home !!2 @15min, tomorrow @ 9_
 
 ## Changelog
 
 View [CHANGELOG.md](https://github.com/moranje/alfred-workflow-todoist/blob/master/CHANGELOG.md)
 
+## Contributing
+
+### Instructions
+
+```md
+- Fork and clone the repo
+- Install dependacies
+- Symlink to project workflow folder
+
+  git clone https://github.com/YOUR-USERNAME/alfred-worflow-todoist
+  npm install
+  npm run setup:dev
+```
+
+### Build
+
+Create a new build with
+
+`npm run build`
+
+### Run tests
+
+Run Jest test suite with:
+
+`npm run test`
+`npm run test:prod`
+
+Or run a watcher with
+
+`npm run test:watch`
+
+### Commits
+
+For commits I follow the `angular commit guidelines` and use `semantic release` to automate builds, semver version updates and changelog creation. The way to make sure this all works is to run:
+
+`npm run commit`
+
+Which guides you through the motions
+
+### Code of conduct
+
+[code-of-conduct.md](code-of-conduct.md)
+
 ## License
 
-The MIT License (MIT)
-
-Copyright (c) 2018 [Martien Oranje](https://github.com/moranje)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+[License MIT](LICENSE) © [Martien Oranje](https://github.com/moranje)
