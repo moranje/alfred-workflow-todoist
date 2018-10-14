@@ -1,13 +1,9 @@
-import { list, update } from '@/workflow/settings'
+import { list, update } from '@/workflow/settings';
 
 jest.mock('@/workflow/files')
-jest.mock('@/workflow/notifier')
 jest.mock('write-json-file', () => {
-  return (path: string, data: any) => {
+  return async (path: string, data: any) => {
     console.log(data)
-    return {
-      then: () => ({ catch: () => ({}) })
-    }
   }
 })
 
@@ -44,8 +40,8 @@ describe('Unit: Settings', () => {
     expect(items[4].title).toBe('SETTING: anonymous_statistics')
   })
 
-  it('should be able to edit token setting', () => {
-    update({ key: 'token', value: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' })
+  it('should be able to edit token setting', async () => {
+    await update({ key: 'token', value: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' })
     let json = spy.mock.calls[0][0]
 
     expect(json.token).toBe('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
@@ -55,8 +51,8 @@ describe('Unit: Settings', () => {
     expect(json.anonymous_statistics).toBe(true)
   })
 
-  it('should be able to edit language setting', () => {
-    update({ key: 'language', value: 'nl' })
+  it('should be able to edit language setting', async () => {
+    await update({ key: 'language', value: 'nl' })
     let json = spy.mock.calls[0][0]
 
     expect(json.token).toBe('')
@@ -66,8 +62,8 @@ describe('Unit: Settings', () => {
     expect(json.anonymous_statistics).toBe(true)
   })
 
-  it('should be able to edit max_items setting', () => {
-    update({ key: 'max_items', value: 3 })
+  it('should be able to edit max_items setting', async () => {
+    await update({ key: 'max_items', value: 3 })
     let json = spy.mock.calls[0][0]
 
     expect(json.token).toBe('')
@@ -77,8 +73,8 @@ describe('Unit: Settings', () => {
     expect(json.anonymous_statistics).toBe(true)
   })
 
-  it('should be able to edit cache_timeout setting', () => {
-    update({ key: 'cache_timeout', value: 3 })
+  it('should be able to edit cache_timeout setting', async () => {
+    await update({ key: 'cache_timeout', value: 3 })
     let json = spy.mock.calls[0][0]
 
     expect(json.token).toBe('')
@@ -88,8 +84,8 @@ describe('Unit: Settings', () => {
     expect(json.anonymous_statistics).toBe(true)
   })
 
-  it('should be able to edit anonymous_statistics setting', () => {
-    update({ key: 'anonymous_statistics', value: true })
+  it('should be able to edit anonymous_statistics setting', async () => {
+    await update({ key: 'anonymous_statistics', value: true })
     let json = spy.mock.calls[0][0]
 
     expect(json.token).toBe('')
@@ -99,8 +95,8 @@ describe('Unit: Settings', () => {
     expect(json.anonymous_statistics).toBe(true)
   })
 
-  it('should be able to edit settings when none exist on disk', () => {
-    update({ key: 'token', value: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' })
+  it('should be able to edit settings when none exist on disk', async () => {
+    await update({ key: 'token', value: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' })
     let json = spy.mock.calls[0][0]
 
     expect(json.token).toBe('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')

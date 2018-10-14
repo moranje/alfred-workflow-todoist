@@ -1,12 +1,9 @@
-import { TodoistWorkflow } from '@/workflow/todoist-workflow'
+import { TodoistWorkflow } from '@/workflow/todoist-workflow';
 
 jest.mock('@/workflow/files')
 jest.mock('write-json-file', () => {
-  return (path: string, data: any) => {
+  return async (path: string, data: any) => {
     console.log(data)
-    return {
-      then: () => ({ catch: () => ({}) })
-    }
   }
 })
 
