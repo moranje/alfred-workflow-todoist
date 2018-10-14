@@ -1,5 +1,5 @@
 import { LabelAdapter, ProjectAdapter } from '@/todoist/rest-api-v8'
-import { getSettings } from '@/workflow/settings'
+import { getSetting } from '@/workflow/settings'
 import compose from 'stampit'
 
 import { Item, List } from '../workflow/workflow'
@@ -21,7 +21,7 @@ export function init(query: string, locale: string) {
     return showPriorities(query)
   }
 
-  return createTask(parsed, locale)
+  return Promise.resolve(createTask(parsed, locale))
 }
 
 function createTask(parsed: ParsedTask, locale: string) {
@@ -33,14 +33,14 @@ function createTask(parsed: ParsedTask, locale: string) {
 
 async function showProjects(query: string) {
   let project = query.replace(/^.*#/, '').replace(/\[|\]/g, '')
-  let projects = await ProjectAdapter({ token: getSettings().token }).query(project, 'name')
+  let projects = await ProjectAdapter({ token: getSetting('token') }).query(project, 'name')
 
   return ProjectList({ projects, query }).write()
 }
 
 async function showLabels(query: string) {
   let label = query.replace(/^.*@/, '')
-  let labels = await LabelAdapter({ token: getSettings().token }).query(label, 'name')
+  let labels = await LabelAdapter({ token: getSetting('token') }).query(label, 'name')
 
   return LabelList({ labels, query }).write()
 }

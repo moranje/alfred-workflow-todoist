@@ -140,7 +140,7 @@ function createDefault() {
     return starter
   }
 
-  Notification(new AlfredError(formatValidationErrors(validate.errors || []))).write()
+  throw new AlfredError(formatValidationErrors(validate.errors || []))
 }
 
 function castSettingTypes(settings: Settings) {
@@ -184,41 +184,40 @@ function getErrors(key: string, value: string | number | boolean, settings: Sett
   return []
 }
 
-export function getSettings() {
+export function getSettings(): Settings {
   // Reintroduce defaults when a setting goes missing
   return castSettingTypes(Object.assign(createDefault(), files.settings))
 }
 
+export function getSetting(setting: string): primitiveNonEmpty {
+  let settings = getSettings()
+
+  return settings[setting]
+}
+
 export function list() {
-  let settings: Settings = getSettings()
+  let settings = getSettings()
   let settingsList = SettingsList({ settings })
 
   return settingsList.write()
 }
 
 export function edit(key: string, value: string | number | boolean) {
-  let settings: Settings = getSettings()
+  let settings = getSettings()
   let settingList = SettingList({ key, value, settings })
 
   return settingList.write()
 }
 
 export function update({ key, value }: { key: string; value: string | number | boolean }) {
-  let settings: Settings = getSettings()
+  let settings = getSettings()
   let errors = getErrors(key, value, settings)
-  let notification: Notification
 
   if (errors.length === 0) {
-    notification = Notification({ message: 'Setting updated' })
-
-    writeJsonFile(SETTINGS_PATH, Object.assign(settings, { [key]: value }))
-      .then(() => {
-        return notification.write()
-      })
-      .catch((err: Error) => {
-        return Notification(new AlfredError(err.message, err.name, err.stack)).write()
-      })
+    return writeJsonFile(SETTINGS_PATH, Object.assign(settings, { [key]: value })).then(() => {
+      return Notification({ message: 'Setting updated' }).write()
+    })
   } else {
-    Notification(new AlfredError(formatValidationErrors(errors || []))).write()
+    return Promise.reject(new AlfredError(formatValidationErrors(errors || [])))
   }
 }
