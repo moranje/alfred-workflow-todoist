@@ -1,7 +1,6 @@
+import * as grammar from '@/todoist/grammar'
+import { Task } from '@/todoist/task'
 import nearley from 'nearley'
-
-import * as grammar from './grammar'
-import { Task } from './task'
 
 interface Token {
   type: string
@@ -52,9 +51,12 @@ function organize([results]: Token[][]) {
       return {
         content: this.content,
         priority: +(this.priority || 1),
-        due_string: this.due_string,
-        project: `${this.project}`,
-        labels: (this.labels || []).map(label => `${label}`)
+        due_string: this.due_string || void 0,
+        project: this.project ? `${this.project}` : void 0,
+        project_id: this.project_id,
+        labels:
+          this.labels && this.labels.length > 0 ? this.labels.map(label => `${label}`) : void 0,
+        label_ids: (this.label_ids && this.label_ids.length > 0) || void 0
       }
     }
   })
