@@ -8,6 +8,7 @@ import { edit, getSetting, getSettings, list, update } from '@/workflow/settings
 import { Item, List } from '@/workflow/workflow'
 import omit from 'lodash.omit'
 import compose from 'stampit'
+import { removeObject } from '@/workflow/cache'
 
 interface Workflow {}
 
@@ -70,6 +71,7 @@ export const TodoistWorkflow = compose({
     async submit(this: Workflow, task: Task) {
       let apiTask = await replaceNamesWithIds(task)
       let { statusCode, body } = await TaskAdapter({ token: getSetting('token') }).create(apiTask)
+      await TaskAdapter({ token: getSetting('token') }).find(body.id)
 
       if (statusCode === 200) {
         return Notification({
@@ -88,6 +90,8 @@ export const TodoistWorkflow = compose({
       let { statusCode } = await TaskAdapter({ token: getSetting('token') }).remove(task.id)
 
       if (statusCode === 204) {
+        if (task.id) removeObject('tasks', task.id)
+
         return Notification({ message: 'Task completed' }).write()
       }
 
