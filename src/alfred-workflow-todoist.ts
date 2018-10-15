@@ -1,9 +1,9 @@
-import '@babel/polyfill'
+import '@babel/polyfill';
 
-import { cache, serialize } from '@/todoist/cache'
-import { AlfredError, handleError } from '@/workflow/error'
-import { getSetting } from '@/workflow/settings'
-import { TodoistWorkflow } from '@/workflow/todoist-workflow'
+import { cache, serialize } from '@/workflow/cache';
+import { AlfredError, handleError } from '@/workflow/error';
+import { getSetting } from '@/workflow/settings';
+import { TodoistWorkflow } from '@/workflow/todoist-workflow';
 
 const argv = Object.assign([], process.argv)
 argv.splice(0, 2)

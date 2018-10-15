@@ -1,13 +1,13 @@
-import { cache } from '@/todoist/cache'
-import { Label } from '@/todoist/label'
-import { Project } from '@/todoist/project'
-import { Task } from '@/todoist/task'
-import { uuid } from '@/workflow/workflow'
-import { filter } from 'fuzzaldrin'
-import got from 'got'
-import find from 'lodash.find'
-import unionBy from 'lodash.unionby'
-import compose from 'stampit'
+import { Label } from '@/todoist/label';
+import { Project } from '@/todoist/project';
+import { Task } from '@/todoist/task';
+import { cache } from '@/workflow/cache';
+import { uuid } from '@/workflow/workflow';
+import { filter } from 'fuzzaldrin';
+import got from 'got';
+import find from 'lodash.find';
+import unionBy from 'lodash.unionby';
+import compose from 'stampit';
 
 interface Adapter {
   type: string
