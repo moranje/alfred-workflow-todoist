@@ -1,3 +1,11 @@
+## [5.6.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.0...v5.6.1) (2018-10-15)
+
+
+### Bug Fixes
+
+* broken import references ([25728ab](https://github.com/moranje/alfred-workflow-todoist/commit/25728ab))
+* update cache after task creation or completion ([6172d28](https://github.com/moranje/alfred-workflow-todoist/commit/6172d28)), closes [#44](https://github.com/moranje/alfred-workflow-todoist/issues/44)
+
 # [5.6.0](https://github.com/moranje/alfred-workflow-todoist/compare/v5.5.0...v5.6.0) (2018-10-14)
 
 
