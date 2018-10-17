@@ -1,6 +1,6 @@
-import { AlfredError } from '@/workflow/error'
-import { Item, List } from '@/workflow/workflow'
-import compose from 'stampit'
+import { AlfredError } from '@/project';
+import { Item, List } from '@/workflow';
+import compose from 'stampit';
 
 // @ts-ignore: no declaration for v4 yet
 export interface Project {
@@ -26,7 +26,7 @@ export const Project = compose({
 export const ProjectList = compose(
   List,
   {
-    init(this: List, { projects = [], query }: { projects: Project[]; query: string }) {
+    init(this: workflow.List, { projects = [], query }: { projects: Project[]; query: string }) {
       projects.forEach((project: Project) => {
         let name = project.name.indexOf(' ') !== -1 ? `[${project.name}]` : project.name
 

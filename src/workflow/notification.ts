@@ -1,9 +1,9 @@
-import { AlfredError } from '@/workflow/error'
-import omit from 'lodash.omit'
-import notifier from 'node-notifier'
-import open from 'opn'
-import osName from 'os-name'
-import compose from 'stampit'
+import { AlfredError } from '@/project';
+import omit from 'lodash.omit';
+import notifier from 'node-notifier';
+import open from 'opn';
+import osName from 'os-name';
+import compose from 'stampit';
 
 const NOTIFICATION_DEFAULTS = {
   title: 'ALFRED WORKFLOW TODOIST',
@@ -21,26 +21,14 @@ const NOTIFICATION_DEFAULTS = {
   reply: false
 }
 
-export interface NotificationOptions {
-  title: string
-  subtitle: string
-  message: string
-  sound: boolean // Case Sensitive string for location of sound file; or use one of macOS' native sounds (see below)
-  icon: string // Absolute Path to Triggering Icon
-  contentImage: string // Absolute Path to Attached Image (Content Image)
-  open: string // URL to open on Click
-  wait: boolean // Wait for User Action against Notification or times out. Same as timeout = 5 seconds
-
-  // New in latest version. See `example/macInput.js` for usage
-  timeout: number // Takes precedence over wait if both are defined.
-  closeLabel: string // String. Label for cancel button
-  actions: string // String | Array<String>. Action label or list of labels in case of dropdown
-  dropdownLabel: string // String. Label to be used if multiple actions
-  reply: boolean // Boolean. If notification should take input. Value passed as third argument in callback and event emitter.
-  error?: AlfredError
-}
-
-function logError(error: AlfredError) {
+/**
+ * Formatted error logs
+ *
+ * @param {project.AlfredError} error
+ *
+ * @hidden
+ */
+function logError(error: project.AlfredError) {
   console.log(
     [
       `${error.name}: ${error.message}\n`,
@@ -59,8 +47,17 @@ function logError(error: AlfredError) {
   )
 }
 
+/**
+ * Create a notification with optional click and timeout calbacks
+ *
+ * @param {workflow.NotificationOptions} options
+ * @param {(notifierObject: any, option: any, meta: any) => void} [onClick]
+ * @param {(notifierObject: any, option: any, meta: any) => void} [onTimeout]
+ *
+ * @hidden
+ */
 function notification(
-  options: NotificationOptions,
+  options: workflow.NotificationOptions,
   onClick?: (notifierObject: any, option: any, meta: any) => void,
   onTimeout?: (notifierObject: any, option: any, meta: any) => void
 ) {
@@ -77,11 +74,6 @@ function notification(
     if (err) {
       logError(new AlfredError(err.name, err.message, err.stack))
     }
-
-    // if (options.error) {
-    //   console.log('Something went wrong\n', options.error)
-    //   logError(options.error)
-    // }
   })
 
   notifier.on('click', onClick || onClickFallback)
@@ -91,12 +83,12 @@ function notification(
   })
 }
 
-export interface Notification {
-  write: (onClick?: any, onTimeout?: any) => void
-}
-
 export const Notification = compose({
-  init(output: AlfredError | NotificationOptions) {
+  /**
+   * @constructor
+   * @param {(project.AlfredError | workflow.NotificationOptions)} output
+   */
+  init(output: project.AlfredError | workflow.NotificationOptions) {
     let values = Object.assign({}, output)
 
     if (output instanceof Error) {
@@ -114,7 +106,14 @@ export const Notification = compose({
   },
 
   methods: {
-    write(this: NotificationOptions, onClick?: any, onTimeout?: any) {
+    /**
+     * Send output to notification and optionally to stdout
+     *
+     * @param {workflow.NotificationOptions} this
+     * @param {Function} [onClick]
+     * @param {Function} [onTimeout]
+     */
+    write(this: workflow.NotificationOptions, onClick?: any, onTimeout?: any) {
       if (this.error) logError(this.error)
 
       notification(this, onClick, onTimeout)

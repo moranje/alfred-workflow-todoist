@@ -1,8 +1,8 @@
+import { cache } from '@/project/cache';
 import { Label } from '@/todoist/label';
 import { Project } from '@/todoist/project';
 import { Task } from '@/todoist/task';
-import { cache } from '@/workflow/cache';
-import { uuid } from '@/workflow/workflow';
+import { uuid } from '@/workflow';
 import { filter } from 'fuzzaldrin';
 import got from 'got';
 import find from 'lodash.find';

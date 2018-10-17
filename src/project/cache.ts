@@ -1,7 +1,7 @@
-import { CACHE_PATH } from '@/utils/references';
-import { AlfredError } from '@/workflow/error';
-import { files } from '@/workflow/files';
-import { getSetting } from '@/workflow/settings';
+import { AlfredError } from '@/project';
+import { files } from '@/project/files';
+import { CACHE_PATH } from '@/project/references';
+import { getSetting } from '@/project/settings';
 import remove from 'lodash.remove';
 import LRU from 'lru-cache';
 import writeJsonFile from 'write-json-file';
@@ -22,6 +22,13 @@ cache.load(files.cache)
  */
 export { cache }
 
+/**
+ * Remove an object at a specific key in cache by id.
+ *
+ * @export
+ * @param {string} type
+ * @param {number} id
+ */
 export function removeObject(type: string, id: number): void {
   // @ts-ignore incorect return type on cache.get()
   let objects: any[] = cache.get(type) || []

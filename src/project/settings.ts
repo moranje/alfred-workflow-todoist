@@ -1,9 +1,9 @@
-import { SETTINGS_PATH } from '@/utils/references';
-import { AlfredError } from '@/workflow/error';
-import { files } from '@/workflow/files';
-import { Notification } from '@/workflow/notifier';
-import { Schema } from '@/workflow/settings-schema';
-import { Item, List, uuid } from '@/workflow/workflow';
+import { AlfredError } from '@/project';
+import { files } from '@/project/files';
+import { SETTINGS_PATH } from '@/project/references';
+import { Item, List, uuid } from '@/workflow';
+import { Notification } from '@/workflow/notification';
+import { Schema } from '@/project/settings-schema';
 import AJV from 'ajv';
 import compose from 'stampit';
 import writeJsonFile from 'write-json-file';
@@ -23,7 +23,7 @@ const ajv = new AJV({ allErrors: true })
 const SettingsList = compose(
   List,
   {
-    init(this: List, { settings }: { settings: Settings }) {
+    init(this: workflow.List, { settings }: { settings: Settings }) {
       this.items = this.items || []
 
       Object.keys(Schema.properties).forEach((key: string) => {
@@ -46,7 +46,7 @@ const SettingList = compose(
   List,
   {
     init(
-      this: List,
+      this: workflow.List,
       {
         key = '',
         value = '',

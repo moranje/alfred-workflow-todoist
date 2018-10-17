@@ -69,6 +69,10 @@ Example: `todos car` => returns (because of fuzzy search):
 Example: _todo Get things done, tomorrow @ 9_  
 Example: _todo Build tree house #home !!2 @15min, tomorrow @ 9_
 
+## Documentation
+
+Read the [docs](https://moranje.github.io/alfred-workflow-todoist).
+
 ## Changelog
 
 View [CHANGELOG.md](https://github.com/moranje/alfred-workflow-todoist/blob/master/CHANGELOG.md)
@@ -112,10 +116,10 @@ For commits I follow the `angular commit guidelines` and use `semantic release` 
 
 Which guides you through the motions
 
-### Code of conduct
+## Code of conduct
 
-[code-of-conduct.md](code-of-conduct.md)
+[code-of-conduct.md](https://github.com/moranje/alfred-workflow-todoist/blob/master/code-of-conduct.md)
 
 ## License
 
-[License MIT](LICENSE) © [Martien Oranje](https://github.com/moranje)
+[License MIT](https://github.com/moranje/alfred-workflow-todoist/blob/master/LICENSE) © [Martien Oranje](https://github.com/moranje)

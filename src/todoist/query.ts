@@ -1,11 +1,11 @@
-import { LabelList } from '@/todoist/label'
-import parser from '@/todoist/parser'
-import { ProjectList } from '@/todoist/project'
-import { LabelAdapter, ProjectAdapter } from '@/todoist/rest-api-v8'
-import { Task, TaskList } from '@/todoist/task'
-import { getSetting } from '@/workflow/settings'
-import { Item, List } from '@/workflow/workflow'
-import compose from 'stampit'
+import { LabelList } from '@/todoist/label';
+import parser from '@/todoist/parser';
+import { ProjectList } from '@/todoist/project';
+import { LabelAdapter, ProjectAdapter } from '@/todoist/rest-api-v8';
+import { Task, TaskList } from '@/todoist/task';
+import { Item, List } from '@/workflow';
+import { getSetting } from '@/project/settings';
+import compose from 'stampit';
 
 interface ParsedTask {}
 
@@ -55,7 +55,7 @@ function showPriorities(query: string) {
   let Priority = compose(
     Item,
     {
-      init(this: Item, title: number) {
+      init(this: workflow.Item, title: number) {
         this.title = `${title}`
         this.subtitle = `Set priority to ${priorityNames[`${title}`]}`
         this.autocomplete = `${query

@@ -1,6 +1,6 @@
-import { list, update } from '@/workflow/settings';
+import { list, update } from '@/project/settings';
 
-jest.mock('@/workflow/files')
+jest.mock('@/project/files')
 jest.mock('write-json-file', () => {
   return async (path: string, data: any) => {
     console.log(data)

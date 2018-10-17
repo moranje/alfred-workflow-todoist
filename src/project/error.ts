@@ -1,7 +1,7 @@
-import { Notification } from '@/workflow/notifier'
-import plist from 'fast-plist'
-import { readFileSync } from 'fs'
-import osName from 'os-name'
+import { Notification } from '@/workflow/notification';
+import plist from 'fast-plist';
+import { readFileSync } from 'fs';
+import osName from 'os-name';
 
 const argv = Object.assign([], process.argv)
 argv.splice(0, 2)
@@ -28,23 +28,12 @@ const ERROR_ENV = {
   WORKFLOW_VERSION: workflowVersion
 }
 
-/**
- * An extension of the base Error that incorperates workflow
- * environment variables.
- *
- * @export
- * @interface AlfredError
- * @extends {Error}
- */
-export interface AlfredError extends Error {
-  QUERY: string
-  OSX_VERSION: string
-  NODE_VERSION: string
-  ALFRED_VERSION: string
-  WORKFLOW_VERSION: string
-}
-
 export class AlfredError extends Error {
+  QUERY?: string
+  OSX_VERSION?: string
+  NODE_VERSION?: string
+  ALFRED_VERSION?: string
+  WORKFLOW_VERSION?: string
   constructor(message: string, name?: string, stack?: any) {
     super(message)
 

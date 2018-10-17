@@ -1,4 +1,4 @@
-import { CACHE_PATH, SETTINGS_PATH } from '@/utils/references'
+import { CACHE_PATH, SETTINGS_PATH } from '@/project/references';
 
 let settings = {}
 let cache = []

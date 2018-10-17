@@ -3,12 +3,12 @@ import { Project } from '@/todoist/project'
 import { init } from '@/todoist/query'
 import { LabelAdapter, ProjectAdapter, TaskAdapter } from '@/todoist/rest-api-v8'
 import { Task, TaskList } from '@/todoist/task'
-import { Notification } from '@/workflow/notifier'
-import { edit, getSetting, getSettings, list, update } from '@/workflow/settings'
-import { Item, List } from '@/workflow/workflow'
+import { Notification } from '@/workflow/notification'
+import { edit, getSetting, getSettings, list, update } from '@/project/settings'
+import { Item, List } from '@/workflow'
 import omit from 'lodash.omit'
 import compose from 'stampit'
-import { removeObject } from '@/workflow/cache'
+import { removeObject } from '@/project/cache'
 
 interface Workflow {}
 

@@ -1,10 +1,10 @@
-import { Label } from '@/todoist/label'
-import { Project } from '@/todoist/project'
-import { AlfredError } from '@/workflow/error'
-import { Item, List, View } from '@/workflow/workflow'
-import formatDistance from 'date-fns/formatDistance'
-import { de, enUS, es, fr, it, nl, ptBR, ru, sv, zhCN } from 'date-fns/locale'
-import compose from 'stampit'
+import { AlfredError } from '@/project';
+import { Label } from '@/todoist/label';
+import { Project } from '@/todoist/project';
+import { Item, List, View } from '@/workflow';
+import formatDistance from 'date-fns/formatDistance';
+import { de, enUS, es, fr, it, nl, ptBR, ru, sv, zhCN } from 'date-fns/locale';
+import compose from 'stampit';
 
 // import da from 'date-fns/locale/da'
 // import ko from 'date-fns/locale/ko'
@@ -77,7 +77,7 @@ export interface Task {
   labels?: Label[]
 }
 
-export interface TaskList extends List {}
+export interface TaskList extends workflow.List {}
 
 export const Task = compose({
   init(this: Task, task: Task = { content: '' }) {
@@ -93,7 +93,7 @@ export const TaskList = compose(
   List,
   {
     init(
-      this: List,
+      this: workflow.List,
       {
         tasks = [],
         action = 'COMPLETE',
@@ -102,7 +102,7 @@ export const TaskList = compose(
     ) {
       tasks.forEach((task: Task) => {
         const { content, project, labels = [], priority, due, due_string } = task
-        let view: View = View()
+        let view: workflow.View = View()
         let name = (project && project.name) || ''
         let date: Date
 
