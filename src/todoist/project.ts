@@ -1,16 +1,10 @@
 import { AlfredError } from '@/project';
-import { Item, List } from '@/workflow';
+import todoist from '@/todoist';
+import workflow, { Item, List } from '@/workflow';
 import compose from 'stampit';
 
-// @ts-ignore: no declaration for v4 yet
-export interface Project {
-  [index: string]: string | number
-  name: string
-  id: number
-}
-
-export const Project = compose({
-  init(this: Project, project: Project = { name: '', id: -1 }) {
+export const Project: todoist.ProjectFactory = compose({
+  init(this: todoist.ProjectInstance, project: todoist.Project = { name: '', id: -1 }) {
     if (!project.name && project.name === '') {
       throw new AlfredError(`A project must have a name (${project.name}) property`)
     }
@@ -23,11 +17,15 @@ export const Project = compose({
   }
 })
 
-export const ProjectList = compose(
+export const ProjectList: todoist.ProjectListFactory = compose(
+  
   List,
   {
-    init(this: workflow.List, { projects = [], query }: { projects: Project[]; query: string }) {
-      projects.forEach((project: Project) => {
+    init(
+      this: todoist.ProjectListInstance,
+      { projects = [], query }: { projects: todoist.Project[]; query: string }
+    ) {
+      projects.forEach((project: todoist.Project) => {
         let name = project.name.indexOf(' ') !== -1 ? `[${project.name}]` : project.name
 
         this.items.push(

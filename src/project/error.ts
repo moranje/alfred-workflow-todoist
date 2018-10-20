@@ -1,4 +1,4 @@
-import { Notification } from '@/workflow/notification';
+import { Notification } from '@/workflow';
 import plist from 'fast-plist';
 import { readFileSync } from 'fs';
 import osName from 'os-name';

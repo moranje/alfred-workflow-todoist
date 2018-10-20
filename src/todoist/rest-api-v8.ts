@@ -1,7 +1,5 @@
 import { cache } from '@/project/cache';
-import { Label } from '@/todoist/label';
-import { Project } from '@/todoist/project';
-import { Task } from '@/todoist/task';
+import todoist, { Label, Project, Task } from '@/todoist';
 import { uuid } from '@/workflow';
 import { filter } from 'fuzzaldrin';
 import got from 'got';
@@ -9,26 +7,14 @@ import find from 'lodash.find';
 import unionBy from 'lodash.unionby';
 import compose from 'stampit';
 
-interface Adapter {
-  type: string
-  got: any
-  uri: string
-  token: string
-  findAll: () => Promise<any>
-}
-
-export interface TaskAdapter extends Adapter {
-  getRelationships: (task: Task) => Task
-}
-
-const Adapter = compose({
+const Adapter: todoist.AdapterFactory = compose({
   init(
-    this: Adapter,
+    this: todoist.AdapterInstance,
     {
       type,
       uri = 'https://beta.todoist.com/API/v8',
       token
-    }: { type: string; uri: string; token: string }
+    }: { type: 'task' | 'project' | 'label'; uri: string; token: string }
   ) {
     this.type = type
     this.uri = uri
@@ -46,7 +32,19 @@ const Adapter = compose({
   },
 
   methods: {
-    async query(this: Adapter, query: string, key: string = 'content'): Promise<any> {
+    /**
+     * Returns items of a type based on a query. Returns all items when qeurr
+     * is falsy.
+     *
+     * @param {string} query
+     * @param {string} [key='content']
+     * @returns {Promise<any>}
+     */
+    async query(
+      this: todoist.TaskAdapterInstance,
+      query: string,
+      key: string = 'content'
+    ): Promise<any> {
       if (!query) return this.findAll()
 
       return filter(await this.findAll(), query, { key })
@@ -55,51 +53,51 @@ const Adapter = compose({
     /**
      * POST an item of a type to Todoist
      *
-     * @author moranje
      * @param {*} data
      * @returns {Promise<any>}
-     * @memberof Adapter
      */
-    async create(this: Adapter, data: any): Promise<any> {
+    async create(this: todoist.AdapterInstance, data: any): Promise<any> {
       return this.got.post(`${this.type}s`, { body: data })
     },
 
     /**
      * POST an item of a type to Todoist replacing a known value
      *
-     * @author moranje
      * @param {number} id
      * @param {*} data
      * @returns {Promise<any>}
-     * @memberof Adapter
      */
-    async update(this: Adapter, id: number, data: any): Promise<any> {
+    async update(this: todoist.AdapterInstance, id: number, data: any): Promise<any> {
       return this.got.post(`${this.type}s/${id}`, { body: data })
     },
 
     /**
      * API call to delete a single item.
      *
-     * @author moranje
-     * @param {Adapter} this
      * @param {number} id
      * @returns {Promise<any>}
      */
-    async remove(this: Adapter, id: number): Promise<any> {
+    async remove(this: todoist.AdapterInstance, id: number): Promise<any> {
       return this.got.delete(`${this.type}s/${id}`)
     }
   }
 })
 
-export const ProjectAdapter = compose(
+export const ProjectAdapter: todoist.ProjectAdapterFactory = compose(
   Adapter,
   {
-    init(this: Adapter) {
+    init(this: todoist.ProjectAdapterInstance) {
       this.type = 'project'
     },
 
     methods: {
-      async find(this: Adapter, id: number) {
+      /**
+       * Find a project by it's id.
+       *
+       * @param {number} id
+       * @returns A project instance
+       */
+      async find(this: todoist.ProjectAdapterInstance, id: number): Promise<todoist.Project> {
         // @ts-ignore: cache type definition is incorrect
         let cachedProjects: Project[] = cache.get('projects') || []
         let project = find(cachedProjects, ['id', id])
@@ -114,7 +112,12 @@ export const ProjectAdapter = compose(
         return Project(body)
       },
 
-      async findAll(this: Adapter) {
+      /**
+       * Get all projects
+       *
+       * @returns All projects
+       */
+      async findAll(this: todoist.ProjectAdapterInstance): Promise<todoist.Project[]> {
         // @ts-ignore: cache type definition is incorrect
         let cachedProjects: Project[] = cache.get('projects') || []
 
@@ -122,7 +125,7 @@ export const ProjectAdapter = compose(
 
         let { body } = await this.got.get('projects')
 
-        let projects: Project[] = body.map((project: Project) => {
+        let projects: todoist.Project[] = body.map((project: todoist.Project) => {
           return Project(project)
         })
 
@@ -134,15 +137,21 @@ export const ProjectAdapter = compose(
   }
 )
 
-export const LabelAdapter = compose(
+export const LabelAdapter: todoist.LabelAdapterFactory = compose(
   Adapter,
   {
-    init(this: Adapter) {
+    init(this: todoist.LabelAdapterInstance) {
       this.type = 'label'
     },
 
     methods: {
-      async find(this: Adapter, id: number) {
+      /**
+       * Find a label by it's id.
+       *
+       * @param {number} id
+       * @returns A label instance
+       */
+      async find(this: todoist.LabelAdapterInstance, id: number): Promise<todoist.Label> {
         // @ts-ignore: cache type definition is incorrect
         let cachedLabels: Label[] = cache.get('labels') || []
         let label = find(cachedLabels, ['id', id])
@@ -157,14 +166,19 @@ export const LabelAdapter = compose(
         return Label(body)
       },
 
-      async findAll(this: Adapter) {
+      /**
+       * Get all labels
+       *
+       * @returns All labels
+       */
+      async findAll(this: todoist.LabelAdapterInstance): Promise<todoist.Label[]> {
         // @ts-ignore: cache type definition is incorrect
         let cachedLabels: Label[] = cache.get('labels') || []
 
         if (cachedLabels.length > 0) return cachedLabels
 
         let { body } = await this.got.get('labels')
-        let labels: Label[] = body.map((label: Label) => {
+        let labels: todoist.Label[] = body.map((label: todoist.Label) => {
           return Label(label)
         })
 
@@ -176,17 +190,23 @@ export const LabelAdapter = compose(
   }
 )
 
-export const TaskAdapter = compose(
+export const TaskAdapter: todoist.TaskAdapterFactory = compose(
   Adapter,
   {
-    init(this: Adapter) {
+    init(this: todoist.TaskAdapterInstance) {
       this.type = 'task'
     },
 
     methods: {
-      async find(this: TaskAdapter, id: number): Promise<Task> {
+      /**
+       * Find a task by it's id.
+       *
+       * @param {number} id
+       * @returns A task instance
+       */
+      async find(this: todoist.TaskAdapterInstance, id: number): Promise<todoist.Task> {
         // @ts-ignore: cache type definition is incorrect
-        let cachedTasks: Task[] = cache.get('tasks') || []
+        let cachedTasks: todoist.Task[] = cache.get('tasks') || []
         let task = find(cachedTasks, ['id', id])
 
         if (task) return task
@@ -199,9 +219,14 @@ export const TaskAdapter = compose(
         return Task(body) // tslint:disable-line
       },
 
-      async findAll(this: TaskAdapter) {
+      /**
+       * Get all tasks
+       *
+       * @returns All tasks
+       */
+      async findAll(this: todoist.TaskAdapterInstance): Promise<todoist.Task[]> {
         // @ts-ignore: cache type definition is incorrect
-        let cachedTasks: Task[] = cache.get('tasks') || []
+        let cachedTasks: todoist.Task[] = cache.get('tasks') || []
 
         if (cachedTasks.length > 0) return cachedTasks
 
@@ -211,7 +236,7 @@ export const TaskAdapter = compose(
         await ProjectAdapter({ token: this.token }).findAll()
         await LabelAdapter({ token: this.token }).findAll()
 
-        let mapped = body.map(async (task: Task) => {
+        let mapped = body.map(async (task: todoist.Task) => {
           return Task(await this.getRelationships(task)) // tslint:disable-line
         })
 
@@ -222,7 +247,17 @@ export const TaskAdapter = compose(
         })
       },
 
-      async getRelationships(this: TaskAdapter, task: Task): Promise<Task> {
+      /**
+       * Retrieve a tasks labels an projects by id.
+       *
+       * @param {todoist.TaskAdapterInstance} this
+       * @param {todoist.Task} task
+       * @returns {Promise<todoist.Task>}
+       */
+      async getRelationships(
+        this: todoist.TaskAdapterInstance,
+        task: todoist.Task
+      ): Promise<todoist.Task> {
         // Don't mutate task object
         let t = Object.assign({}, { labels: [] }, task)
         let projectAdapter = ProjectAdapter({ token: this.token })

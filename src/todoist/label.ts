@@ -1,21 +1,14 @@
 import { AlfredError } from '@/project';
-import { Item, List } from '@/workflow';
+import todoist from '@/todoist';
+import workflow, { Item, List } from '@/workflow';
 import compose from 'stampit';
 
-export interface Label {
-  [index: string]: string | number
-  name: string
-  id: number
-}
-
-export interface LabelList extends workflow.List {}
-
-export const Label = compose({
+export const Label: todoist.LabelFactory = compose({
   /**
    * @constructor
    * @param {Label} label A new label
    */
-  init(this: Label, label: Label = { name: '', id: -1 }) {
+  init(this: todoist.LabelInstance, label: todoist.Label = { name: '', id: -1 }) {
     if (!label.name && label.name === '') {
       throw new AlfredError(`A label must have a name (${label.name}) property`)
     }
@@ -28,11 +21,15 @@ export const Label = compose({
   }
 })
 
-export const LabelList = compose(
+export const LabelList: todoist.LabelListFactory = compose(
+  
   List,
   {
-    init(this: workflow.List, { labels = [], query }: { labels: Label[]; query: string }) {
-      labels.forEach((label: Label) => {
+    init(
+      this: todoist.LabelListInstance,
+      { labels = [], query }: { labels: todoist.Label[]; query: string }
+    ) {
+      labels.forEach((label: todoist.Label) => {
         this.items.push(
           Item({
             title: label.name,

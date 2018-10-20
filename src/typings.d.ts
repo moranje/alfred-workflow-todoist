@@ -1,49 +1,119 @@
+import { Stamp } from 'stampit';
+
+/**
+ * @hidden
+ */
 declare module 'fast-plist'
-
-declare type primitiveNonEmpty = string | number | boolean
-
-declare namespace todoist {
-
-}
 
 /**
  * Alfred workflow logic
  */
 declare namespace workflow {
   /**
-   * A mixin that formats the way output is sent to stdout
+   * An instance of a WritableFactory
    */
-  export interface Writable {
+  export interface WritableInstance {
+    /**
+     * Write to stdout.
+     *
+     * @param {any[]} params
+     */
     write: (...params: any[]) => void
+
+    /**
+     * Write to stdout.
+     *
+     * @param {Object} arg
+     * @private
+     */
     object: (arg: Object) => string
   }
 
   /**
-   * A text view object
+   * A WritableFactory (pure function) constructor
    */
-  export interface View {
+  export interface WritableFactory extends Stamp {
+    /**
+     * @constructor
+     */
+    (): WritableInstance
+  }
+
+  /**
+   * A callback function with bound helper functions
+   */
+  interface ViewCallbacks {
+    /**
+     * Convert a string to upper case.
+     *
+     * @memberof ViewCallbacks
+     * @param {string} text
+     *
+     * @returns The string in upper case.
+     */
     upperCase: (text: string) => string
+
+    /**
+     * Convert a string to lower case.
+     *
+     * @memberof ViewCallbacks
+     * @param {string} text
+     *
+     * @returns The string in lower case.
+     */
     lowerCase: (text: string) => string
+
+    /**
+     * Convert a string to sentence case.
+     *
+     * @memberof ViewCallbacks
+     * @param {string} text
+     *
+     * @returns The string in sentence case.
+     */
     sentenceCase: (text: string) => string
+
+    /**
+     * When the first parameter is truthy return second parameter, when it is
+     * falsy return the third parameter.
+     *
+     * @memberof ViewCallbacks
+     * @param {*} condition
+     * @param {string} truthy
+     * @param {string} falsy
+     *
+     * @returns The second or third parameter.
+     */
     when: (condition: any, truthy: string, falsy: string) => string
+
+    /**
+     * Returns a number of whitespace characters
+     *
+     * @memberof ViewCallbacks
+     * @param {number} quantity
+     *
+     * @return A string consisting of a number of whitespace characters.
+     */
     ws: (quantity: number) => string
+  }
+
+  /**
+   * An instance of a ViewFactory
+   */
+  export interface ViewInstance extends ViewCallbacks {
     template: (
-      fn: (
-        {
-          upperCase,
-          lowerCase,
-          sentenceCase,
-          ws,
-          when
-        }: {
-          upperCase: (text: string) => string
-          lowerCase: (text: string) => string
-          sentenceCase: (text: string) => string
-          when: (condition: any, truthy: string, falsy: string) => string
-          ws: (quantity: number) => string
-        }
-      ) => string
+      fn: ({ upperCase, lowerCase, sentenceCase, ws, when }: ViewCallbacks) => string
     ) => string
+  }
+
+  /**
+   * A ViewFactory (pure function) constructor
+   */
+  export interface ViewFactory extends Stamp {
+    /**
+     * @constructor
+     */
+    (): ViewInstance
   }
 
   /**
@@ -80,8 +150,6 @@ declare namespace workflow {
      * of your script to take advantage of Alfred's knowledge and sorting. If you
      * would like Alfred to always show the results in the order you return them
      * from your script, exclude the UID field.
-     *
-     * @memberof Item#uid
      */
     uid?: string
 
@@ -89,7 +157,7 @@ declare namespace workflow {
      * The argument which is passed through the workflow to the connected output
      * action.
      */
-    arg?: string
+    arg?: any
 
     /**
      * By specifying `"type": "file"`, this makes Alfred treat your result as a
@@ -192,7 +260,7 @@ declare namespace workflow {
      * If these are not defined, you will inherit Alfred's standard behaviour \
      * where the arg is copied to the Clipboard or used for Large Type.
      */
-    text: {
+    text?: {
       copy: string
       largetype: string
     }
@@ -212,53 +280,572 @@ declare namespace workflow {
   }
 
   /**
-   * A collection of Items
+   * An instance of an ItemFactory
    */
-  export interface List extends Writable {
+  export interface ItemInstance extends Item, WritableInstance {}
+
+  /**
+   * A ItemFactory (pure function) constructor
+   */
+  export interface ItemFactory extends Stamp {
+    /**
+     * @constructor
+     * @param {Item} item
+     */
+    (item: Item): ItemInstance
+  }
+  /**
+   * An instance of an ListFactory
+   */
+  export interface ListInstance extends WritableInstance {
     /**
      * A collection of list items
      */
     items: Item[]
+  }
 
+  /**
+   * A ListFactory (pure function) constructor
+   */
+  export interface ListFactory extends Stamp {
     /**
-     * Write to stdout.
-     *
-     * @param {any[]} params
+     * @constructor
+     * @param {*} list
      */
-    write: (...params: any[]) => void
+    ({ items }: { items: Item[] | undefined }): ListInstance
+  }
+
+  /**
+   * A PriorityFactory (pure function) constructor
+   */
+  export interface PriorityFactory extends Stamp {
+    /**
+     * @constructor
+     * @param {number} title
+     */
+    (title: number): ItemInstance
   }
 
   /**
    * Alfred notification options
    */
   export interface NotificationOptions {
-    title: string
-    subtitle: string
-    message: string
-    sound: boolean // Case Sensitive string for location of sound file; or use one of macOS' native sounds (see below)
-    icon: string // Absolute Path to Triggering Icon
-    contentImage: string // Absolute Path to Attached Image (Content Image)
-    open: string // URL to open on Click
-    wait: boolean // Wait for User Action against Notification or times out. Same as timeout = 5 seconds
+    /**
+     * The notification title
+     */
+    title?: string
 
-    // New in latest version. See `example/macInput.js` for usage
-    timeout: number // Takes precedence over wait if both are defined.
-    closeLabel: string // String. Label for cancel button
-    actions: string // String | Array<String>. Action label or list of labels in case of dropdown
-    dropdownLabel: string // String. Label to be used if multiple actions
-    reply: boolean // Boolean. If notification should take input. Value passed as third argument in callback and event emitter.
+    /**
+     * The notification subtitle
+     */
+    subtitle?: string
+
+    /**
+     * The notification message
+     */
+    message: string
+
+    /**
+     * Case Sensitive string for location of sound file; or use one of macOS'
+     * native sounds (see below)
+     */
+    sound?: string
+
+    /**
+     * Absolute Path to Triggering Icon
+     */
+    icon?: string
+
+    /**
+     * Absolute Path to Attached Image (Content Image)
+     */
+    contentImage?: string
+
+    /**
+     * URL to open on Click
+     */
+    open?: string
+
+    /**
+     * Wait for User Action against Notification or times out. Same as timeout
+     * = 5 seconds
+     */
+    wait?: boolean
+
+    /**
+     * Takes precedence over wait if both are defined.
+     */
+    timeout?: number
+
+    /**
+     * Label for cancel button
+     */
+    closeLabel?: string
+
+    /**
+     * Action label or list of labels in case of dropdown
+     */
+    actions?: string | string[]
+
+    /**
+     * Label to be used if multiple actions
+     */
+    dropdownLabel?: string
+
+    /**
+     * If notification should take input. Value passed as third argument in callback and event emitter.
+     */
+    reply?: boolean
+
+    /**
+     * An error object.
+     */
     error?: project.AlfredError
   }
 
   /**
-   * An alfred notification
+   * An instance of an NotificationFactory
    */
-  export interface Notification {
+  export interface NotificationInstance extends NotificationOptions {
+    write: (onClick?: any, onTimeout?: any) => void
+  }
+
+  /**
+   * A NotificationFactory (pure function) constructor
+   */
+  export interface NotificationFactory extends Stamp {
+    /**
+     * @constructor
+     * @param {project.AlfredError | NotificationOptions} output
+     */
+    (output: project.AlfredError | NotificationOptions): NotificationInstance
+  }
+}
+
+declare namespace todoist {
+  export type locale =
+    | 'da'
+    | 'de'
+    | 'en'
+    | 'es'
+    | 'fr'
+    | 'it'
+    | 'ja'
+    | 'ko'
+    | 'nl'
+    | 'pl'
+    | 'pt'
+    | 'ru'
+    | 'sv'
+    | 'zh'
+
+  /**
+   * An instance of a AdapterFactory
+   */
+  export interface AdapterInstance {
+    /**
+     * The resource type.
+     */
+    type: 'task' | 'project' | 'label'
+
+    /**
+     * The todoist api url
+     */
+    uri: string
+
+    /**
+     * The API token.
+     */
+    token: string
+
+    /**
+     * A pre-configured got object
+     */
+    got: any
+
+    /**
+     * Returns items of a type based on a query. Returns all items when qeurr
+     * is falsy.
+     *
+     * @param {string} query
+     * @param {string} [key='content']
+     * @returns {Promise<any>}
+     */
+    query: (query: string, key: string) => Promise<any>
+
+    /**
+     * POST an item of a type to Todoist
+     *
+     * @param {*} data
+     * @returns {Promise<any>}
+     */
+    create: (data: any) => Promise<any>
+
+    /**
+     * POST an item of a type to Todoist replacing a known value
+     *
+     * @param {number} id
+     * @param {*} data
+     * @returns {Promise<any>}
+     */
+    update: (id: number, data: any) => Promise<any>
+
+    /**
+     * API call to delete a single item.
+     *
+     * @param {number} id
+     * @returns {Promise<any>}
+     */
+    remove: (id: number) => Promise<any>
+  }
+
+  /**
+   * An AdapterFactory (pure function) constructor
+   */
+  export interface AdapterFactory extends Stamp {
     /**
      * @constructor
      */
-    init: (output: project.AlfredError | NotificationOptions) => void
-    write: (onClick?: any, onTimeout?: any) => void
+    ({ type, uri, token }: { type: string; uri: string; token: string }): AdapterInstance
+  }
+
+  /**
+   * An instance of a TaskAdapterFactory
+   */
+  export interface TaskAdapterInstance extends AdapterInstance {
+    /**
+     * Find a task by it's id.
+     *
+     * @param {number} id
+     * @returns A task instance
+     */
+    find: (id: number) => Promise<any>
+
+    /**
+     * Get all tasks
+     *
+     * @returns All tasks
+     */
+    findAll: () => Promise<any>
+
+    /**
+     * Retrieve a tasks labels an projects by id.
+     *
+     * @param {todoist.TaskAdapterInstance} this
+     * @param {todoist.Task} task
+     * @returns {Promise<todoist.Task>}
+     */
+    getRelationships: (task: todoist.Task) => Promise<todoist.Task>
+  }
+
+  /**
+   * A TaskAdapterFactory (pure function) constructor
+   */
+  export interface TaskAdapterFactory extends AdapterFactory {
+    /**
+     * @constructor
+     */
+    ({ type, uri, token }: { type: string; uri: string; token: string }): TaskAdapterInstance
+  }
+
+  /**
+   * An instance of a ProjectAdapterFactory
+   */
+  export interface ProjectAdapterInstance extends AdapterInstance {
+    /**
+     * Find a project by it's id.
+     *
+     * @param {number} id
+     * @returns A project instance
+     */
+    find: (id: number) => Promise<any>
+
+    /**
+     * Get all projects
+     *
+     * @returns All projects
+     */
+    findAll: () => Promise<any>
+  }
+
+  /**
+   * A ProjectAdapterFactory (pure function) constructor
+   */
+  export interface ProjectAdapterFactory extends AdapterFactory {
+    /**
+     * @constructor
+     */
+    ({ type, uri, token }: { type: string; uri: string; token: string }): ProjectAdapterInstance
+  }
+
+  /**
+   * An instance of a LabelAdapterFactory
+   */
+  export interface LabelAdapterInstance extends AdapterInstance {
+    /**
+     * Find a label by it's id.
+     *
+     * @param {number} id
+     * @returns A label instance
+     */
+    find: (id: number) => Promise<any>
+
+    /**
+     * Get all labels
+     *
+     * @returns All labels
+     */
+    findAll: () => Promise<any>
+  }
+
+  /**
+   * A LabelAdapterFactory (pure function) constructor
+   */
+  export interface LabelAdapterFactory extends AdapterFactory {
+    /**
+     * @constructor
+     */
+    ({ type, uri, token }: { type: string; uri: string; token: string }): LabelAdapterInstance
+  }
+
+  /**
+   * An instance of a QueryFactory
+   */
+  export interface QueryInstance {
+    query: string
+    locale: locale
+    parsed: any
+    parse: () => Promise<void>
+  }
+
+  /**
+   * A QueryFactory (pure function) constructor
+   */
+  export interface QueryFactory extends Stamp {
+    /**
+     * @constructor
+     */
+    ({ query, locale }: { query: string; locale: todoist.locale }): QueryInstance
+  }
+
+  /**
+   * A todoist task as the todoist API expects it
+   */
+  export interface RequestTask {
+    /**
+     * Task content.
+     */
+    content: string
+
+    /**
+     * Task project id. If not set, task is put to user’s Inbox.
+     */
+    project_id?: number
+
+    /**
+     * Non-zero integer value used by clients to sort tasks inside project.
+     */
+    order?: number
+
+    /**
+     * Ids of labels associated with the task.
+     */
+    label_ids?: number[]
+
+    /**
+     * Task priority from 1 (normal) to 4 (urgent).
+     */
+    priority?: number
+
+    /**
+     * [Human defined]{@link https://todoist.com/Help/DatesTimes} task due date (ex.: “next Monday”, “Tomorrow”). Value is set using local (not UTC) time.
+     */
+    due_string?: string
+
+    /**
+     * Specific date in YYYY-MM-DD format relative to user’s timezone.
+     */
+    due_date?: string
+
+    /**
+     * Specific date and time in [RFC3339]{@link https://www.ietf.org/rfc/rfc3339.txt} format in UTC.
+     */
+    due_datetime?: string
+
+    /**
+     * 2-letter code specifying language in case due_string is not written in
+     * English.
+     */
+    due_lang?: string
+  }
+
+  /**
+   * A todoist task as received by the todoist API
+   */
+  export interface ResponseTask {
+    comment_count?: number
+    completed?: boolean
+    content: string
+    due?: {
+      date?: string
+      recurring?: boolean
+      datetime?: string
+      string?: string
+      timezone?: string
+    }
+    id?: number
+    order?: number
+    indent?: number
+    priority?: number
+    project_id?: number
+    url?: string
+  }
+
+  /**
+   * A todoist task interface
+   */
+  export interface Task extends RequestTask, ResponseTask {
+    [index: string]:
+      | undefined
+      | string
+      | number
+      | number[]
+      | boolean
+      | Label[]
+      | Project
+      | {
+          date?: string
+          recurring?: boolean
+          datetime?: string
+          string?: string
+          timezone?: string
+        }
+    project?: Project
+    labels?: Label[]
+  }
+
+  /**
+   * An instance of a TaskFactory
+   */
+  export interface TaskInstance extends Task {}
+
+  /**
+   * A TaskFactory (pure function) constructor
+   */
+  export interface TaskFactory extends Stamp {
+    /**
+     * @constructor
+     */
+    (task: todoist.Task): TaskInstance
+  }
+
+  /**
+   * An instance of a TaskListFactory
+   */
+  export interface TaskListInstance extends workflow.ListInstance {}
+
+  /**
+   * A TaskListFactory (pure function) constructor
+   */
+  export interface TaskListFactory extends workflow.ListFactory {
+    /**
+     * @constructor
+     */
+    (
+      { tasks, action, locale }: { tasks: todoist.Task[]; action: string; locale: todoist.locale }
+    ): TaskListInstance
+  }
+
+  export interface Project {
+    [index: string]: string | number
+    name: string
+    id: number
+  }
+
+  /**
+   * An instance of a ProjectFactory
+   */
+  export interface ProjectInstance extends Project {}
+
+  /**
+   * A ProjectFactory (pure function) constructor
+   */
+  export interface ProjectFactory extends Stamp {
+    /**
+     * @constructor
+     */
+    (project: todoist.Project): ProjectInstance
+  }
+
+  /**
+   * An instance of a ProjectListFactory
+   */
+  export interface ProjectListInstance extends workflow.ListInstance {}
+
+  /**
+   * A ProjectListFactory (pure function) constructor
+   */
+  export interface ProjectListFactory extends workflow.ListFactory {
+    /**
+     * @constructor
+     */
+    ({ projects, query }: { projects: todoist.Project[]; query: string }): ProjectListInstance
+  }
+
+  export interface ProjectList extends workflow.ListInstance {}
+
+  export interface Label {
+    [index: string]: string | number
+    name: string
+    id: number
+  }
+  /**
+   * An instance of a LabelFactory
+   */
+  export interface LabelInstance extends Label {}
+
+  /**
+   * A LabelFactory (pure function) constructor
+   */
+  export interface LabelFactory extends Stamp {
+    /**
+     * @constructor
+     */
+    (label: todoist.Label): LabelInstance
+  }
+
+  /**
+   * An instance of a LabelListFactory
+   */
+  export interface LabelListInstance extends workflow.ListInstance {}
+
+  /**
+   * A LabelListFactory (pure function) constructor
+   */
+  export interface LabelListFactory extends workflow.ListFactory {
+    /**
+     * @constructor
+     */
+    ({ labels, query }: { labels: todoist.Label[]; query: string }): LabelListInstance
+  }
+
+  export interface LabelList extends workflow.ListInstance {}
+
+  /**
+   * A lexed token.
+   */
+  export interface Token {
+    type: string
+    value: string
+    toString: () => string
+  }
+
+  export interface ParsedTask {
+    content: string
+    priority?: number
+    due_string?: string
+    project?: string
+    labels?: string[]
   }
 }
 

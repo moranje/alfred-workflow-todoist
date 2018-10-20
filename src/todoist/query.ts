@@ -1,35 +1,21 @@
-import { LabelList } from '@/todoist/label';
-import parser from '@/todoist/parser';
-import { ProjectList } from '@/todoist/project';
-import { LabelAdapter, ProjectAdapter } from '@/todoist/rest-api-v8';
-import { Task, TaskList } from '@/todoist/task';
-import { Item, List } from '@/workflow';
 import { getSetting } from '@/project/settings';
+import todoist, { LabelAdapter, LabelList, parser, ProjectAdapter, ProjectList, Task, TaskList } from '@/todoist';
+import workflow, { Item, List } from '@/workflow';
 import compose from 'stampit';
 
-interface ParsedTask {}
-
-export function init(query: string, locale: string) {
-  let parsed = parser(query)
-
-  if (parsed.last().type === 'project') {
-    return showProjects(query)
-  } else if (parsed.last().type === 'label') {
-    return showLabels(query)
-  } else if (parsed.last().type === 'priority') {
-    return showPriorities(query)
-  }
-
-  return Promise.resolve(createTask(parsed, locale))
-}
-
-function createTask(parsed: ParsedTask, locale: string) {
+/**
+ * @hidden
+ */
+function createTask(parsed: todoist.ParsedTask, locale: string) {
   let task = Task(parsed)
   let taskList = TaskList({ tasks: [task], action: 'CREATE', locale })
 
   return taskList.write()
 }
 
+/**
+ * @hidden
+ */
 async function showProjects(query: string) {
   let project = query.replace(/^.*#/, '').replace(/\[|\]/g, '')
   let projects = await ProjectAdapter({ token: getSetting('token') }).query(project, 'name')
@@ -37,6 +23,9 @@ async function showProjects(query: string) {
   return ProjectList({ projects, query }).write()
 }
 
+/**
+ * @hidden
+ */
 async function showLabels(query: string) {
   let label = query.replace(/^.*@/, '')
   let labels = await LabelAdapter({ token: getSetting('token') }).query(label, 'name')
@@ -44,6 +33,9 @@ async function showLabels(query: string) {
   return LabelList({ labels, query }).write()
 }
 
+/**
+ * @hidden
+ */
 function showPriorities(query: string) {
   let priority = query.replace(/^.*?!!/, '').replace(/^.*?p/, '')
   let priorityNames: { [index: string]: string } = {
@@ -52,10 +44,11 @@ function showPriorities(query: string) {
     '3': 'medium',
     '4': 'low'
   }
-  let Priority = compose(
+
+  const Priority: workflow.PriorityFactory = compose(
     Item,
     {
-      init(this: workflow.Item, title: number) {
+      init(this: workflow.ItemInstance, title: number) {
         this.title = `${title}`
         this.subtitle = `Set priority to ${priorityNames[`${title}`]}`
         this.autocomplete = `${query
@@ -74,3 +67,25 @@ function showPriorities(query: string) {
     items: [Priority(1), Priority(2), Priority(3), Priority(4)]
   }).write()
 }
+
+export const Query: todoist.QueryFactory = compose({
+  init(this: todoist.QueryInstance, { query, locale }: { query: string; locale: todoist.locale }) {
+    this.query = query
+    this.locale = locale || 'en'
+    this.parsed = parser(query)
+  },
+
+  methods: {
+    parse(this: todoist.QueryInstance) {
+      if (this.parsed.last().type === 'project') {
+        return showProjects(this.query)
+      } else if (this.parsed.last().type === 'label') {
+        return showLabels(this.query)
+      } else if (this.parsed.last().type === 'priority') {
+        return showPriorities(this.query)
+      }
+
+      return Promise.resolve(createTask(this.parsed, this.locale))
+    }
+  }
+})

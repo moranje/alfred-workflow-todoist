@@ -1,26 +1,21 @@
-import { Label } from '@/todoist/label'
-import { Project } from '@/todoist/project'
-import { init } from '@/todoist/query'
-import { LabelAdapter, ProjectAdapter, TaskAdapter } from '@/todoist/rest-api-v8'
-import { Task, TaskList } from '@/todoist/task'
-import { Notification } from '@/workflow/notification'
-import { edit, getSetting, getSettings, list, update } from '@/project/settings'
-import { Item, List } from '@/workflow'
-import omit from 'lodash.omit'
-import compose from 'stampit'
-import { removeObject } from '@/project/cache'
+import { removeObject } from '@/project/cache';
+import { edit, getSetting, getSettings, list, update } from '@/project/settings';
+import todoist, { LabelAdapter, ProjectAdapter, Query, TaskAdapter, TaskList } from '@/todoist';
+import { Item, List, Notification } from '@/workflow';
+import omit from 'lodash.omit';
+import compose from 'stampit';
 
 interface Workflow {}
 
-async function replaceNamesWithIds(task: Task) {
+async function replaceNamesWithIds(task: todoist.Task) {
   let allProjects = await ProjectAdapter({ token: getSetting('token') }).findAll()
   let allLabels = await LabelAdapter({ token: getSetting('token') }).findAll()
 
   if (task && task.labels) {
     Object.assign(task, { label_ids: [] }, task)
 
-    task.labels.forEach((label: Label) => {
-      let matchedLabel = allLabels.find((aLabel: Label) => aLabel.name === `${label}`)
+    task.labels.forEach((label: todoist.Label) => {
+      let matchedLabel = allLabels.find((aLabel: todoist.Label) => aLabel.name === `${label}`)
 
       // @ts-ignore: is properly checked as far a I can see
       if (matchedLabel) task.label_ids.push(matchedLabel.id)
@@ -28,7 +23,7 @@ async function replaceNamesWithIds(task: Task) {
   }
 
   if (task && task.project) {
-    let matchedProject = allProjects.find((aProject: Project) => {
+    let matchedProject = allProjects.find((aProject: todoist.Project) => {
       // @ts-ignore: object is possibly undefined
       return aProject.name === task.project
     })
@@ -63,12 +58,10 @@ export const TodoistWorkflow = compose({
     },
 
     create(this: Workflow, query: string) {
-      // @ts-ignore: don't know how to express this in typescript but this will
-      // be a string
-      return init(query, getSetting('language'))
+      return Query(query, getSetting('language')).parse()
     },
 
-    async submit(this: Workflow, task: Task) {
+    async submit(this: Workflow, task: todoist.Task) {
       let apiTask = await replaceNamesWithIds(task)
       let { statusCode, body } = await TaskAdapter({ token: getSetting('token') }).create(apiTask)
       await TaskAdapter({ token: getSetting('token') }).find(body.id)
@@ -86,7 +79,7 @@ export const TodoistWorkflow = compose({
       }).write()
     },
 
-    async remove(this: Workflow, task: Task) {
+    async remove(this: Workflow, task: todoist.Task) {
       let { statusCode } = await TaskAdapter({ token: getSetting('token') }).remove(task.id)
 
       if (statusCode === 204) {

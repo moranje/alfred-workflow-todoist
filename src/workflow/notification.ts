@@ -1,21 +1,19 @@
-import { AlfredError } from '@/project';
+import project, { AlfredError } from '@/project';
+import workflow from '@/workflow';
 import omit from 'lodash.omit';
 import notifier from 'node-notifier';
 import open from 'opn';
 import osName from 'os-name';
 import compose from 'stampit';
 
-const NOTIFICATION_DEFAULTS = {
+const NOTIFICATION_DEFAULTS: workflow.NotificationOptions = {
   title: 'ALFRED WORKFLOW TODOIST',
   subtitle: '✓ Happy days!',
   message: "There's nothing to say.",
   sound: false,
   icon: `${process.cwd()}/icon.png`,
   contentImage: '',
-  open: void 0,
-  wait: void 0,
   timeout: 5,
-  closeLabel: void 0,
   actions: '',
   dropdownLabel: '',
   reply: false
@@ -83,7 +81,12 @@ function notification(
   })
 }
 
-export const Notification = compose({
+/**
+ * An alfred notification
+ *
+ * @hidden
+ */
+export const Notification: workflow.NotificationFactory = compose({
   /**
    * @constructor
    * @param {(project.AlfredError | workflow.NotificationOptions)} output

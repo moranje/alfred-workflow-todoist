@@ -1,45 +1,50 @@
-import { Writable } from '@/workflow';
+import workflow, { Writable } from '@/workflow';
 import md5 from 'md5';
 import compose from 'stampit';
 
-// **********************************************
-// Module
-// **********************************************
-
 /**
  * A workflow item.
+ *
+ * @hidden
  */
-export const Item = compose(
+export const Item: workflow.ItemFactory = compose(
   Writable,
   {
     /**
      * @constructor
-     * @param {Item} item
+     * @param {workflow.Item} item
      */
     init(
-      this: workflow.Item,
+      this: workflow.ItemInstance,
       {
-        uid = '',
-        arg = '',
+        uid = void 0,
+        title = '',
+        subtitle = void 0,
+        icon = { path: 'icon.png' },
+        arg = void 0,
         type = 'default',
         valid = true,
-        autocomplete = '',
-        title = '',
-        subtitle = '',
-        icon = { path: 'icon.png' }
+        autocomplete = void 0,
+        match = void 0,
+        mod = void 0,
+        text = void 0,
+        quicklookurl = void 0
       }
     ) {
       Object.assign(this, {
+        uid: uid || md5(this.title + this.subtitle),
+        title,
+        subtitle,
+        icon,
         arg: typeof 'object' ? JSON.stringify(arg) : arg,
         type,
         valid,
         autocomplete,
-        title,
-        subtitle,
-        icon
+        match,
+        mod,
+        text,
+        quicklookurl
       })
-
-      this.uid = uid || md5(this.title + this.subtitle)
     }
   }
 )

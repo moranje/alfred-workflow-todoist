@@ -1,6 +1,5 @@
 import { AlfredError } from '@/project';
-import { Label } from '@/todoist/label';
-import { Project } from '@/todoist/project';
+import todoist from '@/todoist';
 import { Item, List, View } from '@/workflow';
 import formatDistance from 'date-fns/formatDistance';
 import { de, enUS, es, fr, it, nl, ptBR, ru, sv, zhCN } from 'date-fns/locale';
@@ -10,23 +9,8 @@ import compose from 'stampit';
 // import ko from 'date-fns/locale/ko'
 // import pl from 'date-fns/locale/pl'
 // import ja from 'date-fns/locale/ja';
-export type locale =
-  | 'da'
-  | 'de'
-  | 'en'
-  | 'es'
-  | 'fr'
-  | 'it'
-  | 'ja'
-  | 'ko'
-  | 'nl'
-  | 'pl'
-  | 'pt'
-  | 'ru'
-  | 'sv'
-  | 'zh'
 
-const locales = {
+const LOCALES = {
   da: enUS,
   de,
   en: enUS,
@@ -43,44 +27,8 @@ const locales = {
   zh: zhCN
 }
 
-export interface Task {
-  [index: string]:
-    | undefined
-    | string
-    | number
-    | number[]
-    | Label[]
-    | Project
-    | {
-        date?: string
-        recurring?: boolean
-        datetime?: string
-        string?: string
-        timezone?: string
-      }
-  content: string
-  due?: {
-    date?: string
-    recurring?: boolean
-    datetime?: string
-    string?: string
-    timezone?: string
-  }
-  due_string?: string
-  due_lang?: string
-  id?: number
-  label_ids?: number[]
-  project_id?: number
-  url?: string
-  priority?: number
-  project?: Project
-  labels?: Label[]
-}
-
-export interface TaskList extends workflow.List {}
-
-export const Task = compose({
-  init(this: Task, task: Task = { content: '' }) {
+export const Task: todoist.TaskFactory = compose({
+  init(this: todoist.ResponseTask, task: todoist.ResponseTask = { content: '' }) {
     if (!task.content || task.content === '') {
       throw new AlfredError(`A task must have a content (${task.content}) property`)
     }
@@ -89,20 +37,20 @@ export const Task = compose({
   }
 })
 
-export const TaskList = compose(
+export const TaskList: todoist.TaskListFactory = compose(
   List,
   {
     init(
-      this: workflow.List,
+      this: todoist.TaskListInstance,
       {
         tasks = [],
         action = 'COMPLETE',
         locale = 'en'
-      }: { tasks: Task[]; action: string; locale: locale }
+      }: { tasks: todoist.Task[]; action: string; locale: todoist.locale }
     ) {
-      tasks.forEach((task: Task) => {
+      tasks.forEach((task: todoist.Task) => {
         const { content, project, labels = [], priority, due, due_string } = task
-        let view: workflow.View = View()
+        let view = View()
         let name = (project && project.name) || ''
         let date: Date
 
@@ -131,7 +79,7 @@ export const TaskList = compose(
                 date,
                 `${ws(10)}\u29D6 ${formatDistance(date, new Date(), {
                   addSuffix: true,
-                  locale: locales[locale]
+                  locale: LOCALES[locale]
                 })}`,
                 ''
               )}${when(due_string, `${ws(10)}\u29D6 ${due_string}`, '')}`

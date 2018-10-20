@@ -1,4 +1,4 @@
-import parser from '@/todoist/parser'
+import { parser } from '@/todoist/parser';
 
 describe('Unit: Parser', () => {
   it('should parse every content character as a single token', () => {

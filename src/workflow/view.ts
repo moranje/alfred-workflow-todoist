@@ -1,14 +1,16 @@
+import workflow from '@/workflow';
 import compose from 'stampit';
 
-export const View = compose({
+/**
+ * @hidden
+ */
+export const View: workflow.ViewFactory = compose({
   /**
    * @constructor
    */
-  init(this: workflow.View) {
+  init(this: workflow.ViewInstance) {
     this.upperCase = (text: string) => text.toUpperCase()
-
     this.lowerCase = (text: string) => text.toLowerCase()
-
     this.sentenceCase = (text: string) => text.charAt(0).toUpperCase() + text.substring(1)
 
     this.when = (condition: any, truthy: string, falsy: string) => {
@@ -32,7 +34,7 @@ export const View = compose({
      *    helpers
      * @returns string
      */
-    template(this: workflow.View, fn: () => string) {
+    template(this: workflow.ViewInstance, fn: () => string) {
       return fn.call(this, {
         upperCase: this.upperCase,
         lowerCase: this.lowerCase,

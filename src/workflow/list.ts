@@ -1,19 +1,18 @@
-import { Writable } from '@/workflow';
+import workflow, { Writable } from '@/workflow';
 import compose from 'stampit';
 
-export const List = compose(
+/**
+ * @hidden
+ */
+export const List: workflow.ListFactory = compose(
   Writable,
   {
-    props: {
-      items: []
-    },
-
     /**
      * @constructor
-     * @param {List} list
+     * @param {workflow.ListInstance} list
      */
-    init(this: workflow.List, { items = [] }: { items: any }) {
-      this.items = items || []
+    init(this: workflow.ListInstance, { items = [] }: { items: workflow.Item[] | undefined }) {
+      this.items = items
     }
   }
 )

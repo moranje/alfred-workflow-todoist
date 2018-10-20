@@ -1,9 +1,8 @@
 import { AlfredError } from '@/project';
 import { files } from '@/project/files';
 import { SETTINGS_PATH } from '@/project/references';
-import { Item, List, uuid } from '@/workflow';
-import { Notification } from '@/workflow/notification';
 import { Schema } from '@/project/settings-schema';
+import workflow, { Item, List, Notification, uuid } from '@/workflow';
 import AJV from 'ajv';
 import compose from 'stampit';
 import writeJsonFile from 'write-json-file';
@@ -21,9 +20,10 @@ export interface Settings {
 const ajv = new AJV({ allErrors: true })
 
 const SettingsList = compose(
+  
   List,
   {
-    init(this: workflow.List, { settings }: { settings: Settings }) {
+    init(this: workflow.ListInstance, { settings }: { settings: Settings }) {
       this.items = this.items || []
 
       Object.keys(Schema.properties).forEach((key: string) => {
@@ -43,10 +43,11 @@ const SettingsList = compose(
 )
 
 const SettingList = compose(
+  
   List,
   {
     init(
-      this: workflow.List,
+      this: workflow.ListInstance,
       {
         key = '',
         value = '',
@@ -188,7 +189,7 @@ export function getSettings(): Settings {
   return castSettingTypes(Object.assign(createDefault(), files.settings))
 }
 
-export function getSetting(setting: string): primitiveNonEmpty {
+export function getSetting(setting: string) {
   let settings = getSettings()
 
   return settings[setting]

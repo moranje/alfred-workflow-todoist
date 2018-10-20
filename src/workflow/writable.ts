@@ -1,16 +1,16 @@
-import { Notification } from '@/workflow';
+import workflow, { Notification } from '@/workflow';
 import compose from 'stampit';
 
 /**
- * A way to autmatically format stdout input
+ * A mixin to automatically format stdout input
  *
- * @exports Writable
+ * @hidden
  */
-export const Writable = compose({
+export const Writable: workflow.WritableFactory = compose({
   /**
    * @constructor
    */
-  init(this: workflow.Writable) {
+  init(this: workflow.WritableInstance) {
     // Private methods
     this.object = (arg: Object) => JSON.stringify(arg)
   },
@@ -21,11 +21,10 @@ export const Writable = compose({
      *
      * @param {any[]} params
      */
-    write(this: workflow.Writable, ...params: any[]) {
+    write(this: workflow.WritableInstance, ...params: any[]) {
       const args: any[] = params.length > 0 ? params : [this]
 
       const mapped: string[] = args.map((arg: any) => {
-        // @ts-ignore: should implement a real AlfreError
         if (arg instanceof Error) return Notification(arg).write()
 
         if (typeof arg === 'object') return this.object(arg)

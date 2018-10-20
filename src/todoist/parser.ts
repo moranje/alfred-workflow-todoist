@@ -1,14 +1,8 @@
-import * as grammar from '@/todoist/grammar'
-import { Task } from '@/todoist/task'
-import nearley from 'nearley'
+import todoist from '@/todoist';
+import * as grammar from '@/todoist/grammar';
+import nearley from 'nearley';
 
-interface Token {
-  type: string
-  value: string
-  toString: () => string
-}
-
-export default function(text: string) {
+export function parser(text: string) {
   const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar))
 
   parser.feed(text)
@@ -16,7 +10,10 @@ export default function(text: string) {
   return organize(parser.results)
 }
 
-function organize([results]: Token[][]) {
+/**
+ * @hidden
+ */
+function organize([results]: todoist.Token[][]) {
   // Defaults
   let tokens: { [index: string]: any } = {
     content: '<Give a name to this task>',
@@ -47,7 +44,7 @@ function organize([results]: Token[][]) {
   })
 
   return Object.assign(tokens, {
-    toJSON(this: Task) {
+    toJSON(this: todoist.Task) {
       return {
         content: this.content,
         priority: +(this.priority || 1),
