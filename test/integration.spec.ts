@@ -20,6 +20,7 @@ describe('Integration:', () => {
 
   describe('Find task(s)', () => {
     it('should find tasks from cache', async () => {
+      expect.assertions(5)
       await TodoistWorkflow().read()
 
       let items = JSON.parse(spy.mock.calls[0][0]).items
@@ -31,6 +32,7 @@ describe('Integration:', () => {
     })
 
     it('should filter tasks based on query', async () => {
+      expect.assertions(3)
       await TodoistWorkflow().read('thing')
 
       let items = JSON.parse(spy.mock.calls[0][0]).items
@@ -41,9 +43,10 @@ describe('Integration:', () => {
   })
 
   describe('Create task', () => {
-    it('should return a parsed JSON response', () => {
+    it('should return a parsed JSON response', async () => {
+      expect.assertions(1)
       let query = 'Get milk @15min @at_home #Work p1, tomorrow'
-      TodoistWorkflow().create(query)
+      await TodoistWorkflow().create(query)
 
       let items = JSON.parse(spy.mock.calls[0][0]).items
       expect(JSON.parse(items[0].arg)).toEqual({

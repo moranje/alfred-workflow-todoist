@@ -4,7 +4,7 @@
   "description": "",
   "keywords": [],
   "main": "dist/workflow/alfred-workflow-todoist.js",
-  "typings": "dist/types/alfred-workflow-todoist.d.ts",
+  "typings": "src/typings.d.ts",
   "files": [
     "dist"
   ],

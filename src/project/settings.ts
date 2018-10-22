@@ -2,7 +2,7 @@ import { AlfredError } from '@/project';
 import { files } from '@/project/files';
 import { SETTINGS_PATH } from '@/project/references';
 import { Schema } from '@/project/settings-schema';
-import workflow, { Item, List, Notification, uuid } from '@/workflow';
+import { Item, List, Notification, uuid } from '@/workflow';
 import AJV from 'ajv';
 import compose from 'stampit';
 import writeJsonFile from 'write-json-file';
@@ -20,7 +20,6 @@ export interface Settings {
 const ajv = new AJV({ allErrors: true })
 
 const SettingsList = compose(
-  
   List,
   {
     init(this: workflow.ListInstance, { settings }: { settings: Settings }) {
@@ -43,7 +42,6 @@ const SettingsList = compose(
 )
 
 const SettingList = compose(
-  
   List,
   {
     init(

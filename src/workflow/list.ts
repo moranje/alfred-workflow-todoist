@@ -1,4 +1,4 @@
-import workflow, { Writable } from '@/workflow';
+import { Writable } from '@/workflow';
 import compose from 'stampit';
 
 /**

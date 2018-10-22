@@ -1,6 +1,5 @@
 import { AlfredError } from '@/project';
-import todoist from '@/todoist';
-import workflow, { Item, List } from '@/workflow';
+import { Item, List } from '@/workflow';
 import compose from 'stampit';
 
 export const Label: todoist.LabelFactory = compose({
@@ -22,7 +21,6 @@ export const Label: todoist.LabelFactory = compose({
 })
 
 export const LabelList: todoist.LabelListFactory = compose(
-  
   List,
   {
     init(

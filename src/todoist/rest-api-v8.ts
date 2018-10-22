@@ -1,5 +1,5 @@
 import { cache } from '@/project/cache';
-import todoist, { Label, Project, Task } from '@/todoist';
+import { Label, Project, Task } from '@/todoist';
 import { uuid } from '@/workflow';
 import { filter } from 'fuzzaldrin';
 import got from 'got';

@@ -1,5 +1,4 @@
 import { AlfredError } from '@/project';
-import todoist from '@/todoist';
 import { Item, List, View } from '@/workflow';
 import formatDistance from 'date-fns/formatDistance';
 import { de, enUS, es, fr, it, nl, ptBR, ru, sv, zhCN } from 'date-fns/locale';

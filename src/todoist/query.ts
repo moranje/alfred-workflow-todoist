@@ -1,12 +1,12 @@
 import { getSetting } from '@/project/settings';
-import todoist, { LabelAdapter, LabelList, parser, ProjectAdapter, ProjectList, Task, TaskList } from '@/todoist';
-import workflow, { Item, List } from '@/workflow';
+import { LabelAdapter, LabelList, parser, ProjectAdapter, ProjectList, Task, TaskList } from '@/todoist';
+import { Item, List } from '@/workflow';
 import compose from 'stampit';
 
 /**
  * @hidden
  */
-function createTask(parsed: todoist.ParsedTask, locale: string) {
+function createTask(parsed: todoist.Parsed, locale: string) {
   let task = Task(parsed)
   let taskList = TaskList({ tasks: [task], action: 'CREATE', locale })
 
@@ -77,11 +77,11 @@ export const Query: todoist.QueryFactory = compose({
 
   methods: {
     parse(this: todoist.QueryInstance) {
-      if (this.parsed.last().type === 'project') {
+      if (this.parsed && this.parsed.last('type') === 'project') {
         return showProjects(this.query)
-      } else if (this.parsed.last().type === 'label') {
+      } else if (this.parsed && this.parsed.last('type') === 'label') {
         return showLabels(this.query)
-      } else if (this.parsed.last().type === 'priority') {
+      } else if (this.parsed && this.parsed.last('type') === 'priority') {
         return showPriorities(this.query)
       }
 

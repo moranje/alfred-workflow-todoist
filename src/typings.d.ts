@@ -1,4 +1,295 @@
-import { Stamp } from 'stampit';
+/******************************************************************************
+ * COPIED FROM STAMPIT DECLARATION FILE
+ *
+ * Importing it would turn this file into a module which means sepearte imports
+ * for each interface. That ins't a problem per se but it also breaks jest. For
+ * now this is an acceptable workaround.
+ *****************************************************************************/
+
+/**
+ * Function used as .init() argument.
+ */
+type Init = (factoryArg: any, ctx?: Context) => any
+
+/** The stamp Descriptor */
+interface Descriptor {
+  /** Create a new stamp based on this descriptor */
+  (...composables: Composable[]): stampit.Stamp
+  /**
+   * A hash containing methods (functions) of any future created instance.
+   */
+  methods?: {}
+  /**
+   * Initialization function(s) which will be called per each newly created
+   * instance.
+   */
+  initializers?: Init[]
+  /**
+   * Properties which will shallowly copied into any future created instance.
+   */
+  properties?: {}
+  /**
+   * Properties which will be mixed to the new and any other stamp which this stamp will be composed with.
+   */
+  staticProperties?: {}
+  /** Deeply merged properties of object instances */
+  deepProperties?: {}
+  /** ES5 Property Descriptors applied to object instances */
+  propertyDescriptors?: {}
+  /** Deeply merged properties of Stamps */
+  staticDeepProperties?: {}
+  /** ES5 Property Descriptors applied to Stamps */
+  staticPropertyDescriptors?: {}
+  /** A configuration object to be shallowly assigned to Stamps */
+  configuration?: {}
+  /** A configuration object to be deeply merged to Stamps */
+  deepConfiguration?: {}
+}
+
+/** Any composable object (stamp or descriptor) */
+type Composable = stampit.Stamp | Descriptor
+
+/**
+ * The .init() function argument.
+ */
+interface Context {
+  /**
+   * The object which has been just instantiated.
+   */
+  instance: any
+
+  /**
+   * The stamp the object has been instantiated with.
+   */
+  stamp: stampit.Stamp
+
+  /**
+   * The arguments list passed to the stamp.
+   */
+  args: any[]
+}
+
+declare namespace stampit {
+  /**
+   * A factory function that will produce new objects using the
+   * prototypes that are passed in or composed.
+   */
+  interface Stamp {
+    /**
+     * Invokes the stamp and returns a new object instance.
+     * @param state Properties you wish to set on the new objects.
+     * @param encloseArgs The remaining arguments are passed to all .enclose() functions.
+     * WARNING Avoid using two different .enclose() functions that expect different arguments.
+     * .enclose() functions that take arguments should not be considered safe to compose
+     * with other .enclose() functions that also take arguments. Taking arguments with
+     * an .enclose() function is an anti-pattern that should be avoided, when possible.
+     * @return A new object composed of the Stamps and prototypes provided.
+     */
+    (state?: {}, ...encloseArgs: any[]): any
+
+    /**
+     * Just like calling stamp(), stamp.create() invokes the stamp and returns a new instance.
+     * @param state Properties you wish to set on the new objects.
+     * @param encloseArgs The remaining arguments are passed to all .enclose() functions.
+     * WARNING Avoid using two different .enclose() functions that expect different arguments.
+     * .enclose() functions that take arguments should not be considered safe to compose
+     * with other .enclose() functions that also take arguments. Taking arguments with
+     * an .enclose() function is an anti-pattern that should be avoided, when possible.
+     * @return A new object composed of the Stamps and prototypes provided.
+     */
+    create(state?: {}, ...encloseArgs: any[]): any
+
+    /**
+     * Stamp metadata/composer function
+     */
+    compose: Descriptor
+
+    /**
+     * Add methods to the methods prototype.  Creates and returns new Stamp. Chainable.
+     * @param methods Object(s) containing map of method names and bodies for delegation.
+     * @return A new Stamp.
+     */
+    methods(...methods: Array<{}>): Stamp
+
+    /**
+     * Take n objects and add them to the state prototype. Creates and returns new Stamp. Chainable.
+     * @param states Object(s) containing map of property names and values to clone for each new object.
+     * @return A new Stamp.
+     */
+    refs(...states: Array<{}>): Stamp
+
+    /**
+     * Take a variable number of objects and shallow assign them to any future
+     * created instance of the Stamp. Creates and returns new Stamp. Chainable.
+     * @param objects Object(s) to shallow assign for each new object.
+     * @return A new Stamp.
+     */
+    props(...objects: Array<{}>): Stamp
+
+    /**
+     * Take a variable number of objects and shallow assign them to any future
+     * created instance of the Stamp. Creates and returns new Stamp. Chainable.
+     * @param objects Object(s) to shallow assign for each new object.
+     * @return A new Stamp.
+     */
+    properties(...objects: Array<{}>): Stamp
+
+    /**
+     * Take a variable number of objects and deeply merge them to any future
+     * created instance of the Stamp. Creates and returns a new Stamp.
+     * Chainable.
+     * @param deepObjects The object(s) to deeply merge for each new object
+     * @returns A new Stamp
+     */
+    deepProps(...deepObjects: Array<{}>): Stamp
+
+    /**
+     * Take a variable number of objects and deeply merge them to any future
+     * created instance of the Stamp. Creates and returns a new Stamp.
+     * Chainable.
+     * @param deepObjects The object(s) to deeply merge for each new object
+     * @returns A new Stamp
+     */
+    deepProperties(...deepObjects: Array<{}>): Stamp
+
+    /**
+     * @deprecated Use .init() instead.
+     */
+    enclose(...functions: Init[]): Stamp
+
+    /**
+     * @deprecated Use .init() instead.
+     */
+    enclose(...functions: Array<{}>): Stamp
+
+    /**
+     * Take in a variable number of functions and add them to the enclose
+     * prototype as initializers.
+     * @param functions Initializer functions used to create private data and
+     * privileged methods
+     * @returns A new stamp
+     */
+    init(...functions: Init[]): Stamp
+
+    /**
+     * Take in a variable number of functions and add them to the enclose
+     * prototype as initializers.
+     * @param functions Initializer functions used to create private data and
+     * privileged methods
+     * @returns A new stamp
+     */
+    init(functions: Init[]): Stamp
+
+    /**
+     * Take in a variable number of functions and add them to the enclose
+     * prototype as initializers.
+     * @param functions Initializer functions used to create private data and
+     * privileged methods
+     * @returns A new stamp
+     */
+    initializers(...functions: Init[]): Stamp
+
+    /**
+     * Take in a variable number of functions and add them to the enclose
+     * prototype as initializers.
+     * @param functions Initializer functions used to create private data and
+     * privileged methods
+     * @returns A new stamp
+     */
+    initializers(functions: Init[]): Stamp
+
+    /**
+     * Take n objects and add them to a new stamp and any future stamp it composes with.
+     * Creates and returns new Stamp. Chainable.
+     * @param statics Object(s) containing map of property names and values to mixin into each new stamp.
+     * @return A new Stamp.
+     */
+    statics(...statics: Array<{}>): Stamp
+
+    /**
+     * Take n objects and add them to a new stamp and any future stamp it composes with.
+     * Creates and returns new Stamp. Chainable.
+     * @param statics Object(s) containing map of property names and values to mixin into each new stamp.
+     * @return A new Stamp.
+     */
+    staticProperties(...statics: Array<{}>): Stamp
+
+    /**
+     * Deeply merge a variable number of objects and add them to a new stamp and
+     * any future stamp it composes. Creates and returns a new Stamp. Chainable.
+     * @param deepStatics The object(s) containing static properties to be
+     * merged
+     * @returns A new stamp
+     */
+    deepStatics(...deepStatics: Array<{}>): Stamp
+
+    /**
+     * Deeply merge a variable number of objects and add them to a new stamp and
+     * any future stamp it composes. Creates and returns a new Stamp. Chainable.
+     * @param deepStatics The object(s) containing static properties to be
+     * merged
+     * @returns A new stamp
+     */
+    staticDeepProperties(...deepStatics: Array<{}>): Stamp
+
+    /**
+     * Shallowly assign properties of Stamp arbitrary metadata and add them to
+     * a new stamp and any future Stamp it composes. Creates and returns a new
+     * Stamp. Chainable.
+     * @param confs The object(s) containing metadata properties
+     * @returns A new Stamp
+     */
+    conf(...confs: Array<{}>): Stamp
+
+    /**
+     * Shallowly assign properties of Stamp arbitrary metadata and add them to
+     * a new stamp and any future Stamp it composes. Creates and returns a new
+     * Stamp. Chainable.
+     * @param confs The object(s) containing metadata properties
+     * @returns A new Stamp
+     */
+    configuration(...confs: Array<{}>): Stamp
+
+    /**
+     * Deeply merge properties of Stamp arbitrary metadata and add them to a new
+     * Stamp and any future Stamp it composes. Creates and returns a new Stamp.
+     * Chainable.
+     * @param deepConfs The object(s) containing metadata properties
+     * @returns A new Stamp
+     */
+    deepConf(...deepConfs: Array<{}>): Stamp
+
+    /**
+     * Deeply merge properties of Stamp arbitrary metadata and add them to a new
+     * Stamp and any future Stamp it composes. Creates and returns a new Stamp.
+     * Chainable.
+     * @param deepConfs The object(s) containing metadata properties
+     * @returns A new Stamp
+     */
+    deepConfiguration(...deepConfs: Array<{}>): Stamp
+
+    /**
+     * Apply ES5 property descriptors to object instances created by the new
+     * Stamp returned by the function and any future Stamp it composes. Creates
+     * and returns a new stamp. Chainable.
+     * @param descriptors
+     * @returns A new Stamp
+     */
+    propertyDescriptors(...descriptors: Array<{}>): Stamp
+
+    /**
+     * Apply ES5 property descriptors to a Stamp and any future Stamp it
+     * composes. Creates and returns a new stamp. Chainable.
+     * @param descriptors
+     * @returns A new Stamp
+     */
+    staticPropertyDescriptors(...descriptors: Array<{}>): Stamp
+  }
+}
+
+/**********************************************************
+ * WORKFLOW DECLARATIONS
+ *********************************************************/
 
 /**
  * @hidden
@@ -32,7 +323,7 @@ declare namespace workflow {
   /**
    * A WritableFactory (pure function) constructor
    */
-  export interface WritableFactory extends Stamp {
+  export interface WritableFactory extends stampit.Stamp {
     /**
      * @constructor
      */
@@ -109,7 +400,7 @@ declare namespace workflow {
   /**
    * A ViewFactory (pure function) constructor
    */
-  export interface ViewFactory extends Stamp {
+  export interface ViewFactory extends stampit.Stamp {
     /**
      * @constructor
      */
@@ -287,7 +578,7 @@ declare namespace workflow {
   /**
    * A ItemFactory (pure function) constructor
    */
-  export interface ItemFactory extends Stamp {
+  export interface ItemFactory extends stampit.Stamp {
     /**
      * @constructor
      * @param {Item} item
@@ -307,7 +598,7 @@ declare namespace workflow {
   /**
    * A ListFactory (pure function) constructor
    */
-  export interface ListFactory extends Stamp {
+  export interface ListFactory extends stampit.Stamp {
     /**
      * @constructor
      * @param {*} list
@@ -318,7 +609,7 @@ declare namespace workflow {
   /**
    * A PriorityFactory (pure function) constructor
    */
-  export interface PriorityFactory extends Stamp {
+  export interface PriorityFactory extends stampit.Stamp {
     /**
      * @constructor
      * @param {number} title
@@ -349,7 +640,7 @@ declare namespace workflow {
      * Case Sensitive string for location of sound file; or use one of macOS'
      * native sounds (see below)
      */
-    sound?: string
+    sound?: boolean
 
     /**
      * Absolute Path to Triggering Icon
@@ -413,7 +704,7 @@ declare namespace workflow {
   /**
    * A NotificationFactory (pure function) constructor
    */
-  export interface NotificationFactory extends Stamp {
+  export interface NotificationFactory extends stampit.Stamp {
     /**
      * @constructor
      * @param {project.AlfredError | NotificationOptions} output
@@ -502,7 +793,7 @@ declare namespace todoist {
   /**
    * An AdapterFactory (pure function) constructor
    */
-  export interface AdapterFactory extends Stamp {
+  export interface AdapterFactory extends stampit.Stamp {
     /**
      * @constructor
      */
@@ -519,23 +810,23 @@ declare namespace todoist {
      * @param {number} id
      * @returns A task instance
      */
-    find: (id: number) => Promise<any>
+    find: (id: number) => Promise<Task>
 
     /**
      * Get all tasks
      *
      * @returns All tasks
      */
-    findAll: () => Promise<any>
+    findAll: () => Promise<Task[]>
 
     /**
      * Retrieve a tasks labels an projects by id.
      *
-     * @param {todoist.TaskAdapterInstance} this
-     * @param {todoist.Task} task
-     * @returns {Promise<todoist.Task>}
+     * @param {TaskAdapterInstance} this
+     * @param {Task} task
+     * @returns {Promise<Task>}
      */
-    getRelationships: (task: todoist.Task) => Promise<todoist.Task>
+    getRelationships: (task: Task) => Promise<Task>
   }
 
   /**
@@ -558,14 +849,14 @@ declare namespace todoist {
      * @param {number} id
      * @returns A project instance
      */
-    find: (id: number) => Promise<any>
+    find: (id: number) => Promise<Project>
 
     /**
      * Get all projects
      *
      * @returns All projects
      */
-    findAll: () => Promise<any>
+    findAll: () => Promise<Project[]>
   }
 
   /**
@@ -588,14 +879,14 @@ declare namespace todoist {
      * @param {number} id
      * @returns A label instance
      */
-    find: (id: number) => Promise<any>
+    find: (id: number) => Promise<Label>
 
     /**
      * Get all labels
      *
      * @returns All labels
      */
-    findAll: () => Promise<any>
+    findAll: () => Promise<Label[]>
   }
 
   /**
@@ -621,11 +912,11 @@ declare namespace todoist {
   /**
    * A QueryFactory (pure function) constructor
    */
-  export interface QueryFactory extends Stamp {
+  export interface QueryFactory extends stampit.Stamp {
     /**
      * @constructor
      */
-    ({ query, locale }: { query: string; locale: todoist.locale }): QueryInstance
+    ({ query, locale }: { query: string; locale: locale }): QueryInstance
   }
 
   /**
@@ -720,8 +1011,8 @@ declare namespace todoist {
           string?: string
           timezone?: string
         }
-    project?: Project
-    labels?: Label[]
+    project?: ProjectInstance
+    labels?: LabelInstance[]
   }
 
   /**
@@ -732,11 +1023,11 @@ declare namespace todoist {
   /**
    * A TaskFactory (pure function) constructor
    */
-  export interface TaskFactory extends Stamp {
+  export interface TaskFactory extends stampit.Stamp {
     /**
      * @constructor
      */
-    (task: todoist.Task): TaskInstance
+    (task: Task): TaskInstance
   }
 
   /**
@@ -751,9 +1042,7 @@ declare namespace todoist {
     /**
      * @constructor
      */
-    (
-      { tasks, action, locale }: { tasks: todoist.Task[]; action: string; locale: todoist.locale }
-    ): TaskListInstance
+    ({ tasks, action, locale }: { tasks: Task[]; action: string; locale: locale }): TaskListInstance
   }
 
   export interface Project {
@@ -770,11 +1059,11 @@ declare namespace todoist {
   /**
    * A ProjectFactory (pure function) constructor
    */
-  export interface ProjectFactory extends Stamp {
+  export interface ProjectFactory extends stampit.Stamp {
     /**
      * @constructor
      */
-    (project: todoist.Project): ProjectInstance
+    (project: Project): ProjectInstance
   }
 
   /**
@@ -789,7 +1078,7 @@ declare namespace todoist {
     /**
      * @constructor
      */
-    ({ projects, query }: { projects: todoist.Project[]; query: string }): ProjectListInstance
+    ({ projects, query }: { projects: Project[]; query: string }): ProjectListInstance
   }
 
   export interface ProjectList extends workflow.ListInstance {}
@@ -807,11 +1096,11 @@ declare namespace todoist {
   /**
    * A LabelFactory (pure function) constructor
    */
-  export interface LabelFactory extends Stamp {
+  export interface LabelFactory extends stampit.Stamp {
     /**
      * @constructor
      */
-    (label: todoist.Label): LabelInstance
+    (label: Label): LabelInstance
   }
 
   /**
@@ -826,7 +1115,7 @@ declare namespace todoist {
     /**
      * @constructor
      */
-    ({ labels, query }: { labels: todoist.Label[]; query: string }): LabelListInstance
+    ({ labels, query }: { labels: Label[]; query: string }): LabelListInstance
   }
 
   export interface LabelList extends workflow.ListInstance {}
@@ -835,17 +1124,47 @@ declare namespace todoist {
    * A lexed token.
    */
   export interface Token {
+    [index: string]: string | (() => string)
     type: string
     value: string
-    toString: () => string
+    toString(): string
   }
 
-  export interface ParsedTask {
+  /**
+   * Parse a string.
+   *
+   * @param {string} text
+   * @returns The parsed blocks of the string
+   */
+  export interface Parsed {
+    [index: string]:
+      | undefined
+      | string
+      | Token
+      | Token[]
+      | (() => Token | string)
+      | (() => ParsedToJSON)
     content: string
-    priority?: number
+    priority: string
+    project?: Token
+    labels: Token[]
+    person?: Token
     due_string?: string
-    project?: string
-    labels?: string[]
+    last(key?: 'type' | 'value'): Token | string
+    toJSON(): ParsedToJSON
+  }
+
+  /**
+   * The contents of a parsed task
+   */
+  export interface ParsedToJSON {
+    content: string
+    priority: number
+    due_string: string | undefined
+    project: string | undefined
+    project_id: number | undefined
+    labels: string[] | undefined
+    label_ids: number[] | undefined
   }
 }
 

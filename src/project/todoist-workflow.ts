@@ -1,6 +1,6 @@
 import { removeObject } from '@/project/cache';
 import { edit, getSetting, getSettings, list, update } from '@/project/settings';
-import todoist, { LabelAdapter, ProjectAdapter, Query, TaskAdapter, TaskList } from '@/todoist';
+import { LabelAdapter, ProjectAdapter, Query, TaskAdapter, TaskList } from '@/todoist';
 import { Item, List, Notification } from '@/workflow';
 import omit from 'lodash.omit';
 import compose from 'stampit';
@@ -58,7 +58,7 @@ export const TodoistWorkflow = compose({
     },
 
     create(this: Workflow, query: string) {
-      return Query(query, getSetting('language')).parse()
+      return Query({ query, language: getSetting('language') }).parse()
     },
 
     async submit(this: Workflow, task: todoist.Task) {

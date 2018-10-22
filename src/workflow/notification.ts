@@ -1,5 +1,4 @@
-import project, { AlfredError } from '@/project';
-import workflow from '@/workflow';
+import { AlfredError } from '@/project';
 import omit from 'lodash.omit';
 import notifier from 'node-notifier';
 import open from 'opn';
@@ -10,7 +9,6 @@ const NOTIFICATION_DEFAULTS: workflow.NotificationOptions = {
   title: 'ALFRED WORKFLOW TODOIST',
   subtitle: '✓ Happy days!',
   message: "There's nothing to say.",
-  sound: false,
   icon: `${process.cwd()}/icon.png`,
   contentImage: '',
   timeout: 5,
@@ -67,7 +65,7 @@ function notification(
     }
   }
 
-  notifier.notify(omit(options, ['error']), (err, response) => {
+  notifier.notify(omit(options, ['error']), (err: Error, response: any) => {
     // Response is response from notification
     if (err) {
       logError(new AlfredError(err.name, err.message, err.stack))

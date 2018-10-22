@@ -22,20 +22,20 @@ describe('Unit: Parser', () => {
   it('should parse double exclamations as priority', () => {
     let ast = parser('!!')
 
-    expect(`${ast.last().type}`).toBe('priority')
+    expect(`${ast.last('type')}`).toBe('priority')
   })
 
   it('should parse spaces as content', () => {
     let ast = parser('!!4 ')
 
     expect(`${ast.content}`).toBe('<Give a name to this task>')
-    expect(`${ast.last().type}`).toBe('content')
+    expect(`${ast.last('type')}`).toBe('content')
   })
 
   it('should parse @ as label', () => {
     let ast = parser('@')
 
     expect(`${ast.labels}`).toBe('')
-    expect(`${ast.last().type}`).toBe('label')
+    expect(`${ast.last('type')}`).toBe('label')
   })
 })

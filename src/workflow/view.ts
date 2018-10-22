@@ -1,4 +1,3 @@
-import workflow from '@/workflow';
 import compose from 'stampit';
 
 /**

@@ -50,7 +50,6 @@ export class AlfredError extends Error {
 
 export function handleError(err: Error) {
   let error = new AlfredError(err.message, err.name, err.stack)
-  console.log('Error log', arguments)
 
   return Notification(Object.assign(error, { query })).write()
 }

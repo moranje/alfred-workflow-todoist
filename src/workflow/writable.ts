@@ -1,4 +1,4 @@
-import workflow, { Notification } from '@/workflow';
+import { Notification } from '@/workflow';
 import compose from 'stampit';
 
 /**

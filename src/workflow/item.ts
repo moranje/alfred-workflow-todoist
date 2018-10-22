@@ -1,4 +1,4 @@
-import workflow, { Writable } from '@/workflow';
+import { Writable } from '@/workflow';
 import md5 from 'md5';
 import compose from 'stampit';
 

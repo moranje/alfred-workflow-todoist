@@ -18,5 +18,3 @@ export function uuid(): string {
     return v.toString(16)
   })
 }
-
-export { workflow as default } from '@/typings'
