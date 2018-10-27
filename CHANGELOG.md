@@ -1,3 +1,10 @@
+## [5.6.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.1...v5.6.2) (2018-10-27)
+
+
+### Bug Fixes
+
+* completing a task now closes a task instead of deleting it ([a0c71f8](https://github.com/moranje/alfred-workflow-todoist/commit/a0c71f8)), closes [#47](https://github.com/moranje/alfred-workflow-todoist/issues/47)
+
 ## [5.6.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.0...v5.6.1) (2018-10-15)
 
 
