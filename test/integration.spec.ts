@@ -1,6 +1,9 @@
-import { TodoistWorkflow } from '@/project/todoist-workflow';
+import './helpers/nock-requests';
+
+import { cache, Command } from '@/project';
 
 jest.mock('@/project/files')
+
 jest.mock('write-json-file', () => {
   return async (path: string, data: any) => {
     console.log(data)
@@ -21,7 +24,8 @@ describe('Integration:', () => {
   describe('Find task(s)', () => {
     it('should find tasks from cache', async () => {
       expect.assertions(5)
-      await TodoistWorkflow().read()
+
+      await Command().read()
 
       let items = JSON.parse(spy.mock.calls[0][0]).items
       expect(items[0].title).toBe('COMPLETE: Get milk')
@@ -31,14 +35,34 @@ describe('Integration:', () => {
       expect(items[4].title).toBe('COMPLETE: Project review')
     })
 
-    it('should filter tasks based on query', async () => {
+    it('should return all tasks from API with empty query (mocked)', async () => {
+      expect.assertions(5)
+
+      let dump = cache.dump()
+      cache.reset()
+      await Command().read()
+
+      let items = JSON.parse(spy.mock.calls[0][0]).items
+      expect(items[0].title).toBe('COMPLETE: Get milk')
+      expect(items[1].title).toBe('COMPLETE: Plan a thing')
+      expect(items[2].title).toBe('COMPLETE: Buy the thing')
+      expect(items[3].title).toBe('COMPLETE: Sign up for dance class')
+      expect(items[4].title).toBe('COMPLETE: Project review')
+      cache.load(dump)
+    })
+
+    it('should return matched tasks when queried (mocked)', async () => {
       expect.assertions(3)
-      await TodoistWorkflow().read('thing')
+
+      let dump = cache.dump()
+      cache.reset()
+      await Command().read('thing')
 
       let items = JSON.parse(spy.mock.calls[0][0]).items
       expect(items[0].title).toBe('COMPLETE: Plan a thing')
       expect(items[1].title).toBe('COMPLETE: Buy the thing')
       expect(items).toHaveLength(2)
+      cache.load(dump)
     })
   })
 
@@ -46,7 +70,7 @@ describe('Integration:', () => {
     it('should return a parsed JSON response', async () => {
       expect.assertions(1)
       let query = 'Get milk @15min @at_home #Work p1, tomorrow'
-      await TodoistWorkflow().create(query)
+      await Command().create(query)
 
       let items = JSON.parse(spy.mock.calls[0][0]).items
       expect(JSON.parse(items[0].arg)).toEqual({
@@ -59,13 +83,31 @@ describe('Integration:', () => {
     })
   })
 
-  // describe('Submit task', () => {})
+  describe('Submit task', () => {
+    it('should submit a created task to todoist', async () => {
+      expect.assertions(1)
 
-  // describe('Remove task', () => {})
+      await Command().submit({ content: 'New task' })
+
+      let output = spy.mock.calls[0][0]
+      expect(output).toMatch(/Task added/)
+    })
+  })
+
+  describe('Remove task', () => {
+    it('should remove a task from todoist', async () => {
+      expect.assertions(1)
+
+      await Command().remove({ id: 1, content: 'Completed task' })
+
+      let output = spy.mock.calls[0][0]
+      expect(output).toMatch(/Task completed/)
+    })
+  })
 
   describe('Find settings', () => {
     it('should list all relevent settings', () => {
-      TodoistWorkflow().settings()
+      Command().listSettings()
       let items = JSON.parse(spy.mock.calls[0][0]).items
 
       // Should list 5 settings even though there only 4 in the mock
@@ -79,7 +121,7 @@ describe('Integration:', () => {
 
   describe('Select setting', () => {
     it('should edit token setting', () => {
-      TodoistWorkflow().editSetting('token', '0123456789abcde0123456789abcde0123456789')
+      Command().verifySetting('token', '0123456789abcde0123456789abcde0123456789')
       let items = JSON.parse(spy.mock.calls[0][0]).items
       let response = JSON.parse(items[0].arg)
 
@@ -87,7 +129,7 @@ describe('Integration:', () => {
     })
 
     it('should edit language setting', () => {
-      TodoistWorkflow().editSetting('language', 'nl')
+      Command().verifySetting('language', 'nl')
       let items = JSON.parse(spy.mock.calls[0][0]).items
       let response = JSON.parse(items[0].arg)
 
@@ -95,7 +137,7 @@ describe('Integration:', () => {
     })
 
     it('should edit token setting', () => {
-      TodoistWorkflow().editSetting('max_items', 13)
+      Command().verifySetting('max_items', 13)
       let items = JSON.parse(spy.mock.calls[0][0]).items
       let response = JSON.parse(items[0].arg)
 
@@ -103,7 +145,7 @@ describe('Integration:', () => {
     })
 
     it('should edit cache_timeout setting', () => {
-      TodoistWorkflow().editSetting('cache_timeout', 13)
+      Command().verifySetting('cache_timeout', 13)
       let items = JSON.parse(spy.mock.calls[0][0]).items
       let response = JSON.parse(items[0].arg)
 
@@ -111,7 +153,7 @@ describe('Integration:', () => {
     })
 
     it('should edit anonymous_statistics setting', () => {
-      TodoistWorkflow().editSetting('anonymous_statistics', false)
+      Command().verifySetting('anonymous_statistics', false)
       let items = JSON.parse(spy.mock.calls[0][0]).items
       let response = JSON.parse(items[1].arg)
 
@@ -121,7 +163,7 @@ describe('Integration:', () => {
 
   describe('Store setting', () => {
     it('should store a token setting back to disk', () => {
-      TodoistWorkflow().storeSetting({
+      Command().saveSetting({
         key: 'token',
         value: '0123456789abcde0123456789abcde0123456789'
       })
@@ -131,7 +173,7 @@ describe('Integration:', () => {
     })
 
     it('should store a langauge setting back to disk', () => {
-      TodoistWorkflow().storeSetting({
+      Command().saveSetting({
         key: 'langauge',
         value: 'nl'
       })
@@ -141,7 +183,7 @@ describe('Integration:', () => {
     })
 
     it('should store a max_items setting back to disk', () => {
-      TodoistWorkflow().storeSetting({
+      Command().saveSetting({
         key: 'max_items',
         value: 3
       })
@@ -151,7 +193,7 @@ describe('Integration:', () => {
     })
 
     it('should store a cache_timeout setting back to disk', () => {
-      TodoistWorkflow().storeSetting({
+      Command().saveSetting({
         key: 'cache_timeout',
         value: 13
       })
@@ -161,7 +203,7 @@ describe('Integration:', () => {
     })
 
     it('should store a anonymous_statistics setting back to disk', () => {
-      TodoistWorkflow().storeSetting({
+      Command().saveSetting({
         key: 'anonymous_statistics',
         value: false
       })

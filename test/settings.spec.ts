@@ -1,6 +1,9 @@
-import { list, update } from '@/project/settings';
+import { list, save } from '@/project';
 
-jest.mock('@/project/files')
+jest.mock('@/project/files', () => ({
+  __esModule: true,
+  FILES: { cache: [] }
+}))
 jest.mock('write-json-file', () => {
   return async (path: string, data: any) => {
     console.log(data)
@@ -41,7 +44,7 @@ describe('Unit: Settings', () => {
   })
 
   it('should be able to edit token setting', async () => {
-    await update({ key: 'token', value: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' })
+    await save({ key: 'token', value: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' })
     let json = spy.mock.calls[0][0]
 
     expect(json.token).toBe('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
@@ -52,7 +55,7 @@ describe('Unit: Settings', () => {
   })
 
   it('should be able to edit language setting', async () => {
-    await update({ key: 'language', value: 'nl' })
+    await save({ key: 'language', value: 'nl' })
     let json = spy.mock.calls[0][0]
 
     expect(json.token).toBe('')
@@ -63,7 +66,7 @@ describe('Unit: Settings', () => {
   })
 
   it('should be able to edit max_items setting', async () => {
-    await update({ key: 'max_items', value: 3 })
+    await save({ key: 'max_items', value: 3 })
     let json = spy.mock.calls[0][0]
 
     expect(json.token).toBe('')
@@ -74,7 +77,7 @@ describe('Unit: Settings', () => {
   })
 
   it('should be able to edit cache_timeout setting', async () => {
-    await update({ key: 'cache_timeout', value: 3 })
+    await save({ key: 'cache_timeout', value: 3 })
     let json = spy.mock.calls[0][0]
 
     expect(json.token).toBe('')
@@ -85,7 +88,7 @@ describe('Unit: Settings', () => {
   })
 
   it('should be able to edit anonymous_statistics setting', async () => {
-    await update({ key: 'anonymous_statistics', value: true })
+    await save({ key: 'anonymous_statistics', value: true })
     let json = spy.mock.calls[0][0]
 
     expect(json.token).toBe('')
@@ -96,7 +99,7 @@ describe('Unit: Settings', () => {
   })
 
   it('should be able to edit settings when none exist on disk', async () => {
-    await update({ key: 'token', value: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' })
+    await save({ key: 'token', value: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' })
     let json = spy.mock.calls[0][0]
 
     expect(json.token).toBe('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')

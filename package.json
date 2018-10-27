@@ -82,7 +82,7 @@
   },
   "jest": {
     "transform": {
-      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+      ".(ts|tsx)": "ts-jest"
     },
     "testEnvironment": "node",
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
@@ -103,10 +103,10 @@
     ],
     "coverageThreshold": {
       "global": {
-        "branches": 40,
-        "functions": 50,
-        "lines": 50,
-        "statements": 50
+        "branches": 60,
+        "functions": 75,
+        "lines": 80,
+        "statements": 80
       }
     },
     "collectCoverage": true
@@ -136,7 +136,7 @@
     "mkdirp": "0.5.1",
     "moo": "github:no-context/moo#master",
     "nearley": "2.15.1",
-    "node-notifier": "5.2.1",
+    "node-notifier": "5.3.0",
     "opn": "5.4.0",
     "os-name": "2.0.1",
     "stampit": "4.2.0",
@@ -162,6 +162,7 @@
     "@types/mkdirp": "0.5.1",
     "@types/moo": "0.4.1",
     "@types/nearley": "2.11.0",
+    "@types/nock": "9.3.0",
     "@types/node": "*",
     "@types/node-notifier": "0.0.28",
     "@types/opn": "5.1.0",
@@ -171,7 +172,7 @@
     "@types/write-json-file": "2.2.1",
     "bestzip": "2.1.1",
     "colors": "1.3.2",
-    "commitizen": "^2.9.6",
+    "commitizen": "3.0.4",
     "coveralls": "3.0.2",
     "cross-env": "5.2.0",
     "cz-conventional-changelog": "^2.0.0",
@@ -183,6 +184,7 @@
     "jest": "^23.6.0",
     "lint-staged": "7.3.0",
     "lodash.camelcase": "^4.3.0",
+    "nock": "10.0.1",
     "prettier": "^1.14.3",
     "prompt": "^1.0.0",
     "replace-in-file": "3.4.2",
@@ -199,6 +201,7 @@
     "ts-jest": "23.10.4",
     "ts-node": "7.0.1",
     "tslint": "^5.11.0",
+    "tslint-clean-code": "0.2.7",
     "tslint-config-prettier": "1.15.0",
     "tslint-config-standard": "7.1.0",
     "typedoc": "^0.12.0",
