@@ -8,10 +8,14 @@
 
 /**
  * Function used as .init() argument.
+ * @hidden
  */
 type Init = (factoryArg: any, ctx?: Context) => any
 
-/** The stamp Descriptor */
+/**
+ * The stamp Descriptor
+ * @hidden
+ */
 interface Descriptor {
   /** Create a new stamp based on this descriptor */
   (...composables: Composable[]): stampit.Stamp
@@ -46,11 +50,15 @@ interface Descriptor {
   deepConfiguration?: {}
 }
 
-/** Any composable object (stamp or descriptor) */
+/**
+ * Any composable object (stamp or descriptor)
+ * @hidden
+ */
 type Composable = stampit.Stamp | Descriptor
 
 /**
  * The .init() function argument.
+ * @hidden
  */
 interface Context {
   /**
@@ -69,6 +77,7 @@ interface Context {
   args: any[]
 }
 
+/** @hidden */
 declare namespace stampit {
   /**
    * A factory function that will produce new objects using the
@@ -1170,18 +1179,117 @@ declare namespace todoist {
 
 declare namespace project {
   /**
+   * A file path reference to settings.json. This is used to store workflow
+   * settings.
+   */
+  export const SETTINGS_PATH: string
+
+  /**
+   * A file path reference to the cache.json. This is used to store todoist APi
+   * call responses.
+   */
+  export const CACHE_PATH: string
+
+  /**
+   * The imported project settings and todoist cache
+   */
+  export interface FILES {
+    settings: Settings
+    cache: any
+  }
+
+  /**
    * An extension of the base Error that incorperates workflow
    * environment variables.
-   *
-   * @export
-   * @interface AlfredError
-   * @extends {Error}
    */
-  export interface AlfredError extends Error {
+  export class AlfredError extends Error {
     QUERY?: string
     OSX_VERSION?: string
     NODE_VERSION?: string
     ALFRED_VERSION?: string
     WORKFLOW_VERSION?: string
+    constructor(message: string, name?: string, stack?: any)
+  }
+
+  /**
+   * A factory function that creates a command instance
+   */
+  export interface CommandFactory extends stampit.Stamp {
+    /**
+     * @constructor
+     */
+    (): CommandInstance
+  }
+
+  /**
+   * A command instance. This is the starting point for all calls eminating
+   * from the workflow.
+   */
+  export interface CommandInstance {
+    /**
+     * Get a list of tasks from Todoist
+     *
+     * @param {string} query
+     * @returns {Promise<void>}
+     */
+    read(query?: string): Promise<void>
+
+    /**
+     * Parse a todoist task and extra information from Alfred input
+     *
+     * @param {string} query
+     * @returns {Promise<void>}
+     */
+    create(query: string): Promise<void>
+
+    /**
+     * Submit a 'created' task back to Todoist
+     *
+     * @param {todoist.Task} task
+     * @returns {Promise<void>}
+     */
+    submit(task: todoist.Task): Promise<void>
+
+    /**
+     * Remove a task from to todoist by id
+     *
+     * @param {todoist.Task} task
+     * @returns {Promise<void>}
+     */
+    remove(task: todoist.Task): Promise<void>
+
+    /**
+     * Display a list of possible settings
+     */
+    listSettings(): void
+
+    /**
+     * Checks if a settings is valid when changing one
+     *
+     * @param {string} key
+     * @param {string | number | boolean} value
+     */
+    verifySetting(key: string, value: string | number | boolean): void
+
+    /**
+     * Saves a project setting back to disk
+     *
+     * @param {*} setting
+     * @returns {Promise<void>}
+     */
+    saveSetting(setting: { key: string; value: string | number | boolean }): Promise<void>
+  }
+
+  /**
+   * A settings object.
+   */
+  export interface Settings {
+    [index: string]: string | number | boolean
+    token: string
+    language: string
+    max_items: number
+    uuid: string
+    cache_timeout: number
+    anonymous_statistics: boolean
   }
 }

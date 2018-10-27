@@ -1,4 +1,4 @@
-export let files = {
+export let FILES = {
   settings: {
     token: '',
     language: 'en',

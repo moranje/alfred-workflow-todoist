@@ -1,9 +1,7 @@
 import { Writable } from '@/workflow';
 import compose from 'stampit';
 
-/**
- * @hidden
- */
+/** @hidden */
 export const List: workflow.ListFactory = compose(
   Writable,
   {

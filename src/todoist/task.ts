@@ -9,6 +9,7 @@ import compose from 'stampit';
 // import pl from 'date-fns/locale/pl'
 // import ja from 'date-fns/locale/ja';
 
+/** @hidden */
 const LOCALES = {
   da: enUS,
   de,
@@ -26,6 +27,7 @@ const LOCALES = {
   zh: zhCN
 }
 
+/** @hidden */
 export const Task: todoist.TaskFactory = compose({
   init(this: todoist.ResponseTask, task: todoist.ResponseTask = { content: '' }) {
     if (!task.content || task.content === '') {
@@ -36,6 +38,7 @@ export const Task: todoist.TaskFactory = compose({
   }
 })
 
+/** @hidden */
 export const TaskList: todoist.TaskListFactory = compose(
   List,
   {

@@ -2,6 +2,7 @@ import { AlfredError } from '@/project';
 import { Item, List } from '@/workflow';
 import compose from 'stampit';
 
+/** @hidden */
 export const Project: todoist.ProjectFactory = compose({
   init(this: todoist.ProjectInstance, project: todoist.Project = { name: '', id: -1 }) {
     if (!project.name && project.name === '') {
@@ -16,6 +17,7 @@ export const Project: todoist.ProjectFactory = compose({
   }
 })
 
+/** @hidden */
 export const ProjectList: todoist.ProjectListFactory = compose(
   List,
   {

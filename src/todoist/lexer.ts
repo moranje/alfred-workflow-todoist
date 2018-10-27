@@ -1,5 +1,6 @@
-import moo from 'moo'
+import moo from 'moo';
 
+/** @hidden */
 const lexer = moo.states({
   main: {
     // @ts-ignore: not yet in typescript definition

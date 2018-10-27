@@ -15,9 +15,7 @@ export function parser(text: string): todoist.Parsed {
   return organize(parser.results)
 }
 
-/**
- * @hidden
- */
+/** @hidden */
 function organize([results]: todoist.Token[][]): todoist.Parsed {
   // Defaults
   let tokens: todoist.Parsed = {

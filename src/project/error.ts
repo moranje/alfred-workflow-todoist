@@ -3,12 +3,16 @@ import plist from 'fast-plist';
 import { readFileSync } from 'fs';
 import osName from 'os-name';
 
+/** @hidden */
 const argv = Object.assign([], process.argv)
 argv.splice(0, 2)
 argv.shift()
+/** @hidden */
 const query = argv.join(' ')
 
+/** @hidden */
 let alfredVersion = 'unknown'
+/** @hidden */
 let workflowVersion = 'unknown'
 
 try {
@@ -20,6 +24,7 @@ try {
   // Do nothing
 }
 
+/** @hidden */
 const ERROR_ENV = {
   QUERY: query,
   OSX_VERSION: osName(),
@@ -28,6 +33,12 @@ const ERROR_ENV = {
   WORKFLOW_VERSION: workflowVersion
 }
 
+/**
+ * An extension of the base Error that incorperates workflow
+ * environment variables.
+ *
+ * @hidden
+ */
 export class AlfredError extends Error {
   QUERY?: string
   OSX_VERSION?: string

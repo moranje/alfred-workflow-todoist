@@ -1,4 +1,4 @@
-import { cache } from '@/project/cache';
+import { cache } from '@/project';
 import { Label, Project, Task } from '@/todoist';
 import { uuid } from '@/workflow';
 import { filter } from 'fuzzaldrin';
@@ -7,6 +7,7 @@ import find from 'lodash.find';
 import unionBy from 'lodash.unionby';
 import compose from 'stampit';
 
+/** @hidden */
 const Adapter: todoist.AdapterFactory = compose({
   init(
     this: todoist.AdapterInstance,
@@ -83,6 +84,7 @@ const Adapter: todoist.AdapterFactory = compose({
   }
 })
 
+/** @hidden */
 export const ProjectAdapter: todoist.ProjectAdapterFactory = compose(
   Adapter,
   {
@@ -137,6 +139,7 @@ export const ProjectAdapter: todoist.ProjectAdapterFactory = compose(
   }
 )
 
+/** @hidden */
 export const LabelAdapter: todoist.LabelAdapterFactory = compose(
   Adapter,
   {
@@ -190,6 +193,7 @@ export const LabelAdapter: todoist.LabelAdapterFactory = compose(
   }
 )
 
+/** @hidden */
 export const TaskAdapter: todoist.TaskAdapterFactory = compose(
   Adapter,
   {
@@ -216,7 +220,7 @@ export const TaskAdapter: todoist.TaskAdapterFactory = compose(
         cachedTasks.push(body)
         cache.set('tasks', unionBy(cachedTasks, 'id'))
 
-        return Task(body) // tslint:disable-line
+        return Task(body)
       },
 
       /**
@@ -246,6 +250,17 @@ export const TaskAdapter: todoist.TaskAdapterFactory = compose(
           return tasks
         })
       },
+
+      /**
+       * API call to close but not delete a task.
+       *
+       * @param {number} id
+       * @returns {Promise<any>}
+       */
+      async close(this: todoist.AdapterInstance, id: number): Promise<any> {
+        return this.got.post(`${this.type}s/${id}/close`)
+      },
+
 
       /**
        * Retrieve a tasks labels an projects by id.

@@ -1,6 +1,8 @@
-import { CACHE_PATH, SETTINGS_PATH } from '@/project/references';
+import { CACHE_PATH, SETTINGS_PATH } from '@/project';
 
-let settings = {}
+/** @hidden */
+let settings
+/** @hidden */
 let cache = []
 try {
   settings = require(SETTINGS_PATH)
@@ -9,7 +11,12 @@ try {
   // Do nothing
 }
 
-export let files = {
+/**
+ * The imported project settings and todoist cache
+ *
+ * @hidden
+ */
+export const FILES: project.FILES = {
   settings,
   cache
 }

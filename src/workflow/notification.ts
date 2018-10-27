@@ -5,6 +5,7 @@ import open from 'opn';
 import osName from 'os-name';
 import compose from 'stampit';
 
+/** @hidden */
 const NOTIFICATION_DEFAULTS: workflow.NotificationOptions = {
   title: 'ALFRED WORKFLOW TODOIST',
   subtitle: '✓ Happy days!',
@@ -22,10 +23,11 @@ const NOTIFICATION_DEFAULTS: workflow.NotificationOptions = {
  *
  * @param {project.AlfredError} error
  *
+ * @private
  * @hidden
  */
 function logError(error: project.AlfredError) {
-  console.log(
+  return console.log(
     [
       `${error.name}: ${error.message}\n`,
       'ALFRED WORKFLOW TODOIST',
@@ -50,6 +52,7 @@ function logError(error: project.AlfredError) {
  * @param {(notifierObject: any, option: any, meta: any) => void} [onClick]
  * @param {(notifierObject: any, option: any, meta: any) => void} [onTimeout]
  *
+ * @private
  * @hidden
  */
 function notification(
@@ -59,29 +62,35 @@ function notification(
 ) {
   let onClickFallback = (notifier: any, opts: any, meta: any) => {
     if (opts.open) {
-      open(opts.open).catch(openError => {
-        logError(new AlfredError(openError.name, openError.message, openError.stack))
+      return open(opts.open).catch(openError => {
+        return logError(new AlfredError(openError.name, openError.message, openError.stack))
       })
     }
-  }
 
-  notifier.notify(omit(options, ['error']), (err: Error, response: any) => {
-    // Response is response from notification
-    if (err) {
-      logError(new AlfredError(err.name, err.message, err.stack))
-    }
-  })
+    return
+  }
 
   notifier.on('click', onClick || onClickFallback)
 
   notifier.on('timeout', (notifierObject: any, opts: any, meta: any) => {
     // console.log('Timeout\n')
+    return
+  })
+
+  return notifier.notify(omit(options, ['error']), (err: Error, response: any) => {
+    // Response is response from notification
+    if (err) {
+      return logError(new AlfredError(err.name, err.message, err.stack))
+    }
+
+    return
   })
 }
 
 /**
  * An alfred notification
  *
+ * @private
  * @hidden
  */
 export const Notification: workflow.NotificationFactory = compose({
@@ -115,9 +124,13 @@ export const Notification: workflow.NotificationFactory = compose({
      * @param {Function} [onTimeout]
      */
     write(this: workflow.NotificationOptions, onClick?: any, onTimeout?: any) {
-      if (this.error) logError(this.error)
+      if (this.error) {
+        logError(this.error)
+        return notification(this, onClick, onTimeout)
+      }
 
-      notification(this, onClick, onTimeout)
+      console.log(`${this.title}: ${this.subtitle}\n\n${this.message}\n`)
+      return notification(this, onClick, onTimeout)
     }
   }
 })

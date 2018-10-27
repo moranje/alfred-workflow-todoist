@@ -1,28 +1,17 @@
-import { AlfredError } from '@/project';
-import { files } from '@/project/files';
-import { SETTINGS_PATH } from '@/project/references';
-import { Schema } from '@/project/settings-schema';
+import { AlfredError, FILES, Schema, SETTINGS_PATH } from '@/project';
 import { Item, List, Notification, uuid } from '@/workflow';
 import AJV from 'ajv';
 import compose from 'stampit';
 import writeJsonFile from 'write-json-file';
 
-export interface Settings {
-  [index: string]: string | number | boolean
-  token: string
-  language: string
-  max_items: number
-  uuid: string
-  cache_timeout: number
-  anonymous_statistics: boolean
-}
-
+/** @hidden */
 const ajv = new AJV({ allErrors: true })
 
+/** @hidden */
 const SettingsList = compose(
   List,
   {
-    init(this: workflow.ListInstance, { settings }: { settings: Settings }) {
+    init(this: workflow.ListInstance, { settings }: { settings: project.Settings }) {
       this.items = this.items || []
 
       Object.keys(Schema.properties).forEach((key: string) => {
@@ -41,6 +30,7 @@ const SettingsList = compose(
   }
 )
 
+/** @hidden */
 const SettingList = compose(
   List,
   {
@@ -50,7 +40,7 @@ const SettingList = compose(
         key = '',
         value = '',
         settings
-      }: { key: string; value: string | number | boolean; settings: Settings }
+      }: { key: string; value: string | number | boolean; settings: project.Settings }
     ) {
       this.items = this.items || []
       if (!Schema.properties[key]) {
@@ -115,6 +105,7 @@ const SettingList = compose(
   }
 )
 
+/** @hidden */
 function formatValidationErrors(errors: any[]) {
   return errors
     .map((err: any) => {
@@ -123,8 +114,9 @@ function formatValidationErrors(errors: any[]) {
     .join('. ')
 }
 
+/** @hidden */
 function createDefault() {
-  const starter: Settings = {
+  const starter: project.Settings = {
     token: '',
     language: 'en',
     max_items: 9,
@@ -141,8 +133,9 @@ function createDefault() {
   throw new AlfredError(formatValidationErrors(validate.errors || []))
 }
 
-function castSettingTypes(settings: Settings) {
-  let typeCast: Settings = settings
+/** @hidden */
+function castSettingTypes(settings: project.Settings) {
+  let typeCast: project.Settings = settings
 
   Object.entries(settings).forEach(([key, value]) => {
     if (Schema.properties[key] && Schema.properties[key].type === 'boolean') {
@@ -171,7 +164,8 @@ function castSettingTypes(settings: Settings) {
   return typeCast
 }
 
-function getErrors(key: string, value: string | number | boolean, settings: Settings) {
+/** @hidden */
+function getErrors(key: string, value: string | number | boolean, settings: project.Settings) {
   let updated = Object.assign({}, settings, { [key]: value })
   let validate = ajv.compile(Schema)
 
@@ -182,9 +176,9 @@ function getErrors(key: string, value: string | number | boolean, settings: Sett
   return []
 }
 
-export function getSettings(): Settings {
+export function getSettings(): project.Settings {
   // Reintroduce defaults when a setting goes missing
-  return castSettingTypes(Object.assign(createDefault(), files.settings))
+  return castSettingTypes(Object.assign(createDefault(), FILES.settings))
 }
 
 export function getSetting(setting: string) {
@@ -200,14 +194,14 @@ export function list() {
   return settingsList.write()
 }
 
-export function edit(key: string, value: string | number | boolean) {
+export function verify(key: string, value: string | number | boolean) {
   let settings = getSettings()
   let settingList = SettingList({ key, value, settings })
 
   return settingList.write()
 }
 
-export async function update({ key, value }: { key: string; value: string | number | boolean }) {
+export async function save({ key, value }: { key: string; value: string | number | boolean }) {
   let settings = getSettings()
   let errors = getErrors(key, value, settings)
 

@@ -1,6 +1,4 @@
-/**
- * @hidden
- */
+/** @hidden */
 export interface Schema {
   [index: string]: string | string[] | null | undefined | Properties
   $schema: string
@@ -11,9 +9,7 @@ export interface Schema {
   required?: (string)[] | null
 }
 
-/**
- * @hidden
- */
+/** @hidden */
 export interface Properties {
   [index: string]: Token | Language | MaxItems | Uuid | AnonymousStatistics
   token: Token
@@ -23,9 +19,7 @@ export interface Properties {
   anonymous_statistics: AnonymousStatistics
 }
 
-/**
- * @hidden
- */
+/** @hidden */
 export interface Token {
   description: string
   explanation: string
@@ -33,9 +27,7 @@ export interface Token {
   pattern: string
 }
 
-/**
- * @hidden
- */
+/** @hidden */
 export interface Language {
   description: string
   explanation: string
@@ -43,9 +35,7 @@ export interface Language {
   enum?: (string)[] | null
 }
 
-/**
- * @hidden
- */
+/** @hidden */
 export interface MaxItems {
   description: string
   explanation: string
@@ -54,9 +44,7 @@ export interface MaxItems {
   maximum: number
 }
 
-/**
- * @hidden
- */
+/** @hidden */
 export interface Uuid {
   description: string
   explanation: string
@@ -65,9 +53,7 @@ export interface Uuid {
   format: string
 }
 
-/**
- * @hidden
- */
+/** @hidden */
 export interface AnonymousStatistics {
   description: string
   explanation: string

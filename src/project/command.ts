@@ -1,12 +1,10 @@
-import { removeObject } from '@/project/cache';
-import { edit, getSetting, getSettings, list, update } from '@/project/settings';
+import { getSetting, getSettings, list, removeObject, save, verify } from '@/project';
 import { LabelAdapter, ProjectAdapter, Query, TaskAdapter, TaskList } from '@/todoist';
 import { Item, List, Notification } from '@/workflow';
 import omit from 'lodash.omit';
 import compose from 'stampit';
 
-interface Workflow {}
-
+/** @hidden */
 async function replaceNamesWithIds(task: todoist.Task) {
   let allProjects = await ProjectAdapter({ token: getSetting('token') }).findAll()
   let allLabels = await LabelAdapter({ token: getSetting('token') }).findAll()
@@ -34,9 +32,16 @@ async function replaceNamesWithIds(task: todoist.Task) {
   return omit(task, ['labels', 'project'])
 }
 
-export const TodoistWorkflow = compose({
+/** @hidden */
+export const Command: project.CommandFactory = compose({
   methods: {
-    async read(this: Workflow, query: string) {
+    /**
+     * Get a list of tasks from Todoist
+     *
+     * @param {string} query
+     * @returns {Promise<void>}
+     */
+    async read(this: project.CommandInstance, query?: string): Promise<void> {
       let tasks = await TaskAdapter({ token: getSettings().token }).query(query)
 
       if (tasks.length > 0) {
@@ -57,11 +62,23 @@ export const TodoistWorkflow = compose({
       }).write()
     },
 
-    create(this: Workflow, query: string) {
+    /**
+     * Parse a todoist task and extra information from Alfred input
+     *
+     * @param {string} query
+     * @returns {Promise<void>}
+     */
+    create(this: project.CommandInstance, query: string) {
       return Query({ query, language: getSetting('language') }).parse()
     },
 
-    async submit(this: Workflow, task: todoist.Task) {
+    /**
+     * Submit a 'created' task back to Todoist
+     *
+     * @param {todoist.Task} task
+     * @returns {Promise<void>}
+     */
+    async submit(this: project.CommandInstance, task: todoist.Task) {
       let apiTask = await replaceNamesWithIds(task)
       let { statusCode, body } = await TaskAdapter({ token: getSetting('token') }).create(apiTask)
       await TaskAdapter({ token: getSetting('token') }).find(body.id)
@@ -79,8 +96,14 @@ export const TodoistWorkflow = compose({
       }).write()
     },
 
-    async remove(this: Workflow, task: todoist.Task) {
-      let { statusCode } = await TaskAdapter({ token: getSetting('token') }).remove(task.id)
+    /**
+     * Remove a task from to todoist by id
+     *
+     * @param {todoist.Task} task
+     * @returns {Promise<void>}
+     */
+    async remove(this: project.CommandInstance, task: todoist.Task) {
+      let { statusCode } = await TaskAdapter({ token: getSetting('token') }).close(task.id)
 
       if (statusCode === 204) {
         if (task.id) removeObject('tasks', task.id)
@@ -91,16 +114,34 @@ export const TodoistWorkflow = compose({
       return Notification({ message: 'Task might not actually be completed' }).write()
     },
 
-    settings(this: Workflow) {
+    /**
+     * Display a list of possible settings
+     */
+    listSettings(this: project.CommandInstance) {
       return list()
     },
 
-    editSetting(this: Workflow, key: string, value: string | number | boolean) {
-      return edit(key, value)
+    /**
+     * Checks if a settings is valid when changing one
+     *
+     * @param {string} key
+     * @param {string | number | boolean} value
+     */
+    verifySetting(this: project.CommandInstance, key: string, value: string | number | boolean) {
+      return verify(key, value)
     },
 
-    storeSetting(this: Workflow, setting: { key: string; value: string | number | boolean }) {
-      return update(Object.assign(setting))
+    /**
+     * Saves a project setting back to disk
+     *
+     * @param {*} setting
+     * @returns {Promise<void>}
+     */
+    saveSetting(
+      this: project.CommandInstance,
+      setting: { key: string; value: string | number | boolean }
+    ) {
+      return save(Object.assign(setting))
     }
   }
 })

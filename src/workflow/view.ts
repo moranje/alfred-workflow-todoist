@@ -1,8 +1,6 @@
 import compose from 'stampit';
 
-/**
- * @hidden
- */
+/** @hidden */
 export const View: workflow.ViewFactory = compose({
   /**
    * @constructor

@@ -1,50 +1,68 @@
 import '@babel/polyfill';
 
-import { AlfredError, handleError } from '@/project';
-import { cache, serialize } from '@/project/cache';
-import { getSetting } from '@/project/settings';
-import { TodoistWorkflow } from '@/project/todoist-workflow';
+import { AlfredError, cache, Command, getSetting, handleError, serialize } from '@/project';
 
+/**
+ * CLI argument parsing
+ */
+
+/** @hidden */
 const argv = Object.assign([], process.argv)
 argv.splice(0, 2)
+/** @hidden */
 const type = argv.shift()
+/** @hidden */
 const query = argv.join(' ')
-const todoistWorkflow = TodoistWorkflow()
+/** @hidden */
+const command = Command()
 
+/**
+ * Serialize cache back to JSON
+ *
+ * @hidden
+ */
 function handleSerialization() {
   return serialize(cache.dump()).catch(handleError)
 }
 
+/**
+ * CLI option logic
+ */
+
 if (type === 'read') {
-  todoistWorkflow
+  command
     .read(query)
     .catch(handleError)
     .finally(handleSerialization)
 } else if (type === 'create') {
-  todoistWorkflow
+  command
     .create(query)
     .catch(handleError)
     .finally(handleSerialization)
 } else if (type === 'submit') {
-  todoistWorkflow
+  command
     .submit(Object.assign(JSON.parse(query), { due_lang: getSetting('language') }))
     .catch(handleError)
     .finally(handleSerialization)
 } else if (type === 'remove') {
-  todoistWorkflow
+  command
     .remove(JSON.parse(query))
     .catch(handleError)
     .finally(handleSerialization)
 } else if (type === 'settings' && query.trim() !== '') {
   let [key, value] = query.trim().split(' ')
-  todoistWorkflow.editSetting(key, value)
+  command.verifySetting(key, value)
 } else if (type === 'settings') {
-  todoistWorkflow.settings()
+  command.listSettings()
 } else if (type === 'settings:store') {
-  todoistWorkflow.storeSetting(JSON.parse(query)).catch(handleError)
+  command.saveSetting(JSON.parse(query)).catch(handleError)
 } else {
   handleError(new AlfredError(`Invalid command ${type} (${query})`))
 }
+
+/**
+ * Catch any unhandled exception or rejected promise and handle here
+ */
 
 process.on('uncaughtException', handleError)
 process.on('unhandledRejection', handleError)

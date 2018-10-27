@@ -1,11 +1,9 @@
-import { getSetting } from '@/project/settings';
+import { getSetting } from '@/project';
 import { LabelAdapter, LabelList, parser, ProjectAdapter, ProjectList, Task, TaskList } from '@/todoist';
 import { Item, List } from '@/workflow';
 import compose from 'stampit';
 
-/**
- * @hidden
- */
+/** @hidden */
 function createTask(parsed: todoist.Parsed, locale: string) {
   let task = Task(parsed)
   let taskList = TaskList({ tasks: [task], action: 'CREATE', locale })
@@ -13,9 +11,7 @@ function createTask(parsed: todoist.Parsed, locale: string) {
   return taskList.write()
 }
 
-/**
- * @hidden
- */
+/** @hidden */
 async function showProjects(query: string) {
   let project = query.replace(/^.*#/, '').replace(/\[|\]/g, '')
   let projects = await ProjectAdapter({ token: getSetting('token') }).query(project, 'name')
@@ -23,9 +19,7 @@ async function showProjects(query: string) {
   return ProjectList({ projects, query }).write()
 }
 
-/**
- * @hidden
- */
+/** @hidden */
 async function showLabels(query: string) {
   let label = query.replace(/^.*@/, '')
   let labels = await LabelAdapter({ token: getSetting('token') }).query(label, 'name')
@@ -33,9 +27,7 @@ async function showLabels(query: string) {
   return LabelList({ labels, query }).write()
 }
 
-/**
- * @hidden
- */
+/** @hidden */
 function showPriorities(query: string) {
   let priority = query.replace(/^.*?!!/, '').replace(/^.*?p/, '')
   let priorityNames: { [index: string]: string } = {
@@ -68,6 +60,7 @@ function showPriorities(query: string) {
   }).write()
 }
 
+/** @hidden */
 export const Query: todoist.QueryFactory = compose({
   init(this: todoist.QueryInstance, { query, locale }: { query: string; locale: todoist.locale }) {
     this.query = query

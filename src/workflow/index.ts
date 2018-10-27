@@ -7,7 +7,6 @@ export { Notification } from '@/workflow/notification'
 /**
  * Generate a UUID (v4).
  *
- * @since  2016-07-03
  * @return {String}
  */
 export function uuid(): string {

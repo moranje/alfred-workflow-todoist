@@ -1,11 +1,7 @@
 import { Notification } from '@/workflow';
 import compose from 'stampit';
 
-/**
- * A mixin to automatically format stdout input
- *
- * @hidden
- */
+/** @hidden */
 export const Writable: workflow.WritableFactory = compose({
   /**
    * @constructor

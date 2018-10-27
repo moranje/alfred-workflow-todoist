@@ -1,21 +1,21 @@
-import { AlfredError } from '@/project';
-import { files } from '@/project/files';
-import { CACHE_PATH } from '@/project/references';
-import { getSetting } from '@/project/settings';
+import { AlfredError, CACHE_PATH, FILES, getSetting } from '@/project';
 import remove from 'lodash.remove';
 import LRU from 'lru-cache';
 import writeJsonFile from 'write-json-file';
 
+/** @hidden */
 // @ts-ignore: don't know how to express this in typescript but this will
 // be a number
 const cacheTimeout: number = getSetting('cache_timeout')
 
+/** @hidden */
 const options = {
   max: 500,
   maxAge: 1000 * cacheTimeout
 }
+/** @hidden */
 const cache = LRU(options)
-cache.load(files.cache)
+cache.load(FILES.cache)
 
 /**
  * Pre-loaded disk cache
