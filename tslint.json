@@ -1,6 +1,6 @@
 {
-  "extends": [
-    "tslint-config-standard",
-    "tslint-config-prettier"
-  ]
+  "extends": ["tslint-config-standard", "tslint-config-prettier", "tslint-clean-code"],
+  "rules": {
+    "no-floating-promises": false
+  }
 }
