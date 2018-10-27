@@ -2,7 +2,6 @@ import { AlfredError } from '@/project';
 import omit from 'lodash.omit';
 import notifier from 'node-notifier';
 import open from 'opn';
-import osName from 'os-name';
 import compose from 'stampit';
 
 /** @hidden */
@@ -32,7 +31,7 @@ function logError(error: project.AlfredError) {
       `${error.name}: ${error.message}\n`,
       'ALFRED WORKFLOW TODOIST',
       '----------------------------------------',
-      `os: ${osName()}`,
+      `os: macOS ${error.OSX_VERSION}`,
       `query: ${error.QUERY}`,
       `node.js: ${error.NODE_VERSION}`,
       `alfred: ${error.ALFRED_VERSION}`,

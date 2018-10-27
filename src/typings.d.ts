@@ -300,10 +300,11 @@ declare namespace stampit {
  * WORKFLOW DECLARATIONS
  *********************************************************/
 
-/**
- * @hidden
- */
+/** @hidden */
 declare module 'fast-plist'
+
+/** @hidden */
+declare module 'macos-version'
 
 /**
  * Alfred workflow logic

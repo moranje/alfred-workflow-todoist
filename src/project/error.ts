@@ -1,7 +1,7 @@
 import { Notification } from '@/workflow';
 import plist from 'fast-plist';
 import { readFileSync } from 'fs';
-import osName from 'os-name';
+import macOsVersion from 'macos-version';
 
 /** @hidden */
 const argv = Object.assign([], process.argv)
@@ -27,7 +27,7 @@ try {
 /** @hidden */
 const ERROR_ENV = {
   QUERY: query,
-  OSX_VERSION: osName(),
+  OSX_VERSION: macOsVersion(),
   NODE_VERSION: process.version,
   ALFRED_VERSION: alfredVersion,
   WORKFLOW_VERSION: workflowVersion
