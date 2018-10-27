@@ -1,3 +1,10 @@
+## [5.6.3](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.2...v5.6.3) (2018-10-27)
+
+
+### Bug Fixes
+
+* add valid error handler fot task creation logic ([13446cc](https://github.com/moranje/alfred-workflow-todoist/commit/13446cc))
+
 ## [5.6.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.1...v5.6.2) (2018-10-27)
 
 
