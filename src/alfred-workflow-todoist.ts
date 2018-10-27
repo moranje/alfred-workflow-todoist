@@ -35,10 +35,13 @@ if (type === 'read') {
     .catch(handleError)
     .finally(handleSerialization)
 } else if (type === 'create') {
-  command
-    .create(query)
-    .catch(handleError)
-    .finally(handleSerialization)
+  try {
+    command.create(query)
+  } catch (error) {
+    handleError(error)
+  } finally {
+    handleSerialization()
+  }
 } else if (type === 'submit') {
   command
     .submit(Object.assign(JSON.parse(query), { due_lang: getSetting('language') }))
