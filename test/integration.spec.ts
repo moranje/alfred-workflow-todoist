@@ -1,6 +1,6 @@
-import './helpers/nock-requests';
+import './helpers/nock-requests'
 
-import { cache, Command } from '@/project';
+import { cache, Command } from '@/project'
 
 jest.mock('@/project/files')
 
@@ -64,6 +64,18 @@ describe('Integration:', () => {
       expect(items).toHaveLength(2)
       cache.load(dump)
     })
+
+    it('should show a nothing found item if a query has no matches', async () => {
+      expect.assertions(1)
+
+      let dump = cache.dump()
+      cache.reset()
+      await Command().read('xxxxx')
+
+      let items = JSON.parse(spy.mock.calls[0][0]).items
+      expect(items[0].title).toBe("SORRY: There's just nothing here...")
+      cache.load(dump)
+    })
   })
 
   describe('Create task', () => {
@@ -80,6 +92,52 @@ describe('Integration:', () => {
         priority: 4,
         project: 'Work'
       })
+    })
+
+    it('should recommend projects', async () => {
+      expect.assertions(5)
+      let query = 'Get milk #'
+      await Command().create(query)
+
+      let items = JSON.parse(spy.mock.calls[0][0]).items
+      expect(items[0].title).toBe('Inbox')
+      expect(items[1].title).toBe('Next Actions')
+      expect(items[2].title).toBe('Waiting')
+      expect(items[3].title).toBe('Someday/Maybe')
+      expect(items[4].title).toBe('Work')
+    })
+
+    it('should recommend labels', async () => {
+      expect.assertions(5)
+      let query = 'Get milk @'
+      await Command().create(query)
+
+      let items = JSON.parse(spy.mock.calls[0][0]).items
+      expect(items[0].title).toBe('15min')
+      expect(items[1].title).toBe('30min')
+      expect(items[2].title).toBe('1hour')
+      expect(items[3].title).toBe('2hours')
+      expect(items[4].title).toBe('at_work')
+    })
+
+    it('should recommend priorities', async () => {
+      expect.assertions(4)
+      let query = 'Get milk !!'
+      await Command().create(query)
+
+      let items = JSON.parse(spy.mock.calls[0][0]).items
+      expect(items[0].title).toBe('1')
+      expect(items[1].title).toBe('2')
+      expect(items[2].title).toBe('3')
+      expect(items[3].title).toBe('4')
+    })
+
+    it('should insert a placeholder when trying to create a task with no input', async () => {
+      expect.assertions(1)
+      await Command().create('')
+
+      let items = JSON.parse(spy.mock.calls[0][0]).items
+      expect(items[0].title).toBe('CREATE: <Give a name to this task>')
     })
   })
 
