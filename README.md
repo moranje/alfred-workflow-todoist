@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/moranje/alfred-workflow-todoist.svg?branch=master)](https://travis-ci.org/moranje/alfred-workflow-todoist) [![Coverage Status](https://coveralls.io/repos/github/moranje/alfred-workflow-todoist/badge.svg)](https://coveralls.io/github/moranje/alfred-workflow-todoist)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmoranje%2Falfred-workflow-todoist.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmoranje%2Falfred-workflow-todoist?ref=badge_shield)
 
 # ALFRED TODOIST WORKFLOW
 
@@ -123,3 +124,6 @@ Which guides you through the motions
 ## License
 
 [License MIT](https://github.com/moranje/alfred-workflow-todoist/blob/master/LICENSE) © [Martien Oranje](https://github.com/moranje)
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fmoranje%2Falfred-workflow-todoist.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fmoranje%2Falfred-workflow-todoist?ref=badge_large)
