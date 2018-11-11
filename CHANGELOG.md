@@ -1,3 +1,10 @@
+## [5.6.4](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.3...v5.6.4) (2018-11-11)
+
+
+### Bug Fixes
+
+* allow labels to be hyphenated ([ae309ef](https://github.com/moranje/alfred-workflow-todoist/commit/ae309ef)), closes [#50](https://github.com/moranje/alfred-workflow-todoist/issues/50)
+
 ## [5.6.3](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.2...v5.6.3) (2018-10-27)
 
 
