@@ -25,7 +25,7 @@ const lexer = moo.states({
   },
 
   label: {
-    name: { match: /[a-zA-Z0-9_]+/, pop: 1 }
+    name: { match: /[a-zA-Z0-9_-]+/, pop: 1 }
   },
 
   priority: {

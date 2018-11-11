@@ -15,8 +15,15 @@ describe('Unit: Lexer', () => {
     expect(tokens.map(token => token.type)).toEqual(['pound', 'name'])
   })
 
-  it('should tokenize tag', () => {
+  it('should tokenize label', () => {
     lexer.reset('@at_home')
+    let tokens: any[] = Array.from(lexer)
+
+    expect(tokens.map(token => token.type)).toEqual(['at', 'name'])
+  })
+
+  it('should tokenize hyphenated label', () => {
+    lexer.reset('@at-home')
     let tokens: any[] = Array.from(lexer)
 
     expect(tokens.map(token => token.type)).toEqual(['at', 'name'])
@@ -33,14 +40,21 @@ describe('Unit: Lexer', () => {
     lexer.reset('!!1')
     let tokens: any[] = Array.from(lexer)
 
-    expect(tokens.map(token => token.type)).toEqual(['doubleExclamation', 'number'])
+    expect(tokens.map(token => token.type)).toEqual([
+      'doubleExclamation',
+      'number'
+    ])
   })
 
   it('should tokenize spaces as content', () => {
     lexer.reset('!!1 ')
     let tokens: any[] = Array.from(lexer)
 
-    expect(tokens.map(token => token.type)).toEqual(['doubleExclamation', 'number', 'content'])
+    expect(tokens.map(token => token.type)).toEqual([
+      'doubleExclamation',
+      'number',
+      'content'
+    ])
   })
 
   it('should tokenize person', () => {
