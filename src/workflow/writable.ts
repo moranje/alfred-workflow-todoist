@@ -1,5 +1,5 @@
-import { Notification } from '@/workflow';
-import compose from 'stampit';
+import { Notification } from '@/workflow'
+import compose from 'stampit'
 
 /** @hidden */
 export const Writable: workflow.WritableFactory = compose({
@@ -30,7 +30,7 @@ export const Writable: workflow.WritableFactory = compose({
         return arg
       })
 
-      return console.log.apply(null, mapped)
+      return console.log(...mapped)
     }
   }
 })

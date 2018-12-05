@@ -1,4 +1,4 @@
-import compose from 'stampit';
+import compose from 'stampit'
 
 /** @hidden */
 export const View: workflow.ViewFactory = compose({
@@ -8,7 +8,8 @@ export const View: workflow.ViewFactory = compose({
   init(this: workflow.ViewInstance) {
     this.upperCase = (text: string) => text.toUpperCase()
     this.lowerCase = (text: string) => text.toLowerCase()
-    this.sentenceCase = (text: string) => text.charAt(0).toUpperCase() + text.substring(1)
+    this.sentenceCase = (text: string) =>
+      text.charAt(0).toUpperCase() + text.substring(1)
 
     this.when = (condition: any, truthy: string, falsy: string) => {
       if (typeof condition === 'string' && !condition.trim()) return falsy
@@ -31,7 +32,7 @@ export const View: workflow.ViewFactory = compose({
      *    helpers
      * @returns string
      */
-    template(this: workflow.ViewInstance, fn: () => string) {
+    template(this: workflow.ViewInstance, fn: (...args: any) => string) {
       return fn.call(this, {
         upperCase: this.upperCase,
         lowerCase: this.lowerCase,
