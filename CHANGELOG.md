@@ -1,3 +1,10 @@
+## [5.6.5](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.4...v5.6.5) (2018-12-05)
+
+
+### Bug Fixes
+
+* fix missing new invocation in cache module (probably harmless) ([4777b2f](https://github.com/moranje/alfred-workflow-todoist/commit/4777b2f))
+
 ## [5.6.4](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.3...v5.6.4) (2018-11-11)
 
 
