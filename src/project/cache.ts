@@ -1,7 +1,7 @@
-import { AlfredError, CACHE_PATH, FILES, getSetting } from '@/project';
-import remove from 'lodash.remove';
-import LRU from 'lru-cache';
-import writeJsonFile from 'write-json-file';
+import { AlfredError, CACHE_PATH, FILES, getSetting } from '@/project'
+import remove from 'lodash.remove'
+import LRU from 'lru-cache'
+import writeJsonFile from 'write-json-file'
 
 /** @hidden */
 // @ts-ignore: don't know how to express this in typescript but this will
@@ -14,7 +14,7 @@ const options = {
   maxAge: 1000 * cacheTimeout
 }
 /** @hidden */
-const cache = LRU(options)
+const cache = new LRU(options)
 cache.load(FILES.cache)
 
 /**
@@ -34,7 +34,9 @@ export function removeObject(type: string, id: number): void {
   let objects: any[] = cache.get(type) || []
   let removed = remove(objects, (obj: any) => obj.id === id)
 
-  if (!removed) throw new AlfredError(`Could not remove item with id ${id} from ${type}`)
+  if (!removed) {
+    throw new AlfredError(`Could not remove item with id ${id} from ${type}`)
+  }
 }
 
 /**
