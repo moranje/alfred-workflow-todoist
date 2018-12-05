@@ -7,6 +7,7 @@ branches:
 cache:
   directories:
     - ~/.npm
+install: npm install
 notifications:
   email: false
 node_js:
