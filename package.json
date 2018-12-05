@@ -32,19 +32,23 @@
     "test:prod": "npm run lint && npm run test -- --coverage --no-cache",
     "deploy-docs": "ts-node tools/gh-pages-publish",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
-    "commit": "git-cz",
+    "commit": "npx git-cz",
     "semantic-release": "semantic-release",
     "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
     "bump-plist": "ts-node tools/bump-plist.ts",
-    "precommit": "lint-staged",
     "travis-deploy-once": "travis-deploy-once",
-    "prepush": "npm run build && npm run test:prod",
-    "commitmsg": "commitlint -E GIT_PARAMS"
+    "prepush": "npm run build && npm run test:prod"
   },
   "lint-staged": {
     "{src,test}/**/*.ts": [
       "git add"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
   },
   "config": {
     "commitizen": {
