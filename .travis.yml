@@ -7,7 +7,7 @@ branches:
 cache:
   directories:
     - ~/.npm
-install: npm install
+install: case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;
 notifications:
   email: false
 node_js:
