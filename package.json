@@ -130,7 +130,7 @@
     "date-fns": "2.0.0-alpha.18",
     "fast-plist": "0.1.2",
     "fuzzaldrin": "2.1.0",
-    "got": "9.3.2",
+    "got": "9.4.0",
     "lodash.find": "4.6.0",
     "lodash.omit": "4.5.0",
     "lodash.remove": "4.7.0",
