@@ -12,7 +12,7 @@ Add and search [Todoist](https://todoist.com/) tasks straight from [Alfred](http
 ## Getting started
 
 - For this workflow to work you need version `3.x` of Alfred and a powerpack licence.
-- [Node.js](https://nodejs.org/en/download/)
+- [Node.js](https://nodejs.org/en/download/). If you install node.js in a non-standard way be advised that the workflow expects the binary to be in `/usr/local/bin` or `/usr/bin`
 
 ## Installation
 
@@ -27,16 +27,20 @@ Add and search [Todoist](https://todoist.com/) tasks straight from [Alfred](http
 | _cache_timeout_        | A positive number (default `3600`, an hour)                                                       | The time (in seconds) until the cache is refreshed (until that time todoist information is stored locally to make things a little faster) |
 | _anonymous_statistics_ | `true` or `false` (default `true`)                                                                | Doesn't do much at the moment but I intent to use it to track installs                                                                    |
 
-`todo:setting token {api token}`  
+`todo:setting token {api token}`
+
 Example: _todo:setting token 2d2e2a334c5f36e7a7c43b46e_
 
-`todo:setting language {language}`  
+`todo:setting language {language}`
+
 Example: _todo:setting language nl_
 
-`todo:setting cache_timeout {time in seconds}`  
+`todo:setting cache_timeout {time in seconds}`
+
 Example: _todo:setting cache_timeout 13_
 
-`todo:setting anonymous_statistics {true or false}`  
+`todo:setting anonymous_statistics {true or false}`
+
 Example: _todo:setting anonymous_statistics false_
 
 ## Usage
@@ -67,7 +71,7 @@ Example: `todos car` => returns (because of fuzzy search):
 
 `todo {task}, {date}`
 
-Example: _todo Get things done, tomorrow @ 9_  
+Example: _todo Get things done, tomorrow @ 9_
 Example: _todo Build tree house #home !!2 @15min, tomorrow @ 9_
 
 ## Documentation
