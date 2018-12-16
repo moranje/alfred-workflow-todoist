@@ -125,7 +125,7 @@
     ]
   },
   "dependencies": {
-    "ajv": "6.6.1",
+    "ajv": "6.6.2",
     "babel-polyfill": "6.26.0",
     "date-fns": "2.0.0-alpha.18",
     "fast-plist": "0.1.2",
