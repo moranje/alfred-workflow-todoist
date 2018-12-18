@@ -154,7 +154,7 @@
     "@semantic-release/exec": "3.3.0",
     "@semantic-release/git": "7.0.5",
     "@types/fuzzaldrin": "2.1.1",
-    "@types/got": "9.2.1",
+    "@types/got": "9.2.2",
     "@types/inquirer": "0.0.43",
     "@types/jest": "23.3.10",
     "@types/lodash.find": "4.6.4",
