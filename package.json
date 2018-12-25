@@ -136,7 +136,7 @@
     "lodash.remove": "4.7.0",
     "lodash.unionby": "4.8.0",
     "lru-cache": "5.1.1",
-    "macos-version": "4.1.0",
+    "macos-version": "5.0.0",
     "md5": "2.2.1",
     "mkdirp": "0.5.1",
     "moo": "github:no-context/moo#master",
