@@ -180,7 +180,7 @@
     "cross-env": "5.2.0",
     "cz-conventional-changelog": "^2.0.0",
     "eslint": "5.9.0",
-    "eslint-config-prettier": "3.3.0",
+    "eslint-config-prettier": "3.4.0",
     "eslint-plugin-prettier": "3.0.0",
     "husky": "^1.2.0",
     "inquirer": "6.2.1",
