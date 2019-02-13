@@ -159,7 +159,7 @@
     "@types/jest": "23.3.10",
     "@types/lodash.find": "4.6.4",
     "@types/lodash.omit": "4.5.4",
-    "@types/lodash.remove": "4.7.4",
+    "@types/lodash.remove": "4.7.5",
     "@types/lodash.unionby": "4.8.4",
     "@types/lru-cache": "4.1.1",
     "@types/md5": "2.1.33",
