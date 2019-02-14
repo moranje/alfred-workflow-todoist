@@ -170,7 +170,7 @@
     "@types/node": "*",
     "@types/node-notifier": "0.0.28",
     "@types/opn": "5.1.0",
-    "@types/shelljs": "0.8.1",
+    "@types/shelljs": "0.8.3",
     "@types/stampit": "3.0.2",
     "@types/write-json-file": "2.2.1",
     "bestzip": "2.1.2",
