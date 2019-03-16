@@ -1,13 +1,8 @@
-import { AlfredError } from '@/project';
-import { Item, List, View } from '@/workflow';
-import formatDistance from 'date-fns/formatDistance';
-import { de, enUS, es, fr, it, nl, ptBR, ru, sv, zhCN } from 'date-fns/locale';
-import compose from 'stampit';
-
-// import da from 'date-fns/locale/da'
-// import ko from 'date-fns/locale/ko'
-// import pl from 'date-fns/locale/pl'
-// import ja from 'date-fns/locale/ja';
+import { AlfredError } from '@/project'
+import { Item, List, View } from '@/workflow'
+import formatDistance from 'date-fns/formatDistance'
+import { de, enUS, es, fr, it, ja, nl, ptBR, ru, sv, zhCN } from 'date-fns/locale'
+import compose from 'stampit'
 
 /** @hidden */
 const LOCALES = {
@@ -17,7 +12,7 @@ const LOCALES = {
   es,
   fr,
   it,
-  ja: enUS,
+  ja,
   ko: enUS,
   nl,
   pl: enUS,
