@@ -1,3 +1,11 @@
+# [5.7.0](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.5...v5.7.0) (2019-03-16)
+
+
+### Features
+
+* **parser:** add support for scripts other than latin ([b12ce3d](https://github.com/moranje/alfred-workflow-todoist/commit/b12ce3d)), closes [#105](https://github.com/moranje/alfred-workflow-todoist/issues/105)
+* **todoist:** add japanese timestamp translations ([44b47dd](https://github.com/moranje/alfred-workflow-todoist/commit/44b47dd))
+
 ## [5.6.5](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.4...v5.6.5) (2018-12-05)
 
 
