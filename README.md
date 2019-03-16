@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/moranje/alfred-workflow-todoist.svg?branch=master)](https://travis-ci.org/moranje/alfred-workflow-todoist)
-[![Coverage Status](https://coveralls.io/repos/github/moranje/alfred-workflow-todoist/badge.svg)](https://coveralls.io/github/moranje/alfred-workflow-todoist) [![Greenkeeper badge](https://badges.greenkeeper.io/moranje/alfred-workflow-todoist.svg)](https://greenkeeper.io/)
+[![Coverage Status](https://coveralls.io/repos/github/moranje/alfred-workflow-todoist/badge.svg)](https://coveralls.io/github/moranje/alfred-workflow-todoist) ![](https://img.shields.io/github/downloads/moranje/alfred-workflow-todoist/latest/total.svg) ![](https://img.shields.io/librariesio/github/moranje/alfred-workflow-todoist.svg)
 
 # ALFRED TODOIST WORKFLOW
 
