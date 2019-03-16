@@ -52,8 +52,14 @@
   },
   "config": {
     "commitizen": {
-      "path": "node_modules/cz-conventional-changelog"
+      "path": "./node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "./cz-config.js"
     }
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
   },
   "release": {
     "verifyConditions": [
@@ -182,6 +188,7 @@
     "eslint": "5.9.0",
     "eslint-config-prettier": "3.4.0",
     "eslint-plugin-prettier": "3.0.0",
+    "cz-customizable": "5.5.3",
     "husky": "^1.2.0",
     "inquirer": "6.2.1",
     "jest": "^23.6.0",
