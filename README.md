@@ -12,7 +12,7 @@ Add and search [Todoist](https://todoist.com/) tasks straight from [Alfred](http
 ## Getting started
 
 - For this workflow to work you need version `3.x` of Alfred and a powerpack licence.
-- [Node.js](https://nodejs.org/en/download/). If you install node.js in a non-standard way be advised that the workflow expects the binary to be in `/usr/local/bin` or `/usr/bin`
+- [Node.js](https://nodejs.org/en/download/) version `8.3` or up. If you install node.js in a non-standard way be advised that the workflow expects the binary to be in `/usr/local/bin` or `/usr/bin`
 
 ## Installation
 
