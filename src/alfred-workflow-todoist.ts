@@ -68,4 +68,5 @@ if (type === 'read') {
  */
 
 process.on('uncaughtException', handleError)
-process.on('unhandledRejection', handleError)
+// process.on('unhandledRejection', handleError)
+;(process as NodeJS.EventEmitter).on('unhandledRejection', handleError)
