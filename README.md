@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/moranje/alfred-workflow-todoist.svg?branch=master)](https://travis-ci.org/moranje/alfred-workflow-todoist)
-[![Coverage Status](https://coveralls.io/repos/github/moranje/alfred-workflow-todoist/badge.svg)](https://coveralls.io/github/moranje/alfred-workflow-todoist) ![](https://img.shields.io/librariesio/github/moranje/alfred-workflow-todoist.svg) [![CodeFactor](https://www.codefactor.io/repository/github/moranje/alfred-workflow-todoist/badge)](https://www.codefactor.io/repository/github/moranje/alfred-workflow-todoist)
+[![Coverage Status](https://coveralls.io/repos/github/moranje/alfred-workflow-todoist/badge.svg)](https://coveralls.io/github/moranje/alfred-workflow-todoist) ![](https://img.shields.io/librariesio/github/moranje/alfred-workflow-todoist.svg) [![CodeFactor](https://www.codefactor.io/repository/github/moranje/alfred-workflow-todoist/badge)](https://www.codefactor.io/repository/github/moranje/alfred-workflow-todoist) ![GitHub Releases (by Asset)](https://img.shields.io/github/downloads/moranje/alfred-workflow-todoist/latest/Alfred.Workflow.Todoist.alfredworkflow.svg)
 
 # ALFRED TODOIST WORKFLOW
 
@@ -16,7 +16,7 @@ Add and search [Todoist](https://todoist.com/) tasks straight from [Alfred](http
 
 ## Installation
 
-[Download](https://github.com/moranje/alfred-workflow-todoist/raw/master/dist/Alfred%20Workflow%20Todoist.alfredworkflow) and import workflow.
+[Download](https://github.com/moranje/alfred-workflow-todoist/releases/latest/download/Alfred.Workflow.Todoist.alfredworkflow) and import workflow.
 
 ## Configuration
 
