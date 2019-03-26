@@ -30,6 +30,12 @@ const Adapter: todoist.AdapterFactory = compose({
         // 'Content-Type': 'application/json'
       }
     })
+
+    if (!this.token) {
+      throw new Error(
+        'Missing Todoist API token. Add a token using the `todo:setting token <token>` command.'
+      )
+    }
   },
 
   methods: {
