@@ -165,6 +165,7 @@ node alfred-workflow-todoist.js remove "{query}"</string>
 export PATH="$PATH:/usr/local/bin:/usr/bin"
 
 if which node &gt; /dev/null; then
+  :
 else
   echo "You need to have node (8.5 or up) installed for this workflow to work."
   echo "Have a look at the docs:"
@@ -262,6 +263,7 @@ node alfred-workflow-todoist.js submit "{query}"</string>
 export PATH="$PATH:/usr/local/bin:/usr/bin"
 
 if which node &gt; /dev/null; then
+  :
 else
   echo "You need to have node (8.5 or up) installed for this workflow to work."
   echo "Have a look at the docs:"
@@ -378,6 +380,7 @@ export PATH="$PATH:/usr/local/bin:/usr/bin"
 # IDEA: should return a list with options (eg: settings, (check for) update, install, refresh_cache)
 
 if which node &gt; /dev/null; then
+  :
 else
   echo "You need to have node (8.5 or up) installed for this workflow to work."
   echo "Have a look at the docs:"
