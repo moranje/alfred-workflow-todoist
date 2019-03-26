@@ -1,3 +1,12 @@
+## [5.7.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.7.0...v5.7.1) (2019-03-26)
+
+
+### Bug Fixes
+
+* **project:** failing node.js check ([c9409d9](https://github.com/moranje/alfred-workflow-todoist/commit/c9409d9))
+* **project:** return useful error message when node.js is missing ([a8a966e](https://github.com/moranje/alfred-workflow-todoist/commit/a8a966e)), closes [#107](https://github.com/moranje/alfred-workflow-todoist/issues/107)
+* **project:** return useful error when API key is missing ([7fbc41b](https://github.com/moranje/alfred-workflow-todoist/commit/7fbc41b)), closes [#106](https://github.com/moranje/alfred-workflow-todoist/issues/106)
+
 # [5.7.0](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.5...v5.7.0) (2019-03-16)
 
 
