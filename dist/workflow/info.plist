@@ -164,6 +164,15 @@ node alfred-workflow-todoist.js remove "{query}"</string>
 
 export PATH="$PATH:/usr/local/bin:/usr/bin"
 
+if which node &gt; /dev/null; then
+else
+  echo "You need to have node (8.5 or up) installed for this workflow to work."
+  echo "Have a look at the docs:"
+  echo ""
+  echo "https://github.com/moranje/alfred-workflow-todoist#installation"
+  exit 1
+fi
+
 node alfred-workflow-todoist.js read "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
@@ -251,6 +260,15 @@ node alfred-workflow-todoist.js submit "{query}"</string>
 ###############################################################################
 
 export PATH="$PATH:/usr/local/bin:/usr/bin"
+
+if which node &gt; /dev/null; then
+else
+  echo "You need to have node (8.5 or up) installed for this workflow to work."
+  echo "Have a look at the docs:"
+  echo ""
+  echo "https://github.com/moranje/alfred-workflow-todoist#installation"
+  exit 1
+fi
 
 node alfred-workflow-todoist.js create "{query}"</string>
 				<key>scriptargtype</key>
@@ -358,6 +376,15 @@ node alfred-workflow-todoist.js settings:store "{query}"</string>
 export PATH="$PATH:/usr/local/bin:/usr/bin"
 
 # IDEA: should return a list with options (eg: settings, (check for) update, install, refresh_cache)
+
+if which node &gt; /dev/null; then
+else
+  echo "You need to have node (8.5 or up) installed for this workflow to work."
+  echo "Have a look at the docs:"
+  echo ""
+  echo "https://github.com/moranje/alfred-workflow-todoist#installation"
+  exit 1
+fi
 
 node alfred-workflow-todoist.js settings "{query}"</string>
 				<key>scriptargtype</key>
