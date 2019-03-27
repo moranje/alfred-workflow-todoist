@@ -49,7 +49,7 @@ Example: _todo:setting anonymous_statistics false_
 | ---------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
 | _task_     | Any text except `,`                     | The task title.                                                                                                                      |
 | _date_     | A date string                           | See the [Todoist documentation](https://support.todoist.com/hc/en-us/articles/205325931-Dates-and-Times) for supported date formats. |
-| _project_  | Either `#personal` or `#[next actions]` | Use either the hashtag notation or bracket notation if the project name has spaces in it. The project name is case insensitive.      |
+| _project_  | Either `#personal` or `#[next actions]` | Use either the hashtag notation or bracket notation if the project name has spaces in it. The project name is case sensitive.        |
 | _label_    | `@label`                                | Label names can't contain any whitespace characters. Labels are case insensitive.                                                    |
 | _priority_ | Either `p2` or `!!2`                    | A value between `1` (urgent) and `4` (normal)                                                                                        |
 
