@@ -2,6 +2,7 @@ import './helpers/nock-requests'
 
 import { cache, Command } from '@/project'
 
+jest.mock('@/project/references')
 jest.mock('@/project/files')
 
 jest.mock('write-json-file', () => {

@@ -1,9 +1,6 @@
-import { AlfredError } from '@/project'
-import omit from 'lodash.omit'
-import notifier from 'node-notifier'
-import open from 'opn'
 import compose from 'stampit'
 import { spawn } from 'child_process'
+import { NOTIFIER_PATH } from '@/project'
 
 /** @hidden */
 const NOTIFICATION_DEFAULTS: workflow.NotificationOptions = {
@@ -55,7 +52,7 @@ function logError(error: project.AlfredError) {
 
 function notify(options: workflow.NotificationOptions) {
   let child = spawn(
-    './notifier/terminal-notifier.app/Contents/MacOS/terminal-notifier',
+    NOTIFIER_PATH,
     [
       '-title',
       `"${options.title}"`,

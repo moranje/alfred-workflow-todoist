@@ -23,11 +23,11 @@ export const CACHE_PATH = `${
  *
  * @hidden
  */
-export const WORKFLOW_JSON = `${process.cwd()}/workflow.json`
+export const WORKFLOW_JSON = `${process.cwd()}/dist/workflow/workflow.json`
 
 /**
  * A file path reference to package.josn.
  *
  * @hidden
  */
-export const NOTIFIER_PATH = `${process.cwd()}/notifier/terminal-notifier.app/Contents/MacOS/terminal-notifier`
+export const NOTIFIER_PATH = `${process.cwd()}/dist/workflow/notifier/terminal-notifier.app/Contents/MacOS/terminal-notifier`
