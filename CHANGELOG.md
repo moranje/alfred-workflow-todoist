@@ -1,3 +1,15 @@
+# [5.8.0](https://github.com/moranje/alfred-workflow-todoist/compare/v5.7.1...v5.8.0) (2019-03-30)
+
+
+### Bug Fixes
+
+* **project:** tests failing due to faulty notifier reference ([236a369](https://github.com/moranje/alfred-workflow-todoist/commit/236a369))
+
+
+### Features
+
+* **project:** periodic checks for workflow updates ([e9f4262](https://github.com/moranje/alfred-workflow-todoist/commit/e9f4262)), closes [#108](https://github.com/moranje/alfred-workflow-todoist/issues/108)
+
 ## [5.7.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.7.0...v5.7.1) (2019-03-26)
 
 
