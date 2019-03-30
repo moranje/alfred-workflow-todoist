@@ -8,7 +8,8 @@ const WHITE_LIST = [
   'dist/workflow/alfred-workflow-todoist.js',
   'dist/workflow/alfred-workflow-todoist.js.map',
   'dist/workflow/icon.png',
-  'dist/workflow/info.plist'
+  'dist/workflow/info.plist',
+  'dist/workflow/workflow.json'
 ]
 
 let err = shell.exec('rollup -c rollup.config.ts').stderr

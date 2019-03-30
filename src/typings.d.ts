@@ -702,6 +702,11 @@ declare namespace workflow {
      * An error object.
      */
     error?: project.AlfredError
+
+    /**
+     * Hide success messages from logs
+     */
+    hideSuccessLogs?: boolean
   }
 
   /**
@@ -1197,6 +1202,7 @@ declare namespace project {
   export interface FILES {
     settings: Settings
     cache: any
+    workflowConfig: any
   }
 
   /**
@@ -1279,6 +1285,8 @@ declare namespace project {
      * @returns {Promise<void>}
      */
     saveSetting(setting: { key: string; value: string | number | boolean }): Promise<void>
+
+    updateWorkflowVersion(): Promise<void>
   }
 
   /**

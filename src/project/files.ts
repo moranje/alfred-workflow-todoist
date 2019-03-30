@@ -1,12 +1,15 @@
-import { CACHE_PATH, SETTINGS_PATH } from '@/project';
+import { CACHE_PATH, SETTINGS_PATH, WORKFLOW_JSON } from '@/project'
 
 /** @hidden */
 let settings
+/** @hidden */
+let workflowConfig
 /** @hidden */
 let cache = []
 try {
   settings = require(SETTINGS_PATH)
   cache = require(CACHE_PATH)
+  workflowConfig = require(WORKFLOW_JSON)
 } catch (err) {
   // Do nothing
 }
@@ -18,5 +21,6 @@ try {
  */
 export const FILES: project.FILES = {
   settings,
-  cache
+  cache,
+  workflowConfig
 }

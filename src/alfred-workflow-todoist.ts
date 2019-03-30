@@ -1,6 +1,5 @@
-import '@babel/polyfill';
-
-import { AlfredError, cache, Command, getSetting, handleError, serialize } from '@/project';
+import '@babel/polyfill'
+import { AlfredError, cache, Command, getSetting, handleError, serialize } from '@/project'
 
 /**
  * CLI argument parsing
@@ -26,9 +25,13 @@ function handleSerialization() {
 }
 
 /**
+ * Updater
+ */
+command.updateWorkflowVersion()
+
+/**
  * CLI option logic
  */
-
 if (type === 'read') {
   command
     .read(query)
