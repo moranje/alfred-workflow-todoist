@@ -1,3 +1,10 @@
+## [5.8.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.8.0...v5.8.1) (2019-04-05)
+
+
+### Bug Fixes
+
+* **project:** empty files constant on fresh install ([ea7ad1f](https://github.com/moranje/alfred-workflow-todoist/commit/ea7ad1f)), closes [#109](https://github.com/moranje/alfred-workflow-todoist/issues/109)
+
 # [5.8.0](https://github.com/moranje/alfred-workflow-todoist/compare/v5.7.1...v5.8.0) (2019-03-30)
 
 
