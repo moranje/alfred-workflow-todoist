@@ -1,5 +1,11 @@
 export { AlfredError, handleError } from './error'
-export { SETTINGS_PATH, CACHE_PATH, WORKFLOW_JSON, NOTIFIER_PATH } from './references'
+export {
+  SETTINGS_PATH,
+  CACHE_PATH,
+  WORKFLOW_JSON,
+  WORKFLOW_PATH,
+  NOTIFIER_PATH
+} from './references'
 export { Schema } from './settings-schema'
 export { FILES } from './files'
 export { verify, getSetting, getSettings, list, save } from './settings'

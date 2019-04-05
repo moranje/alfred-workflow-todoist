@@ -27,7 +27,11 @@ function handleSerialization() {
 /**
  * Updater
  */
-command.updateWorkflowVersion()
+try {
+  command.updateWorkflowVersion()
+} catch (error) {
+  handleError(error)
+}
 
 /**
  * CLI option logic

@@ -1,4 +1,5 @@
 import { CACHE_PATH, SETTINGS_PATH, WORKFLOW_JSON } from '@/project'
+import { handleError } from '.'
 
 /** @hidden */
 let settings
@@ -8,10 +9,20 @@ let workflowConfig
 let cache = []
 try {
   settings = require(SETTINGS_PATH)
-  cache = require(CACHE_PATH)
-  workflowConfig = require(WORKFLOW_JSON)
 } catch (err) {
-  // Do nothing
+  // Do nothing as user may start with no settings
+}
+
+try {
+  cache = require(CACHE_PATH)
+} catch (err) {
+  // Do nothing as no cache be be stored yet
+}
+
+try {
+  workflowConfig = require(WORKFLOW_JSON)
+} catch (error) {
+  handleError(error)
 }
 
 /**
