@@ -11,12 +11,48 @@ Add and search [Todoist](https://todoist.com/) tasks straight from [Alfred](http
 
 ## Getting started
 
-- For this workflow to work you need version `3.x` of Alfred and a powerpack licence.
-- [Node.js](https://nodejs.org/en/download/) version `8.3` or up. If you install node.js in a non-standard way be advised that the workflow expects the binary to be in `/usr/local/bin` or `/usr/bin`
+For this workflow to work you need:
+
+- Alfred version `3.x` and a powerpack licence.
+- [Node.js](https://nodejs.org/en/download/) version `8.3` or up
+
+Note that the workflow expects node to be installed in the default location(s), i.e. `/usr/local/bin` or `/usr/bin`. See [installation notes](#Non---standard-node-installation) below on how to make the workflow work with non-standard node installations.
 
 ## Installation
 
 [Download](https://github.com/moranje/alfred-workflow-todoist/releases/latest/download/Alfred.Workflow.Todoist.alfredworkflow) and import workflow.
+
+### Non-standard node installation
+
+If you have installed node.js in a non-standard way (e.g. through **nvm** or **homebrew**), you may need to do either of the following to make the workflow work:
+
+**Create symlink to current node version:**
+
+1. In the terminal, navigate to /usr/local/bin
+`cd /usr/local/bin`
+2. Create symlink to current node version
+`ln -s $(which node) node`
+(note, if you're using a different shell - fish, zsh, etc. - you may need to make slight changes to make the command work).
+
+This method should work with different versions of nvm (including changing to other versions), as long as you don't remove the symlinked node version (or the symlink itself of course).
+
+**Manually add node path to the workflow:**
+
+1. In the terminal, reveal the path to your node installation
+`which node`
+2. copy the output, but omit the executeable
+(e.g.
+`/Users/{user}/.nvm/versions/node/v11.6.0/bin`, not
+`/Users/{user}/.nvm/versions/node/v11.6.0/bin/node`)
+3. navigate to the workflow in Alfred Preferences
+*Alfred Preferences* -> *Workflows*-tab
+4. open all objects in the workflow, one at a time, find wherever the path is exported and add your node path to the beginning – i.e. find all instances of
+`export PATH="$PATH:/usr/local/bin:/usr/bin"`
+and add your node path, resulting in
+`export PATH="$PATH:/Users/{user}/.nvm/versions/node/v11.6.0/bin:/usr/local/bin:/usr/bin"`
+(observe the colons separating the statements)
+
+**Observe**, this method will have to be repeated whenever the workflow is updated.
 
 ## Configuration
 
