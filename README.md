@@ -54,6 +54,16 @@ and add your node path, resulting in
 
 **Observe**, this method will have to be repeated whenever the workflow is updated.
 
+### Debug
+
+If the workflow doesn't work as expected, perform the following to get a clue about the issue:
+
+1. Navigate to the workflow in *Alfred Preferences* -> *Workflows*-tab
+2. Enable *Debug mode* (button in the top-right corner of the screen)
+3. Watch for messages in the bottom log-pane when using the workflow.
+
+If the error messages outputs node errors, either make sure you have the appropriate node version or follow the steps [above](#Non---standard-node-installation) to enable the workflow with a non-standard node installation.
+
 ## Configuration
 
 | Name                   | Notation                                                                                          | Explanation                                                                                                                               |
