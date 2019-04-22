@@ -22,7 +22,7 @@ const lexer = moo.states({
     doubleExclamation: { match: /!!/, push: 'priority' },
     plus: { match: /\+/, push: 'person' },
     comma: { match: /,/, push: 'date' },
-    priority: /p[1-4]/u
+    priority: /p[1-4]/
   },
 
   project: {
