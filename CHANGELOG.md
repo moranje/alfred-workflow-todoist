@@ -1,3 +1,11 @@
+## [5.8.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.8.1...v5.8.2) (2019-04-22)
+
+
+### Bug Fixes
+
+* **parser:** add all language scripts in a more robust way ([b5fd7b4](https://github.com/moranje/alfred-workflow-todoist/commit/b5fd7b4)), closes [#111](https://github.com/moranje/alfred-workflow-todoist/issues/111)
+* **parser:** use es5 compatible robust script parsing ([0b22006](https://github.com/moranje/alfred-workflow-todoist/commit/0b22006)), closes [#111](https://github.com/moranje/alfred-workflow-todoist/issues/111)
+
 ## [5.8.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.8.0...v5.8.1) (2019-04-05)
 
 
