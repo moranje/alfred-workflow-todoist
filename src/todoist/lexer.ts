@@ -1,12 +1,14 @@
 import moo from 'moo'
 import escape from 'escape-string-regexp'
 
-// Includes numbers, lowercase letters an titlecase letters
-// Generaterd with: https://apps.timwhitlock.info/js/regex#
-const ALL_SCRIPTS =
-  '[0-9A-Za-zªµºÀ-ÖØ-öø-ƺƼ-ƿǄ-ʓʕ-ʯͰ-ͳͶ-ͷͻ-ͽΆΈ-ΊΌΎ-ΡΣ-ϵϷ-ҁҊ-ԣԱ-Ֆա-և٠-٩۰-۹߀-߉०-९০-৯੦-੯૦-૯୦-୯௦-௯౦-౯೦-೯൦-൯๐-๙໐-໙༠-༩၀-၉႐-႙Ⴀ-Ⴥ០-៩᠐-᠙᥆-᥏᧐-᧙᭐-᭙᮰-᮹᱀-᱉᱐-᱙ᴀ-ᴫᵢ-ᵷᵹ-ᶚḀ-ἕἘ-Ἕἠ-ὅὈ-Ὅὐ-ὗὙὛὝὟ-ώᾀ-ᾴᾶ-ᾼιῂ-ῄῆ-ῌῐ-ΐῖ-Ίῠ-Ῥῲ-ῴῶ-ῼⁱⁿℂℇℊ-ℓℕℙ-ℝℤΩℨK-ℭℯ-ℴℹℼ-ℿⅅ-ⅉⅎↃ-ↄⰀ-Ⱞⰰ-ⱞⱠ-Ɐⱱ-ⱼⲀ-ⳤⴀ-ⴥ꘠-꘩Ꙁ-ꙟꙢ-ꙭꚀ-ꚗꜢ-ꝯꝱ-ꞇꞋ-ꞌ꣐-꣙꤀-꤉꩐-꩙ﬀ-ﬆﬓ-ﬗ０-９Ａ-Ｚａ-ｚ]|\ud801[\udc00-\udc4f\udca0-\udca9]|\ud835[\udc00-\udc54\udc56-\udc9c\udc9e-\udc9f\udca2\udca5-\udca6\udca9-\udcac\udcae-\udcb9\udcbb\udcbd-\udcc3\udcc5-\udd05\udd07-\udd0a\udd0d-\udd14\udd16-\udd1c\udd1e-\udd39\udd3b-\udd3e\udd40-\udd44\udd46\udd4a-\udd50\udd52-\udea5\udea8-\udec0\udec2-\udeda\udedc-\udefa\udefc-\udf14\udf16-\udf34\udf36-\udf4e\udf50-\udf6e\udf70-\udf88\udf8a-\udfa8\udfaa-\udfc2\udfc4-\udfcb\udfce-\udfff]'
-const SEPARATORS = new RegExp(`(?:${ALL_SCRIPTS}|_|-)+`)
-const WHITESPACE = new RegExp(`(?:${ALL_SCRIPTS}|_| |-)+`)
+// tslint:disable: no-empty-character-class
+
+/** @hidden */
+const ALL_SCRIPTS = /(?:\p{Letter}|\p{Number})+/u
+/** @hidden */
+const SEPARATORS = new RegExp(`(?:${ALL_SCRIPTS.source}|_|-)+`, 'u')
+/** @hidden */
+const WHITESPACE = new RegExp(`(?:${ALL_SCRIPTS.source}|_| |-)+`, 'u')
 
 /** @hidden */
 const lexer = moo.states({
@@ -14,21 +16,21 @@ const lexer = moo.states({
     // @ts-ignore: not yet in typescript definition
     content: moo.fallback,
 
-    pound: { match: /#/, push: 'project' },
-    at: { match: /@/, push: 'label' },
-    doubleExclamation: { match: /!!/, push: 'priority' },
-    plus: { match: /\+/, push: 'person' },
-    comma: { match: /,/, push: 'date' },
-    priority: /p[1-4]/
+    pound: { match: /#/u, push: 'project' },
+    at: { match: /@/u, push: 'label' },
+    doubleExclamation: { match: /!!/u, push: 'priority' },
+    plus: { match: /\+/u, push: 'person' },
+    comma: { match: /,/u, push: 'date' },
+    priority: /p[1-4]/u
   },
 
   project: {
-    open: { match: /\[/, next: 'projectWithSpaces' },
+    open: { match: /\[/u, next: 'projectWithSpaces' },
     name: { match: SEPARATORS, pop: 1 }
   },
 
   projectWithSpaces: {
-    close: { match: /\]/, pop: 1 },
+    close: { match: /\]/u, pop: 1 },
     name: WHITESPACE
   },
 
@@ -37,7 +39,7 @@ const lexer = moo.states({
   },
 
   priority: {
-    number: { match: /[1-4]/, pop: 1 }
+    number: { match: /[1-4]/u, pop: 1 }
   },
 
   person: {
@@ -45,7 +47,7 @@ const lexer = moo.states({
   },
 
   date: {
-    date: { match: /.+/, pop: 1 }
+    date: { match: /.+/u, pop: 1 }
   }
 })
 
