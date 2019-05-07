@@ -132,21 +132,28 @@ View [CHANGELOG.md](https://github.com/moranje/alfred-workflow-todoist/blob/mast
 
 ### Instructions
 
-```md
 - Fork and clone the repo
-- Install dependacies
+
+  *git clone https://github.com/YOUR-USERNAME/alfred-worflow-todoist*
+
+- Install dependencies
+
+  *npm install*
+
 - Symlink to project workflow folder
 
-  git clone https://github.com/YOUR-USERNAME/alfred-worflow-todoist
-  npm install
-  npm run setup:dev
-```
+  *npm run setup:dev*
 
 ### Build
 
 Create a new build with
 
 `npm run build`
+
+Create a distributable package (.alfredworkflow) after the build step with
+
+`npm run build:workflow`
+
 
 ### Run tests
 
@@ -169,7 +176,7 @@ Which guides you through the motions
 
 ## Code of conduct
 
-[code-of-conduct.md](https://github.com/moranje/alfred-workflow-todoist/blob/master/code-of-conduct.md)
+[Code of Conduct](https://github.com/moranje/alfred-workflow-todoist/blob/master/code-of-conduct.md)
 
 ## License
 
