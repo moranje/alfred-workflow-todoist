@@ -120,6 +120,12 @@ Example: `todos car` => returns (because of fuzzy search):
 Example: _todo Get things done, tomorrow @ 9_
 Example: _todo Build tree house #home !!2 @15min, tomorrow @ 9_
 
+*_Important_*
+
+For date parsing the work the date needs to be the only thing after the comma.
+
+The reason for this is that multilanguage date string parsing is hard, and Todoist has already solved this problem. But in order to have Todoist read the date the workflow needs to present it a string that holds just the date. The workflow does this by having the date string between a comma and the end of the string.
+
 ## Documentation
 
 Read the [docs](https://moranje.github.io/alfred-workflow-todoist).
