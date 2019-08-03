@@ -3,7 +3,7 @@
 
 # ALFRED TODOIST WORKFLOW
 
-Add and search [Todoist](https://todoist.com/) tasks straight from [Alfred](https://www.alfredapp.com). It uses Todoist `v8` [REST API](https://developer.todoist.com/rest/v8/).
+Add and search [Todoist](https://todoist.com/) tasks straight from [Alfred](https://www.alfredapp.com). It uses Todoist stable `v1` [REST API](https://developer.todoist.com/rest/v1).
 
 | [Getting started](#getting-started) | [Installation](#installation) | [Configuration](#configuration) | [Usage](#usage) | [Contributing](#contributing) |
 | :---------------------------------: | :---------------------------: | :-----------------------------: | :-------------: | :---------------------------: |

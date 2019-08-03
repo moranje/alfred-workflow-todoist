@@ -31,3 +31,8 @@ export const WORKFLOW_JSON = `${process.cwd()}/dist/workflow/workflow.json`
  * @hidden
  */
 export const NOTIFIER_PATH = `${process.cwd()}/dist/workflow/notifier/terminal-notifier.app/Contents/MacOS/terminal-notifier`
+
+/**
+ * The API base path.
+ */
+export const TODOIST_API_URI = 'https://api.todoist.com/rest/v1'

@@ -6,6 +6,7 @@ import got from 'got';
 import find from 'lodash.find';
 import unionBy from 'lodash.unionby';
 import compose from 'stampit';
+import { TODOIST_API_URI } from '@/project/references';
 
 /** @hidden */
 const Adapter: todoist.AdapterFactory = compose({
@@ -13,7 +14,7 @@ const Adapter: todoist.AdapterFactory = compose({
     this: todoist.AdapterInstance,
     {
       type,
-      uri = 'https://beta.todoist.com/API/v8',
+      uri = TODOIST_API_URI,
       token
     }: { type: 'task' | 'project' | 'label'; uri: string; token: string }
   ) {
