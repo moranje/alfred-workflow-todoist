@@ -767,7 +767,7 @@ declare namespace todoist {
     /**
      * A pre-configured got object
      */
-    got: any
+    client: any
 
     /**
      * Returns items of a type based on a query. Returns all items when qeurr
