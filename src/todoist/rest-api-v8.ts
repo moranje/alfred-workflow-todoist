@@ -41,7 +41,7 @@ const Adapter: todoist.AdapterFactory = compose({
 
   methods: {
     /**
-     * Returns items of a type based on a query. Returns all items when qeurr
+     * Returns items of a type based on a query. Returns all items when query
      * is falsy.
      *
      * @param {string} query

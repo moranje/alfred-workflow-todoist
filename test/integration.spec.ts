@@ -231,14 +231,14 @@ describe('Integration:', () => {
       expect(response.token).toEqual('0123456789abcde0123456789abcde0123456789')
     })
 
-    it('should store a langauge setting back to disk', () => {
+    it('should store a language setting back to disk', () => {
       Command().saveSetting({
-        key: 'langauge',
+        key: 'language',
         value: 'nl'
       })
       let response = spy.mock.calls[0][0]
 
-      expect(response.langauge).toEqual('nl')
+      expect(response.language).toEqual('nl')
     })
 
     it('should store a max_items setting back to disk', () => {

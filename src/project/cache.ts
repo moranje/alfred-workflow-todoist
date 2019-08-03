@@ -30,7 +30,7 @@ export { cache }
  * @param {number} id
  */
 export function removeObject(type: string, id: number): void {
-  // @ts-ignore incorect return type on cache.get()
+  // @ts-ignore incorrect return type on cache.get()
   let objects: any[] = cache.get(type) || []
   let removed = remove(objects, (obj: any) => obj.id === id)
 
