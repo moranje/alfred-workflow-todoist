@@ -1,6 +1,6 @@
 import { AlfredError, CACHE_PATH, FILES, getSetting } from '@/project'
 import remove from 'lodash.remove'
-import LRU from 'lru-cache'
+import LRUCache from 'lru-cache'
 import writeJsonFile from 'write-json-file'
 
 /** @hidden */
@@ -14,7 +14,7 @@ const options = {
   maxAge: 1000 * cacheTimeout
 }
 /** @hidden */
-const cache = new LRU(options)
+const cache = new LRUCache(options)
 cache.load(FILES.cache)
 
 /**
@@ -43,9 +43,9 @@ export function removeObject(type: string, id: number): void {
  * Serialize cache changes back to disk
  *
  * @export
- * @param {LRU.LRUEntry<{}, {}>[]} dump
+ * @param {Array<LRUCache.Entry<any, any>>} dump
  * @returns
  */
-export function serialize(dump: LRU.LRUEntry<{}, {}>[]) {
+export function serialize(dump: Array<LRUCache.Entry<any, any>>) {
   return writeJsonFile(CACHE_PATH, dump)
 }
