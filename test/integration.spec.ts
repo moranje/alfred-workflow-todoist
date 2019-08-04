@@ -2,8 +2,6 @@ import './helpers/nock-requests'
 import { cache, Command, FILES } from '@/project'
 
 jest.mock('@/project/references')
-jest.mock('@/project/files')
-
 
 jest.mock('write-json-file', () => {
   return async (path: string, data: any) => {
@@ -16,12 +14,10 @@ let spy: any
 describe('Integration:', () => {
   beforeEach(() => {
     spy = jest.spyOn(console, 'log')
-    cache.load(FILES.cache)
   })
 
   afterEach(() => {
     spy.mockReset()
-    cache.reset()
   })
 
   describe('Find task(s)', () => {
