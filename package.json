@@ -146,7 +146,7 @@
   "dependencies": {
     "ajv": "6.10.2",
     "babel-polyfill": "6.26.0",
-    "date-fns": "v2.0.0-alpha.26",
+    "date-fns": "2.0.0-beta.3",
     "escape-string-regexp": "2.0.0",
     "fast-plist": "0.1.2",
     "fuzzaldrin": "2.1.0",

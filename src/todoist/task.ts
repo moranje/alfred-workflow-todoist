@@ -1,6 +1,7 @@
 import { AlfredError } from '@/project'
 import { Item, List, View } from '@/workflow'
 import formatDistance from 'date-fns/formatDistance'
+import parseISO from 'date-fns/parseISO'
 import { de, enUS, es, fr, it, ja, nl, ptBR, ru, sv, zhCN } from 'date-fns/locale'
 import compose from 'stampit'
 
@@ -49,41 +50,57 @@ export const TaskList: todoist.TaskListFactory = compose(
         const { content, project, labels = [], priority, due, due_string } = task
         let view = View()
         let name = (project && project.name) || ''
-        let date: Date
+        let date: string
 
         if (due && due.date) {
-          date = new Date(due.date)
+          date = due.date
         }
 
         if (due && due.datetime) {
-          date = new Date(due.datetime)
+          date = due.datetime
         }
 
         let item = Item({
           arg: task,
           title: `${action}: ${content}`,
           subtitle: view.template(
-            ({ upperCase, ws, when }) =>
-              `${when(name, upperCase(name), 'INBOX')}${when(
+            ({ upperCase, ws, when }) => {
+              // Project name
+              let subtitle = `${when(name, upperCase(name), 'INBOX')}`
+
+              // Label
+              subtitle += `${when(
                 labels.length > 0,
                 `${ws(10)}\uFF20 ${labels.map(label => label.name)}`,
                 ''
-              )}${when(
+              )}`
+
+              // Priority
+              subtitle += `${when(
                 priority && priority > 1,
                 `${ws(10)}\u203C ${priority && 5 - priority}`,
                 ''
-              )}${when(
+              )}`
+
+              // Due date (in local language)
+              if (date) {
+              subtitle += `${when(
                 date,
-                `${ws(10)}\u29D6 ${formatDistance(date, new Date(), {
+                `${ws(10)}\u29D6 ${formatDistance(parseISO(date), new Date(), {
                   addSuffix: true,
                   locale: LOCALES[locale]
                 })}`,
                 ''
-              )}${when(due_string, `${ws(10)}\u29D6 ${due_string}`, '')}`
-          )
+              )}`}
+
+              // Alternative due date
+              subtitle += `${when(due_string, `${ws(10)}\u29D6 ${due_string}`, '')}`
+
+              return subtitle
+            })
         })
 
-        this.items.push(item)
+          this.items.push(item)
       })
     }
   }
