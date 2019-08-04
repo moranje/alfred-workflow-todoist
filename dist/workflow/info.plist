@@ -494,7 +494,7 @@ node alfred-workflow-todoist.js settings "{query}"</string>
 		</dict>
 	</dict>
 	<key>version</key>
-	<string>5.8.2</string>
+	<string>5.8.3</string>
 	<key>webaddress</key>
 	<string>https://github.com/moranje/alfred-workflow-todoist</string>
 </dict>

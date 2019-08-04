@@ -1,3 +1,12 @@
+## [5.8.3](https://github.com/moranje/alfred-workflow-todoist/compare/v5.8.2...v5.8.3) (2019-08-04)
+
+
+### Bug Fixes
+
+* **project:** update to stable todoist v1 rest api ([7f3f34a](https://github.com/moranje/alfred-workflow-todoist/commit/7f3f34a)), closes [#113](https://github.com/moranje/alfred-workflow-todoist/issues/113)
+* **tests:** failing test suite due a bug in nock under node 12 ([42cc96d](https://github.com/moranje/alfred-workflow-todoist/commit/42cc96d))
+* **todoist:** support emoticons/emoji ([bfdce97](https://github.com/moranje/alfred-workflow-todoist/commit/bfdce97)), closes [#112](https://github.com/moranje/alfred-workflow-todoist/issues/112)
+
 ## [5.8.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.8.1...v5.8.2) (2019-04-22)
 
 
