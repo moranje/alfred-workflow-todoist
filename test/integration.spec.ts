@@ -1,7 +1,21 @@
 import './helpers/nock-requests'
-import { cache, Command, FILES } from '@/project'
+import { Command, FILES } from '@/project'
 
 jest.mock('@/project/references')
+// Needed for settings
+jest.mock('@/project/files', () => ({
+  __esModule: true,
+  FILES: {
+    settings: {
+      token: '0123456789abcde0123456789abcde0123456789',
+      language: 'en',
+      max_items: '9',
+      anonymous_statistics: 'true',
+      unknown: {}
+    },
+    cache: []
+  }})
+)
 
 jest.mock('write-json-file', () => {
   return async (path: string, data: any) => {
