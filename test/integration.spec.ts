@@ -1,9 +1,9 @@
 import './helpers/nock-requests'
-
-import { cache, Command } from '@/project'
+import { cache, Command, FILES } from '@/project'
 
 jest.mock('@/project/references')
 jest.mock('@/project/files')
+
 
 jest.mock('write-json-file', () => {
   return async (path: string, data: any) => {
@@ -16,16 +16,17 @@ let spy: any
 describe('Integration:', () => {
   beforeEach(() => {
     spy = jest.spyOn(console, 'log')
+    cache.load(FILES.cache)
   })
 
   afterEach(() => {
     spy.mockReset()
+    cache.reset()
   })
 
   describe('Find task(s)', () => {
     it('should find tasks from cache', async () => {
       expect.assertions(5)
-
       await Command().read()
 
       let items = JSON.parse(spy.mock.calls[0][0]).items
@@ -38,9 +39,6 @@ describe('Integration:', () => {
 
     it('should return all tasks from API with empty query (mocked)', async () => {
       expect.assertions(5)
-
-      let dump = cache.dump()
-      cache.reset()
       await Command().read()
 
       let items = JSON.parse(spy.mock.calls[0][0]).items
@@ -49,33 +47,24 @@ describe('Integration:', () => {
       expect(items[2].title).toBe('COMPLETE: Buy the thing')
       expect(items[3].title).toBe('COMPLETE: Sign up for dance class')
       expect(items[4].title).toBe('COMPLETE: Project review')
-      cache.load(dump)
     })
 
     it('should return matched tasks when queried (mocked)', async () => {
       expect.assertions(3)
-
-      let dump = cache.dump()
-      cache.reset()
       await Command().read('thing')
 
       let items = JSON.parse(spy.mock.calls[0][0]).items
       expect(items[0].title).toBe('COMPLETE: Plan a thing')
       expect(items[1].title).toBe('COMPLETE: Buy the thing')
       expect(items).toHaveLength(2)
-      cache.load(dump)
     })
 
     it('should show a nothing found item if a query has no matches', async () => {
       expect.assertions(1)
-
-      let dump = cache.dump()
-      cache.reset()
       await Command().read('xxxxx')
 
       let items = JSON.parse(spy.mock.calls[0][0]).items
       expect(items[0].title).toBe("SORRY: There's just nothing here...")
-      cache.load(dump)
     })
   })
 
