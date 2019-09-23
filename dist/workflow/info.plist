@@ -112,9 +112,14 @@
 # Licence: MIT
 ###############################################################################
 
-export PATH="$PATH:/usr/local/bin:/usr/bin"
+export PATH="$PATH:$node_path:/usr/local/bin:/usr/bin"
 
-node alfred-workflow-todoist.js remove "{query}"</string>
+version=`node --version`
+if [ "`echo $version | grep 'v10'`" ]; then
+  option='--experimental-worker'
+fi
+
+node $option alfred-workflow-todoist.js remove "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -162,19 +167,25 @@ node alfred-workflow-todoist.js remove "{query}"</string>
 # Licence: MIT
 ###############################################################################
 
-export PATH="$PATH:/usr/local/bin:/usr/bin"
+export PATH="$PATH:$node_path:/usr/local/bin:/usr/bin"
 
 if which node &gt; /dev/null; then
   :
 else
-  echo "You need to have node (8.5 or up) installed for this workflow to work."
+  echo "You need to have node (10.5 or up) installed for this workflow to work."
   echo "Have a look at the docs:"
   echo ""
   echo "https://github.com/moranje/alfred-workflow-todoist#installation"
   exit 1
 fi
 
-node alfred-workflow-todoist.js read "{query}"</string>
+version=`node --version`
+if [ "`echo $version | grep 'v10'`" ]; then
+  option='--experimental-worker'
+fi
+
+node $option alfred-workflow-todoist.js read "{query}"
+</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -210,9 +221,14 @@ node alfred-workflow-todoist.js read "{query}"</string>
 # Licence: MIT
 ###############################################################################
 
-export PATH="$PATH:/usr/local/bin:/usr/bin"
+export PATH="$PATH:$node_path:/usr/local/bin:/usr/bin"
 
-node alfred-workflow-todoist.js submit "{query}"</string>
+version=`node --version`
+if [ "`echo $version | grep 'v10'`" ]; then
+  option='--experimental-worker'
+fi
+
+node $option alfred-workflow-todoist.js submit "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -260,19 +276,25 @@ node alfred-workflow-todoist.js submit "{query}"</string>
 # Licence: MIT
 ###############################################################################
 
-export PATH="$PATH:/usr/local/bin:/usr/bin"
+export PATH="$PATH:$node_path:/usr/local/bin:/usr/bin"
 
 if which node &gt; /dev/null; then
   :
 else
-  echo "You need to have node (8.5 or up) installed for this workflow to work."
+  echo "You need to have node (10.5 or up) installed for this workflow to work."
   echo "Have a look at the docs:"
   echo ""
   echo "https://github.com/moranje/alfred-workflow-todoist#installation"
   exit 1
 fi
 
-node alfred-workflow-todoist.js create "{query}"</string>
+version=`node --version`
+if [ "`echo $version | grep 'v10'`" ]; then
+  option='--experimental-worker'
+fi
+
+node $option alfred-workflow-todoist.js create "{query}"
+</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -325,9 +347,14 @@ node alfred-workflow-todoist.js create "{query}"</string>
 # Licence: MIT
 ###############################################################################
 
-export PATH="$PATH:/usr/local/bin:/usr/bin"
+export PATH="$PATH:$node_path:/usr/local/bin:/usr/bin"
 
-node alfred-workflow-todoist.js settings:store "{query}"</string>
+version=`node --version`
+if [ "`echo $version | grep 'v10'`" ]; then
+  option='--experimental-worker'
+fi
+
+node $option alfred-workflow-todoist.js settings:store "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -375,21 +402,27 @@ node alfred-workflow-todoist.js settings:store "{query}"</string>
 # Licence: MIT
 ###############################################################################
 
-export PATH="$PATH:/usr/local/bin:/usr/bin"
+export PATH="$PATH:$node_path:/usr/local/bin:/usr/bin"
 
 # IDEA: should return a list with options (eg: settings, (check for) update, install, refresh_cache)
 
 if which node &gt; /dev/null; then
   :
 else
-  echo "You need to have node (8.5 or up) installed for this workflow to work."
+  echo "You need to have node (10.5 or up) installed for this workflow to work."
   echo "Have a look at the docs:"
   echo ""
   echo "https://github.com/moranje/alfred-workflow-todoist#installation"
   exit 1
 fi
 
-node alfred-workflow-todoist.js settings "{query}"</string>
+version=`node --version`
+if [ "`echo $version | grep 'v10'`" ]; then
+  option='--experimental-worker'
+fi
+
+node $option alfred-workflow-todoist.js settings "{query}"
+</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -492,6 +525,11 @@ node alfred-workflow-todoist.js settings "{query}"</string>
 			<key>ypos</key>
 			<integer>360</integer>
 		</dict>
+	</dict>
+	<key>variables</key>
+	<dict>
+		<key>node_path</key>
+		<string></string>
 	</dict>
 	<key>version</key>
 	<string>5.8.3</string>

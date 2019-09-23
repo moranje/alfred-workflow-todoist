@@ -46,13 +46,7 @@ This method should work with different versions of nvm (including changing to ot
 `/Users/{user}/.nvm/versions/node/v11.6.0/bin/node`)
 3. navigate to the workflow in Alfred Preferences
 *Alfred Preferences* -> *Workflows*-tab
-4. open all objects in the workflow, one at a time, find wherever the path is exported and add your node path to the beginning – i.e. find all instances of
-`export PATH="$PATH:/usr/local/bin:/usr/bin"`
-and add your node path, resulting in
-`export PATH="$PATH:/Users/{user}/.nvm/versions/node/v11.6.0/bin:/usr/local/bin:/usr/bin"`
-(observe the colons separating the statements)
-
-**Observe**, this method will have to be repeated whenever the workflow is updated.
+4. open environment variables setting at right icons (like [x] mark). At right panel, input your node path to `node_path` variable.
 
 ### Debug
 
