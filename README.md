@@ -36,6 +36,8 @@ If you have installed node.js in a non-standard way (e.g. through **nvm** or **h
 
 This method should work with different versions of nvm (including changing to other versions), as long as you don't remove the symlinked node version (or the symlink itself of course).
 
+The downside is having problems switching between versions because most processes will default to the symlinked version.
+
 **Manually add node path to the workflow:**
 
 1. In the terminal, reveal the path to your node installation
@@ -46,13 +48,10 @@ This method should work with different versions of nvm (including changing to ot
 `/Users/{user}/.nvm/versions/node/v11.6.0/bin/node`)
 3. navigate to the workflow in Alfred Preferences
 *Alfred Preferences* -> *Workflows*-tab
-4. open all objects in the workflow, one at a time, find wherever the path is exported and add your node path to the beginning – i.e. find all instances of
-`export PATH="$PATH:/usr/local/bin:/usr/bin"`
-and add your node path, resulting in
-`export PATH="$PATH:/Users/{user}/.nvm/versions/node/v11.6.0/bin:/usr/local/bin:/usr/bin"`
-(observe the colons separating the statements)
+4. Click "Configure workflow and variables" in the top right corner and add a new Workflow Environemnt Variable named PATH with the node path followed by a colon i.e.
+`/Users/{user}/.nvm/versions/node/v11.6.0/bin:`
 
-**Observe**, this method will have to be repeated whenever the workflow is updated.
+**Observe**, variable will have to be updated whenever node version changes.
 
 ### Debug
 
