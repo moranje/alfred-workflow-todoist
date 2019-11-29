@@ -8,6 +8,10 @@ shell.exec(`/usr/libexec/PlistBuddy -c "Set version ${pkg.version}" "dist/workfl
   silent: true
 })
 
+shell.exec(`/usr/libexec/PlistBuddy -c "Set :variables:node_flags" "dist/workflow/info.plist"`, {
+  silent: true
+})
+
 shell.exec(`/usr/libexec/PlistBuddy -c "Set :variables:node_path" "dist/workflow/info.plist"`, {
   silent: true
 })

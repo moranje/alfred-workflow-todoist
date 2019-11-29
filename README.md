@@ -8,13 +8,12 @@ Add and search [Todoist](https://todoist.com/) tasks straight from [Alfred](http
 | [Getting started](#getting-started) | [Installation](#installation) | [Configuration](#configuration) | [Usage](#usage) | [Contributing](#contributing) |
 | :---------------------------------: | :---------------------------: | :-----------------------------: | :-------------: | :---------------------------: |
 
-
 ## Getting started
 
 For this workflow to work you need:
 
-- Alfred version `3.x` and a powerpack licence.
-- [Node.js](https://nodejs.org/en/download/) version `10.0.0` or up
+- Alfred version `3.x` or `4.x` and a powerpack licence.
+- [Node.js](https://nodejs.org/en/download/) version `12.0.0` or up (`10.5.0` or up can be used with the `--experimental-worker` [node flag](#node-flags) enabled)
 
 Note that the workflow expects node to be installed in the default location(s), i.e. `/usr/local/bin` or `/usr/bin`. See [installation notes](#Non---standard-node-installation) below on how to make the workflow work with non-standard node installations.
 
@@ -52,6 +51,14 @@ The downside is having problems switching between versions because most processe
 `/Users/{user}/.nvm/versions/node/v11.6.0/bin:`
 
 **Observe**, variable will have to be updated whenever node version changes.
+
+#### Node flags
+
+If you need to enable any node.js command-line flags, you can with
+
+1. Navigate to the workflow in Alfred Preferences
+*Alfred Preferences* -> *Workflows*-tab
+2. Click "Configure workflow and variables" in the top right corner and edit the node_flag variable with the command-line flag i.e. `--experimental-worker --experimental-modules`
 
 ### Debug
 

@@ -112,9 +112,9 @@
 # Licence: MIT
 ###############################################################################
 
-export PATH="$PATH:/usr/local/bin:/usr/bin"
+export PATH="$PATH:$node_path:/usr/local/bin:/usr/bin"
 
-node alfred-workflow-todoist.js remove "{query}"</string>
+node $node_flags alfred-workflow-todoist.js remove "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -162,19 +162,20 @@ node alfred-workflow-todoist.js remove "{query}"</string>
 # Licence: MIT
 ###############################################################################
 
-export PATH="$PATH:/usr/local/bin:/usr/bin"
+export PATH="$PATH:$node_path:/usr/local/bin:/usr/bin"
 
 if which node &gt; /dev/null; then
   :
 else
-  echo "You need to have node (8.5 or up) installed for this workflow to work."
+  echo "You need to have node (12.x or up) installed for this workflow to work."
   echo "Have a look at the docs:"
   echo ""
   echo "https://github.com/moranje/alfred-workflow-todoist#installation"
   exit 1
 fi
 
-node alfred-workflow-todoist.js read "{query}"</string>
+node $node_flags alfred-workflow-todoist.js read "{query}"
+</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -210,9 +211,9 @@ node alfred-workflow-todoist.js read "{query}"</string>
 # Licence: MIT
 ###############################################################################
 
-export PATH="$PATH:/usr/local/bin:/usr/bin"
+export PATH="$PATH:$node_path:/usr/local/bin:/usr/bin"
 
-node alfred-workflow-todoist.js submit "{query}"</string>
+node $node_flags alfred-workflow-todoist.js submit "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -260,19 +261,20 @@ node alfred-workflow-todoist.js submit "{query}"</string>
 # Licence: MIT
 ###############################################################################
 
-export PATH="$PATH:/usr/local/bin:/usr/bin"
+export PATH="$PATH:$node_path:/usr/local/bin:/usr/bin"
 
 if which node &gt; /dev/null; then
   :
 else
-  echo "You need to have node (8.5 or up) installed for this workflow to work."
+  echo "You need to have node (12.x or up) installed for this workflow to work."
   echo "Have a look at the docs:"
   echo ""
   echo "https://github.com/moranje/alfred-workflow-todoist#installation"
   exit 1
 fi
 
-node alfred-workflow-todoist.js create "{query}"</string>
+node $node_flags alfred-workflow-todoist.js create "{query}"
+</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -325,9 +327,9 @@ node alfred-workflow-todoist.js create "{query}"</string>
 # Licence: MIT
 ###############################################################################
 
-export PATH="$PATH:/usr/local/bin:/usr/bin"
+export PATH="$PATH:$node_path:/usr/local/bin:/usr/bin"
 
-node alfred-workflow-todoist.js settings:store "{query}"</string>
+node $node_flags alfred-workflow-todoist.js settings:store "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -375,21 +377,20 @@ node alfred-workflow-todoist.js settings:store "{query}"</string>
 # Licence: MIT
 ###############################################################################
 
-export PATH="$PATH:/usr/local/bin:/usr/bin"
-
-# IDEA: should return a list with options (eg: settings, (check for) update, install, refresh_cache)
+export PATH="$PATH:$node_path:/usr/local/bin:/usr/bin"
 
 if which node &gt; /dev/null; then
   :
 else
-  echo "You need to have node (8.5 or up) installed for this workflow to work."
+  echo "You need to have node (12.x or up) installed for this workflow to work."
   echo "Have a look at the docs:"
   echo ""
   echo "https://github.com/moranje/alfred-workflow-todoist#installation"
   exit 1
 fi
 
-node alfred-workflow-todoist.js settings "{query}"</string>
+node $node_flags alfred-workflow-todoist.js settings "{query}"
+</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -495,6 +496,8 @@ node alfred-workflow-todoist.js settings "{query}"</string>
 	</dict>
 	<key>variables</key>
 	<dict>
+		<key>node_flags</key>
+		<string></string>
 		<key>node_path</key>
 		<string></string>
 	</dict>
