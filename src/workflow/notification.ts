@@ -1,6 +1,6 @@
 import compose from 'stampit'
 import { spawn } from 'child_process'
-import { NOTIFIER_PATH } from '@/project'
+import { ENV, NOTIFIER_PATH } from '@/project'
 
 /** @hidden */
 const NOTIFICATION_DEFAULTS: workflow.NotificationOptions = {
@@ -51,6 +51,10 @@ function logError(error: project.AlfredError) {
  */
 
 function notify(options: workflow.NotificationOptions) {
+  let sender = 'com.runningwithcrayons.Alfred'
+
+  if (ENV.ALFRED_VERSION.split('.').shift() === '3') sender += '-3'
+
   let child = spawn(
     NOTIFIER_PATH,
     [
@@ -63,7 +67,7 @@ function notify(options: workflow.NotificationOptions) {
       '-appIcon',
       `${options.icon}`,
       '-sender',
-      'com.runningwithcrayons.Alfred-3',
+      `${sender}`,
       '-open',
       `"${options.open}"`,
       '-timeout',

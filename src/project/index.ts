@@ -1,3 +1,4 @@
+export { ENV } from './environment'
 export { AlfredError, handleError } from './error'
 export {
   SETTINGS_PATH,
