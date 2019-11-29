@@ -27,6 +27,7 @@ export default {
     'url',
     'util',
     'os',
+    'worker_threads',
     'zlib'
   ],
   watch: {
