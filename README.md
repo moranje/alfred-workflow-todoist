@@ -42,13 +42,13 @@ The downside is having problems switching between versions because most processe
 
 1. In the terminal, reveal the path to your node installation
 `which node`
-2. copy the output, but omit the executeable
+2. Copy the output, but omit the executable
 (e.g.
 `/Users/{user}/.nvm/versions/node/v11.6.0/bin`, not
 `/Users/{user}/.nvm/versions/node/v11.6.0/bin/node`)
-3. navigate to the workflow in Alfred Preferences
+3. Navigate to the workflow in Alfred Preferences
 *Alfred Preferences* -> *Workflows*-tab
-4. Click "Configure workflow and variables" in the top right corner and add a new Workflow Environemnt Variable named PATH with the node path followed by a colon i.e.
+4. Click "Configure workflow and variables" in the top right corner and edit the node_path variable with the node path followed by a colon i.e.
 `/Users/{user}/.nvm/versions/node/v11.6.0/bin:`
 
 **Observe**, variable will have to be updated whenever node version changes.

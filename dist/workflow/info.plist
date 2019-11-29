@@ -493,6 +493,11 @@ node alfred-workflow-todoist.js settings "{query}"</string>
 			<integer>360</integer>
 		</dict>
 	</dict>
+	<key>variables</key>
+	<dict>
+		<key>node_path</key>
+		<string></string>
+	</dict>
 	<key>version</key>
 	<string>5.8.3</string>
 	<key>webaddress</key>
