@@ -1,16 +1,39 @@
 {
+  "parser": "@typescript-eslint/parser",
   "env": {
     "es6": true,
     "node": true
   },
-  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "ecmaVersion": 2020,
     "sourceType": "module"
   },
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "prettier/@typescript-eslint",
+    "plugin:prettier/recommended"
+  ],
+  "ignorePatterns": "grammar.ts",
   "rules": {
-    "indent": ["error", 2],
-    "quotes": ["error", "single"],
-    "semi": ["error", "never"]
+    "indent": "off",
+    "@typescript-eslint/indent": ["error", 2],
+    "camelcase": "off",
+    "@typescript-eslint/camelcase": [
+      "error",
+      {
+        "allow": [
+          "project_id",
+          "label_ids",
+          "due_string",
+          "due_date",
+          "due_datetime",
+          "due_lang",
+          "comment_count",
+          "max_items",
+          "cache_timeout",
+          "anonymous_statistics"
+        ]
+      }
+    ]
   }
 }
