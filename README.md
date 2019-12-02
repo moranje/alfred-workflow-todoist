@@ -8,12 +8,13 @@ Add and search [Todoist](https://todoist.com/) tasks straight from [Alfred](http
 | [Getting started](#getting-started) | [Installation](#installation) | [Configuration](#configuration) | [Usage](#usage) | [Contributing](#contributing) |
 | :---------------------------------: | :---------------------------: | :-----------------------------: | :-------------: | :---------------------------: |
 
+
 ## Getting started
 
 For this workflow to work you need:
 
 - Alfred version `3.x` or `4.x` and a powerpack licence.
-- [Node.js](https://nodejs.org/en/download/) version `12.0.0` or up (`10.5.0` or up can be used with the `--experimental-worker` [node flag](#node-flags) enabled)
+- [Node.js](https://nodejs.org/en/download/) version `10.x` or up
 
 Note that the workflow expects node to be installed in the default location(s), i.e. `/usr/local/bin` or `/usr/bin`. See [installation notes](#Non---standard-node-installation) below on how to make the workflow work with non-standard node installations.
 
@@ -28,10 +29,10 @@ If you have installed node.js in a non-standard way (e.g. through **nvm** or **h
 **Create symlink to current node version:**
 
 1. In the terminal, navigate to /usr/local/bin
-`cd /usr/local/bin`
+   `cd /usr/local/bin`
 2. Create symlink to current node version
-`ln -s $(which node) node`
-(note, if you're using a different shell - fish, zsh, etc. - you may need to make slight changes to make the command work).
+   `ln -s $(which node) node`
+   (note, if you're using a different shell - fish, zsh, etc. - you may need to make slight changes to make the command work).
 
 This method should work with different versions of nvm (including changing to other versions), as long as you don't remove the symlinked node version (or the symlink itself of course).
 
@@ -40,15 +41,15 @@ The downside is having problems switching between versions because most processe
 **Manually add node path to the workflow:**
 
 1. In the terminal, reveal the path to your node installation
-`which node`
+   `which node`
 2. Copy the output, but omit the executable
-(e.g.
-`/Users/{user}/.nvm/versions/node/v11.6.0/bin`, not
-`/Users/{user}/.nvm/versions/node/v11.6.0/bin/node`)
+   (e.g.
+   `/Users/{user}/.nvm/versions/node/v11.6.0/bin`, not
+   `/Users/{user}/.nvm/versions/node/v11.6.0/bin/node`)
 3. Navigate to the workflow in Alfred Preferences
-*Alfred Preferences* -> *Workflows*-tab
+   _Alfred Preferences_ -> _Workflows_-tab
 4. Click "Configure workflow and variables" in the top right corner and edit the node_path variable with the node path followed by a colon i.e.
-`/Users/{user}/.nvm/versions/node/v11.6.0/bin:`
+   `/Users/{user}/.nvm/versions/node/v11.6.0/bin:`
 
 **Observe**, variable will have to be updated whenever node version changes.
 
@@ -57,15 +58,15 @@ The downside is having problems switching between versions because most processe
 If you need to enable any node.js command-line flags, you can with
 
 1. Navigate to the workflow in Alfred Preferences
-*Alfred Preferences* -> *Workflows*-tab
+   _Alfred Preferences_ -> _Workflows_-tab
 2. Click "Configure workflow and variables" in the top right corner and edit the node_flag variable with the command-line flag i.e. `--experimental-worker --experimental-modules`
 
 ### Debug
 
 If the workflow doesn't work as expected, perform the following to get a clue about the issue:
 
-1. Navigate to the workflow in *Alfred Preferences* -> *Workflows*-tab
-2. Enable *Debug mode* (button in the top-right corner of the screen)
+1. Navigate to the workflow in _Alfred Preferences_ -> _Workflows_-tab
+2. Enable _Debug mode_ (button in the top-right corner of the screen)
 3. Watch for messages in the bottom log-pane when using the workflow.
 
 If the error messages outputs node errors, either make sure you have the appropriate node version or follow the steps [above](#Non---standard-node-installation) to enable the workflow with a non-standard node installation.

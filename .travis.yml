@@ -3,7 +3,6 @@ language: node_js
 branches:
   only:
     - master
-    - /^greenkeeper/.*$/
 cache:
   directories:
     - ~/.npm
@@ -11,7 +10,10 @@ install: case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;
 notifications:
   email: false
 node_js:
-  - '10'
+  - 8
+  - 10
+  - 12
+  - 13
 script:
   - npm run build && npm run test:prod
 after_success:

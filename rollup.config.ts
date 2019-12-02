@@ -27,7 +27,7 @@ export default {
     'url',
     'util',
     'os',
-    'worker_threads',
+    'worker_treads',
     'zlib'
   ],
   watch: {
@@ -41,7 +41,9 @@ export default {
     typescript({ useTsconfigDeclarationDir: true }),
 
     // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
-    commonjs(),
+    commonjs({
+      ignore: ['worker_threads']
+    }),
     // Allow node_modules resolution, so you can use 'external' to control
     // which external modules to include in the bundle
     // https://github.com/rollup/rollup-plugin-node-resolve#usage
