@@ -1,5 +1,6 @@
-import { AlfredError, handleError } from '@/project';
+import { AlfredError, handleError } from '@/project'
 
+jest.mock('@/project/references')
 jest.mock('write-json-file', () => {
   return async (path: string, data: any) => {
     console.log(data)

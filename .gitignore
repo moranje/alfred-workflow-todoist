@@ -3,7 +3,6 @@
 .idea
 .nyc_output
 .rpt2_cache
-.vscode
 .env
 *.log
 cache

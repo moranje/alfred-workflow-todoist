@@ -8,7 +8,8 @@ const WHITE_LIST = [
   'dist/workflow/alfred-workflow-todoist.js',
   'dist/workflow/alfred-workflow-todoist.js.map',
   'dist/workflow/icon.png',
-  'dist/workflow/info.plist'
+  'dist/workflow/info.plist',
+  'dist/workflow/workflow.json'
 ]
 
 let err = shell.exec('rollup -c rollup.config.ts').stderr
@@ -20,15 +21,10 @@ if (err) {
 mkdirp('dist/workflow/notifier')
 shell.cp(
   '-r',
-  'node_modules/node-notifier/vendor/terminal-notifier.app',
+  'node_modules/node-notifier/vendor/mac.noindex/terminal-notifier.app',
   'dist/workflow/notifier/terminal-notifier.app'
 )
-shell.sed(
-  '-i',
-  '../vendor/',
-  './notifier/',
-  'dist/workflow/alfred-workflow-todoist.js'
-)
+shell.sed('-i', '../vendor/mac.noindex/', './notifier/', 'dist/workflow/alfred-workflow-todoist.js')
 shell.exec('npx typedoc src', { silent: true })
 shell.exec('ts-node tools/move-files.ts moveFromTemp', { silent: true })
 

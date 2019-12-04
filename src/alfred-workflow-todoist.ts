@@ -1,6 +1,5 @@
-import '@babel/polyfill';
-
-import { AlfredError, cache, Command, getSetting, handleError, serialize } from '@/project';
+import '@babel/polyfill'
+import { AlfredError, cache, Command, getSetting, handleError, serialize } from '@/project'
 
 /**
  * CLI argument parsing
@@ -26,9 +25,17 @@ function handleSerialization() {
 }
 
 /**
+ * Updater
+ */
+try {
+  command.updateWorkflowVersion()
+} catch (error) {
+  handleError(error)
+}
+
+/**
  * CLI option logic
  */
-
 if (type === 'read') {
   command
     .read(query)
@@ -68,4 +75,5 @@ if (type === 'read') {
  */
 
 process.on('uncaughtException', handleError)
-process.on('unhandledRejection', handleError)
+// process.on('unhandledRejection', handleError)
+;(process as NodeJS.EventEmitter).on('unhandledRejection', handleError)

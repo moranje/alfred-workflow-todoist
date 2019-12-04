@@ -1,4 +1,7 @@
 import nock from 'nock';
+import { TODOIST_API_URI } from '@/project/references';
+
+jest.mock('@/project/references')
 
 const FIXTURES = {
   tasks: [
@@ -167,7 +170,7 @@ const FIXTURES = {
 }
 
 // TASKS
-nock('https://beta.todoist.com/API/v8')
+nock(TODOIST_API_URI)
   .get('/tasks')
   .reply(200, FIXTURES.tasks)
   .get('/tasks/1')
@@ -195,7 +198,7 @@ nock('https://beta.todoist.com/API/v8')
   .persist()
 
 // PROJECTS
-nock('https://beta.todoist.com/API/v8')
+nock(TODOIST_API_URI)
   .get('/projects')
   .reply(200, FIXTURES.projects)
   .get('/projects/1')
@@ -223,7 +226,7 @@ nock('https://beta.todoist.com/API/v8')
   .persist()
 
 // LABELS
-nock('https://beta.todoist.com/API/v8')
+nock(TODOIST_API_URI)
   .get('/labels')
   .reply(200, FIXTURES.labels)
   .get('/labels/1')

@@ -1,5 +1,6 @@
-import { list, save } from '@/project';
+import { list, save } from '@/project'
 
+jest.mock('@/project/references')
 jest.mock('@/project/files', () => ({
   __esModule: true,
   FILES: { cache: [] }

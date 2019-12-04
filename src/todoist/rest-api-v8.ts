@@ -6,6 +6,7 @@ import got from 'got';
 import find from 'lodash.find';
 import unionBy from 'lodash.unionby';
 import compose from 'stampit';
+import { TODOIST_API_URI } from '@/project/references';
 
 /** @hidden */
 const Adapter: todoist.AdapterFactory = compose({
@@ -13,7 +14,7 @@ const Adapter: todoist.AdapterFactory = compose({
     this: todoist.AdapterInstance,
     {
       type,
-      uri = 'https://beta.todoist.com/API/v8',
+      uri = TODOIST_API_URI,
       token
     }: { type: 'task' | 'project' | 'label'; uri: string; token: string }
   ) {
@@ -21,7 +22,7 @@ const Adapter: todoist.AdapterFactory = compose({
     this.uri = uri
     this.token = token
     // @ts-ignore: incomplete declaration file
-    this.got = got.extend({
+    this.client = got.extend({
       baseUrl: uri,
       json: true,
       headers: {
@@ -30,11 +31,17 @@ const Adapter: todoist.AdapterFactory = compose({
         // 'Content-Type': 'application/json'
       }
     })
+
+    if (!this.token) {
+      throw new Error(
+        'Missing Todoist API token. Add a token using the `todo:setting token <token>` command.'
+      )
+    }
   },
 
   methods: {
     /**
-     * Returns items of a type based on a query. Returns all items when qeurr
+     * Returns items of a type based on a query. Returns all items when query
      * is falsy.
      *
      * @param {string} query
@@ -58,7 +65,7 @@ const Adapter: todoist.AdapterFactory = compose({
      * @returns {Promise<any>}
      */
     async create(this: todoist.AdapterInstance, data: any): Promise<any> {
-      return this.got.post(`${this.type}s`, { body: data })
+      return this.client.post(`${this.type}s`, { body: data })
     },
 
     /**
@@ -69,7 +76,7 @@ const Adapter: todoist.AdapterFactory = compose({
      * @returns {Promise<any>}
      */
     async update(this: todoist.AdapterInstance, id: number, data: any): Promise<any> {
-      return this.got.post(`${this.type}s/${id}`, { body: data })
+      return this.client.post(`${this.type}s/${id}`, { body: data })
     },
 
     /**
@@ -79,7 +86,7 @@ const Adapter: todoist.AdapterFactory = compose({
      * @returns {Promise<any>}
      */
     async remove(this: todoist.AdapterInstance, id: number): Promise<any> {
-      return this.got.delete(`${this.type}s/${id}`)
+      return this.client.delete(`${this.type}s/${id}`)
     }
   }
 })
@@ -106,7 +113,7 @@ export const ProjectAdapter: todoist.ProjectAdapterFactory = compose(
 
         if (project) return project
 
-        let { body } = await this.got.get(`projects/${id}`)
+        let { body } = await this.client.get(`projects/${id}`)
 
         cachedProjects.push(body)
         cache.set('projects', unionBy(cachedProjects, 'id'))
@@ -125,7 +132,7 @@ export const ProjectAdapter: todoist.ProjectAdapterFactory = compose(
 
         if (cachedProjects.length > 0) return cachedProjects
 
-        let { body } = await this.got.get('projects')
+        let { body } = await this.client.get('projects')
 
         let projects: todoist.Project[] = body.map((project: todoist.Project) => {
           return Project(project)
@@ -161,7 +168,7 @@ export const LabelAdapter: todoist.LabelAdapterFactory = compose(
 
         if (label) return label
 
-        let { body } = await this.got.get(`labels/${id}`)
+        let { body } = await this.client.get(`labels/${id}`)
 
         cachedLabels.push(body)
         cache.set('labels', unionBy(cachedLabels, 'id'))
@@ -180,7 +187,7 @@ export const LabelAdapter: todoist.LabelAdapterFactory = compose(
 
         if (cachedLabels.length > 0) return cachedLabels
 
-        let { body } = await this.got.get('labels')
+        let { body } = await this.client.get('labels')
         let labels: todoist.Label[] = body.map((label: todoist.Label) => {
           return Label(label)
         })
@@ -215,7 +222,7 @@ export const TaskAdapter: todoist.TaskAdapterFactory = compose(
 
         if (task) return task
 
-        let { body } = await this.got.get(`tasks/${id}`)
+        let { body } = await this.client.get(`tasks/${id}`)
 
         cachedTasks.push(body)
         cache.set('tasks', unionBy(cachedTasks, 'id'))
@@ -234,7 +241,7 @@ export const TaskAdapter: todoist.TaskAdapterFactory = compose(
 
         if (cachedTasks.length > 0) return cachedTasks
 
-        let { body } = await this.got.get('tasks')
+        let { body } = await this.client.get('tasks')
 
         // Cache label and projects
         await ProjectAdapter({ token: this.token }).findAll()
@@ -258,7 +265,7 @@ export const TaskAdapter: todoist.TaskAdapterFactory = compose(
        * @returns {Promise<any>}
        */
       async close(this: todoist.AdapterInstance, id: number): Promise<any> {
-        return this.got.post(`${this.type}s/${id}/close`)
+        return this.client.post(`${this.type}s/${id}/close`)
       },
 
 

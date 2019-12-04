@@ -1,8 +1,6 @@
-import { AlfredError } from '@/project';
-import omit from 'lodash.omit';
-import notifier from 'node-notifier';
-import open from 'opn';
-import compose from 'stampit';
+import compose from 'stampit'
+import { spawn } from 'child_process'
+import { ENV, NOTIFIER_PATH } from '@/project'
 
 /** @hidden */
 const NOTIFICATION_DEFAULTS: workflow.NotificationOptions = {
@@ -10,11 +8,8 @@ const NOTIFICATION_DEFAULTS: workflow.NotificationOptions = {
   subtitle: '✓ Happy days!',
   message: "There's nothing to say.",
   icon: `${process.cwd()}/icon.png`,
-  contentImage: '',
   timeout: 5,
-  actions: '',
-  dropdownLabel: '',
-  reply: false
+  hideSuccessLogs: false
 }
 
 /**
@@ -54,36 +49,39 @@ function logError(error: project.AlfredError) {
  * @private
  * @hidden
  */
-function notification(
-  options: workflow.NotificationOptions,
-  onClick?: (notifierObject: any, option: any, meta: any) => void,
-  onTimeout?: (notifierObject: any, option: any, meta: any) => void
-) {
-  let onClickFallback = (notifier: any, opts: any, meta: any) => {
-    if (opts.open) {
-      return open(opts.open).catch(openError => {
-        return logError(new AlfredError(openError.name, openError.message, openError.stack))
-      })
+
+function notify(options: workflow.NotificationOptions) {
+  let sender = 'com.runningwithcrayons.Alfred'
+
+  if (ENV.ALFRED_VERSION.split('.').shift() === '3') sender += '-3'
+
+  let child = spawn(
+    NOTIFIER_PATH,
+    [
+      '-title',
+      `"${options.title}"`,
+      '-subtitle',
+      `"${options.subtitle}"`,
+      '-message',
+      `"${options.message}"`,
+      '-appIcon',
+      `${options.icon}`,
+      '-sender',
+      `${sender}`,
+      '-open',
+      `"${options.open}"`,
+      '-timeout',
+      `${options.timeout}`
+      // '> /dev/null 2>&1 &'
+    ],
+    {
+      detached: true,
+      stdio: 'ignore'
     }
+  )
 
-    return
-  }
-
-  notifier.on('click', onClick || onClickFallback)
-
-  notifier.on('timeout', (notifierObject: any, opts: any, meta: any) => {
-    // console.log('Timeout\n')
-    return
-  })
-
-  return notifier.notify(omit(options, ['error']), (err: Error, response: any) => {
-    // Response is response from notification
-    if (err) {
-      return logError(new AlfredError(err.name, err.message, err.stack))
-    }
-
-    return
-  })
+  // Stop alfred from waiting for the notification to finish
+  child.unref()
 }
 
 /**
@@ -122,14 +120,17 @@ export const Notification: workflow.NotificationFactory = compose({
      * @param {Function} [onClick]
      * @param {Function} [onTimeout]
      */
-    write(this: workflow.NotificationOptions, onClick?: any, onTimeout?: any) {
+    write(this: workflow.NotificationOptions) {
       if (this.error) {
         logError(this.error)
-        return notification(this, onClick, onTimeout)
+        return notify(this)
       }
 
-      console.log(`${this.title}: ${this.subtitle}\n\n${this.message}\n`)
-      return notification(this, onClick, onTimeout)
+      if (!this.hideSuccessLogs) {
+        console.log(`${this.title}: ${this.subtitle}\n\n${this.message}\n`)
+      }
+
+      return notify(this)
     }
   }
 })

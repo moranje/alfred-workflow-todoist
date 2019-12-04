@@ -1,7 +1,7 @@
 const shell = require('shelljs')
 const zip = require('bestzip')
 
-shell.exec('npm run bump-plist', { silent: true })
+shell.exec('npm run bump-version', { silent: true })
 
 zip({
   source: '*',

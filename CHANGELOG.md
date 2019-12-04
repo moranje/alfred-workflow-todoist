@@ -1,3 +1,56 @@
+## [5.8.3](https://github.com/moranje/alfred-workflow-todoist/compare/v5.8.2...v5.8.3) (2019-08-04)
+
+
+### Bug Fixes
+
+* **project:** update to stable todoist v1 rest api ([7f3f34a](https://github.com/moranje/alfred-workflow-todoist/commit/7f3f34a)), closes [#113](https://github.com/moranje/alfred-workflow-todoist/issues/113)
+* **tests:** failing test suite due a bug in nock under node 12 ([42cc96d](https://github.com/moranje/alfred-workflow-todoist/commit/42cc96d))
+* **todoist:** support emoticons/emoji ([bfdce97](https://github.com/moranje/alfred-workflow-todoist/commit/bfdce97)), closes [#112](https://github.com/moranje/alfred-workflow-todoist/issues/112)
+
+## [5.8.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.8.1...v5.8.2) (2019-04-22)
+
+
+### Bug Fixes
+
+* **parser:** add all language scripts in a more robust way ([b5fd7b4](https://github.com/moranje/alfred-workflow-todoist/commit/b5fd7b4)), closes [#111](https://github.com/moranje/alfred-workflow-todoist/issues/111)
+* **parser:** use es5 compatible robust script parsing ([0b22006](https://github.com/moranje/alfred-workflow-todoist/commit/0b22006)), closes [#111](https://github.com/moranje/alfred-workflow-todoist/issues/111)
+
+## [5.8.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.8.0...v5.8.1) (2019-04-05)
+
+
+### Bug Fixes
+
+* **project:** empty files constant on fresh install ([ea7ad1f](https://github.com/moranje/alfred-workflow-todoist/commit/ea7ad1f)), closes [#109](https://github.com/moranje/alfred-workflow-todoist/issues/109)
+
+# [5.8.0](https://github.com/moranje/alfred-workflow-todoist/compare/v5.7.1...v5.8.0) (2019-03-30)
+
+
+### Bug Fixes
+
+* **project:** tests failing due to faulty notifier reference ([236a369](https://github.com/moranje/alfred-workflow-todoist/commit/236a369))
+
+
+### Features
+
+* **project:** periodic checks for workflow updates ([e9f4262](https://github.com/moranje/alfred-workflow-todoist/commit/e9f4262)), closes [#108](https://github.com/moranje/alfred-workflow-todoist/issues/108)
+
+## [5.7.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.7.0...v5.7.1) (2019-03-26)
+
+
+### Bug Fixes
+
+* **project:** failing node.js check ([c9409d9](https://github.com/moranje/alfred-workflow-todoist/commit/c9409d9))
+* **project:** return useful error message when node.js is missing ([a8a966e](https://github.com/moranje/alfred-workflow-todoist/commit/a8a966e)), closes [#107](https://github.com/moranje/alfred-workflow-todoist/issues/107)
+* **project:** return useful error when API key is missing ([7fbc41b](https://github.com/moranje/alfred-workflow-todoist/commit/7fbc41b)), closes [#106](https://github.com/moranje/alfred-workflow-todoist/issues/106)
+
+# [5.7.0](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.5...v5.7.0) (2019-03-16)
+
+
+### Features
+
+* **parser:** add support for scripts other than latin ([b12ce3d](https://github.com/moranje/alfred-workflow-todoist/commit/b12ce3d)), closes [#105](https://github.com/moranje/alfred-workflow-todoist/issues/105)
+* **todoist:** add japanese timestamp translations ([44b47dd](https://github.com/moranje/alfred-workflow-todoist/commit/44b47dd))
+
 ## [5.6.5](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.4...v5.6.5) (2018-12-05)
 
 

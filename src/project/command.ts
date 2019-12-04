@@ -1,8 +1,20 @@
-import { getSetting, getSettings, list, removeObject, save, verify } from '@/project';
-import { LabelAdapter, ProjectAdapter, Query, TaskAdapter, TaskList } from '@/todoist';
-import { Item, List, Notification } from '@/workflow';
-import omit from 'lodash.omit';
-import compose from 'stampit';
+import {
+  getSetting,
+  getSettings,
+  WORKFLOW_JSON,
+  WORKFLOW_PATH,
+  FILES,
+  list,
+  removeObject,
+  save,
+  verify
+} from '@/project'
+import { LabelAdapter, ProjectAdapter, Query, TaskAdapter, TaskList } from '@/todoist'
+import { Item, List, Notification } from '@/workflow'
+import omit from 'lodash.omit'
+import compose from 'stampit'
+import got from 'got'
+import writeJsonFile from 'write-json-file'
 
 /** @hidden */
 async function replaceNamesWithIds(task: todoist.Task) {
@@ -142,6 +154,36 @@ export const Command: project.CommandFactory = compose({
       setting: { key: string; value: string | number | boolean }
     ) {
       return save(Object.assign(setting))
+    },
+
+    updateWorkflowVersion() {
+      let timePassed = new Date().getTime() - new Date(FILES.workflowConfig.updated).getTime()
+      if (timePassed < 604800000 /* One week */) return
+
+      got('https://raw.githubusercontent.com/moranje/alfred-workflow-todoist/master/package.json', {
+        json: true
+      })
+        .then(response => {
+          if (response.body.version > FILES.workflowConfig.version) {
+            Notification({
+              message: `Workflow update available (v${response.body.version})`,
+              open: `https://github.com/moranje/alfred-workflow-todoist/releases/latest/download/Alfred.Workflow.Todoist.alfredworkflow`,
+              hideSuccessLogs: true
+            }).write()
+
+            writeJsonFile(WORKFLOW_JSON, {
+              version: FILES.workflowConfig.version,
+              updated: new Date()
+            })
+          }
+        })
+        .catch(err => {
+          Notification({
+            subtitle: `Couldn't update workflow`,
+            message: `${err.message}`,
+            hideSuccessLogs: true
+          }).write()
+        })
     }
   }
 })

@@ -8,6 +8,13 @@ describe('Unit: Lexer', () => {
     expect(tokens.map(token => token.type)).toEqual(['content'])
   })
 
+  it('should tokenize regular text with emoticon', () => {
+    lexer.reset('Get the 🚙')
+    let tokens: any[] = Array.from(lexer)
+
+    expect(tokens.map(token => token.type)).toEqual(['content'])
+  })
+
   it('should tokenize project', () => {
     lexer.reset('#inbox')
     let tokens: any[] = Array.from(lexer)
@@ -15,8 +22,23 @@ describe('Unit: Lexer', () => {
     expect(tokens.map(token => token.type)).toEqual(['pound', 'name'])
   })
 
+  it('should tokenize project with emoticon', () => {
+    lexer.reset('#[🚙 Car]')
+    let tokens: any[] = Array.from(lexer)
+
+    expect(tokens.map(token => token.type)).toEqual(['pound', 'open', 'name', 'close'])
+  })
+
   it('should tokenize label', () => {
     lexer.reset('@at_home')
+    let tokens: any[] = Array.from(lexer)
+
+    expect(tokens.map(token => token.type)).toEqual(['at', 'name'])
+  })
+
+
+  it('should tokenize label with emoticon', () => {
+    lexer.reset('@🚙_Car')
     let tokens: any[] = Array.from(lexer)
 
     expect(tokens.map(token => token.type)).toEqual(['at', 'name'])

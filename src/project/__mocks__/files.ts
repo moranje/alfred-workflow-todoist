@@ -1,6 +1,6 @@
 export let FILES = {
   settings: {
-    token: '',
+    token: '0123456789abcde0123456789abcde0123456789',
     language: 'en',
     max_items: '9',
     anonymous_statistics: 'true',

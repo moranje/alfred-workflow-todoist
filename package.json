@@ -1,6 +1,6 @@
 {
   "name": "alfred-workflow-todoist",
-  "version": "5.6.5",
+  "version": "5.8.3",
   "description": "",
   "keywords": [],
   "main": "dist/workflow/alfred-workflow-todoist.js",
@@ -20,24 +20,26 @@
   "scripts": {
     "setup:dev": "ts-node tools/setup.ts",
     "debug": "ts-node tools/debug.ts",
-    "lint": "tslint  --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
+    "lint": "npx prettier --find-config-path --write \"{src,test,tools}/**/*.{ts,js}\" && npx eslint src/**/*.ts --fix",
     "prebuild": "ts-node tools/move-files.ts moveToTemp && rimraf dist",
     "build": "ts-node tools/build.ts",
     "build:grammar": "npx nearleyc src/todoist/grammar.ne -o src/todoist/grammar.ts",
     "build:workflow": "ts-node tools/build-workflow.ts",
     "restore": "mkdir -p dist/workflow && npm run postbuild",
     "start": "rollup -c rollup.config.ts -w",
-    "test": "jest",
+    "test": "npm run lint && jest",
+    "test:debug": "node --inspect-brk node_modules/.bin/jest --no-cache --watch --runInBand",
     "test:watch": "jest --watch --silent",
-    "test:prod": "npm run lint && npm run test -- --coverage --no-cache",
+    "test:prod": "npm run test -- --coverage --no-cache",
     "deploy-docs": "ts-node tools/gh-pages-publish",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "commit": "npx git-cz",
     "semantic-release": "semantic-release",
     "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
-    "bump-plist": "ts-node tools/bump-plist.ts",
+    "bump-version": "ts-node tools/bump-version.ts",
     "travis-deploy-once": "travis-deploy-once",
-    "prepush": "npm run build && npm run test:prod"
+    "prepush": "npm run build && npm run test:prod",
+    "update": "npx updtr --out"
   },
   "lint-staged": {
     "{src,test}/**/*.ts": [
@@ -52,8 +54,14 @@
   },
   "config": {
     "commitizen": {
-      "path": "node_modules/cz-conventional-changelog"
+      "path": "./node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "./cz-config.js"
     }
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
   },
   "release": {
     "verifyConditions": [
@@ -75,13 +83,24 @@
           "package.json",
           "package-lock.json",
           "dist/workflow/info.plist",
+          "dist/workflow/workflow.json",
           "dist/Alfred Workflow Todoist.alfredworkflow"
         ],
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }
     ],
     "publish": [
-      "@semantic-release/github"
+      [
+        "@semantic-release/github",
+        {
+          "assets": [
+            {
+              "path": "dist/Alfred Workflow Todoist.alfredworkflow",
+              "label": "Alfred Workflow Todoist.alfredworkflow"
+            }
+          ]
+        }
+      ]
     ]
   },
   "jest": {
@@ -125,89 +144,81 @@
     ]
   },
   "dependencies": {
-    "ajv": "6.6.1",
+    "ajv": "6.10.2",
     "babel-polyfill": "6.26.0",
-    "date-fns": "2.0.0-alpha.18",
+    "date-fns": "2.0.0-beta.3",
     "fast-plist": "0.1.2",
     "fuzzaldrin": "2.1.0",
-    "got": "9.3.2",
+    "got": "9.6.0",
     "lodash.find": "4.6.0",
     "lodash.omit": "4.5.0",
     "lodash.remove": "4.7.0",
     "lodash.unionby": "4.8.0",
     "lru-cache": "5.1.1",
-    "macos-version": "4.1.0",
+    "macos-version": "5.2.0",
     "md5": "2.2.1",
     "mkdirp": "0.5.1",
-    "moo": "github:no-context/moo#master",
-    "nearley": "2.15.1",
-    "node-notifier": "5.3.0",
-    "opn": "5.4.0",
-    "stampit": "4.2.0",
-    "write-json-file": "3.0.2"
+    "moo": "0.5.1",
+    "nearley": "2.19.0",
+    "node-notifier": "5.4.0",
+    "stampit": "4.3.0",
+    "write-json-file": "3.1.0"
   },
   "devDependencies": {
-    "@babel/polyfill": "7.0.0",
-    "@commitlint/cli": "7.2.1",
-    "@commitlint/config-conventional": "7.1.2",
-    "@semantic-release/changelog": "3.0.1",
-    "@semantic-release/exec": "3.3.0",
-    "@semantic-release/git": "7.0.5",
-    "@types/fuzzaldrin": "2.1.1",
-    "@types/got": "9.2.1",
-    "@types/inquirer": "0.0.43",
-    "@types/jest": "23.3.10",
-    "@types/lodash.find": "4.6.4",
-    "@types/lodash.omit": "4.5.4",
-    "@types/lodash.remove": "4.7.4",
-    "@types/lodash.unionby": "4.8.4",
-    "@types/lru-cache": "4.1.1",
+    "@babel/polyfill": "7.7.0",
+    "@commitlint/cli": "7.5.2",
+    "@commitlint/config-conventional": "8.1.0",
+    "@semantic-release/changelog": "3.0.6",
+    "@semantic-release/exec": "3.3.8",
+    "@semantic-release/git": "7.0.18",
+    "@types/fuzzaldrin": "2.1.2",
+    "@types/got": "9.6.9",
+    "@types/inquirer": "6.5.0",
+    "@types/jest": "24.0.11",
+    "@types/lodash.find": "4.6.6",
+    "@types/lodash.omit": "4.5.6",
+    "@types/lodash.remove": "4.7.6",
+    "@types/lodash.unionby": "4.8.6",
+    "@types/lru-cache": "5.1.0",
     "@types/md5": "2.1.33",
     "@types/mkdirp": "0.5.2",
-    "@types/moo": "0.4.2",
+    "@types/moo": "0.5.0",
     "@types/nearley": "2.11.0",
-    "@types/nock": "9.3.0",
-    "@types/node": "*",
-    "@types/node-notifier": "0.0.28",
-    "@types/opn": "5.1.0",
-    "@types/shelljs": "0.8.1",
-    "@types/stampit": "3.0.2",
-    "@types/write-json-file": "2.2.1",
-    "bestzip": "2.1.2",
-    "colors": "1.3.2",
-    "commitizen": "3.0.5",
-    "coveralls": "3.0.2",
+    "@types/nock": "10.0.3",
+    "@types/node": "12.6.8",
+    "@types/shelljs": "0.8.6",
+    "@types/stampit": "3.0.3",
+    "@types/write-json-file": "3.2.1",
+    "@typescript-eslint/eslint-plugin": "2.9.0",
+    "@typescript-eslint/parser": "2.9.0",
+    "bestzip": "2.1.5",
+    "colors": "1.4.0",
+    "commitizen": "4.0.3",
+    "coveralls": "3.0.9",
     "cross-env": "5.2.0",
-    "cz-conventional-changelog": "^2.0.0",
-    "eslint": "5.9.0",
-    "eslint-config-prettier": "3.3.0",
-    "eslint-plugin-prettier": "3.0.0",
-    "husky": "^1.2.0",
-    "inquirer": "6.2.1",
-    "jest": "^23.6.0",
-    "lint-staged": "8.1.0",
-    "lodash.camelcase": "^4.3.0",
-    "nock": "10.0.4",
-    "prettier": "^1.14.3",
-    "prompt": "^1.0.0",
-    "replace-in-file": "3.4.2",
-    "rollup": "^0.67.4",
-    "rollup-plugin-commonjs": "9.2.0",
-    "rollup-plugin-json": "3.1.0",
-    "rollup-plugin-node-globals": "1.4.0",
-    "rollup-plugin-node-resolve": "4.0.0",
+    "cz-customizable": "6.2.0",
+    "eslint": "6.7.2",
+    "eslint-config-prettier": "6.7.0",
+    "eslint-plugin-prettier": "3.1.1",
+    "husky": "3.1.0",
+    "inquirer": "6.5.0",
+    "jest": "24.9.0",
+    "lint-staged": "9.5.0",
+    "nock": "11.0.0-beta.21",
+    "prettier": "1.19.1",
+    "rollup": "1.27.6",
+    "rollup-plugin-commonjs": "10.1.0",
+    "rollup-plugin-json": "4.0.0",
+    "rollup-plugin-node-resolve": "5.2.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
-    "rollup-plugin-typescript2": "^0.18.0",
-    "semantic-release": "^15.9.16",
+    "rollup-plugin-typescript2": "0.25.2",
+    "semantic-release": "15.13.31",
     "shelljs": "0.8.3",
-    "travis-deploy-once": "^5.0.9",
-    "ts-jest": "23.10.5",
-    "ts-node": "7.0.1",
-    "tslint": "^5.11.0",
-    "tslint-clean-code": "0.2.9",
-    "tslint-config-prettier": "1.17.0",
-    "tslint-config-standard": "8.0.1",
-    "typedoc": "^0.13.0",
-    "typescript": "3.2.1"
+    "travis-deploy-once": "^5.0.11",
+    "ts-jest": "24.2.0",
+    "ts-node": "8.5.4",
+    "tslib": "1.10.0",
+    "typedoc": "0.15.3",
+    "typescript": "3.7.2"
   }
 }

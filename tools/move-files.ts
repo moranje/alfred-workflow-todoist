@@ -22,6 +22,7 @@ function moveToTemp() {
   mkdirp(`${TEMP_FOLDER}`)
   shell.cp('dist/workflow/info.plist', `${TEMP_FOLDER}/info.plist`)
   shell.cp('dist/workflow/icon.png', `${TEMP_FOLDER}/icon.png`)
+  shell.cp('dist/workflow/workflow.json', `${TEMP_FOLDER}/workflow.json`)
   // shell.cp('-R', 'dist/workflow/images/', `${TEMP_FOLDER}/images`)
 }
 
@@ -29,11 +30,14 @@ function moveFromTemp() {
   mkdirp(`dist/workflow`)
   let plist = shell.cp(`${TEMP_FOLDER}/info.plist`, 'dist/workflow/info.plist').stderr
   let icon = shell.cp(`${TEMP_FOLDER}/icon.png`, 'dist/workflow/icon.png').stderr
+  let workflowConfig = shell.cp(`${TEMP_FOLDER}/workflow.json`, 'dist/workflow/workflow.json')
+    .stderr
   // shell.cp('-R', `${TEMP_FOLDER}/images/`, 'dist/workflow/images/')
 
-  if (!plist && !icon) {
+  if (!plist && !icon && !workflowConfig) {
     shell.rm('-rf', `${TEMP_FOLDER}/info.plist`)
     shell.rm('-rf', `${TEMP_FOLDER}/icon.png`)
+    shell.rm('-rf', `${TEMP_FOLDER}/workflow.json`)
     // shell.rm('-rf', `${TEMP_FOLDER}/images/`)
   }
 }
