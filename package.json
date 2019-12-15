@@ -63,46 +63,6 @@
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
-  "release": {
-    "verifyConditions": [
-      "@semantic-release/changelog",
-      "@semantic-release/npm",
-      "@semantic-release/git"
-    ],
-    "prepare": [
-      "@semantic-release/changelog",
-      "@semantic-release/npm",
-      {
-        "path": "@semantic-release/exec",
-        "cmd": "npm run build:workflow"
-      },
-      {
-        "path": "@semantic-release/git",
-        "assets": [
-          "CHANGELOG.md",
-          "package.json",
-          "package-lock.json",
-          "dist/workflow/info.plist",
-          "dist/workflow/workflow.json",
-          "dist/Alfred Workflow Todoist.alfredworkflow"
-        ],
-        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
-      }
-    ],
-    "publish": [
-      [
-        "@semantic-release/github",
-        {
-          "assets": [
-            {
-              "path": "dist/Alfred Workflow Todoist.alfredworkflow",
-              "label": "Alfred Workflow Todoist.alfredworkflow"
-            }
-          ]
-        }
-      ]
-    ]
-  },
   "jest": {
     "transform": {
       ".(ts|tsx)": "ts-jest"
