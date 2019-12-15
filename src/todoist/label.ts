@@ -1,44 +1,36 @@
 import { AlfredError } from '@/project';
 import { Item, List } from '@/workflow';
-import compose from 'stampit';
 
-/** @hidden */
-export const Label: todoist.LabelFactory = compose({
-  /**
-   * @constructor
-   * @param {Label} label A new label
-   */
-  init(this: todoist.LabelInstance, label: todoist.Label = { name: '', id: -1 }) {
-    if (!label.name && label.name === '') {
-      throw new AlfredError(`A label must have a name (${label.name}) property`)
+export class Label {
+  name: string;
+  id: number;
+
+  constructor(name = '', id = -1) {
+    if (!name && name === '') {
+      throw new AlfredError(`A label must have a name (${name}) property`);
     }
 
-    if (!label.id || label.id === -1) {
-      throw new AlfredError(`A label must have a id (${label.id}) property`)
+    if (!id || id === -1) {
+      throw new AlfredError(`A label must have a id (${id}) property`);
     }
 
-    Object.assign(this, label)
+    this.name = name;
+    this.id = id;
   }
-})
+}
 
-/** @hidden */
-export const LabelList: todoist.LabelListFactory = compose(
-  List,
-  {
-    init(
-      this: todoist.LabelListInstance,
-      { labels = [], query }: { labels: todoist.Label[]; query: string }
-    ) {
-      labels.forEach((label: todoist.Label) => {
-        this.items.push(
-          Item({
+export class LabelList extends List {
+  constructor(labels: Label[] = [], query = '') {
+    super(
+      labels.map(
+        label =>
+          new Item({
             title: label.name,
             subtitle: `Add label ${label.name} to task`,
             autocomplete: `${query.replace(/(^.*@).*/, '$1')}${label.name} `,
-            valid: false
+            valid: false,
           })
-        )
-      })
-    }
+      )
+    );
   }
-)
+}

@@ -127,7 +127,7 @@ Example: `todos car` => returns (because of fuzzy search):
 Example: _todo Get things done, tomorrow @ 9_
 Example: _todo Build tree house #home !!2 @15min, tomorrow @ 9_
 
-*_Important_*
+_*Important*_
 
 For date parsing the work the date needs to be the only thing after the comma.
 
@@ -147,15 +147,15 @@ View [CHANGELOG.md](https://github.com/moranje/alfred-workflow-todoist/blob/mast
 
 - Fork and clone the repo
 
-  *git clone https://github.com/YOUR-USERNAME/alfred-worflow-todoist*
+  _git clone https://github.com/YOUR-USERNAME/alfred-worflow-todoist_
 
 - Install dependencies
 
-  *npm install*
+  _npm install_
 
 - Symlink to project workflow folder
 
-  *npm run setup:dev*
+  _npm run setup:dev_
 
 ### Build
 
@@ -166,7 +166,6 @@ Create a new build with
 Create a distributable package (.alfredworkflow) after the build step with
 
 `npm run build:workflow`
-
 
 ### Run tests
 

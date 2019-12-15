@@ -1,42 +1,39 @@
 import { AlfredError } from '@/project';
 import { Item, List } from '@/workflow';
-import compose from 'stampit';
 
-/** @hidden */
-export const Project: todoist.ProjectFactory = compose({
-  init(this: todoist.ProjectInstance, project: todoist.Project = { name: '', id: -1 }) {
-    if (!project.name && project.name === '') {
-      throw new AlfredError(`A project must have a name (${project.name}) property`)
+export class Project {
+  name: string;
+  id: number;
+
+  constructor(name = '', id = -1) {
+    if (!name && name === '') {
+      throw new AlfredError(`A project must have a name (${name}) property`);
     }
 
-    if (!project.id || project.id === -1) {
-      throw new AlfredError(`A project must have a id (${project.id}) property`)
+    if (!id || id === -1) {
+      throw new AlfredError(`A project must have a id (${id}) property`);
     }
 
-    Object.assign(this, project)
+    this.name = name;
+    this.id = id;
   }
-})
+}
 
-/** @hidden */
-export const ProjectList: todoist.ProjectListFactory = compose(
-  List,
-  {
-    init(
-      this: todoist.ProjectListInstance,
-      { projects = [], query }: { projects: todoist.Project[]; query: string }
-    ) {
-      projects.forEach((project: todoist.Project) => {
-        let name = project.name.indexOf(' ') !== -1 ? `[${project.name}]` : project.name
+export class ProjectList extends List {
+  constructor(projects: Project[] = [], query = '') {
+    super(
+      projects.map(project => {
+        const name = project.name.includes(' ')
+          ? `[${project.name}]`
+          : project.name;
 
-        this.items.push(
-          Item({
-            title: project.name,
-            subtitle: `Move task to ${project.name}`,
-            autocomplete: `${query.replace(/(^.*#).*/, '$1')}${name} `,
-            valid: false
-          })
-        )
+        return new Item({
+          title: project.name,
+          subtitle: `Move task to ${project.name}`,
+          autocomplete: `${query.replace(/(^.*#).*/, '$1')}${name} `,
+          valid: false,
+        });
       })
-    }
+    );
   }
-)
+}

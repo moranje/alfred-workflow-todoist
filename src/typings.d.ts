@@ -1,310 +1,15 @@
-/******************************************************************************
- * COPIED FROM STAMPIT DECLARATION FILE
- *
- * Importing it would turn this file into a module which means sepearte imports
- * for each interface. That ins't a problem per se but it also breaks jest. For
- * now this is an acceptable workaround.
- *****************************************************************************/
-
-/**
- * Function used as .init() argument.
- * @hidden
- */
-type Init = (factoryArg: any, ctx?: Context) => any
-
-/**
- * The stamp Descriptor
- * @hidden
- */
-interface Descriptor {
-  /** Create a new stamp based on this descriptor */
-  (...composables: Composable[]): stampit.Stamp
-  /**
-   * A hash containing methods (functions) of any future created instance.
-   */
-  methods?: {}
-  /**
-   * Initialization function(s) which will be called per each newly created
-   * instance.
-   */
-  initializers?: Init[]
-  /**
-   * Properties which will shallowly copied into any future created instance.
-   */
-  properties?: {}
-  /**
-   * Properties which will be mixed to the new and any other stamp which this stamp will be composed with.
-   */
-  staticProperties?: {}
-  /** Deeply merged properties of object instances */
-  deepProperties?: {}
-  /** ES5 Property Descriptors applied to object instances */
-  propertyDescriptors?: {}
-  /** Deeply merged properties of Stamps */
-  staticDeepProperties?: {}
-  /** ES5 Property Descriptors applied to Stamps */
-  staticPropertyDescriptors?: {}
-  /** A configuration object to be shallowly assigned to Stamps */
-  configuration?: {}
-  /** A configuration object to be deeply merged to Stamps */
-  deepConfiguration?: {}
-}
-
-/**
- * Any composable object (stamp or descriptor)
- * @hidden
- */
-type Composable = stampit.Stamp | Descriptor
-
-/**
- * The .init() function argument.
- * @hidden
- */
-interface Context {
-  /**
-   * The object which has been just instantiated.
-   */
-  instance: any
-
-  /**
-   * The stamp the object has been instantiated with.
-   */
-  stamp: stampit.Stamp
-
-  /**
-   * The arguments list passed to the stamp.
-   */
-  args: any[]
-}
-
-/** @hidden */
-declare namespace stampit {
-  /**
-   * A factory function that will produce new objects using the
-   * prototypes that are passed in or composed.
-   */
-  interface Stamp {
-    /**
-     * Invokes the stamp and returns a new object instance.
-     * @param state Properties you wish to set on the new objects.
-     * @param encloseArgs The remaining arguments are passed to all .enclose() functions.
-     * WARNING Avoid using two different .enclose() functions that expect different arguments.
-     * .enclose() functions that take arguments should not be considered safe to compose
-     * with other .enclose() functions that also take arguments. Taking arguments with
-     * an .enclose() function is an anti-pattern that should be avoided, when possible.
-     * @return A new object composed of the Stamps and prototypes provided.
-     */
-    (state?: {}, ...encloseArgs: any[]): any
-
-    /**
-     * Just like calling stamp(), stamp.create() invokes the stamp and returns a new instance.
-     * @param state Properties you wish to set on the new objects.
-     * @param encloseArgs The remaining arguments are passed to all .enclose() functions.
-     * WARNING Avoid using two different .enclose() functions that expect different arguments.
-     * .enclose() functions that take arguments should not be considered safe to compose
-     * with other .enclose() functions that also take arguments. Taking arguments with
-     * an .enclose() function is an anti-pattern that should be avoided, when possible.
-     * @return A new object composed of the Stamps and prototypes provided.
-     */
-    create(state?: {}, ...encloseArgs: any[]): any
-
-    /**
-     * Stamp metadata/composer function
-     */
-    compose: Descriptor
-
-    /**
-     * Add methods to the methods prototype.  Creates and returns new Stamp. Chainable.
-     * @param methods Object(s) containing map of method names and bodies for delegation.
-     * @return A new Stamp.
-     */
-    methods(...methods: Array<{}>): Stamp
-
-    /**
-     * Take n objects and add them to the state prototype. Creates and returns new Stamp. Chainable.
-     * @param states Object(s) containing map of property names and values to clone for each new object.
-     * @return A new Stamp.
-     */
-    refs(...states: Array<{}>): Stamp
-
-    /**
-     * Take a variable number of objects and shallow assign them to any future
-     * created instance of the Stamp. Creates and returns new Stamp. Chainable.
-     * @param objects Object(s) to shallow assign for each new object.
-     * @return A new Stamp.
-     */
-    props(...objects: Array<{}>): Stamp
-
-    /**
-     * Take a variable number of objects and shallow assign them to any future
-     * created instance of the Stamp. Creates and returns new Stamp. Chainable.
-     * @param objects Object(s) to shallow assign for each new object.
-     * @return A new Stamp.
-     */
-    properties(...objects: Array<{}>): Stamp
-
-    /**
-     * Take a variable number of objects and deeply merge them to any future
-     * created instance of the Stamp. Creates and returns a new Stamp.
-     * Chainable.
-     * @param deepObjects The object(s) to deeply merge for each new object
-     * @returns A new Stamp
-     */
-    deepProps(...deepObjects: Array<{}>): Stamp
-
-    /**
-     * Take a variable number of objects and deeply merge them to any future
-     * created instance of the Stamp. Creates and returns a new Stamp.
-     * Chainable.
-     * @param deepObjects The object(s) to deeply merge for each new object
-     * @returns A new Stamp
-     */
-    deepProperties(...deepObjects: Array<{}>): Stamp
-
-    /**
-     * @deprecated Use .init() instead.
-     */
-    enclose(...functions: Init[]): Stamp
-
-    /**
-     * @deprecated Use .init() instead.
-     */
-    enclose(...functions: Array<{}>): Stamp
-
-    /**
-     * Take in a variable number of functions and add them to the enclose
-     * prototype as initializers.
-     * @param functions Initializer functions used to create private data and
-     * privileged methods
-     * @returns A new stamp
-     */
-    init(...functions: Init[]): Stamp
-
-    /**
-     * Take in a variable number of functions and add them to the enclose
-     * prototype as initializers.
-     * @param functions Initializer functions used to create private data and
-     * privileged methods
-     * @returns A new stamp
-     */
-    init(functions: Init[]): Stamp
-
-    /**
-     * Take in a variable number of functions and add them to the enclose
-     * prototype as initializers.
-     * @param functions Initializer functions used to create private data and
-     * privileged methods
-     * @returns A new stamp
-     */
-    initializers(...functions: Init[]): Stamp
-
-    /**
-     * Take in a variable number of functions and add them to the enclose
-     * prototype as initializers.
-     * @param functions Initializer functions used to create private data and
-     * privileged methods
-     * @returns A new stamp
-     */
-    initializers(functions: Init[]): Stamp
-
-    /**
-     * Take n objects and add them to a new stamp and any future stamp it composes with.
-     * Creates and returns new Stamp. Chainable.
-     * @param statics Object(s) containing map of property names and values to mixin into each new stamp.
-     * @return A new Stamp.
-     */
-    statics(...statics: Array<{}>): Stamp
-
-    /**
-     * Take n objects and add them to a new stamp and any future stamp it composes with.
-     * Creates and returns new Stamp. Chainable.
-     * @param statics Object(s) containing map of property names and values to mixin into each new stamp.
-     * @return A new Stamp.
-     */
-    staticProperties(...statics: Array<{}>): Stamp
-
-    /**
-     * Deeply merge a variable number of objects and add them to a new stamp and
-     * any future stamp it composes. Creates and returns a new Stamp. Chainable.
-     * @param deepStatics The object(s) containing static properties to be
-     * merged
-     * @returns A new stamp
-     */
-    deepStatics(...deepStatics: Array<{}>): Stamp
-
-    /**
-     * Deeply merge a variable number of objects and add them to a new stamp and
-     * any future stamp it composes. Creates and returns a new Stamp. Chainable.
-     * @param deepStatics The object(s) containing static properties to be
-     * merged
-     * @returns A new stamp
-     */
-    staticDeepProperties(...deepStatics: Array<{}>): Stamp
-
-    /**
-     * Shallowly assign properties of Stamp arbitrary metadata and add them to
-     * a new stamp and any future Stamp it composes. Creates and returns a new
-     * Stamp. Chainable.
-     * @param confs The object(s) containing metadata properties
-     * @returns A new Stamp
-     */
-    conf(...confs: Array<{}>): Stamp
-
-    /**
-     * Shallowly assign properties of Stamp arbitrary metadata and add them to
-     * a new stamp and any future Stamp it composes. Creates and returns a new
-     * Stamp. Chainable.
-     * @param confs The object(s) containing metadata properties
-     * @returns A new Stamp
-     */
-    configuration(...confs: Array<{}>): Stamp
-
-    /**
-     * Deeply merge properties of Stamp arbitrary metadata and add them to a new
-     * Stamp and any future Stamp it composes. Creates and returns a new Stamp.
-     * Chainable.
-     * @param deepConfs The object(s) containing metadata properties
-     * @returns A new Stamp
-     */
-    deepConf(...deepConfs: Array<{}>): Stamp
-
-    /**
-     * Deeply merge properties of Stamp arbitrary metadata and add them to a new
-     * Stamp and any future Stamp it composes. Creates and returns a new Stamp.
-     * Chainable.
-     * @param deepConfs The object(s) containing metadata properties
-     * @returns A new Stamp
-     */
-    deepConfiguration(...deepConfs: Array<{}>): Stamp
-
-    /**
-     * Apply ES5 property descriptors to object instances created by the new
-     * Stamp returned by the function and any future Stamp it composes. Creates
-     * and returns a new stamp. Chainable.
-     * @param descriptors
-     * @returns A new Stamp
-     */
-    propertyDescriptors(...descriptors: Array<{}>): Stamp
-
-    /**
-     * Apply ES5 property descriptors to a Stamp and any future Stamp it
-     * composes. Creates and returns a new stamp. Chainable.
-     * @param descriptors
-     * @returns A new Stamp
-     */
-    staticPropertyDescriptors(...descriptors: Array<{}>): Stamp
-  }
-}
-
 /**********************************************************
  * WORKFLOW DECLARATIONS
  *********************************************************/
 
 /** @hidden */
-declare module 'fast-plist'
+declare module 'fast-plist';
 
 /** @hidden */
-declare module 'macos-version'
+declare module 'macos-version';
+
+/** @hidden */
+declare module 'cache-conf';
 
 /**
  * Alfred workflow logic
@@ -319,7 +24,7 @@ declare namespace workflow {
      *
      * @param {any[]} params
      */
-    write: (...params: any[]) => void
+    write: (...params: any[]) => void;
 
     /**
      * Write to stdout.
@@ -327,7 +32,7 @@ declare namespace workflow {
      * @param {Object} arg
      * @private
      */
-    object: (arg: Object) => string
+    object: (arg: Record<string, unknown>) => string;
   }
 
   /**
@@ -337,7 +42,7 @@ declare namespace workflow {
     /**
      * @constructor
      */
-    (): WritableInstance
+    (): WritableInstance;
   }
 
   /**
@@ -352,7 +57,7 @@ declare namespace workflow {
      *
      * @returns The string in upper case.
      */
-    upperCase: (text: string) => string
+    upperCase: (text: string) => string;
 
     /**
      * Convert a string to lower case.
@@ -362,7 +67,7 @@ declare namespace workflow {
      *
      * @returns The string in lower case.
      */
-    lowerCase: (text: string) => string
+    lowerCase: (text: string) => string;
 
     /**
      * Convert a string to sentence case.
@@ -372,7 +77,7 @@ declare namespace workflow {
      *
      * @returns The string in sentence case.
      */
-    sentenceCase: (text: string) => string
+    sentenceCase: (text: string) => string;
 
     /**
      * When the first parameter is truthy return second parameter, when it is
@@ -385,7 +90,7 @@ declare namespace workflow {
      *
      * @returns The second or third parameter.
      */
-    when: (condition: any, truthy: string, falsy: string) => string
+    when: (condition: any, truthy: string, falsy: string) => string;
 
     /**
      * Returns a number of whitespace characters
@@ -395,7 +100,7 @@ declare namespace workflow {
      *
      * @return A string consisting of a number of whitespace characters.
      */
-    ws: (quantity: number) => string
+    ws: (quantity: number) => string;
   }
 
   /**
@@ -403,8 +108,14 @@ declare namespace workflow {
    */
   export interface ViewInstance extends ViewCallbacks {
     template: (
-      fn: ({ upperCase, lowerCase, sentenceCase, ws, when }: ViewCallbacks) => string
-    ) => string
+      fn: ({
+        upperCase,
+        lowerCase,
+        sentenceCase,
+        ws,
+        when,
+      }: ViewCallbacks) => string
+    ) => string;
   }
 
   /**
@@ -414,7 +125,7 @@ declare namespace workflow {
     /**
      * @constructor
      */
-    (): ViewInstance
+    (): ViewInstance;
   }
 
   /**
@@ -425,12 +136,12 @@ declare namespace workflow {
      * The title displayed in the result row. There are no options for this
      * element and it is essential that this element is populated.
      */
-    title: string
+    title: string;
 
     /**
      * The subtitle displayed in the result row.
      */
-    subtitle?: string
+    subtitle?: string;
 
     /**
      * The icon displayed in the result row. Workflows are run from their
@@ -438,9 +149,9 @@ declare namespace workflow {
      * relatively.
      */
     icon?: {
-      type: string
-      path: string
-    }
+      type: string;
+      path: string;
+    };
 
     /**
      * This is a unique identifier for the item which allows help Alfred to learn
@@ -452,13 +163,13 @@ declare namespace workflow {
      * would like Alfred to always show the results in the order you return them
      * from your script, exclude the UID field.
      */
-    uid?: string
+    uid?: string;
 
     /**
      * The argument which is passed through the workflow to the connected output
      * action.
      */
-    arg?: any
+    arg?: any;
 
     /**
      * By specifying `"type": "file"`, this makes Alfred treat your result as a
@@ -471,7 +182,7 @@ declare namespace workflow {
      * like Alfred to skip this check as you are certain that the files you are
      * returning exist, you can use `"type": "file:skipcheck"`.
      */
-    type?: 'default' | 'file' | 'file:skipcheck'
+    type?: 'default' | 'file' | 'file:skipcheck';
 
     /**
      * If this item is valid or not. If an item is valid then Alfred will action
@@ -481,7 +192,7 @@ declare namespace workflow {
      *
      * If you exclude the valid attribute, Alfred assumes that your item is valid.
      */
-    valid?: boolean
+    valid?: boolean;
 
     /**
      * From Alfred 3.5, the match field enables you to define what Alfred matches
@@ -497,7 +208,7 @@ declare namespace workflow {
      * intelligently treated as diacritic insensitive. If the search query
      * contains a diacritic, the match becomes diacritic sensitive.
      */
-    match?: string
+    match?: string;
 
     /**
      * An optional but recommended string you can provide which is populated into
@@ -507,7 +218,7 @@ declare namespace workflow {
      * If the item is set as `"valid": false`, the auto-complete text is
      * populated into Alfred's search field when the user actions the result.
      */
-    autocomplete?: string
+    autocomplete?: string;
 
     /**
      * The mod element gives you control over how the modifier keys react. You
@@ -534,16 +245,16 @@ declare namespace workflow {
      */
     mod?: {
       alt?: {
-        valid: boolean
-        arg: string
-        subtitle: string
-      }
+        valid: boolean;
+        arg: string;
+        subtitle: string;
+      };
       cmd?: {
-        valid: boolean
-        arg: string
-        subtitle: string
-      }
-    }
+        valid: boolean;
+        arg: string;
+        subtitle: string;
+      };
+    };
 
     /**
      * The text element defines the text the user will get when copying the
@@ -562,9 +273,9 @@ declare namespace workflow {
      * where the arg is copied to the Clipboard or used for Large Type.
      */
     text?: {
-      copy: string
-      largetype: string
-    }
+      copy: string;
+      largetype: string;
+    };
 
     /**
      * A Quick Look URL which will be visible if the user uses the Quick Look
@@ -577,7 +288,7 @@ declare namespace workflow {
      * }
      * ```
      */
-    quicklookurl?: string
+    quicklookurl?: string;
   }
 
   /**
@@ -593,7 +304,7 @@ declare namespace workflow {
      * @constructor
      * @param {Item} item
      */
-    (item: Item): ItemInstance
+    (item: Item): ItemInstance;
   }
   /**
    * An instance of an ListFactory
@@ -602,7 +313,7 @@ declare namespace workflow {
     /**
      * A collection of list items
      */
-    items: Item[]
+    items: Item[];
   }
 
   /**
@@ -613,7 +324,7 @@ declare namespace workflow {
      * @constructor
      * @param {*} list
      */
-    ({ items }: { items: Item[] | undefined }): ListInstance
+    ({ items }: { items: Item[] | undefined }): ListInstance;
   }
 
   /**
@@ -624,7 +335,7 @@ declare namespace workflow {
      * @constructor
      * @param {number} title
      */
-    (title: number): ItemInstance
+    (title: number): ItemInstance;
   }
 
   /**
@@ -634,86 +345,86 @@ declare namespace workflow {
     /**
      * The notification title
      */
-    title?: string
+    title?: string;
 
     /**
      * The notification subtitle
      */
-    subtitle?: string
+    subtitle?: string;
 
     /**
      * The notification message
      */
-    message: string
+    message: string;
 
     /**
      * Case Sensitive string for location of sound file; or use one of macOS'
      * native sounds (see below)
      */
-    sound?: boolean
+    sound?: boolean;
 
     /**
      * Absolute Path to Triggering Icon
      */
-    icon?: string
+    icon?: string;
 
     /**
      * Absolute Path to Attached Image (Content Image)
      */
-    contentImage?: string
+    contentImage?: string;
 
     /**
      * URL to open on Click
      */
-    open?: string
+    open?: string;
 
     /**
      * Wait for User Action against Notification or times out. Same as timeout
      * = 5 seconds
      */
-    wait?: boolean
+    wait?: boolean;
 
     /**
      * Takes precedence over wait if both are defined.
      */
-    timeout?: number
+    timeout?: number;
 
     /**
      * Label for cancel button
      */
-    closeLabel?: string
+    closeLabel?: string;
 
     /**
      * Action label or list of labels in case of dropdown
      */
-    actions?: string | string[]
+    actions?: string | string[];
 
     /**
      * Label to be used if multiple actions
      */
-    dropdownLabel?: string
+    dropdownLabel?: string;
 
     /**
      * If notification should take input. Value passed as third argument in callback and event emitter.
      */
-    reply?: boolean
+    reply?: boolean;
 
     /**
      * An error object.
      */
-    error?: project.AlfredError
+    error?: project.AlfredError;
 
     /**
      * Hide success messages from logs
      */
-    hideSuccessLogs?: boolean
+    hideSuccessLogs?: boolean;
   }
 
   /**
    * An instance of an NotificationFactory
    */
   export interface NotificationInstance extends NotificationOptions {
-    write: (onClick?: any, onTimeout?: any) => void
+    write: (onClick?: any, onTimeout?: any) => void;
   }
 
   /**
@@ -724,7 +435,7 @@ declare namespace workflow {
      * @constructor
      * @param {project.AlfredError | NotificationOptions} output
      */
-    (output: project.AlfredError | NotificationOptions): NotificationInstance
+    (output: project.AlfredError | NotificationOptions): NotificationInstance;
   }
 }
 
@@ -743,7 +454,7 @@ declare namespace todoist {
     | 'pt'
     | 'ru'
     | 'sv'
-    | 'zh'
+    | 'zh';
 
   /**
    * An instance of a AdapterFactory
@@ -752,22 +463,22 @@ declare namespace todoist {
     /**
      * The resource type.
      */
-    type: 'task' | 'project' | 'label'
+    type: 'task' | 'project' | 'label';
 
     /**
      * The todoist api url
      */
-    uri: string
+    uri: string;
 
     /**
      * The API token.
      */
-    token: string
+    token: string;
 
     /**
      * A pre-configured got object
      */
-    client: any
+    client: got;
 
     /**
      * Returns items of a type based on a query. Returns all items when qeurr
@@ -777,7 +488,7 @@ declare namespace todoist {
      * @param {string} [key='content']
      * @returns {Promise<any>}
      */
-    query: (query: string, key: string) => Promise<any>
+    query: (query: string, key: string) => Promise<any>;
 
     /**
      * POST an item of a type to Todoist
@@ -785,7 +496,7 @@ declare namespace todoist {
      * @param {*} data
      * @returns {Promise<any>}
      */
-    create: (data: any) => Promise<any>
+    create: (data: any) => Promise<any>;
 
     /**
      * POST an item of a type to Todoist replacing a known value
@@ -794,7 +505,7 @@ declare namespace todoist {
      * @param {*} data
      * @returns {Promise<any>}
      */
-    update: (id: number, data: any) => Promise<any>
+    update: (id: number, data: any) => Promise<any>;
 
     /**
      * API call to delete a single item.
@@ -802,7 +513,7 @@ declare namespace todoist {
      * @param {number} id
      * @returns {Promise<any>}
      */
-    remove: (id: number) => Promise<any>
+    remove: (id: number) => Promise<any>;
   }
 
   /**
@@ -812,7 +523,15 @@ declare namespace todoist {
     /**
      * @constructor
      */
-    ({ type, uri, token }: { type: string; uri: string; token: string }): AdapterInstance
+    ({
+      type,
+      uri,
+      token,
+    }: {
+      type: string;
+      uri: string;
+      token: string;
+    }): AdapterInstance;
   }
 
   /**
@@ -825,14 +544,14 @@ declare namespace todoist {
      * @param {number} id
      * @returns A task instance
      */
-    find: (id: number) => Promise<Task>
+    find: (id: number) => Promise<Task>;
 
     /**
      * Get all tasks
      *
      * @returns All tasks
      */
-    findAll: () => Promise<Task[]>
+    findAll: () => Promise<Task[]>;
 
     /**
      * Retrieve a tasks labels an projects by id.
@@ -841,7 +560,7 @@ declare namespace todoist {
      * @param {Task} task
      * @returns {Promise<Task>}
      */
-    getRelationships: (task: Task) => Promise<Task>
+    getRelationships: (task: Task) => Promise<Task>;
   }
 
   /**
@@ -851,7 +570,15 @@ declare namespace todoist {
     /**
      * @constructor
      */
-    ({ type, uri, token }: { type: string; uri: string; token: string }): TaskAdapterInstance
+    ({
+      type,
+      uri,
+      token,
+    }: {
+      type: string;
+      uri: string;
+      token: string;
+    }): TaskAdapterInstance;
   }
 
   /**
@@ -864,14 +591,14 @@ declare namespace todoist {
      * @param {number} id
      * @returns A project instance
      */
-    find: (id: number) => Promise<Project>
+    find: (id: number) => Promise<Project>;
 
     /**
      * Get all projects
      *
      * @returns All projects
      */
-    findAll: () => Promise<Project[]>
+    findAll: () => Promise<Project[]>;
   }
 
   /**
@@ -881,7 +608,15 @@ declare namespace todoist {
     /**
      * @constructor
      */
-    ({ type, uri, token }: { type: string; uri: string; token: string }): ProjectAdapterInstance
+    ({
+      type,
+      uri,
+      token,
+    }: {
+      type: string;
+      uri: string;
+      token: string;
+    }): ProjectAdapterInstance;
   }
 
   /**
@@ -894,14 +629,14 @@ declare namespace todoist {
      * @param {number} id
      * @returns A label instance
      */
-    find: (id: number) => Promise<Label>
+    find: (id: number) => Promise<Label>;
 
     /**
      * Get all labels
      *
      * @returns All labels
      */
-    findAll: () => Promise<Label[]>
+    findAll: () => Promise<Label[]>;
   }
 
   /**
@@ -911,17 +646,25 @@ declare namespace todoist {
     /**
      * @constructor
      */
-    ({ type, uri, token }: { type: string; uri: string; token: string }): LabelAdapterInstance
+    ({
+      type,
+      uri,
+      token,
+    }: {
+      type: string;
+      uri: string;
+      token: string;
+    }): LabelAdapterInstance;
   }
 
   /**
    * An instance of a QueryFactory
    */
   export interface QueryInstance {
-    query: string
-    locale: locale
-    parsed: any
-    parse: () => Promise<void>
+    query: string;
+    locale: locale;
+    parsed: any;
+    parse: () => Promise<void>;
   }
 
   /**
@@ -931,7 +674,7 @@ declare namespace todoist {
     /**
      * @constructor
      */
-    ({ query, locale }: { query: string; locale: locale }): QueryInstance
+    ({ query, locale }: { query: string; locale: locale }): QueryInstance;
   }
 
   /**
@@ -941,70 +684,70 @@ declare namespace todoist {
     /**
      * Task content.
      */
-    content: string
+    content: string;
 
     /**
      * Task project id. If not set, task is put to user’s Inbox.
      */
-    project_id?: number
+    project_id?: number;
 
     /**
      * Non-zero integer value used by clients to sort tasks inside project.
      */
-    order?: number
+    order?: number;
 
     /**
      * Ids of labels associated with the task.
      */
-    label_ids?: number[]
+    label_ids?: number[];
 
     /**
      * Task priority from 1 (normal) to 4 (urgent).
      */
-    priority?: number
+    priority?: number;
 
     /**
      * [Human defined]{@link https://todoist.com/Help/DatesTimes} task due date (ex.: “next Monday”, “Tomorrow”). Value is set using local (not UTC) time.
      */
-    due_string?: string
+    due_string?: string;
 
     /**
      * Specific date in YYYY-MM-DD format relative to user’s timezone.
      */
-    due_date?: string
+    due_date?: string;
 
     /**
      * Specific date and time in [RFC3339]{@link https://www.ietf.org/rfc/rfc3339.txt} format in UTC.
      */
-    due_datetime?: string
+    due_datetime?: string;
 
     /**
      * 2-letter code specifying language in case due_string is not written in
      * English.
      */
-    due_lang?: string
+    due_lang?: string;
   }
 
   /**
    * A todoist task as received by the todoist API
    */
   export interface ResponseTask {
-    comment_count?: number
-    completed?: boolean
-    content: string
+    comment_count?: number;
+    completed?: boolean;
+    content: string;
     due?: {
-      date?: string
-      recurring?: boolean
-      datetime?: string
-      string?: string
-      timezone?: string
-    }
-    id?: number
-    order?: number
-    indent?: number
-    priority?: number
-    project_id?: number
-    url?: string
+      date?: string;
+      recurring?: boolean;
+      datetime?: string;
+      string?: string;
+      timezone?: string;
+    };
+    id?: number;
+    order?: number;
+    indent?: number;
+    priority?: number;
+    project_id?: number;
+    url?: string;
   }
 
   /**
@@ -1020,20 +763,20 @@ declare namespace todoist {
       | Label[]
       | Project
       | {
-          date?: string
-          recurring?: boolean
-          datetime?: string
-          string?: string
-          timezone?: string
-        }
-    project?: ProjectInstance
-    labels?: LabelInstance[]
+          date?: string;
+          recurring?: boolean;
+          datetime?: string;
+          string?: string;
+          timezone?: string;
+        };
+    project?: ProjectInstance;
+    labels?: LabelInstance[];
   }
 
   /**
    * An instance of a TaskFactory
    */
-  export interface TaskInstance extends Task {}
+  export type TaskInstance = Task;
 
   /**
    * A TaskFactory (pure function) constructor
@@ -1042,13 +785,13 @@ declare namespace todoist {
     /**
      * @constructor
      */
-    (task: Task): TaskInstance
+    (task: Task): TaskInstance;
   }
 
   /**
    * An instance of a TaskListFactory
    */
-  export interface TaskListInstance extends workflow.ListInstance {}
+  export type TaskListInstance = workflow.ListInstance;
 
   /**
    * A TaskListFactory (pure function) constructor
@@ -1057,19 +800,27 @@ declare namespace todoist {
     /**
      * @constructor
      */
-    ({ tasks, action, locale }: { tasks: Task[]; action: string; locale: locale }): TaskListInstance
+    ({
+      tasks,
+      action,
+      locale,
+    }: {
+      tasks: Task[];
+      action: string;
+      locale: locale;
+    }): TaskListInstance;
   }
 
   export interface Project {
-    [index: string]: string | number
-    name: string
-    id: number
+    [index: string]: string | number;
+    name: string;
+    id: number;
   }
 
   /**
    * An instance of a ProjectFactory
    */
-  export interface ProjectInstance extends Project {}
+  export type ProjectInstance = Project;
 
   /**
    * A ProjectFactory (pure function) constructor
@@ -1078,13 +829,13 @@ declare namespace todoist {
     /**
      * @constructor
      */
-    (project: Project): ProjectInstance
+    (project: Project): ProjectInstance;
   }
 
   /**
    * An instance of a ProjectListFactory
    */
-  export interface ProjectListInstance extends workflow.ListInstance {}
+  export type ProjectListInstance = workflow.ListInstance;
 
   /**
    * A ProjectListFactory (pure function) constructor
@@ -1093,20 +844,26 @@ declare namespace todoist {
     /**
      * @constructor
      */
-    ({ projects, query }: { projects: Project[]; query: string }): ProjectListInstance
+    ({
+      projects,
+      query,
+    }: {
+      projects: Project[];
+      query: string;
+    }): ProjectListInstance;
   }
 
-  export interface ProjectList extends workflow.ListInstance {}
+  export type ProjectList = workflow.ListInstance;
 
   export interface Label {
-    [index: string]: string | number
-    name: string
-    id: number
+    [index: string]: string | number;
+    name: string;
+    id: number;
   }
   /**
    * An instance of a LabelFactory
    */
-  export interface LabelInstance extends Label {}
+  export type LabelInstance = Label;
 
   /**
    * A LabelFactory (pure function) constructor
@@ -1115,13 +872,13 @@ declare namespace todoist {
     /**
      * @constructor
      */
-    (label: Label): LabelInstance
+    (label: Label): LabelInstance;
   }
 
   /**
    * An instance of a LabelListFactory
    */
-  export interface LabelListInstance extends workflow.ListInstance {}
+  export type LabelListInstance = workflow.ListInstance;
 
   /**
    * A LabelListFactory (pure function) constructor
@@ -1130,19 +887,23 @@ declare namespace todoist {
     /**
      * @constructor
      */
-    ({ labels, query }: { labels: Label[]; query: string }): LabelListInstance
+    ({ labels, query }: { labels: Label[]; query: string }): LabelListInstance;
   }
 
-  export interface LabelList extends workflow.ListInstance {}
+  export type LabelList = workflow.ListInstance;
+
+  export type Value = Task[] | Project[] | Label[];
+
+  export type Item = Task | Project | Label;
 
   /**
    * A lexed token.
    */
   export interface Token {
-    [index: string]: string | (() => string)
-    type: string
-    value: string
-    toString(): string
+    [index: string]: string | (() => string);
+    type: string;
+    value: string;
+    toString(): string;
   }
 
   /**
@@ -1158,28 +919,28 @@ declare namespace todoist {
       | Token
       | Token[]
       | (() => Token | string)
-      | (() => ParsedToJSON)
-    content: string
-    priority: string
-    project?: Token
-    labels: Token[]
-    person?: Token
-    due_string?: string
-    last(key?: 'type' | 'value'): Token | string
-    toJSON(): ParsedToJSON
+      | (() => ParsedToJSON);
+    content: string;
+    priority: string;
+    project?: Token;
+    labels: Token[];
+    person?: Token;
+    due_string?: string;
+    last(key?: 'type' | 'value'): Token | string;
+    toJSON(): ParsedToJSON;
   }
 
   /**
    * The contents of a parsed task
    */
   export interface ParsedToJSON {
-    content: string
-    priority: number
-    due_string: string | undefined
-    project: string | undefined
-    project_id: number | undefined
-    labels: string[] | undefined
-    label_ids: number[] | undefined
+    content: string;
+    priority: number;
+    due_string: string | undefined;
+    project: string | undefined;
+    project_id: number | undefined;
+    labels: string[] | undefined;
+    label_ids: number[] | undefined;
   }
 }
 
@@ -1188,21 +949,21 @@ declare namespace project {
    * A file path reference to settings.json. This is used to store workflow
    * settings.
    */
-  export const SETTINGS_PATH: string
+  export const SETTINGS_PATH: string;
 
   /**
    * A file path reference to the cache.json. This is used to store todoist APi
    * call responses.
    */
-  export const CACHE_PATH: string
+  export const CACHE_PATH: string;
 
   /**
    * The imported project settings and todoist cache
    */
   export interface FILES {
-    settings: Settings
-    cache: any
-    workflowConfig: any
+    settings: Settings;
+    cache: any;
+    workflowConfig: any;
   }
 
   /**
@@ -1210,12 +971,12 @@ declare namespace project {
    * environment variables.
    */
   export class AlfredError extends Error {
-    QUERY?: string
-    OSX_VERSION?: string
-    NODE_VERSION?: string
-    ALFRED_VERSION?: string
-    WORKFLOW_VERSION?: string
-    constructor(message: string, name?: string, stack?: any)
+    QUERY?: string;
+    OSX_VERSION?: string;
+    NODE_VERSION?: string;
+    ALFRED_VERSION?: string;
+    WORKFLOW_VERSION?: string;
+    constructor(message: string, name?: string, stack?: any);
   }
 
   /**
@@ -1225,7 +986,7 @@ declare namespace project {
     /**
      * @constructor
      */
-    (): CommandInstance
+    (): CommandInstance;
   }
 
   /**
@@ -1239,7 +1000,7 @@ declare namespace project {
      * @param {string} query
      * @returns {Promise<void>}
      */
-    read(query?: string): Promise<void>
+    read(query?: string): Promise<void>;
 
     /**
      * Parse a todoist task and extra information from Alfred input
@@ -1247,7 +1008,7 @@ declare namespace project {
      * @param {string} query
      * @returns {Promise<void>}
      */
-    create(query: string): Promise<void>
+    create(query: string): Promise<void>;
 
     /**
      * Submit a 'created' task back to Todoist
@@ -1255,7 +1016,7 @@ declare namespace project {
      * @param {todoist.Task} task
      * @returns {Promise<void>}
      */
-    submit(task: todoist.Task): Promise<void>
+    submit(task: todoist.Task): Promise<void>;
 
     /**
      * Remove a task from to todoist by id
@@ -1263,12 +1024,12 @@ declare namespace project {
      * @param {todoist.Task} task
      * @returns {Promise<void>}
      */
-    remove(task: todoist.Task): Promise<void>
+    remove(task: todoist.Task): Promise<void>;
 
     /**
      * Display a list of possible settings
      */
-    listSettings(): void
+    listSettings(): void;
 
     /**
      * Checks if a settings is valid when changing one
@@ -1276,7 +1037,7 @@ declare namespace project {
      * @param {string} key
      * @param {string | number | boolean} value
      */
-    verifySetting(key: string, value: string | number | boolean): void
+    verifySetting(key: string, value: string | number | boolean): void;
 
     /**
      * Saves a project setting back to disk
@@ -1284,21 +1045,24 @@ declare namespace project {
      * @param {*} setting
      * @returns {Promise<void>}
      */
-    saveSetting(setting: { key: string; value: string | number | boolean }): Promise<void>
+    saveSetting(setting: {
+      key: string;
+      value: string | number | boolean;
+    }): Promise<void>;
 
-    updateWorkflowVersion(): Promise<void>
+    updateWorkflowVersion(): Promise<void>;
   }
 
   /**
    * A settings object.
    */
   export interface Settings {
-    [index: string]: string | number | boolean
-    token: string
-    language: string
-    max_items: number
-    uuid: string
-    cache_timeout: number
-    anonymous_statistics: boolean
+    [index: string]: string | number | boolean;
+    token: string;
+    language: string;
+    max_items: number;
+    uuid: string;
+    cache_timeout: number;
+    anonymous_statistics: boolean;
   }
 }

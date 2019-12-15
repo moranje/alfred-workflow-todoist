@@ -8,19 +8,22 @@
   "files": [
     "dist"
   ],
-  "author": "moranje <martieno@gmail.com->",
+  "author": {
+    "name": "M. Oranje",
+    "email": "martieno@gmail.com"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/moranje/alfred-workflow-todoist.git"
   },
   "license": "MIT",
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=10"
   },
   "scripts": {
     "setup:dev": "ts-node tools/setup.ts",
     "debug": "ts-node tools/debug.ts",
-    "lint": "npx prettier --find-config-path --write \"{src,test,tools}/**/*.{ts,js}\" && npx eslint src/**/*.ts --fix",
+    "lint": "npx prettier --find-config-path --loglevel silent --write \"{src,test,tools}/**/*.{ts,js}\" && npx eslint src/**/*.ts --fix",
     "prebuild": "ts-node tools/move-files.ts moveToTemp && rimraf dist",
     "build": "ts-node tools/build.ts",
     "build:grammar": "npx nearleyc src/todoist/grammar.ne -o src/todoist/grammar.ts",
@@ -33,87 +36,27 @@
     "test:prod": "npm run test -- --coverage --no-cache",
     "deploy-docs": "ts-node tools/gh-pages-publish",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
-    "commit": "npx git-cz",
+    "commit": "./node_modules/cz-customizable/standalone.js",
     "semantic-release": "semantic-release",
     "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
     "bump-version": "ts-node tools/bump-version.ts",
-    "travis-deploy-once": "travis-deploy-once",
-    "prepush": "npm run build && npm run test:prod",
-    "update": "npx updtr --out"
-  },
-  "lint-staged": {
-    "{src,test}/**/*.ts": [
-      "git add"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
-    }
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-customizable"
-    },
-    "cz-customizable": {
-      "config": "./cz-config.js"
-    }
-  },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
-  "jest": {
-    "transform": {
-      ".(ts|tsx)": "ts-jest"
-    },
-    "testEnvironment": "node",
-    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js"
-    ],
-    "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/src/$1"
-    },
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "/test/",
-      "grammar.ts",
-      "/tools/",
-      "alfred-workflow-todoist.ts"
-    ],
-    "coverageThreshold": {
-      "global": {
-        "branches": 70,
-        "functions": 85,
-        "lines": 85,
-        "statements": 85
-      }
-    },
-    "collectCoverage": true
-  },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
+    "prepush": "npm run build && npm run test:prod"
   },
   "dependencies": {
+    "@types/fuzzy-search": "2.1.0",
     "ajv": "6.10.2",
     "babel-polyfill": "6.26.0",
-    "date-fns": "2.0.0-beta.3",
+    "cache-conf": "0.6.0",
+    "conf": "6.2.0",
+    "date-fns": "2.8.1",
     "fast-plist": "0.1.2",
-    "fuzzaldrin": "2.1.0",
-    "got": "9.6.0",
+    "fuzzy-search": "3.0.2",
+    "got": "10.0.1",
     "lodash.find": "4.6.0",
     "lodash.omit": "4.5.0",
     "lodash.remove": "4.7.0",
     "lodash.unionby": "4.8.0",
+    "loud-rejection": "2.2.0",
     "lru-cache": "5.1.1",
     "macos-version": "5.2.0",
     "md5": "2.2.1",
@@ -122,19 +65,17 @@
     "nearley": "2.19.0",
     "node-notifier": "5.4.0",
     "stampit": "4.3.0",
-    "write-json-file": "3.1.0"
+    "todoist-rest-api": "1.2.5",
+    "write-json-file": "4.2.1"
   },
   "devDependencies": {
     "@babel/polyfill": "7.7.0",
-    "@commitlint/cli": "7.5.2",
-    "@commitlint/config-conventional": "8.1.0",
     "@semantic-release/changelog": "3.0.6",
     "@semantic-release/exec": "3.3.8",
     "@semantic-release/git": "7.0.18",
-    "@types/fuzzaldrin": "2.1.2",
-    "@types/got": "9.6.9",
+    "@types/conf": "3.0.0",
     "@types/inquirer": "6.5.0",
-    "@types/jest": "24.0.11",
+    "@types/jest": "24.0.23",
     "@types/lodash.find": "4.6.6",
     "@types/lodash.omit": "4.5.6",
     "@types/lodash.remove": "4.7.6",
@@ -142,29 +83,26 @@
     "@types/lru-cache": "5.1.0",
     "@types/md5": "2.1.33",
     "@types/mkdirp": "0.5.2",
-    "@types/moo": "0.5.0",
+    "@types/moo": "0.5.1",
     "@types/nearley": "2.11.0",
-    "@types/nock": "10.0.3",
-    "@types/node": "12.6.8",
+    "@types/nock": "11.1.0",
+    "@types/node": "12.12.14",
     "@types/shelljs": "0.8.6",
-    "@types/stampit": "3.0.3",
     "@types/write-json-file": "3.2.1",
     "@typescript-eslint/eslint-plugin": "2.9.0",
     "@typescript-eslint/parser": "2.9.0",
     "bestzip": "2.1.5",
     "colors": "1.4.0",
-    "commitizen": "4.0.3",
     "coveralls": "3.0.9",
-    "cross-env": "5.2.0",
     "cz-customizable": "6.2.0",
     "eslint": "6.7.2",
     "eslint-config-prettier": "6.7.0",
     "eslint-plugin-prettier": "3.1.1",
     "husky": "3.1.0",
-    "inquirer": "6.5.0",
+    "inquirer": "7.0.0",
     "jest": "24.9.0",
     "lint-staged": "9.5.0",
-    "nock": "11.0.0-beta.21",
+    "nock": "11.7.0",
     "prettier": "1.19.1",
     "rollup": "1.27.6",
     "rollup-plugin-commonjs": "10.1.0",
@@ -174,11 +112,18 @@
     "rollup-plugin-typescript2": "0.25.2",
     "semantic-release": "15.13.31",
     "shelljs": "0.8.3",
-    "travis-deploy-once": "^5.0.11",
     "ts-jest": "24.2.0",
     "ts-node": "8.5.4",
     "tslib": "1.10.0",
     "typedoc": "0.15.3",
-    "typescript": "3.7.2"
+    "typescript": "3.7.3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "./cz-config.js"
+    }
   }
 }

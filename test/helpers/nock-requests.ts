@@ -1,7 +1,7 @@
 import nock from 'nock';
 import { TODOIST_API_URI } from '@/project/references';
 
-jest.mock('@/project/references')
+jest.mock('@/project/references');
 
 const FIXTURES = {
   tasks: [
@@ -10,13 +10,13 @@ const FIXTURES = {
         {
           id: 1,
           name: '15min',
-          order: 1
+          order: 1,
         },
         {
           id: 7,
           name: 'on_road',
-          order: 7
-        }
+          order: 7,
+        },
       ],
       id: 1,
       project_id: 1,
@@ -28,20 +28,20 @@ const FIXTURES = {
       priority: 1,
       comment_count: 0,
       url: 'https://todoist.com/showTask?id=1',
-      project: { id: 1, name: 'Inbox', order: 0, indent: 1, comment_count: 0 }
+      project: { id: 1, name: 'Inbox', order: 0, indent: 1, comment_count: 0 },
     },
     {
       labels: [
         {
           id: 1,
           name: '15min',
-          order: 1
+          order: 1,
         },
         {
           id: 6,
           name: 'at_home',
-          order: 6
-        }
+          order: 6,
+        },
       ],
       id: 2,
       project_id: 2,
@@ -53,25 +53,31 @@ const FIXTURES = {
       priority: 1,
       comment_count: 1,
       url: 'https://todoist.com/showTask?id=2',
-      project: { id: 2, name: 'Next Actions', order: 0, indent: 1, comment_count: 0 }
+      project: {
+        id: 2,
+        name: 'Next Actions',
+        order: 0,
+        indent: 1,
+        comment_count: 0,
+      },
     },
     {
       labels: [
         {
           id: 2,
           name: '30min',
-          order: 2
+          order: 2,
         },
         {
           id: 8,
           name: 'at_store',
-          order: 8
+          order: 8,
         },
         {
           id: 10,
           name: 'next_actions',
-          order: 10
-        }
+          order: 10,
+        },
       ],
       id: 3,
       project_id: 3,
@@ -83,25 +89,31 @@ const FIXTURES = {
       priority: 1,
       comment_count: 0,
       url: 'https://todoist.com/showTask?id=3',
-      project: { id: 3, name: 'Waiting', order: 0, indent: 1, comment_count: 0 }
+      project: {
+        id: 3,
+        name: 'Waiting',
+        order: 0,
+        indent: 1,
+        comment_count: 0,
+      },
     },
     {
       labels: [
         {
           id: 3,
           name: '1hour',
-          order: 3
+          order: 3,
         },
         {
           id: 6,
           name: 'at_home',
-          order: 6
+          order: 6,
         },
         {
           id: 9,
           name: 'waiting_for',
-          order: 9
-        }
+          order: 9,
+        },
       ],
       id: 4,
       project_id: 4,
@@ -114,25 +126,31 @@ const FIXTURES = {
       comment_count: 0,
       due: { recurring: false, string: '10 okt.', date: '2018-10-10' },
       url: 'https://todoist.com/showTask?id=4',
-      project: { id: 4, name: 'Someday/Maybe', order: 0, indent: 1, comment_count: 0 }
+      project: {
+        id: 4,
+        name: 'Someday/Maybe',
+        order: 0,
+        indent: 1,
+        comment_count: 0,
+      },
     },
     {
       labels: [
         {
           id: 2,
           name: '30min',
-          order: 2
+          order: 2,
         },
         {
           id: 5,
           name: 'at_work',
-          order: 5
+          order: 5,
         },
         {
           id: 10,
           name: 'next_actions',
-          order: 10
-        }
+          order: 10,
+        },
       ],
       id: 5,
       project_id: 5,
@@ -145,15 +163,15 @@ const FIXTURES = {
       comment_count: 0,
       due: { recurring: false, string: '9 okt.', date: '2018-10-09' },
       url: 'https://todoist.com/showTask?id=5',
-      project: { id: 5, name: 'Work', order: 0, indent: 1, comment_count: 0 }
-    }
+      project: { id: 5, name: 'Work', order: 0, indent: 1, comment_count: 0 },
+    },
   ],
   projects: [
     { id: 1, name: 'Inbox', order: 0, indent: 1, comment_count: 0 },
     { id: 2, name: 'Next Actions', order: 1, indent: 1, comment_count: 0 },
     { id: 3, name: 'Waiting', order: 2, indent: 1, comment_count: 0 },
     { id: 4, name: 'Someday/Maybe', order: 3, indent: 1, comment_count: 0 },
-    { id: 5, name: 'Work', order: 4, indent: 1, comment_count: 0 }
+    { id: 5, name: 'Work', order: 4, indent: 1, comment_count: 0 },
   ],
   labels: [
     { id: 1, name: '15min', order: 1 },
@@ -165,9 +183,9 @@ const FIXTURES = {
     { id: 7, name: 'on_road', order: 7 },
     { id: 8, name: 'at_store', order: 8 },
     { id: 9, name: 'waiting_for', order: 9 },
-    { id: 10, name: 'next_actions', order: 10 }
-  ]
-}
+    { id: 10, name: 'next_actions', order: 10 },
+  ],
+};
 
 // TASKS
 nock(TODOIST_API_URI)
@@ -195,7 +213,7 @@ nock(TODOIST_API_URI)
   .reply(204, {})
   .post('/tasks/5/close')
   .reply(204, {})
-  .persist()
+  .persist();
 
 // PROJECTS
 nock(TODOIST_API_URI)
@@ -223,7 +241,7 @@ nock(TODOIST_API_URI)
   .reply(200, {})
   .delete('/projects/5')
   .reply(200, {})
-  .persist()
+  .persist();
 
 // LABELS
 nock(TODOIST_API_URI)
@@ -271,4 +289,4 @@ nock(TODOIST_API_URI)
   .reply(200, {})
   .delete('/labels/10')
   .reply(200, {})
-  .persist()
+  .persist();

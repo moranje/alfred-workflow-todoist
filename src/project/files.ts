@@ -1,28 +1,28 @@
-import { CACHE_PATH, SETTINGS_PATH, WORKFLOW_JSON } from '@/project'
-import { handleError } from '.'
+import { CACHE_PATH, SETTINGS_PATH, WORKFLOW_JSON } from '@/project';
+import { handleError } from '.';
 
 /** @hidden */
-let settings
+let settings;
 /** @hidden */
-let workflowConfig
+let workflowConfig;
 /** @hidden */
-let cache = []
+let cache = [];
 try {
-  settings = require(SETTINGS_PATH)
+  settings = require(SETTINGS_PATH);
 } catch (err) {
   // Do nothing as user may start with no settings
 }
 
 try {
-  cache = require(CACHE_PATH)
+  cache = require(CACHE_PATH);
 } catch (err) {
   // Do nothing as no cache be be stored yet
 }
 
 try {
-  workflowConfig = require(WORKFLOW_JSON)
+  workflowConfig = require(WORKFLOW_JSON);
 } catch (error) {
-  handleError(error)
+  handleError(error);
 }
 
 /**
@@ -33,5 +33,5 @@ try {
 export const FILES: project.FILES = {
   settings,
   cache,
-  workflowConfig
-}
+  workflowConfig,
+};

@@ -1,36 +1,44 @@
-import '@babel/polyfill'
-import { AlfredError, cache, Command, getSetting, handleError, serialize } from '@/project'
+import '@babel/polyfill';
+import 'loud-rejection/register';
+import {
+  AlfredError,
+  cache,
+  Command,
+  getSetting,
+  handleError,
+  serialize,
+} from '@/project';
 
 /**
  * CLI argument parsing
  */
 
 /** @hidden */
-const argv = Object.assign([], process.argv)
-argv.splice(0, 2)
+const argv = Object.assign([], process.argv);
+argv.splice(0, 2);
 /** @hidden */
-const type = argv.shift()
+const type = argv.shift();
 /** @hidden */
-const query = argv.join(' ')
+const query = argv.join(' ');
 /** @hidden */
-const command = Command()
+const command = Command();
 
 /**
  * Serialize cache back to JSON
  *
  * @hidden
  */
-function handleSerialization() {
-  return serialize(cache.dump()).catch(handleError)
+function handleSerialization(): Promise<void> {
+  return serialize(cache.dump()).catch(handleError);
 }
 
 /**
  * Updater
  */
 try {
-  command.updateWorkflowVersion()
+  command.updateWorkflowVersion();
 } catch (error) {
-  handleError(error)
+  handleError(error);
 }
 
 /**
@@ -40,40 +48,42 @@ if (type === 'read') {
   command
     .read(query)
     .catch(handleError)
-    .finally(handleSerialization)
+    .finally(handleSerialization);
 } else if (type === 'create') {
   try {
-    command.create(query)
+    command.create(query);
   } catch (error) {
-    handleError(error)
+    handleError(error);
   } finally {
-    handleSerialization()
+    handleSerialization();
   }
 } else if (type === 'submit') {
   command
-    .submit(Object.assign(JSON.parse(query), { due_lang: getSetting('language') }))
+    .submit(
+      Object.assign(JSON.parse(query), { due_lang: getSetting('language') })
+    )
     .catch(handleError)
-    .finally(handleSerialization)
+    .finally(handleSerialization);
 } else if (type === 'remove') {
   command
     .remove(JSON.parse(query))
     .catch(handleError)
-    .finally(handleSerialization)
+    .finally(handleSerialization);
 } else if (type === 'settings' && query.trim() !== '') {
-  let [key, value] = query.trim().split(' ')
-  command.verifySetting(key, value)
+  const [key, value] = query.trim().split(' ');
+  command.verifySetting(key, value);
 } else if (type === 'settings') {
-  command.listSettings()
+  command.listSettings();
 } else if (type === 'settings:store') {
-  command.saveSetting(JSON.parse(query)).catch(handleError)
+  command.saveSetting(JSON.parse(query)).catch(handleError);
 } else {
-  handleError(new AlfredError(`Invalid command ${type} (${query})`))
+  handleError(new AlfredError(`Invalid command ${type} (${query})`));
 }
 
 /**
  * Catch any unhandled exception or rejected promise and handle here
  */
 
-process.on('uncaughtException', handleError)
-// process.on('unhandledRejection', handleError)
-;(process as NodeJS.EventEmitter).on('unhandledRejection', handleError)
+process.on('uncaughtException', handleError);
+// Process.on('unhandledRejection', handleError)
+(process as NodeJS.EventEmitter).on('unhandledRejection', handleError);
