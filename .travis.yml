@@ -8,11 +8,9 @@ branches:
 cache:
   directories:
     - ~/.npm
-install: case $TRAVIS_BRANCH in greenkeeper*) npm i;; *) npm ci;; esac;
 notifications:
   email: false
 node_js:
-  - 8
   - 10
   - 12
   - 13

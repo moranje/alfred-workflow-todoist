@@ -13,7 +13,7 @@
     "prettier/@typescript-eslint",
     "plugin:prettier/recommended"
   ],
-  "ignorePatterns": "grammar.ts",
+  "ignorePatterns": ["grammar.ts", "lib"],
   "rules": {
     "indent": "off",
     "@typescript-eslint/indent": ["error", 2],
@@ -31,9 +31,11 @@
           "comment_count",
           "max_items",
           "cache_timeout",
-          "anonymous_statistics"
+          "anonymous_statistics",
+          "auto_update"
         ]
       }
-    ]
+    ],
+    "@typescript-eslint/ban-ts-ignore": "off"
   }
 }
