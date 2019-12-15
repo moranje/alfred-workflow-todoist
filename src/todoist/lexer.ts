@@ -1,6 +1,4 @@
 import moo from 'moo'
-import escape from 'escape-string-regexp'
-
 // tslint:disable: no-empty-character-class
 
 /** @hidden */
