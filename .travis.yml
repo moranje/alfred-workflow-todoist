@@ -3,6 +3,8 @@ language: node_js
 branches:
   only:
     - master
+    - beta
+    - alfa
 cache:
   directories:
     - ~/.npm
