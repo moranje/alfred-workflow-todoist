@@ -12,6 +12,7 @@ export function parser(text: string): todoist.Parsed {
 
   parser.feed(text)
 
+  // eslint-disable-next-line
   return organize(parser.results)
 }
 

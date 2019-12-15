@@ -31,19 +31,66 @@ const SettingsList = compose(
 )
 
 /** @hidden */
-const SettingList = compose(
-  List,
-  {
-    init(
-      this: workflow.ListInstance,
-      {
-        key = '',
-        value = '',
-        settings
-      }: { key: string; value: string | number | boolean; settings: project.Settings }
-    ) {
-      this.items = this.items || []
-      if (!Schema.properties[key]) {
+const SettingList = compose(List, {
+  init(
+    this: workflow.ListInstance,
+    {
+      key = '',
+      value = '',
+      settings
+    }: { key: string; value: string | number | boolean; settings: project.Settings }
+  ) {
+    this.items = this.items || []
+    if (!Schema.properties[key]) {
+      this.items.push(
+        Item({
+          title: 'NO SUCH SETTING',
+          subtitle: 'Alas, but dust yourself off and try again',
+          valid: false
+        })
+      )
+    } else {
+      let subtitle = `Current value: ${settings[key]}`
+      let valid = '\u2713'
+
+      // eslint-disable-next-line
+      if (getErrors(key, value, settings).length > 0) {
+        subtitle += ` (${Schema.properties[key].explanation})`
+        valid = '\u2715'
+      }
+
+      if (Schema.properties[key].type === 'boolean') {
+        this.items.push(
+          Item({
+            title: 'New: true',
+            subtitle: `Current value: ${settings[key]}`,
+            arg: { key, value: true }
+          })
+        )
+        this.items.push(
+          Item({
+            title: 'New: false',
+            subtitle: `Current value: ${settings[key]}`,
+            arg: { key, value: false }
+          })
+        )
+      } else if (Schema.properties[key].type === 'string') {
+        this.items.push(
+          Item({
+            title: `New: ${value} (${valid})`,
+            subtitle,
+            arg: { key, value }
+          })
+        )
+      } else if (Schema.properties[key].type === 'number') {
+        this.items.push(
+          Item({
+            title: `New: ${value} (${valid})`,
+            subtitle,
+            arg: { key, value: +value }
+          })
+        )
+      } else {
         this.items.push(
           Item({
             title: 'NO SUCH SETTING',
@@ -51,59 +98,10 @@ const SettingList = compose(
             valid: false
           })
         )
-      } else {
-        let subtitle = `Current value: ${settings[key]}`
-        let valid = '\u2713'
-
-        if (getErrors(key, value, settings).length > 0) {
-          subtitle += ` (${Schema.properties[key].explanation})`
-          valid = '\u2715'
-        }
-
-        if (Schema.properties[key].type === 'boolean') {
-          this.items.push(
-            Item({
-              title: 'New: true',
-              subtitle: `Current value: ${settings[key]}`,
-              arg: { key, value: true }
-            })
-          )
-          this.items.push(
-            Item({
-              title: 'New: false',
-              subtitle: `Current value: ${settings[key]}`,
-              arg: { key, value: false }
-            })
-          )
-        } else if (Schema.properties[key].type === 'string') {
-          this.items.push(
-            Item({
-              title: `New: ${value} (${valid})`,
-              subtitle,
-              arg: { key, value }
-            })
-          )
-        } else if (Schema.properties[key].type === 'number') {
-          this.items.push(
-            Item({
-              title: `New: ${value} (${valid})`,
-              subtitle,
-              arg: { key, value: +value }
-            })
-          )
-        } else {
-          this.items.push(
-            Item({
-              title: 'NO SUCH SETTING',
-              subtitle: 'Alas, but dust yourself off and try again',
-              valid: false
-            })
-          )
-        }
       }
     }
   }
-)
+})
 
 /** @hidden */
 function formatValidationErrors(errors: any[]) {
