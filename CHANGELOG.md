@@ -1,3 +1,12 @@
+## [5.8.4](https://github.com/moranje/alfred-workflow-todoist/compare/v5.8.3...v5.8.4) (2019-12-15)
+
+
+### Bug Fixes
+
+* **alfred:** notifications not showing in Alfred v4 ([93c7307](https://github.com/moranje/alfred-workflow-todoist/commit/93c7307137983647183171b07ba2a04008b18407)), closes [#125](https://github.com/moranje/alfred-workflow-todoist/issues/125)
+* **dependency:** lower required node.js to v10.x ([a222d5d](https://github.com/moranje/alfred-workflow-todoist/commit/a222d5d50d4c1d3b943b13b7332eedf6f403ace6))
+* **settings:** no update notifications for alfa and beta releases ([1ad3186](https://github.com/moranje/alfred-workflow-todoist/commit/1ad31860379f108025f51c5a1bbcfe8ed5a4d868))
+
 ## [5.8.3](https://github.com/moranje/alfred-workflow-todoist/compare/v5.8.2...v5.8.3) (2019-08-04)
 
 
