@@ -34,7 +34,6 @@
     "test:debug": "node --inspect-brk node_modules/.bin/jest --no-cache --watch --runInBand",
     "test:watch": "jest --watch --silent",
     "test:prod": "npm run test -- --coverage --no-cache",
-    "deploy-docs": "ts-node tools/gh-pages-publish",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "commit": "./node_modules/cz-customizable/standalone.js",
     "semantic-release": "semantic-release",
