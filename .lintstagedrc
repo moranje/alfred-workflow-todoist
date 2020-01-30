@@ -1,11 +1,10 @@
 {
-  "*.{ts,js}": [
-    "npx prettier \"**/*.{ts.js}\" --loglevel silent --write",
-    "npx eslint src/**.ts --fix",
+  "**/*.{ts,js,json,md,yml}": [
+    "npx prettier \"!(dist)/**/*\" --write",
     "git add"
   ],
-  "*.md": [
-    "npx prettier \"**/*.md\" --loglevel silent --write",
+  "{src,tools}/**/*.{ts,js}": [
+    "npx eslint . --fix",
     "git add"
   ]
 }

@@ -6,6 +6,7 @@
     "lib": ["ESNext"],
     "strict": true,
     "sourceMap": true,
+    "inlineSources": true,
     // "declaration": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
@@ -13,12 +14,14 @@
     // "resolveJsonModule": true,
     "esModuleInterop": true,
     // "declarationDir": "dist/types",
+    "sourceRoot": "/",
     "outDir": "dist/workflow",
     "baseUrl": ".",
     "paths": {
+      "@types": ["src/types"],
       "@/*": ["src/*"]
     },
-    "typeRoots": ["node_modules/@types", "src/typings"]
+    "typeRoots": ["node_modules/@types"]
   },
-  "include": ["src/**/*", "test/**/*"]
+  "include": ["src/**/*"]
 }

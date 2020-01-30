@@ -50,6 +50,7 @@
           }
         ]
       }
-    ]
+    ],
+    "@eclass/semantic-release-sentry-releases"
   ]
 }
