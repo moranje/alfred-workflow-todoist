@@ -133,5 +133,7 @@
     "cz-customizable": {
       "config": "./cz-config.js"
     }
+  "engines": {
+    "node": ">=10"
   }
 }
