@@ -8,17 +8,14 @@
   "files": [
     "dist"
   ],
-  "author": {
-    "name": "M. Oranje",
-    "email": "martieno@gmail.com"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/moranje/alfred-workflow-todoist.git"
   },
   "license": "MIT",
-  "engines": {
-    "node": ">=10"
+  "author": {
+    "name": "M. Oranje",
+    "email": "martieno@gmail.com"
   },
   "scripts": {
     "setup:dev": "ts-node tools/setup.ts",
@@ -29,6 +26,7 @@
     "build:dev": "NODE_ENV=development ts-node tools/build.ts",
     "build:grammar": "npx nearleyc src/lib/todoist/grammar.ne -o src/lib/todoist/grammar.ts && echo \"// @ts-nocheck\n$(cat src/lib/todoist/grammar.ts)\" > src/lib/todoist/grammar.ts",
     "build:workflow": "ts-node tools/build-workflow.ts",
+    "commit": "./node_modules/cz-customizable/standalone.js",
     "lint": "npx prettier --find-config-path --loglevel silent --write \"{src,test,tools}/**/*.{ts,js}\" && npx eslint src/**/*.ts --fix",
     "restore": "mkdir -p dist/workflow && npm run postbuild",
     "start": "rollup -c rollup.config.ts -w",
@@ -37,11 +35,18 @@
     "test:watch": "jest --watch --silent",
     "test:prod": "npm run test -- --coverage --no-cache",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
-    "commit": "./node_modules/cz-customizable/standalone.js",
     "semantic-release": "semantic-release",
     "semantic-release-prepare": "ts-node tools/semantic-release-prepare",
     "bump-version": "ts-node tools/bump-version.ts",
     "prepush": "npm run build && npm run test:prod"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-customizable"
+    },
+    "cz-customizable": {
+      "config": "./cz-config.js"
+    }
   },
   "dependencies": {
     "@types/fuzzy-search": "2.1.0",
@@ -126,12 +131,7 @@
     "typedoc": "0.15.3",
     "typescript": "3.7.3"
   },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-customizable"
-    },
-    "cz-customizable": {
-      "config": "./cz-config.js"
-    }
+  "engines": {
+    "node": ">=10"
   }
 }
