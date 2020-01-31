@@ -11,20 +11,27 @@ parserOptions:
   project: './tsconfig.json'
 
 plugins:
-  - 'simple-import-sort'
+  - simple-import-sort
   - jsdoc
+  - security
   - jest
 
 extends:
+  - eslint:recommended
   - plugin:@typescript-eslint/recommended
   - prettier/@typescript-eslint
   - plugin:prettier/recommended
+  # - plugin:node/recommended
   - plugin:jsdoc/recommended
+  - plugin:eslint-comments/recommended
+  - plugin:security/recommended
   - plugin:jest/all
 
 settings:
   jsdoc:
     ignorePrivate: true
+  import/parsers:
+    '@typescript-eslint/parser': [.ts]
 
 ignorePatterns:
   - grammar.ts
@@ -123,3 +130,4 @@ rules:
   jsdoc/require-returns-type: 0
   jsdoc/require-returns: 1
   jsdoc/valid-types: 1
+  eslint-comments/disable-enable-pair: 0

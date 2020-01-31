@@ -1,10 +1,12 @@
 {
   "**/*.{ts,js,json,md,yml}": [
-    "npx prettier \"!(dist)/**/*\" --write",
+    "prettier --write",
     "git add"
   ],
-  "{src,tools}/**/*.{ts,js}": [
-    "npx eslint . --fix",
+  "src/**/*.{ts,js}": [
+    "tsc --noEmit",
+    "eslint --fix",
+    "semantic-release --no-ci --dry-run",
     "git add"
   ]
 }
