@@ -12,7 +12,7 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>AAA14883-904F-4837-9B4B-96B2C68EB5FA</string>
+				<string>329F88DE-5F91-459A-8CA3-9471677B3673</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -25,7 +25,20 @@
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>26A65F76-FAD5-4949-AD59-81187A0A1484</string>
+				<string>E40C509C-1C64-4421-9AD8-FA990CCD9420</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>425292E2-8641-4346-A537-F128D473408C</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>853C0BDB-9C62-4715-86A4-E71735849C80</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -47,37 +60,11 @@
 				<false/>
 			</dict>
 		</array>
-		<key>8B6F091D-CDC6-443D-8610-E40C33A9D389</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>26A65F76-FAD5-4949-AD59-81187A0A1484</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
-		<key>AAA14883-904F-4837-9B4B-96B2C68EB5FA</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>26A65F76-FAD5-4949-AD59-81187A0A1484</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
 		<key>B447C7A9-4CEC-457F-B711-65D07976721C</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>8B6F091D-CDC6-443D-8610-E40C33A9D389</string>
+				<string>329F88DE-5F91-459A-8CA3-9471677B3673</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -100,38 +87,6 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>#!/usr/bin/env bash
-
-###############################################################################
-# Author: M. Oranje
-# Licence: MIT
-###############################################################################
-
-export PATH="$PATH:$node_path:/usr/local/bin:/usr/bin"
-
-node $node_flags alfred-workflow-todoist.js remove "{query}"</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>AAA14883-904F-4837-9B4B-96B2C68EB5FA</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
@@ -141,17 +96,17 @@ node $node_flags alfred-workflow-todoist.js remove "{query}"</string>
 				<key>argumenttype</key>
 				<integer>1</integer>
 				<key>escaping</key>
-				<integer>126</integer>
+				<integer>36</integer>
 				<key>keyword</key>
 				<string>todos</string>
 				<key>queuedelaycustom</key>
 				<integer>3</integer>
 				<key>queuedelayimmediatelyinitially</key>
-				<true/>
+				<false/>
 				<key>queuedelaymode</key>
 				<integer>0</integer>
 				<key>queuemode</key>
-				<integer>1</integer>
+				<integer>2</integer>
 				<key>runningsubtext</key>
 				<string>Hold on, while I get your tasks</string>
 				<key>script</key>
@@ -162,19 +117,10 @@ node $node_flags alfred-workflow-todoist.js remove "{query}"</string>
 # Licence: MIT
 ###############################################################################
 
-export PATH="$PATH:$node_path:/usr/local/bin:/usr/bin"
+. ./check-node.sh
 
-if which node &gt; /dev/null; then
-  :
-else
-  echo "You need to have node (12.x or up) installed for this workflow to work."
-  echo "Have a look at the docs:"
-  echo ""
-  echo "https://github.com/moranje/alfred-workflow-todoist#installation"
-  exit 1
-fi
-
-node $node_flags alfred-workflow-todoist.js read "{query}"
+escaped="$(echo "{query}" | sed 's/"/\\"/g')"
+node $node_flags alfred-workflow-todoist.js "{\"name\": \"read\", \"args\": \"$escaped\"}"
 </string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
@@ -213,7 +159,7 @@ node $node_flags alfred-workflow-todoist.js read "{query}"
 
 export PATH="$PATH:$node_path:/usr/local/bin:/usr/bin"
 
-node $node_flags alfred-workflow-todoist.js submit "{query}"</string>
+node $node_flags alfred-workflow-todoist.js "{query}"</string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
 				<key>scriptfile</key>
@@ -231,6 +177,39 @@ node $node_flags alfred-workflow-todoist.js submit "{query}"</string>
 		<dict>
 			<key>config</key>
 			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>3</integer>
+				<key>argumenttext</key>
+				<string>Get milk #Projecten&lt;2222894826&gt; @10min&lt;537752121&gt; @opleiding&lt;2150940159&gt; !!1 ::Doing&lt;1786288&gt;, morgen 10 uur</string>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>hotkey</key>
+				<integer>17</integer>
+				<key>hotmod</key>
+				<integer>1048576</integer>
+				<key>hotstring</key>
+				<string>T</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>425292E2-8641-4346-A537-F128D473408C</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
 				<key>alfredfiltersresults</key>
 				<false/>
 				<key>alfredfiltersresultsmatchmode</key>
@@ -240,7 +219,7 @@ node $node_flags alfred-workflow-todoist.js submit "{query}"</string>
 				<key>argumenttype</key>
 				<integer>0</integer>
 				<key>escaping</key>
-				<integer>102</integer>
+				<integer>36</integer>
 				<key>keyword</key>
 				<string>todo</string>
 				<key>queuedelaycustom</key>
@@ -261,19 +240,10 @@ node $node_flags alfred-workflow-todoist.js submit "{query}"</string>
 # Licence: MIT
 ###############################################################################
 
-export PATH="$PATH:$node_path:/usr/local/bin:/usr/bin"
+. ./check-node.sh
 
-if which node &gt; /dev/null; then
-  :
-else
-  echo "You need to have node (12.x or up) installed for this workflow to work."
-  echo "Have a look at the docs:"
-  echo ""
-  echo "https://github.com/moranje/alfred-workflow-todoist#installation"
-  exit 1
-fi
-
-node $node_flags alfred-workflow-todoist.js create "{query}"
+escaped="$(echo "{query}" | sed 's/"/\\"/g')"
+node $node_flags alfred-workflow-todoist.js "{\"name\": \"parse\", \"args\": \"$escaped\"}"
 </string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
@@ -308,41 +278,9 @@ node $node_flags alfred-workflow-todoist.js create "{query}"
 			<key>type</key>
 			<string>alfred.workflow.utility.debug</string>
 			<key>uid</key>
-			<string>26A65F76-FAD5-4949-AD59-81187A0A1484</string>
+			<string>E40C509C-1C64-4421-9AD8-FA990CCD9420</string>
 			<key>version</key>
 			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>#!/usr/bin/env bash
-
-###############################################################################
-# Author: M. Oranje
-# Licence: MIT
-###############################################################################
-
-export PATH="$PATH:$node_path:/usr/local/bin:/usr/bin"
-
-node $node_flags alfred-workflow-todoist.js settings:store "{query}"</string>
-				<key>scriptargtype</key>
-				<integer>0</integer>
-				<key>scriptfile</key>
-				<string></string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>8B6F091D-CDC6-443D-8610-E40C33A9D389</string>
-			<key>version</key>
-			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -356,7 +294,7 @@ node $node_flags alfred-workflow-todoist.js settings:store "{query}"</string>
 				<key>argumenttype</key>
 				<integer>1</integer>
 				<key>escaping</key>
-				<integer>102</integer>
+				<integer>36</integer>
 				<key>keyword</key>
 				<string>todo:setting</string>
 				<key>queuedelaycustom</key>
@@ -377,19 +315,10 @@ node $node_flags alfred-workflow-todoist.js settings:store "{query}"</string>
 # Licence: MIT
 ###############################################################################
 
-export PATH="$PATH:$node_path:/usr/local/bin:/usr/bin"
+. ./check-node.sh
 
-if which node &gt; /dev/null; then
-  :
-else
-  echo "You need to have node (12.x or up) installed for this workflow to work."
-  echo "Have a look at the docs:"
-  echo ""
-  echo "https://github.com/moranje/alfred-workflow-todoist#installation"
-  exit 1
-fi
-
-node $node_flags alfred-workflow-todoist.js settings "{query}"
+escaped="$(echo "{query}" | sed 's/"/\\"/g')"
+node $node_flags alfred-workflow-todoist.js "{\"name\": \"readSettings\", \"args\": \"$escaped\"}"
 </string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
@@ -402,7 +331,7 @@ node $node_flags alfred-workflow-todoist.js settings "{query}"
 				<key>type</key>
 				<integer>0</integer>
 				<key>withspace</key>
-				<false/>
+				<true/>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.input.scriptfilter</string>
@@ -421,77 +350,58 @@ node $node_flags alfred-workflow-todoist.js settings "{query}"
 			<key>colorindex</key>
 			<integer>3</integer>
 			<key>note</key>
-			<string>Search tasks</string>
+			<string>Read tasks</string>
 			<key>xpos</key>
-			<integer>240</integer>
+			<integer>250</integer>
 			<key>ypos</key>
-			<integer>40</integer>
-		</dict>
-		<key>26A65F76-FAD5-4949-AD59-81187A0A1484</key>
-		<dict>
-			<key>colorindex</key>
-			<integer>2</integer>
-			<key>note</key>
-			<string>Debug output</string>
-			<key>xpos</key>
-			<integer>630</integer>
-			<key>ypos</key>
-			<integer>230</integer>
+			<integer>60</integer>
 		</dict>
 		<key>329F88DE-5F91-459A-8CA3-9471677B3673</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>3</integer>
 			<key>note</key>
-			<string>Submit task</string>
+			<string>User actions</string>
 			<key>xpos</key>
-			<integer>420</integer>
+			<integer>600</integer>
 			<key>ypos</key>
-			<integer>200</integer>
+			<integer>220</integer>
+		</dict>
+		<key>425292E2-8641-4346-A537-F128D473408C</key>
+		<dict>
+			<key>xpos</key>
+			<integer>80</integer>
+			<key>ypos</key>
+			<integer>220</integer>
 		</dict>
 		<key>853C0BDB-9C62-4715-86A4-E71735849C80</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>3</integer>
 			<key>note</key>
-			<string>Create task</string>
+			<string>Parse task</string>
 			<key>xpos</key>
-			<integer>240</integer>
+			<integer>250</integer>
 			<key>ypos</key>
-			<integer>200</integer>
-		</dict>
-		<key>8B6F091D-CDC6-443D-8610-E40C33A9D389</key>
-		<dict>
-			<key>colorindex</key>
-			<integer>3</integer>
-			<key>note</key>
-			<string>Submit setting</string>
-			<key>xpos</key>
-			<integer>420</integer>
-			<key>ypos</key>
-			<integer>360</integer>
-		</dict>
-		<key>AAA14883-904F-4837-9B4B-96B2C68EB5FA</key>
-		<dict>
-			<key>colorindex</key>
-			<integer>3</integer>
-			<key>note</key>
-			<string>Complete task</string>
-			<key>xpos</key>
-			<integer>420</integer>
-			<key>ypos</key>
-			<integer>40</integer>
+			<integer>220</integer>
 		</dict>
 		<key>B447C7A9-4CEC-457F-B711-65D07976721C</key>
 		<dict>
 			<key>colorindex</key>
 			<integer>3</integer>
 			<key>note</key>
-			<string>Update setting</string>
+			<string>Read settings</string>
 			<key>xpos</key>
-			<integer>240</integer>
+			<integer>250</integer>
 			<key>ypos</key>
-			<integer>360</integer>
+			<integer>380</integer>
+		</dict>
+		<key>E40C509C-1C64-4421-9AD8-FA990CCD9420</key>
+		<dict>
+			<key>xpos</key>
+			<integer>770</integer>
+			<key>ypos</key>
+			<integer>250</integer>
 		</dict>
 	</dict>
 	<key>variables</key>
@@ -502,7 +412,7 @@ node $node_flags alfred-workflow-todoist.js settings "{query}"
 		<string></string>
 	</dict>
 	<key>version</key>
-	<string>5.8.3</string>
+	<string>5.8.4</string>
 	<key>webaddress</key>
 	<string>https://github.com/moranje/alfred-workflow-todoist</string>
 </dict>
