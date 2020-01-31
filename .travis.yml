@@ -4,7 +4,7 @@ branches:
   only:
     - master
     - beta
-    - alfa
+    - alpha
 cache:
   directories:
     - ~/.npm
