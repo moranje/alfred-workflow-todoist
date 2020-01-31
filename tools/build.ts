@@ -10,27 +10,41 @@ const WHITE_LIST = [
   'dist/workflow/icon.png',
   'dist/workflow/info.plist',
   'dist/workflow/workflow.json',
+  'dist/workflow/check-node.sh',
 ];
 
-let err = shell.exec('rollup -c rollup.config.ts').stderr;
+let err = null;
+
+if (process.env.NODE_ENV === 'production') {
+  err = shell.exec('npx rollup -c rollup.config.ts').stderr;
+} else {
+  err = shell.exec('npx rollup -c rollup.config.ts -w').stderr;
+}
 
 if (err) {
   shell.exec('ts-node tools/move-files.ts moveFromTemp', { silent: true });
 }
 
 mkdirp('dist/workflow/notifier');
-shell.cp(
-  '-r',
-  'node_modules/node-notifier/vendor/mac.noindex/terminal-notifier.app',
-  'dist/workflow/notifier/terminal-notifier.app'
+shell.exec(
+  'curl -sSL https://github.com/julienXX/terminal-notifier/releases/latest/download/terminal-notifier-2.0.0.zip > terminal-notifier.zip',
+  { silent: true }
 );
-shell.sed(
-  '-i',
-  '../vendor/mac.noindex/',
-  './notifier/',
-  'dist/workflow/alfred-workflow-todoist.js'
-);
-shell.exec('npx typedoc src', { silent: true });
+shell.exec('unzip terminal-notifier.zip -d dist/workflow/notifier', {
+  silent: true,
+});
+shell.rm('-rf', 'terminal-notifier.zip', {
+  silent: true,
+});
+shell.rm('-rf', 'dist/src/*', {
+  silent: true,
+});
+
+// shell.cp(
+//   '-r',
+//   'node_modules/node-notifier/vendor/mac.noindex/terminal-notifier.app',
+//   'dist/workflow/notifier/terminal-notifier.app'
+// );
 shell.exec('ts-node tools/move-files.ts moveFromTemp', { silent: true });
 
 WHITE_LIST.forEach((path: string) => {
@@ -39,4 +53,4 @@ WHITE_LIST.forEach((path: string) => {
   }
 });
 
-console.log('Build completed succesfully');
+console.log('Build completed successfully');

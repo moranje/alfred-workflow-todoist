@@ -21,6 +21,7 @@ function moveToTemp() {
   shell.cp('dist/workflow/info.plist', `${TEMP_FOLDER}/info.plist`);
   shell.cp('dist/workflow/icon.png', `${TEMP_FOLDER}/icon.png`);
   shell.cp('dist/workflow/workflow.json', `${TEMP_FOLDER}/workflow.json`);
+  shell.cp('dist/workflow/check-node.sh', `${TEMP_FOLDER}/check-node.sh`);
   // shell.cp('-R', 'dist/workflow/images/', `${TEMP_FOLDER}/images`)
 }
 
@@ -34,12 +35,18 @@ function moveFromTemp() {
     `${TEMP_FOLDER}/workflow.json`,
     'dist/workflow/workflow.json'
   ).stderr;
+  let checkNode = shell.cp(
+    `${TEMP_FOLDER}/check-node.sh`,
+    'dist/workflow/check-node.sh'
+  ).stderr;
   // shell.cp('-R', `${TEMP_FOLDER}/images/`, 'dist/workflow/images/')
 
-  if (!plist && !icon && !workflowConfig) {
+  if (!plist && !icon && !workflowConfig && !checkNode) {
     shell.rm('-rf', `${TEMP_FOLDER}/info.plist`);
     shell.rm('-rf', `${TEMP_FOLDER}/icon.png`);
     shell.rm('-rf', `${TEMP_FOLDER}/workflow.json`);
+
+    shell.rm('-rf', `${TEMP_FOLDER}/check-node.sh`);
     // shell.rm('-rf', `${TEMP_FOLDER}/images/`)
   }
 }
