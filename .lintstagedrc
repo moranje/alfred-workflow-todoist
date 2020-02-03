@@ -4,9 +4,7 @@
     "git add"
   ],
   "src/**/*.{ts,js}": [
-    "tsc --noEmit",
     "eslint --fix",
-    "semantic-release --no-ci --dry-run",
     "git add"
   ]
 }
