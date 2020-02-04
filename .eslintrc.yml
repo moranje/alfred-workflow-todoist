@@ -30,14 +30,14 @@ extends:
 settings:
   jsdoc:
     ignorePrivate: true
-  import/parsers:
-    '@typescript-eslint/parser': [.ts]
 
 ignorePatterns:
   - grammar.ts
   - cz-config.js
   - tools
-  - src/{project,todoist,workflow}
+  - dist/
+  - 'tests/'
+  - '__mocks__/'
 
 rules:
   'simple-import-sort/sort': 'error'
@@ -99,7 +99,7 @@ rules:
         - instance-method
         - method
   jsdoc/check-alignment: 1
-  jsdoc/check-examples: 1
+  jsdoc/check-examples: 0
   jsdoc/check-indentation: 1
   jsdoc/check-param-names: 0
   jsdoc/check-property-names: 1
