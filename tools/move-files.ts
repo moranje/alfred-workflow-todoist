@@ -3,7 +3,7 @@ const shell = require('shelljs');
 
 const argv = Object.assign([], process.argv);
 argv.splice(0, 2);
-const call: 'moveToTemp' | 'moveFromTemp' | undefined = argv.shift();
+const call: 'copyToTemp' | 'copyFromTemp' | undefined = argv.shift();
 
 const dataPath = `${process.env.HOME}/Library/Application Support/Alfred 3/Workflow Data/com.alfred-workflow-todoist`;
 const cachePath = `${process.env.HOME}/Library/Caches/com.runningwithcrayons.Alfred-3/Workflow Data/com.alfred-workflow-todoist`;
@@ -12,11 +12,11 @@ const TEMP_FOLDER = 'assets';
 
 function noop() {
   console.log(
-    'Please try: ts-node tools/move-files.ts [call]\n\n\tcall: moveToTemp | moveFromTemp'
+    'Please try: ts-node tools/move-files.ts [call]\n\n\tcall: copyToTemp | copyFromTemp'
   );
 }
 
-function moveToTemp() {
+function copyToTemp() {
   mkdirp(`${TEMP_FOLDER}`);
   shell.cp('dist/workflow/info.plist', `${TEMP_FOLDER}/info.plist`);
   shell.cp('dist/workflow/icon.png', `${TEMP_FOLDER}/icon.png`);
@@ -25,7 +25,7 @@ function moveToTemp() {
   // shell.cp('-R', 'dist/workflow/images/', `${TEMP_FOLDER}/images`)
 }
 
-function moveFromTemp() {
+function copyFromTemp() {
   mkdirp(`dist/workflow`);
   let plist = shell.cp(`${TEMP_FOLDER}/info.plist`, 'dist/workflow/info.plist')
     .stderr;
@@ -40,21 +40,12 @@ function moveFromTemp() {
     'dist/workflow/check-node.sh'
   ).stderr;
   // shell.cp('-R', `${TEMP_FOLDER}/images/`, 'dist/workflow/images/')
-
-  if (!plist && !icon && !workflowConfig && !checkNode) {
-    shell.rm('-rf', `${TEMP_FOLDER}/info.plist`);
-    shell.rm('-rf', `${TEMP_FOLDER}/icon.png`);
-    shell.rm('-rf', `${TEMP_FOLDER}/workflow.json`);
-
-    shell.rm('-rf', `${TEMP_FOLDER}/check-node.sh`);
-    // shell.rm('-rf', `${TEMP_FOLDER}/images/`)
-  }
 }
 
-if (call === 'moveToTemp') {
-  moveToTemp();
-} else if (call === 'moveFromTemp') {
-  moveFromTemp();
+if (call === 'copyToTemp') {
+  copyToTemp();
+} else if (call === 'copyFromTemp') {
+  copyFromTemp();
 } else {
   noop();
 }

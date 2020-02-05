@@ -6,7 +6,6 @@ const fs = require('fs');
 const WHITE_LIST = [
   'dist/workflow/notifier/terminal-notifier.app/Contents/MacOS/terminal-notifier',
   'dist/workflow/alfred-workflow-todoist.js',
-  'dist/workflow/alfred-workflow-todoist.js.map',
   'dist/workflow/icon.png',
   'dist/workflow/info.plist',
   'dist/workflow/workflow.json',
@@ -22,7 +21,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 if (err) {
-  shell.exec('ts-node tools/move-files.ts moveFromTemp', { silent: true });
+  shell.exec('ts-node tools/move-files.ts copyFromTemp', { silent: true });
 }
 
 mkdirp('dist/workflow/notifier');
@@ -40,12 +39,7 @@ shell.rm('-rf', 'dist/src/*', {
   silent: true,
 });
 
-// shell.cp(
-//   '-r',
-//   'node_modules/node-notifier/vendor/mac.noindex/terminal-notifier.app',
-//   'dist/workflow/notifier/terminal-notifier.app'
-// );
-shell.exec('ts-node tools/move-files.ts moveFromTemp', { silent: true });
+shell.exec('ts-node tools/move-files.ts copyFromTemp', { silent: true });
 
 WHITE_LIST.forEach((path: string) => {
   if (!fs.existsSync(`${process.cwd()}/${path}`)) {

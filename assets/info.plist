@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>com.alfred-workflow-todoist</string>
+	<key>category</key>
+	<string>Productivity</string>
+	<key>connections</key>
+	<dict>
+		<key>0E0DCF99-35B9-4513-B0D9-E6020C48ED1E</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>329F88DE-5F91-459A-8CA3-9471677B3673</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>329F88DE-5F91-459A-8CA3-9471677B3673</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>E40C509C-1C64-4421-9AD8-FA990CCD9420</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>425292E2-8641-4346-A537-F128D473408C</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>853C0BDB-9C62-4715-86A4-E71735849C80</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>853C0BDB-9C62-4715-86A4-E71735849C80</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>329F88DE-5F91-459A-8CA3-9471677B3673</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>B447C7A9-4CEC-457F-B711-65D07976721C</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>329F88DE-5F91-459A-8CA3-9471677B3673</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Martien Oranje</string>
+	<key>description</key>
+	<string>An Alfred Todoist workflow</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>Alfred Workflow Todoist</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>36</integer>
+				<key>keyword</key>
+				<string>todos</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<false/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>2</integer>
+				<key>runningsubtext</key>
+				<string>Hold on, while I get your tasks</string>
+				<key>script</key>
+				<string>#!/usr/bin/env bash
+
+###############################################################################
+# Author: M. Oranje
+# Licence: MIT
+###############################################################################
+
+. ./check-node.sh
+
+escaped="$(echo "{query}" | sed 's/"/\\"/g')"
+node $node_flags alfred-workflow-todoist.js "{\"name\": \"read\", \"args\": \"$escaped\"}"
+</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Search upcoming todoist tasks</string>
+				<key>title</key>
+				<string>Search your tasks</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>0E0DCF99-35B9-4513-B0D9-E6020C48ED1E</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>#!/usr/bin/env bash
+
+###############################################################################
+# Author: M. Oranje
+# Licence: MIT
+###############################################################################
+
+export PATH="$PATH:$node_path:/usr/local/bin:/usr/bin"
+
+node $node_flags alfred-workflow-todoist.js "{query}"</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>329F88DE-5F91-459A-8CA3-9471677B3673</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>action</key>
+				<integer>0</integer>
+				<key>argument</key>
+				<integer>3</integer>
+				<key>argumenttext</key>
+				<string>Get milk #Projecten&lt;2222894826&gt; @10min&lt;537752121&gt; @opleiding&lt;2150940159&gt; !!1 ::Doing&lt;1786288&gt;, morgen 10 uur</string>
+				<key>focusedappvariable</key>
+				<false/>
+				<key>focusedappvariablename</key>
+				<string></string>
+				<key>hotkey</key>
+				<integer>17</integer>
+				<key>hotmod</key>
+				<integer>1048576</integer>
+				<key>hotstring</key>
+				<string>T</string>
+				<key>leftcursor</key>
+				<false/>
+				<key>modsmode</key>
+				<integer>0</integer>
+				<key>relatedAppsMode</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.hotkey</string>
+			<key>uid</key>
+			<string>425292E2-8641-4346-A537-F128D473408C</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>36</integer>
+				<key>keyword</key>
+				<string>todo</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string></string>
+				<key>script</key>
+				<string>#!/usr/bin/env bash
+
+###############################################################################
+# Author: M. Oranje
+# Licence: MIT
+###############################################################################
+
+. ./check-node.sh
+
+escaped="$(echo "{query}" | sed 's/"/\\"/g')"
+node $node_flags alfred-workflow-todoist.js "{\"name\": \"parse\", \"args\": \"$escaped\"}"
+</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>What to do?</string>
+				<key>title</key>
+				<string>Create a task</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>853C0BDB-9C62-4715-86A4-E71735849C80</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argument</key>
+				<string>'{query}', {allvars}</string>
+				<key>cleardebuggertext</key>
+				<false/>
+				<key>processoutputs</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.utility.debug</string>
+			<key>uid</key>
+			<string>E40C509C-1C64-4421-9AD8-FA990CCD9420</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<false/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>36</integer>
+				<key>keyword</key>
+				<string>todo:setting</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Hold on...</string>
+				<key>script</key>
+				<string>#!/usr/bin/env bash
+
+###############################################################################
+# Author: M. Oranje
+# Licence: MIT
+###############################################################################
+
+. ./check-node.sh
+
+escaped="$(echo "{query}" | sed 's/"/\\"/g')"
+node $node_flags alfred-workflow-todoist.js "{\"name\": \"readSettings\", \"args\": \"$escaped\"}"
+</string>
+				<key>scriptargtype</key>
+				<integer>0</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Select an option</string>
+				<key>title</key>
+				<string>Configure workflow</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>B447C7A9-4CEC-457F-B711-65D07976721C</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>https://github.com/moranje/alfred-workflow-todoist/blob/master/README.md</string>
+	<key>uidata</key>
+	<dict>
+		<key>0E0DCF99-35B9-4513-B0D9-E6020C48ED1E</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>note</key>
+			<string>Read tasks</string>
+			<key>xpos</key>
+			<integer>250</integer>
+			<key>ypos</key>
+			<integer>60</integer>
+		</dict>
+		<key>329F88DE-5F91-459A-8CA3-9471677B3673</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>note</key>
+			<string>User actions</string>
+			<key>xpos</key>
+			<integer>600</integer>
+			<key>ypos</key>
+			<integer>220</integer>
+		</dict>
+		<key>425292E2-8641-4346-A537-F128D473408C</key>
+		<dict>
+			<key>xpos</key>
+			<integer>80</integer>
+			<key>ypos</key>
+			<integer>220</integer>
+		</dict>
+		<key>853C0BDB-9C62-4715-86A4-E71735849C80</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>note</key>
+			<string>Parse task</string>
+			<key>xpos</key>
+			<integer>250</integer>
+			<key>ypos</key>
+			<integer>220</integer>
+		</dict>
+		<key>B447C7A9-4CEC-457F-B711-65D07976721C</key>
+		<dict>
+			<key>colorindex</key>
+			<integer>3</integer>
+			<key>note</key>
+			<string>Read settings</string>
+			<key>xpos</key>
+			<integer>250</integer>
+			<key>ypos</key>
+			<integer>380</integer>
+		</dict>
+		<key>E40C509C-1C64-4421-9AD8-FA990CCD9420</key>
+		<dict>
+			<key>xpos</key>
+			<integer>770</integer>
+			<key>ypos</key>
+			<integer>250</integer>
+		</dict>
+	</dict>
+	<key>variables</key>
+	<dict>
+		<key>node_flags</key>
+		<string></string>
+		<key>node_path</key>
+		<string></string>
+	</dict>
+	<key>version</key>
+	<string>5.8.4</string>
+	<key>webaddress</key>
+	<string>https://github.com/moranje/alfred-workflow-todoist</string>
+</dict>
+</plist>
