@@ -2,7 +2,7 @@
   "compilerOptions": {
     "moduleResolution": "node",
     "target": "es2017",
-    "module": "ESNext",
+    "module": "CommonJS",
     "lib": ["ESNext"],
     "strict": true,
     "sourceMap": true,
