@@ -17,7 +17,7 @@ let plugins = [
   replace({
     // Needed for Conf
     'commonjsRequire.cache': 'require.cache',
-    '../vendor/mac.noindex/': './notifier/',
+    // '../vendor/mac.noindex/': './notifier/',
   }),
 
   externals(),
@@ -30,11 +30,11 @@ let plugins = [
   }),
 
   typescript({
-    transpiler: 'babel',
+    // transpiler: 'babel',
   }),
 
   commonjs({
-    // ignore: ['require'],
+    ignore: ['worker_threads'],
   }),
 
   sourceMaps(),
