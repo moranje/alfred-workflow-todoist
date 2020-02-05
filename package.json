@@ -125,7 +125,7 @@
     "write-json-file": "3.1.0"
   },
   "devDependencies": {
-    "@babel/polyfill": "7.7.0",
+    "@babel/polyfill": "7.8.3",
     "@commitlint/cli": "7.5.2",
     "@commitlint/config-conventional": "8.1.0",
     "@semantic-release/changelog": "3.0.6",
