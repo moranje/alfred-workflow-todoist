@@ -1,0 +1,36 @@
+import * as Sentry from '@sentry/node';
+
+import settingsStore from '@/lib/stores/settings-store';
+
+import updateStore from './stores/update-store';
+import { ENV } from './utils';
+
+/**
+ * Initialize an a Sentry logging instance if allowed by the user.
+ *
+ * @returns A `Sentry` instance or nothing if the user does not allow online
+ * error collection.
+ */
+export function init(): typeof Sentry | null {
+  if (settingsStore(ENV.meta.dataPath).get('anonymous_statistics') === true) {
+    Sentry.init({
+      dsn: 'https://fcddabe319894f7bb07321c9d93ae3a2@sentry.io/1454575',
+      release: updateStore().get('version'),
+      attachStacktrace: true,
+      environment: process.env.NODE_ENV,
+    });
+
+    /* istanbul ignore next */
+    Sentry.configureScope(function(scope) {
+      scope.setUser({ id: settingsStore(ENV.meta.dataPath).get('uuid') });
+      scope.setTag('osx', ENV.meta.osx);
+      scope.setTag('nodejs', ENV.meta.nodejs);
+      if (ENV.meta.alfred) scope.setTag('alfred', ENV.meta.alfred);
+      if (ENV.workflow.uid) scope.setTag('workflow', ENV.workflow.uid);
+    });
+
+    return Sentry;
+  }
+
+  return null;
+}

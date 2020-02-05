@@ -1,26 +1,40 @@
-import { view, StringElement, ListElement, ViewOptions } from '../view';
-import { Item } from '@/workflow';
+import {
+  ItemView,
+  ListElement,
+  StringElement,
+  view,
+  ViewOptions,
+} from '@/lib/workflow';
 
-const action: StringElement = 'create';
+const defaultAction: StringElement = 'Add task';
 
-let title: ListElement = [];
+const defaultTitle: ListElement = [];
 
-let heading: StringElement = 'inbox';
+const defaultHeading: StringElement = 'inbox';
 
-let subtitle: ListElement = [];
+const defaultSubtitle: ListElement = [];
 
-export default function createView(options: ViewOptions, item: Item): Item {
-  title = options?.title || title;
-  heading = options?.heading || heading;
-  subtitle = options?.subtitle || subtitle;
+/**
+ * A view for listing a parsed task string.
+ *
+ * @param options The view options.
+ * @returns An `Item`-like object that can be merged into an `Item` instance.
+ */
+export default function createView({
+  action,
+  heading,
+  title,
+  subtitle,
+}: ViewOptions): ItemView {
+  action = action || defaultAction;
+  heading = heading || defaultHeading;
+  title = title || defaultTitle;
+  subtitle = subtitle || defaultSubtitle;
 
-  return Object.assign(
-    item,
-    view({
-      action,
-      title,
-      heading,
-      subtitle,
-    })
-  );
+  return view({
+    action,
+    title,
+    heading,
+    subtitle,
+  });
 }

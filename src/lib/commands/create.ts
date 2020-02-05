@@ -1,18 +1,29 @@
-import todoist from 'todoist-rest-api';
-import { config } from '@/lib/utils';
+import { TodoistTaskOptions } from 'todoist-rest-api';
 
-// Retrieve any resource ids from cache
+import { AlfredError, Errors } from '../error';
+import { api, requestError } from '../todoist';
+import { notification } from '../workflow';
 
-export async function create(query: string) {
-  const api = todoist(config.get('token') as string);
-  const task = Object.assign({}, JSON.parse(query), {
-    due_lang: config.get('token') as string,
+/**
+ * Create a task in Todoist.
+ *
+ * @param taskOptions The task options.
+ */
+export async function create(taskOptions: TodoistTaskOptions): Promise<void> {
+  const task = await api.v1.task.create(taskOptions).catch(error => {
+    throw requestError(error);
   });
-  const response = await api.v1.task.create(task);
 
-  if (!response.id) {
-    throw new Error("The task couldn't be created for some reason");
+  if (task.id == null) {
+    throw new AlfredError(
+      Errors.InvalidAPIResponse,
+      "It looks task couldn't be created."
+    );
   }
 
-  return null;
+  notification({
+    subtitle: '✓ Happy days!',
+    message: `Created: ${task.content}`,
+    url: `https://todoist.com/showTask?id=${task.id}`,
+  });
 }

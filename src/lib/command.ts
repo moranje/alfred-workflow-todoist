@@ -1,33 +1,43 @@
+import { Call } from '@/lib/cli-args';
+import { AlfredError, Errors } from '@/lib/error';
+
 import {
+  create,
+  openUrl,
   parse,
   read,
-  create,
-  remove,
   readSettings,
+  refreshCache,
+  remove,
   writeSetting,
 } from './commands';
-import { handleError } from './error';
 
-export type MethodName =
-  | 'parse'
-  | 'read'
-  | 'create'
-  | 'remove'
-  | 'readSettings'
-  | 'writeSetting';
-
-export default function command(methodName: MethodName, query: string) {
-  if (methodName === 'parse') {
-    parse(query).catch(error => handleError(error));
-  } else if (methodName === 'read') {
-    read(query).catch(error => handleError(error));
-  } else if (methodName === 'create') {
-    create(query).catch(error => handleError(error));
-  } else if (methodName === 'remove') {
-    remove(query).catch(error => handleError(error));
-  } else if (methodName === 'readSettings') {
-    readSettings(query).catch(error => handleError(error));
-  } else if (methodName === 'writeSetting') {
-    writeSetting(query).catch(error => handleError(error));
+/**
+ * A method runner.
+ *
+ * @param call A `Call` object.
+ */
+export default async function command(call: Call): Promise<void | null> {
+  if (call.name === 'parse') {
+    return parse(call.args);
+  } else if (call.name === 'read') {
+    return read(call.args);
+  } else if (call.name === 'create') {
+    return create(call.args);
+  } else if (call.name === 'remove') {
+    return remove(call.args);
+  } else if (call.name === 'readSettings') {
+    return readSettings(call.args);
+  } else if (call.name === 'writeSetting') {
+    return writeSetting(call.args);
+  } else if (call.name === 'refreshCache') {
+    return refreshCache(call.args);
+  } else if (call.name === 'openUrl') {
+    return openUrl(call.args);
   }
+
+  throw new AlfredError(
+    Errors.InvalidArgument,
+    `Expected application to be called with either 'parse', 'read', 'create', 'remove', 'readSettings', 'writeSettings' or 'refreshCache', was ${call.name}`
+  );
 }

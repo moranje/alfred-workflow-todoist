@@ -1,89 +1,37 @@
-import '@babel/polyfill';
-import 'loud-rejection/register';
-import {
-  AlfredError,
-  cache,
-  Command,
-  getSetting,
-  handleError,
-  serialize,
-} from '@/project';
+/* eslint simple-import-sort/sort: 0 */
+import compareVersions from 'compare-versions';
+
+import { getCurrentCall } from '@/lib/cli-args';
+import command from '@/lib/command';
+import { AlfredError, Errors, funnelError } from '@/lib/error';
+import { checkForWorkflowUpdate } from '@/lib/updater';
+import { ENV } from '@/lib/utils';
 
 /**
- * CLI argument parsing
+ * Make sure minimum node version is satisfied.
  */
+if (compareVersions.compare(process.version, ENV.requirements.nodejs, '>=')) {
+  (async (): Promise<void | null> => {
+    const call = getCurrentCall();
 
-/** @hidden */
-const argv = Object.assign([], process.argv);
-argv.splice(0, 2);
-/** @hidden */
-const type = argv.shift();
-/** @hidden */
-const query = argv.join(' ');
-/** @hidden */
-const command = Command();
+    /**
+     * Updater.
+     */
+    if (call.name === 'parse' || call.name === 'read') {
+      await checkForWorkflowUpdate();
+    }
 
-/**
- * Serialize cache back to JSON
- *
- * @hidden
- */
-function handleSerialization(): Promise<void> {
-  return serialize(cache.dump()).catch(handleError);
-}
-
-/**
- * Updater
- */
-try {
-  command.updateWorkflowVersion();
-} catch (error) {
-  handleError(error);
-}
-
-/**
- * CLI option logic
- */
-if (type === 'read') {
-  command
-    .read(query)
-    .catch(handleError)
-    .finally(handleSerialization);
-} else if (type === 'create') {
-  try {
-    command.create(query);
-  } catch (error) {
-    handleError(error);
-  } finally {
-    handleSerialization();
-  }
-} else if (type === 'submit') {
-  command
-    .submit(
-      Object.assign(JSON.parse(query), { due_lang: getSetting('language') })
-    )
-    .catch(handleError)
-    .finally(handleSerialization);
-} else if (type === 'remove') {
-  command
-    .remove(JSON.parse(query))
-    .catch(handleError)
-    .finally(handleSerialization);
-} else if (type === 'settings' && query.trim() !== '') {
-  const [key, value] = query.trim().split(' ');
-  command.verifySetting(key, value);
-} else if (type === 'settings') {
-  command.listSettings();
-} else if (type === 'settings:store') {
-  command.saveSetting(JSON.parse(query)).catch(handleError);
+    /**
+     * Command distribution.
+     */
+    return command(call);
+  })().catch(funnelError);
 } else {
-  handleError(new AlfredError(`Invalid command ${type} (${query})`));
+  funnelError(
+    new AlfredError(
+      Errors.InvalidNodeJS,
+      'Please upgrade your Node.js version to 10.x or higher for this workflow to work',
+      { isSafe: true }
+    )
+  );
 }
-
-/**
- * Catch any unhandled exception or rejected promise and handle here
- */
-
-process.on('uncaughtException', handleError);
-// Process.on('unhandledRejection', handleError)
-(process as NodeJS.EventEmitter).on('unhandledRejection', handleError);

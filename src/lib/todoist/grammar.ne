@@ -1,6 +1,6 @@
 @preprocessor typescript
 
-@{% import lexer from '@/todoist/lexer'; %}
+@{%import lexer from '@/lib/todoist/lexer';%}
 
 # Use moo tokenizer
 @lexer lexer
@@ -16,86 +16,154 @@ Element ->
   Project {% id %}
   | Label {% id %}
   | Priority {% id %}
-  | Person {% id %}
   | Date {% id %}
+  | Section {% id %}
+  | Filter {% id %}
 
 Project ->
-  %pound %name {%
+  %pound %name %braceOpen %tid %braceClose {%
+    ([_, name, __, id]) => {
+      return {
+        name: name.value,
+        type: 'project',
+        id: +id.value
+      };
+    }
+  %}
+  | %pound %name %braceOpen %tid {%
+    ([_, name, __, id]) => {
+      return {
+        name: name.value,
+        type: 'project',
+        id: +id.value
+      };
+    }
+  %}
+  | %pound %name %braceOpen {%
     ([_, name]) => {
       return {
         name: name.value,
         type: 'project',
-        toString() {
-          return `${this.name}`;
-        }
+        id: null
       };
     }
   %}
-  | %pound %open %name %close {%
+  | %pound %name {%
+    ([_, name]) => {
+      return {
+        name: name.value,
+        type: 'project',
+        id: null
+      };
+    }
+  %}
+  | %pound %bracketOpen %name %bracketClose %braceOpen %tid %braceClose {%
+    ([_, __, name, ___, id]) => {
+      return {
+        name: name.value,
+        type: 'project',
+        id: +id.value
+      };
+    }
+  %}
+  | %pound %bracketOpen %name %bracketClose %braceOpen %tid {%
+    ([_, __, name, ___, id]) => {
+      return {
+        name: name.value,
+        type: 'project',
+        id: +id.value
+      };
+    }
+  %}
+  | %pound %bracketOpen %name %bracketClose %braceOpen {%
     ([_, __, name]) => {
       return {
         name: name.value,
         type: 'project',
-        toString() {
-          return `${this.name}`;
-        }
+        id: null
       };
     }
   %}
-  | %pound %open %name {%
+  | %pound %bracketOpen %name %bracketClose {%
     ([_, __, name]) => {
       return {
         name: name.value,
         type: 'project',
-        toString() {
-          return `${this.name}`;
-        }
+        id: null
       };
     }
   %}
-  | %pound %open {%
+  | %pound %bracketOpen %name {%
+    ([_, __, name]) => {
+      return {
+        name: name.value,
+        type: 'project',
+        id: null
+      };
+    }
+  %}
+  | %pound %bracketOpen {%
     ([_, __]) => {
       return {
         name: '',
         type: 'project',
-        toString() {
-          return `${this.name}`;
-        }
+        id: null
       };
     }
   %}
   | %pound {%
-    ([_]) => {
+    () => {
       return {
         name: '',
         type: 'project',
-        toString() {
-          return `${this.name}`;
-        }
+        id: null
       };
     }
   %}
 
 Label ->
-   %at %name {%
-    ([_, label]) => {
+  %at %name %braceOpen %tid %braceClose {%
+    ([_, name, __, id]) => {
       return {
-        name: label.value,
+        name: name.value,
         type: 'label',
-        toString() {
-          return `${this.name}`;
-        }
+        id: +id.value
+      };
+    }
+  %}
+  | %at %name %braceOpen %tid {%
+    ([_, name, __, id]) => {
+      return {
+        name: name.value,
+        type: 'label',
+        id: +id.value
+      };
+    }
+  %}
+  | %at %name %braceOpen {%
+    ([_, name]) => {
+      return {
+        name: name.value,
+        type: 'label',
+        id: null
+      };
+    }
+  %}
+  | %at %name {%
+    ([_, name]) => {
+      return {
+        name: name.value,
+        type: 'label',
+        id: null
       };
     }
   %}
   | %at {%
-    ([_]) => {
+    () => {
       return {
         name: '',
         type: 'label',
-        toString() {
-          return `${this.name}`;
-        }
+        id: null
       };
     }
   %}
@@ -104,84 +172,178 @@ Priority ->
   %priority {%
     ([priority]) => {
       return {
-        value: priority.value.substring(1),
-        type: 'priority',
-        toString() {
-          return `${this.value}`;
-        }
+        priority: +priority.value.substring(1),
+        type: 'priority'
       };
     }
   %}
   | %doubleExclamation %number {%
-    ([_, priority]) => {
+    ([_, number]) => {
       return {
-        value: priority.value,
-        type: 'priority',
-        toString() {
-          return `${this.value}`;
-        }
+        priority: +number.value,
+        type: 'priority'
       };
     }
   %}
   | %doubleExclamation {%
-    ([_]) => {
+    () => {
       return {
-        value: '4',
-        type: 'priority',
-        toString() {
-          return `${this.value}`;
-        }
+        priority: undefined,
+        type: 'priority'
       };
     }
   %}
 
-# idea ':' for sections
-
-# Person ->
-#   %plus %name {%
-#     ([_, person]) => {
-#       return {
-#         name: person.value,
-#         type: 'person',
-#         toString() {
-#           return `${this.name}`;
-#         }
-#       };
-#     }
-#   %}
-#   | %plus {%
-#     ([_]) => {
-#       return {
-#         name: '',
-#         type: 'person',
-#         toString() {
-#           return `${this.name}`;
-#         }
-#       };
-#     }
-#   %}
+Section ->
+  %colon %name %braceOpen %tid %braceClose {%
+    ([_, name, __, id]) => {
+      return {
+        name: name.value,
+        type: 'section',
+        id: +id.value
+      };
+    }
+  %}
+  | %colon %name %braceOpen %tid {%
+    ([_, name, __, id]) => {
+      return {
+        name: name.value,
+        type: 'section',
+        id: +id.value
+      };
+    }
+  %}
+  | %colon %name %braceOpen {%
+    ([_, name]) => {
+      return {
+        name: name.value,
+        type: 'section',
+        id: null
+      };
+    }
+  %}
+  | %colon %name {%
+    ([_, name]) => {
+      return {
+        name: name.value,
+        type: 'section',
+        id: null
+      };
+    }
+  %}
+  | %colon %bracketOpen %name %bracketClose %braceOpen %tid %braceClose {%
+    ([_, __, name, ___, id]) => {
+      return {
+        name: name.value,
+        type: 'section',
+        id: +id.value
+      };
+    }
+  %}
+  | %colon %bracketOpen %name %bracketClose %braceOpen %tid {%
+    ([_, __, name, ___, id]) => {
+      return {
+        name: name.value,
+        type: 'section',
+        id: +id.value
+      };
+    }
+  %}
+  | %colon %bracketOpen %name %bracketClose %braceOpen {%
+    ([_, __, name]) => {
+      return {
+        name: name.value,
+        type: 'section',
+        id: null
+      };
+    }
+  %}
+  | %colon %bracketOpen %name %bracketClose {%
+    ([_, __, name]) => {
+      return {
+        name: name.value,
+        type: 'section',
+        id: null
+      };
+    }
+  %}
+  | %colon %bracketOpen %name {%
+    ([_, __, name]) => {
+      return {
+        name: name.value,
+        type: 'section',
+        id: null
+      };
+    }
+  %}
+  | %colon %bracketOpen {%
+    ([_, __]) => {
+      return {
+        name: '',
+        type: 'section',
+        id: null
+      };
+    }
+  %}
+  | %colon {%
+    () => {
+      return {
+        name: '',
+        type: 'section',
+        id: null
+      };
+    }
+  %}
 
 Date ->
   %comma %date {%
     ([_, date]) => {
       return {
         value: date.value.trim(),
-        type: 'date',
-        toString() {
-          return `${this.value}`;
-        }
+        type: 'date'
       };
     }
   %}
   | %comma {%
-    ([_]) => {
+    () => {
       return {
         value: '',
-        type: 'date',
-        toString() {
-          return `${this.value}`;
-        }
+        type: 'date'
       };
+    }
+  %}
+
+Filter ->
+  %filterStart %filter %filterEnd {%
+    ([_, filter]) => {
+      return {
+        value: filter.value,
+        type: 'filter'
+      }
+    }
+  %}
+  | %filterStart %filter {%
+    ([_, filter]) => {
+      return {
+        value: filter.value,
+        type: 'filter'
+      }
+    }
+  %}
+  | %filterStart %filterEnd {%
+    () => {
+      return {
+        value: '',
+        type: 'filter'
+      }
+    }
+  %}
+  | %filterStart {%
+    () => {
+      return {
+        value: '',
+        type: 'filter'
+      }
     }
   %}
 
@@ -193,14 +355,12 @@ Content ->
       }
 
       return {
-        type: 'content',
         value: text.map((partial: any) => partial.value).join(''),
-        toString() {
-          return `${this.value}`;
-        }
+        type: 'content'
       }
     }
   %}
 
 ContentPartial ->
   %content {% id %}
+
