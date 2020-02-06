@@ -39,8 +39,7 @@ export type Call =
       args: ResourceName;
     };
 
-const argv: string[] = Object.assign([], process.argv);
-argv.splice(0, 2);
+const [, , ...argv] = process.argv;
 
 function assertValidArgs(args: Arg): asserts args is Arg {
   if (args == null) {
