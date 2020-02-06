@@ -1,24 +1,24 @@
-const shell = require('shelljs');
-const { readFileSync } = require('fs');
-const writeJsonFile = require('write-json-file');
+import { exec } from 'shelljs';
+import { readFileSync } from 'fs';
+import writeJsonFile from 'write-json-file';
 
-const pkg = JSON.parse(readFileSync('package.json'));
+const pkg = JSON.parse(readFileSync('package.json').toString());
 
-shell.exec(
+exec(
   `/usr/libexec/PlistBuddy -c "Set version ${pkg.version}" "dist/workflow/info.plist"`,
   {
     silent: true,
   }
 );
 
-shell.exec(
+exec(
   `/usr/libexec/PlistBuddy -c "Set :variables:node_flags" "dist/workflow/info.plist"`,
   {
     silent: true,
   }
 );
 
-shell.exec(
+exec(
   `/usr/libexec/PlistBuddy -c "Set :variables:node_path" "dist/workflow/info.plist"`,
   {
     silent: true,

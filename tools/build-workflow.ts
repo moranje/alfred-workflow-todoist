@@ -1,7 +1,7 @@
-const shell = require('shelljs');
-const zip = require('bestzip');
+import { exec } from 'shelljs';
+import zip from 'bestzip';
 
-shell.exec('npm run bump-version', { silent: true });
+exec('npm run bump-version', { silent: true });
 
 zip({
   source: '*',

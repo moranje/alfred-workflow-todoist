@@ -1,5 +1,5 @@
-const inquirer = require('inquirer');
-const shell = require('shelljs');
+import inquirer from 'inquirer';
+import { exec } from 'shelljs';
 
 inquirer
   .prompt([
@@ -25,7 +25,8 @@ inquirer
   .then((answers: any) => {
     process.chdir(answers.workflow);
 
-    shell.exec(
+    // TODO: make this alfred 4 ready
+    exec(
       'alfred_workflow_data="$HOME/Library/Application Support/Alfred 3/Workflow Data/com.alfred-workflow-todoist" ' +
         'alfred_workflow_cache="$HOME/Library/Caches/com.runningwithcrayons.Alfred-3/Workflow Data/com.alfred-workflow-todoist" ' +
         `ndb alfred-workflow-todoist.js ${
