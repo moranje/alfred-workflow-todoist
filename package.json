@@ -117,7 +117,7 @@
     "lru-cache": "5.1.1",
     "macos-version": "5.2.0",
     "md5": "2.2.1",
-    "mkdirp": "0.5.1",
+    "mkdirp": "1.0.3",
     "moo": "0.5.1",
     "nearley": "2.19.0",
     "node-notifier": "5.4.0",
