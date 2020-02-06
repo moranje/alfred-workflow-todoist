@@ -93,7 +93,7 @@ export async function listSections(
   query: string,
   parsed: ParsedTodoistTaskOptions
 ): Promise<void> {
-  if (parsed.project == null) {
+  if (parsed.project == null || parsed.project.id == null) {
     throw new AlfredError(
       Errors.InvalidArgument,
       'Add a project before you add a section',
