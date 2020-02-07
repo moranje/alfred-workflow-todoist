@@ -1,43 +1,31 @@
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
-import replace from '@rollup/plugin-replace';
 import typescript from '@wessberg/rollup-plugin-ts';
-import builtin from 'builtin-modules';
+// import { cjsToEsm } from '@wessberg/cjs-to-esm-transformer';
 import filesize from 'rollup-plugin-filesize';
-import externals from 'rollup-plugin-node-externals';
 import sourceMaps from 'rollup-plugin-sourcemaps';
 import { terser } from 'rollup-plugin-terser';
-
-const pkg = require('./package.json');
+import { builtinModules } from 'module';
+import pkg from './package.json';
 
 const libraryName = 'alfred-workflow-todoist';
-
 let plugins = [
-  replace({
-    // Needed for Conf
-    'commonjsRequire.cache': 'require.cache',
-  }),
-
-  externals(),
-
   // Allow json resolution
   json(),
 
-  typescript({
-    transpiler: 'babel',
-  }),
+  resolve(),
 
-  resolve({
-    // mainFields: ['main'],
+  typescript({
+    // transformers: [cjsToEsm()],
+    // transpiler: 'babel',
   }),
 
   commonjs({
-    // ignore: ['worker_threads'],
-    // include: [/node_modules/],
-    // namedExports: {
-    //   conf: ['Conf'],
-    // },
+    ignore: ['worker_threads'],
+    namedExports: {
+      lru_map: ['LRUMap'],
+    },
   }),
 
   sourceMaps(),
@@ -52,11 +40,11 @@ if (process.env.NODE_ENV === 'production') {
 export default {
   input: `src/${libraryName}.ts`,
   output: [{ file: pkg.main, format: 'cjs', sourcemap: 'inline' }],
-  treeshake: true,
+  // treeshake: true,
   watch: {
     include: 'src/**',
   },
-  external: builtin,
-  inlineDynamicImports: true,
+  external: [...builtinModules],
+  // inlineDynamicImports: true,
   plugins: plugins,
 };
