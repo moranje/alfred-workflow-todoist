@@ -412,7 +412,7 @@ node $node_flags alfred-workflow-todoist.js "{\"name\": \"readSettings\", \"args
 		<string></string>
 	</dict>
 	<key>version</key>
-	<string>5.8.4</string>
+	<string>6.0.0-alpha.1</string>
 	<key>webaddress</key>
 	<string>https://github.com/moranje/alfred-workflow-todoist</string>
 </dict>
