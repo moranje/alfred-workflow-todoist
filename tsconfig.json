@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "allowJs": true,
     "moduleResolution": "node",
     "target": "es2018",
     "module": "commonjs",
@@ -10,7 +11,7 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    // "resolveJsonModule": true,
+    "resolveJsonModule": true,
     "esModuleInterop": true,
     "sourceRoot": "/",
     "outDir": "dist/workflow",
