@@ -7,25 +7,27 @@ import { AlfredError, Errors, funnelError } from '@/lib/error';
 import { checkForWorkflowUpdate } from '@/lib/updater';
 import { ENV } from '@/lib/utils';
 
+async function main(): Promise<void | null> {
+  const call = getCurrentCall();
+
+  /**
+   * Updater.
+   */
+  if (call.name === 'parse' || call.name === 'read') {
+    await checkForWorkflowUpdate();
+  }
+
+  /**
+   * Command distribution.
+   */
+  return command(call);
+}
+
 /**
  * Make sure minimum node version is satisfied.
  */
 if (compareVersions.compare(process.version, ENV.requirements.nodejs, '>=')) {
-  (async (): Promise<void | null> => {
-    const call = getCurrentCall();
-
-    /**
-     * Updater.
-     */
-    if (call.name === 'parse' || call.name === 'read') {
-      await checkForWorkflowUpdate();
-    }
-
-    /**
-     * Command distribution.
-     */
-    return command(call);
-  })().catch(funnelError);
+  main().catch(funnelError);
 } else {
   funnelError(
     new AlfredError(
