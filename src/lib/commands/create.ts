@@ -24,6 +24,6 @@ export async function create(taskOptions: TodoistTaskOptions): Promise<void> {
   notification({
     subtitle: '✓ Happy days!',
     message: `Created: ${task.content}`,
-    url: `https://todoist.com/showTask?id=${task.id}`,
+    url: task.url,
   });
 }
