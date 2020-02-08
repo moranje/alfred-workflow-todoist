@@ -1,3 +1,10 @@
+# [6.0.0-alpha.3](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.2...v6.0.0-alpha.3) (2020-02-08)
+
+
+### Bug Fixes
+
+* alfred workflow version is the same as the release version again ([0ce67a3](https://github.com/moranje/alfred-workflow-todoist/commit/0ce67a37d97a6dc8df26e13165350f09c96a3786))
+
 # [6.0.0-alpha.2](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.1...v6.0.0-alpha.2) (2020-02-08)
 
 
