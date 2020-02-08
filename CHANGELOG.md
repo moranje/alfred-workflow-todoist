@@ -1,3 +1,16 @@
+# [6.0.0-alpha.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.8.4...v6.0.0-alpha.1) (2020-02-08)
+
+
+### Features
+
+* **project:** full rewrite ([2849c8a](https://github.com/moranje/alfred-workflow-todoist/commit/2849c8a081f4254610ac41125c79fed9a55e557d)), closes [#128](https://github.com/moranje/alfred-workflow-todoist/issues/128) [#126](https://github.com/moranje/alfred-workflow-todoist/issues/126) [#20](https://github.com/moranje/alfred-workflow-todoist/issues/20) [#124](https://github.com/moranje/alfred-workflow-todoist/issues/124) [#128](https://github.com/moranje/alfred-workflow-todoist/issues/128) [#126](https://github.com/moranje/alfred-workflow-todoist/issues/126) [#124](https://github.com/moranje/alfred-workflow-todoist/issues/124) [#20](https://github.com/moranje/alfred-workflow-todoist/issues/20)
+* **project:** provide a useful error as a list item when node.js is not installed ([e039157](https://github.com/moranje/alfred-workflow-todoist/commit/e0391577db34aa353fd1458698e7304a51821303))
+
+
+### BREAKING CHANGES
+
+* **project:** Improve string parsing, now requires id for project, labels and sections
+
 ## [5.8.4](https://github.com/moranje/alfred-workflow-todoist/compare/v5.8.3...v5.8.4) (2019-12-15)
 
 ### Bug Fixes
