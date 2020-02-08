@@ -1,13 +1,12 @@
 import { exec } from 'shelljs';
-import zip from 'bestzip';
+import { zip } from 'zip-a-folder';
 
 exec('npm run bump-version', { silent: true });
 
-zip({
-  source: '*',
-  destination: '"../Alfred Workflow Todoist.alfredworkflow"',
-  cwd: 'dist/workflow/',
-})
+zip(
+  `${process.cwd()}/dist/workflow`,
+  `${process.cwd()}/dist/Alfred Workflow Todoist.alfredworkflow`
+)
   .then(() => {
     console.log('all done!');
   })

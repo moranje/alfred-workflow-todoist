@@ -103,7 +103,6 @@
     "@typescript-eslint/parser": "2.19.0",
     "@wessberg/rollup-plugin-ts": "^1.2.15",
     "babel-jest": "^25.1.0",
-    "bestzip": "2.1.5",
     "chance": "^1.1.4",
     "colors": "1.4.0",
     "coveralls": "3.0.9",
@@ -136,7 +135,8 @@
     "shelljs": "0.8.3",
     "ts-node": "8.6.2",
     "tslib": "1.10.0",
-    "typescript": "3.7.5"
+    "typescript": "3.7.5",
+    "zip-a-folder": "0.0.11"
   },
   "engines": {
     "node": ">=10"
