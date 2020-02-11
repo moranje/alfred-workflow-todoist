@@ -1,5 +1,5 @@
 import { exec } from 'shelljs';
-import pkg from './package.json';
+import pkg from '../package.json';
 
 exec(
   `/usr/libexec/PlistBuddy -c "Set version ${pkg.version}" "dist/workflow/info.plist"`,
