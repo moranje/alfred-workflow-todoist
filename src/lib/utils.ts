@@ -39,7 +39,7 @@ const workflow: {
   readonly workflowTimestamp: string;
   readonly notifierPath: string;
 } = {
-  version: getEnv('workflow_version') ?? pkg.version,
+  version: pkg.version,
   uid: getEnv('workflow_uid'),
   bundleId: getEnv('workflow_bundleid'),
   workflowPath,
