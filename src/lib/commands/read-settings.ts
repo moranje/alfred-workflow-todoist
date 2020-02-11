@@ -12,7 +12,7 @@ import { Item, List } from '../workflow';
 
 const SETTINGS = Object.keys(settingsStore(ENV.meta.dataPath).store);
 const searcher = new FuzzySearch(
-  SETTINGS.filter(key => key !== 'uuid'),
+  SETTINGS.filter(key => key !== 'uuid' && key !== 'last_update'),
   [],
   {
     sort: true,
