@@ -27,7 +27,7 @@ export function getApi(): LocalTodoistRESTAPI {
   } catch (error) {
     if (error.name === 'InvalidToken') {
       throw new AlfredError(Errors.InvalidArgument, error.message, {
-        // isSafe: true,
+        isSafe: true,
         title: 'You need to set up a valid Todoist API token',
       });
     }
