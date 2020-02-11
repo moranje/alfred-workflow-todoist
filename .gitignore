@@ -13,3 +13,4 @@ alfred-workflow-todoist.js
 Alfred Workflow Todoist.alfredworkflow
 docs
 node_modules
+dist/
