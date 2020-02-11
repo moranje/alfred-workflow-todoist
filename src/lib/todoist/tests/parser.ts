@@ -3,7 +3,6 @@ import { ParsedTodoistTaskOptions } from '@types';
 import { parser } from '@/lib/todoist/parser';
 
 jest.mock('@/lib/stores/settings-store');
-jest.mock('@/lib/stores/update-store');
 
 type T = ParsedTodoistTaskOptions;
 

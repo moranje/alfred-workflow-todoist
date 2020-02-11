@@ -1,6 +1,5 @@
 /* eslint-disable jest/no-hooks */
 jest.mock('@/lib/stores/settings-store');
-jest.mock('@/lib/stores/update-store');
 jest.mock('@/lib/stores/cache-store');
 jest.mock('@/lib/workflow/notification');
 

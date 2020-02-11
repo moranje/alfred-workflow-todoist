@@ -7,7 +7,6 @@ import command from '@/lib/command';
 dotenv.config();
 
 jest.mock('@/lib/stores/settings-store');
-jest.mock('@/lib/stores/update-store');
 jest.mock('@/lib/todoist/local-rest-adapter/conf-cache');
 
 let stdoutSpy: jest.SpyInstance;

@@ -4,7 +4,6 @@ import { mockProcessStderr, mockProcessStdout } from 'jest-mock-process';
 import command from '@/lib/command';
 
 jest.mock('@/lib/stores/settings-store');
-jest.mock('@/lib/stores/update-store');
 jest.mock('@/lib/todoist/local-rest-adapter/conf-cache');
 
 let stdoutSpy: jest.SpyInstance;
