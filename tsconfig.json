@@ -7,7 +7,7 @@
     "lib": ["es2018"],
     "strict": true,
     "sourceMap": true,
-    "inlineSources": true,
+    "inlineSources": false,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,

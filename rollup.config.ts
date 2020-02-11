@@ -39,8 +39,8 @@ if (process.env.NODE_ENV === 'production') {
 
 export default {
   input: `src/${libraryName}.ts`,
-  output: [{ file: pkg.main, format: 'cjs', sourcemap: 'inline' }],
-  // treeshake: true,
+  output: [{ file: pkg.main, format: 'cjs', sourcemap: true }],
+  treeshake: true,
   watch: {
     include: 'src/**',
   },
