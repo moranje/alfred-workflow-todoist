@@ -12,10 +12,9 @@ function noop() {
 
 function copyFromTemp() {
   mkdirp.sync(`dist/workflow`);
-  cp(`${TEMP_FOLDER}/info.plist`, 'dist/workflow/info.plist').stderr;
-  cp(`${TEMP_FOLDER}/icon.png`, 'dist/workflow/icon.png').stderr;
-  cp(`${TEMP_FOLDER}/workflow.json`, 'dist/workflow/workflow.json').stderr;
-  cp(`${TEMP_FOLDER}/check-node.sh`, 'dist/workflow/check-node.sh').stderr;
+  cp(`${TEMP_FOLDER}/info.plist`, 'dist/workflow/info.plist');
+  cp(`${TEMP_FOLDER}/icon.png`, 'dist/workflow/icon.png');
+  cp(`${TEMP_FOLDER}/check-node.sh`, 'dist/workflow/check-node.sh');
   // cp('-R', `${TEMP_FOLDER}/images/`, 'dist/workflow/images/')
 }
 

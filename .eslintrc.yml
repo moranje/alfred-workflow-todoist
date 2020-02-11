@@ -61,7 +61,8 @@ rules:
         - update_checks
         - pre_releases
         - log_level
-  '@typescript-eslint/member-ordering':
+        - last_update
+  "@typescript-eslint/member-ordering":
     - warn
     - default:
         - signature

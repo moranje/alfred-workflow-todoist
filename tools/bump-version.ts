@@ -1,8 +1,5 @@
 import { exec } from 'shelljs';
-import { readFileSync } from 'fs';
-import writeJsonFile from 'write-json-file';
-
-const pkg = JSON.parse(readFileSync('package.json').toString());
+import pkg from './package.json';
 
 exec(
   `/usr/libexec/PlistBuddy -c "Set version ${pkg.version}" "dist/workflow/info.plist"`,
@@ -24,8 +21,3 @@ exec(
     silent: true,
   }
 );
-
-writeJsonFile('dist/workflow/workflow.json', {
-  version: pkg.version,
-  updated: new Date(),
-});

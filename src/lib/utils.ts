@@ -1,6 +1,7 @@
 /* eslint simple-import-sort/sort: 0 */
 import dotenv from 'dotenv';
 import macOsVersion from 'macos-version';
+import pkg from '@pkg';
 
 // Load .env file
 dotenv.config();
@@ -31,14 +32,14 @@ const requirements: {
 };
 
 const workflow: {
-  readonly version: Env;
+  readonly version: string;
   readonly uid: Env;
   readonly bundleId: Env;
   readonly workflowPath: string;
   readonly workflowTimestamp: string;
   readonly notifierPath: string;
 } = {
-  version: getEnv('workflow_version'),
+  version: getEnv('workflow_version') ?? pkg.version,
   uid: getEnv('workflow_uid'),
   bundleId: getEnv('workflow_bundleid'),
   workflowPath,

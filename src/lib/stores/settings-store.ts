@@ -33,8 +33,9 @@ export type Settings = {
   pre_releases: boolean;
   // TODO: replace with `error_tracking`
   anonymous_statistics: boolean;
-  uuid: string;
   log_level: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'silent';
+  last_update: string;
+  uuid: string;
 };
 
 let instance: Conf<Settings> | null = null;
@@ -122,9 +123,15 @@ export const settingsSchema: { [key: string]: JSONSchema } = {
     enum: ['trace', 'debug', 'info', 'warn', 'error', 'silent'],
   },
 
+  last_update: {
+    description: 'The time since last checked for workflow updates',
+    type: 'string',
+  },
+
   uuid: {
     description: 'This should be left unchanged',
     type: 'string',
+    readOnly: true,
     pattern:
       '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}',
     format: 'uuid',
@@ -147,8 +154,9 @@ function createStore(path: string): Conf {
       update_checks: 604800, // Week in seconds
       pre_releases: false,
       anonymous_statistics: true,
-      uuid: uuid(),
       log_level: 'error',
+      last_update: new Date(2000).toISOString(), // Random date long ago
+      uuid: uuid(),
     },
   });
 }

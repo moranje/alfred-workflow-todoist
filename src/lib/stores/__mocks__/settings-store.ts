@@ -8,8 +8,9 @@ const STORE: { [key: string]: string | number | boolean } = {
   update_checks: 604800, // Week in seconds
   pre_releases: false,
   anonymous_statistics: false,
-  uuid: '0092990d-5cd1-4c84-b2f7-dd6d1b53d44f',
   log_level: 'error',
+  last_update: new Date(2000).toISOString(), // Random date long ago
+  uuid: '0092990d-5cd1-4c84-b2f7-dd6d1b53d44f',
 };
 
 const map = new Map();
@@ -108,6 +109,11 @@ export const settingsSchema: { [key: string]: any } = {
     description: 'The amount of logging output',
     type: 'string',
     enum: ['trace', 'debug', 'info', 'warn', 'error', 'silent'],
+  },
+
+  last_update: {
+    description: 'The time since last checked for workflow updates',
+    type: 'string',
   },
 
   uuid: {

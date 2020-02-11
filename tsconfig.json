@@ -18,10 +18,11 @@
     "baseUrl": ".",
     "paths": {
       "@types": ["src/types"],
+      "@pkg": ["package.json"],
       "@/*": ["src/*"]
     },
     "typeRoots": ["node_modules/@types"]
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "package.json"],
   "exclude": ["**/__mocks__/**/*", "**/tests/**/*", "dist/"]
 }

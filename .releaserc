@@ -22,7 +22,7 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "npm run build:workflow"
+        "prepareCmd": "npm run build && npm run build:workflow"
       }
     ],
     "@semantic-release/changelog",

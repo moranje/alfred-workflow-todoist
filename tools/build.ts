@@ -10,7 +10,6 @@ const WHITE_LIST = [
   'dist/workflow/alfred-workflow-todoist.js.map',
   'dist/workflow/icon.png',
   'dist/workflow/info.plist',
-  'dist/workflow/workflow.json',
   'dist/workflow/check-node.sh',
 ];
 
