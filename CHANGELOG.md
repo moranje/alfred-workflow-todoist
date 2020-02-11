@@ -1,3 +1,11 @@
+# [6.0.0-alpha.4](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.3...v6.0.0-alpha.4) (2020-02-11)
+
+
+### Bug Fixes
+
+* updater not picking up new prereleases, please update manually ([fdcb793](https://github.com/moranje/alfred-workflow-todoist/commit/fdcb793369000b580217db4a58311816503bb5c3))
+* **project:** unhelpful error message when missing todoist token in settings ([5a0af91](https://github.com/moranje/alfred-workflow-todoist/commit/5a0af91b49b0c5b83ad73cb1fec768233e19df64))
+
 # [6.0.0-alpha.3](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.2...v6.0.0-alpha.3) (2020-02-08)
 
 
