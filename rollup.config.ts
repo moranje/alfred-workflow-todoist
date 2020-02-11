@@ -3,7 +3,9 @@ import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@wessberg/rollup-plugin-ts';
 // import { cjsToEsm } from '@wessberg/cjs-to-esm-transformer';
-import filesize from 'rollup-plugin-filesize';
+// import filesize from 'rollup-plugin-filesize';
+// import analyze from 'rollup-plugin-analyzer';
+// import visualizer from 'rollup-plugin-visualizer';
 import sourceMaps from 'rollup-plugin-sourcemaps';
 import { terser } from 'rollup-plugin-terser';
 import { builtinModules } from 'module';
@@ -29,9 +31,17 @@ let plugins = [
   }),
 
   sourceMaps(),
-
-  filesize(),
 ];
+
+if (process.env.NODE_ENV === 'development') {
+  plugins = [
+    ...plugins,
+    // visualizer({
+    //   sourceMaps: true,
+    //   open: true,
+    // }),
+  ];
+}
 
 if (process.env.NODE_ENV === 'production') {
   plugins = [...plugins, terser()];
