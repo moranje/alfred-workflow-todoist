@@ -7,6 +7,7 @@ const [, , arg] = process.argv;
 const WHITE_LIST = [
   'dist/workflow/notifier/terminal-notifier.app/Contents/MacOS/terminal-notifier',
   'dist/workflow/alfred-workflow-todoist.js',
+  'dist/workflow/alfred-workflow-todoist.js.map',
   'dist/workflow/icon.png',
   'dist/workflow/info.plist',
   'dist/workflow/workflow.json',

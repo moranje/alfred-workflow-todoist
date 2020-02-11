@@ -22,8 +22,7 @@
     [
       "@semantic-release/exec",
       {
-        "prepareCmd": "npm run build:workflow",
-        "publishCmd": "npx sentry-cli releases files ${nextRelease.version} upload-sourcemaps ./dist/workflow/alfred-workflow-todoist.js.map"
+        "prepareCmd": "npm run build:workflow"
       }
     ],
     "@semantic-release/changelog",
@@ -52,6 +51,12 @@
         ]
       }
     ],
-    "@eclass/semantic-release-sentry-releases"
+    "@eclass/semantic-release-sentry-releases",
+    [
+      "@semantic-release/exec",
+      {
+        "publishCmd": "./tools/sentry-release.sh ${nextRelease.version}"
+      }
+    ]
   ]
 }
