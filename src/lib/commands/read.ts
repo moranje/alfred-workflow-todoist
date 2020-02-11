@@ -14,7 +14,7 @@ import { parser } from '@/lib/todoist/parser';
 import { Item, List, workflowList } from '@/lib/workflow';
 import readTasksView from '@/lib/workflow/views/read-tasks';
 
-import { api, requestError } from '../todoist';
+import { getApi, requestError } from '../todoist';
 import { ENV } from '../utils';
 
 function assertNoComma(query: string): void | never {
@@ -33,10 +33,12 @@ function assertNoComma(query: string): void | never {
 
 async function getProjectById(id: number): Promise<string> {
   const [project] = (
-    await api.v1.project.findAll().catch(error => {
-      /* istanbul ignore next */
-      throw requestError(error);
-    })
+    await getApi()
+      .v1.project.findAll()
+      .catch(error => {
+        /* istanbul ignore next */
+        throw requestError(error);
+      })
   ).filter(project => project.id === id);
 
   return project.name;
@@ -44,10 +46,12 @@ async function getProjectById(id: number): Promise<string> {
 
 async function getLabelsByIds(ids: number[]): Promise<string> {
   const labels = (
-    await api.v1.label.findAll().catch(error => {
-      /* istanbul ignore next */
-      throw requestError(error);
-    })
+    await getApi()
+      .v1.label.findAll()
+      .catch(error => {
+        /* istanbul ignore next */
+        throw requestError(error);
+      })
   ).filter(label => ids.indexOf(label.id) !== -1);
 
   return labels.map(label => label.name).join(',');
@@ -55,10 +59,12 @@ async function getLabelsByIds(ids: number[]): Promise<string> {
 
 async function getSectionById(id: number): Promise<string> {
   const [section] = (
-    await api.v1.section.findAll().catch(error => {
-      /* istanbul ignore next */
-      throw requestError(error);
-    })
+    await getApi()
+      .v1.section.findAll()
+      .catch(error => {
+        /* istanbul ignore next */
+        throw requestError(error);
+      })
   ).filter(section => section.id === id);
 
   return section.name;
@@ -200,8 +206,8 @@ export async function read(query: string): Promise<void> {
   if (parsed.currentToken === 'section') return listSections(query, parsed);
   // TODO: implement filter search (should ignore other tokens)
 
-  const tasks = await api.v1.task
-    .query(['content'], parsed.content)
+  const tasks = await getApi()
+    .v1.task.query(['content'], parsed.content)
     .catch(error => {
       throw requestError(error);
     });

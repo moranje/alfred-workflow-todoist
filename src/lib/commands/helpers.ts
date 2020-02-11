@@ -7,7 +7,7 @@ import settingsStore from '@/lib/stores/settings-store';
 import { Item, List } from '@/lib/workflow';
 
 import { AlfredError, Errors } from '../error';
-import { api, requestError } from '../todoist';
+import { getApi, requestError } from '../todoist';
 import { ResourceName } from '../todoist/local-rest-adapter';
 import { ENV } from '../utils';
 
@@ -33,8 +33,8 @@ export function listRefreshItem(type: ResourceName): Item {
  * @returns An `List` object.
  */
 export async function listProjects(query: string): Promise<void> {
-  const projects = await api.v1.project
-    .query(['name'], query.replace(/^.*#/, ''))
+  const projects = await getApi()
+    .v1.project.query(['name'], query.replace(/^.*#/, ''))
     .catch(error => {
       throw requestError(error);
     });
@@ -61,8 +61,8 @@ export async function listProjects(query: string): Promise<void> {
  * @returns An `List` object.
  */
 export async function listLabels(query: string): Promise<void> {
-  const labels = await api.v1.label
-    .query(['name'], query.replace(/^.*@/, ''))
+  const labels = await getApi()
+    .v1.label.query(['name'], query.replace(/^.*@/, ''))
     .catch(error => {
       throw requestError(error);
     });
@@ -101,9 +101,11 @@ export async function listSections(
     );
   }
 
-  const sections = await api.v1.section.findAll().catch(error => {
-    throw requestError(error);
-  });
+  const sections = await getApi()
+    .v1.section.findAll()
+    .catch(error => {
+      throw requestError(error);
+    });
 
   const searcher = new FuzzySearch(
     sections.filter(section => section.project_id === parsed.project?.id),

@@ -1,5 +1,5 @@
 import { AlfredError, Errors } from '../error';
-import { api, requestError } from '../todoist';
+import { getApi, requestError } from '../todoist';
 import { ResourceName } from '../todoist/local-rest-adapter';
 import { notification } from '../workflow';
 
@@ -13,15 +13,15 @@ export async function refreshCache(type: ResourceName): Promise<void> {
   let adapter;
 
   if (type === 'task') {
-    adapter = api.v1.task;
+    adapter = getApi().v1.task;
   } else if (type === 'project') {
-    adapter = api.v1.project;
+    adapter = getApi().v1.project;
   } else if (type === 'label') {
-    adapter = api.v1.label;
+    adapter = getApi().v1.label;
   } else if (type === 'section') {
-    adapter = api.v1.section;
+    adapter = getApi().v1.section;
   } else if (type === 'comment') {
-    adapter = api.v1.comment;
+    adapter = getApi().v1.comment;
   } else {
     throw new AlfredError(
       Errors.InvalidArgument,

@@ -1,7 +1,7 @@
 import { TodoistTaskOptions } from 'todoist-rest-api';
 
 import { AlfredError, Errors } from '../error';
-import { api, requestError } from '../todoist';
+import { getApi, requestError } from '../todoist';
 import { notification } from '../workflow';
 
 /**
@@ -10,9 +10,11 @@ import { notification } from '../workflow';
  * @param taskOptions The task options.
  */
 export async function create(taskOptions: TodoistTaskOptions): Promise<void> {
-  const task = await api.v1.task.create(taskOptions).catch(error => {
-    throw requestError(error);
-  });
+  const task = await getApi()
+    .v1.task.create(taskOptions)
+    .catch(error => {
+      throw requestError(error);
+    });
 
   if (task.id == null) {
     throw new AlfredError(

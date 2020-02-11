@@ -15,7 +15,7 @@ interface Options {
   taskCacheTimeout?: number;
 }
 
-interface LocalTodoistRESTAPI {
+export interface LocalTodoistRESTAPI {
   [key: string]: LocalTodoistRESTAPIV1;
   v1: LocalTodoistRESTAPIV1;
 }
@@ -56,14 +56,20 @@ export default function todoist(
   }
 ): LocalTodoistRESTAPI {
   if (!/^[0-9A-Fa-f]{40}$/.test(apiKey)) {
-    throw new Error(
-      `Invalid API token. A token should be 40 characters long and exist of hexadecimals, was ${apiKey} (${apiKey.length} characters)`
+    throw Object.assign(
+      new TypeError(
+        `Invalid API token. A token should be 40 characters long and exist of hexadecimals, was ${apiKey} (${apiKey.length} characters)`
+      ),
+      { name: 'InvalidToken' }
     );
   }
 
   if (typeof cacheTimeout !== 'number' && cacheTimeout < 0) {
-    throw new Error(
-      `A cache timeout must be set and must not be a negative number`
+    throw Object.assign(
+      new TypeError(
+        `A cache timeout must be set and must not be a negative number`
+      ),
+      { name: 'InvalidCacheTimeout' }
     );
   }
 

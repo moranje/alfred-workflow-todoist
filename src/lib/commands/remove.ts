@@ -1,5 +1,5 @@
 import { AlfredError, Errors } from '../error';
-import { api, requestError } from '../todoist';
+import { getApi, requestError } from '../todoist';
 import { TodoistTask } from '../todoist/local-rest-adapter';
 import { notification } from '../workflow';
 
@@ -9,9 +9,11 @@ import { notification } from '../workflow';
  * @param task The `Task` object.
  */
 export async function remove(task: TodoistTask): Promise<void> {
-  const isSucces = await api.v1.task.close(task.id).catch(error => {
-    throw requestError(error);
-  });
+  const isSucces = await getApi()
+    .v1.task.close(task.id)
+    .catch(error => {
+      throw requestError(error);
+    });
 
   if (isSucces === false) {
     throw new AlfredError(
