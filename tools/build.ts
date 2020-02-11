@@ -30,10 +30,6 @@ if (process.env.NODE_ENV === 'production') {
   err = exec('npx rollup -c rollup.config.ts -w').stderr;
 }
 
-if (err) {
-  exec('ts-node tools/move-files.ts copyFromTemp', { silent: true });
-}
-
 mkdirp.sync('dist/workflow/notifier');
 exec(
   'curl -sSL https://github.com/julienXX/terminal-notifier/releases/latest/download/terminal-notifier-2.0.0.zip > terminal-notifier.zip',
@@ -45,7 +41,7 @@ exec('unzip terminal-notifier.zip -d dist/workflow/notifier', {
 rm('-rf', 'terminal-notifier.zip');
 rm('-rf', 'dist/src/*');
 
-exec('ts-node tools/move-files.ts copyFromTemp', { silent: true });
+exec('ts-node tools/move-files.ts copyAssets', { silent: true });
 
 let missing: string[] = [];
 WHITE_LIST.forEach((path: string) => {

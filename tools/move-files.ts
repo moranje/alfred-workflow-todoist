@@ -6,11 +6,11 @@ const TEMP_FOLDER = 'assets';
 
 function noop() {
   console.log(
-    'Please try: ts-node tools/move-files.ts [call]\n\n\tcall: copyToTemp | copyFromTemp'
+    'Please try: ts-node tools/move-files.ts [call]\n\n\tcall: copyAssets | storeAssets'
   );
 }
 
-function copyFromTemp() {
+function copyAssets() {
   mkdirp.sync(`dist/workflow`);
   cp(`${TEMP_FOLDER}/info.plist`, 'dist/workflow/info.plist');
   cp(`${TEMP_FOLDER}/icon.png`, 'dist/workflow/icon.png');
@@ -18,8 +18,14 @@ function copyFromTemp() {
   // cp('-R', `${TEMP_FOLDER}/images/`, 'dist/workflow/images/')
 }
 
-if (call === 'copyFromTemp') {
-  copyFromTemp();
+function storeAssets() {
+  cp('dist/workflow/info.plist', `${TEMP_FOLDER}/info.plist`);
+}
+
+if (call === 'copyAssets') {
+  copyAssets();
+} else if (call === 'storeAssets') {
+  storeAssets();
 } else {
   noop();
 }
