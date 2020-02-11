@@ -41,6 +41,15 @@ export type AlfredProperty =
   | 'match'
   | 'quicklookurl';
 
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace, no-redeclare
+  namespace NodeJS {
+    interface Global {
+      __rootdir__: string;
+    }
+  }
+}
+
 /**
  * Jest matchers.
  */

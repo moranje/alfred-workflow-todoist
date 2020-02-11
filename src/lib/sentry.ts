@@ -1,8 +1,8 @@
+import { RewriteFrames } from '@sentry/integrations';
 import * as Sentry from '@sentry/node';
 
 import settingsStore from '@/lib/stores/settings-store';
 
-import updateStore from './stores/update-store';
 import { ENV } from './utils';
 
 /**
@@ -18,6 +18,11 @@ export function init(): typeof Sentry | null {
       release: ENV.workflow.version,
       attachStacktrace: true,
       environment: process.env.NODE_ENV,
+      integrations: [
+        new RewriteFrames({
+          root: global.__rootdir__,
+        }),
+      ],
     });
 
     /* istanbul ignore next */

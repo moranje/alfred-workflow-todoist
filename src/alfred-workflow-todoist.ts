@@ -7,6 +7,9 @@ import { AlfredError, Errors, funnelError } from '@/lib/error';
 import { checkForWorkflowUpdate } from '@/lib/updater';
 import { ENV } from '@/lib/utils';
 
+// Needed for normalizing sentry paths
+global.__rootdir__ = __dirname || process.cwd();
+
 async function main(): Promise<void | null> {
   const call = getCurrentCall();
 
