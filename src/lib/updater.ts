@@ -1,4 +1,4 @@
-import compareVersions from 'compare-versions';
+import compare from 'compare-versions';
 import got from 'got';
 
 import { createCall } from '@/lib/cli-args';
@@ -6,64 +6,140 @@ import settingsStore from '@/lib/stores/settings-store';
 import { ENV } from '@/lib/utils';
 import { Item, workflowList } from '@/lib/workflow';
 
-import updateStore from './stores/update-store';
+// import { createLogger } from './logger';
 
-// TODO: Add decent testing for updater, as it must not break
+export interface Release {
+  url: string;
+  assets_url: string;
+  html_url: string;
+  id: number;
+  tag_name: string;
+  target_commitish: string;
+  name: string;
+  prerelease: boolean;
+  created_at: string;
+  published_at: string;
+  assets?: (Asset | null)[] | null;
+  body: string;
+}
+export interface Asset {
+  url: string;
+  id: number;
+  name: string;
+  label: string;
+  state: string;
+  size: number;
+  download_count: number;
+  created_at: string;
+  updated_at: string;
+  browser_download_url: string;
+}
 
-export const GITHUB_PACKAGE_URL =
-  'https://raw.githubusercontent.com/moranje/alfred-workflow-todoist/master/package.json';
+const RELEASES_URL =
+  'https://api.github.com/repos/moranje/alfred-workflow-todoist/releases';
 
-/**
- * Check for workflow update on Github.
- */
-export async function checkForWorkflowUpdate(): Promise<void> {
-  const timePassed =
-    new Date().getTime() - new Date(updateStore().get('updated')).getTime();
+// function assertUpdateCheckPossible(): void | never {
+//   'assert has github releases';
 
-  if (
-    timePassed <
-    settingsStore(ENV.meta.dataPath).get('update_checks') *
-      1000 /* Milliseconds */
-  ) {
-    return;
+//   'assert valid version';
+
+//   'assert has settings store';
+//   'assert valid update checks';
+//   'assert valid pre_releases';
+//   'assert valid last_update';
+// }
+
+function getReleases(
+  releases: Release[]
+): { latest: Release | undefined; prerelease: Release | undefined } {
+  let latest, prerelease;
+  for (const [, release] of releases.entries()) {
+    if (release.prerelease === true && !prerelease) {
+      prerelease = release;
+    }
+
+    if (release.prerelease === false && !latest) {
+      latest = release;
+    }
   }
 
-  const { body: remote } = await got(GITHUB_PACKAGE_URL, {
+  return { latest, prerelease };
+}
+
+function isUpdateCheckNeeded(): boolean {
+  const now = Date.now();
+  // TODO: needs guard and fallback
+  const lastUpdate = settingsStore(ENV.meta.dataPath).get('last_update') ?? now;
+  // TODO: needs guard and fallback
+  const updateInterval =
+    settingsStore(ENV.meta.dataPath).get('update_checks') *
+    1000; /* Milliseconds */
+  const timePassed = now - new Date(lastUpdate).getTime();
+
+  // Do not keep nagging
+  // settingsStore(ENV.meta.dataPath).set('last_update', new Date().toISOString());
+
+  if (timePassed > updateInterval) return true;
+
+  return false;
+}
+
+function addRelease(release: Release, current: string): void {
+  const [workflow] = release.assets || [];
+
+  if (workflow) {
+    workflowList.addItem(
+      new Item({
+        arg: createCall({
+          name: 'openUrl',
+          args: workflow.browser_download_url,
+        }),
+        title: `Download workflow update`,
+        subtitle: `The latest version is ${release.tag_name} you are on v${current}`,
+        quicklookurl: release.html_url,
+      })
+    );
+    workflowList.addItem(
+      new Item({
+        arg: createCall({
+          name: 'openUrl',
+          args: release.html_url,
+        }),
+        title: `Open changelog`,
+        subtitle: `See what's changed in the latest version`,
+        quicklookurl: release.html_url,
+      })
+    );
+  }
+}
+
+/**
+ *
+ */
+export async function checkForWorkflowUpdate(): Promise<void> {
+  if (isUpdateCheckNeeded() === false) return;
+  // const all = assertUpdateCheckPossible();
+
+  // TODO: needs guard and fallback
+  const { body: releases } = await got(RELEASES_URL, {
     responseType: 'json',
   });
 
-  // No alpha en beta updates bij default
-  if (/.*(?:alpha|beta).*/.test(remote.version)) {
-    if (settingsStore(ENV.meta.dataPath).get('pre_releases') === false) return;
+  const { latest, prerelease } = getReleases(releases);
+  // TODO: needs guard and fallback
+  const hasPrereleases = settingsStore(ENV.meta.dataPath).get('pre_releases');
+
+  if (
+    hasPrereleases === true &&
+    prerelease &&
+    /* current < prerelease */
+    compare(ENV.workflow.version, prerelease.tag_name) === -1
+  ) {
+    return addRelease(prerelease, ENV.workflow.version);
   }
 
-  const currentVersion = updateStore().get('version');
-  if (compareVersions.compare(remote.version, currentVersion, '>')) {
-    workflowList.addItem(
-      new Item({
-        arg: createCall({
-          name: 'openUrl',
-          args:
-            'https://github.com/moranje/alfred-workflow-todoist/releases/latest/download/Alfred.Workflow.Todoist.alfredworkflow',
-        }),
-        title: `Download workflow update`,
-        subtitle: `The latest version is v${remote.version} you are on v${currentVersion}`,
-        quicklookurl:
-          'https://github.com/moranje/alfred-workflow-todoist/blob/master/CHANGELOG.md',
-      })
-    );
-    workflowList.addItem(
-      new Item({
-        arg: createCall({
-          name: 'openUrl',
-          args:
-            'https://github.com/moranje/alfred-workflow-todoist/blob/master/CHANGELOG.md',
-        }),
-        title: `Open changelog`,
-        subtitle: `See what's changed in the current version`,
-        quicklookurl:
-          'https://github.com/moranje/alfred-workflow-todoist/blob/master/CHANGELOG.md',
-      })
-    );
+  /* current < latest */
+  if (latest && compare(ENV.workflow.version, latest.tag_name) === -1) {
+    return addRelease(latest, ENV.workflow.version);
   }
 }
