@@ -77,7 +77,7 @@ function isUpdateCheckNeeded(): boolean {
   const timePassed = now - new Date(lastUpdate).getTime();
 
   // Do not keep nagging
-  // settingsStore(ENV.meta.dataPath).set('last_update', new Date().toISOString());
+  settingsStore(ENV.meta.dataPath).set('last_update', new Date().toISOString());
 
   if (timePassed > updateInterval) return true;
 
