@@ -11,6 +11,19 @@ import { ENV } from '../utils';
 import { Item, List } from '../workflow';
 
 const SETTINGS = Object.keys(settingsStore(ENV.meta.dataPath).store);
+const ERRORS: { [key: string]: string } = {
+  token: 'Should be 40 characters and consist only of hexadecimals',
+  language:
+    'Must be: da, de, en, es, fi, fr, it, ja, ko, nl, pl, pt_BR, ru, sv, tr, zh_CN or zh_TW',
+  max_items: 'Must be a number between 1 and 20',
+  cache_timeout: 'Must be a number between 1 and 31556926 (year)',
+  cache_timeout_tasks: 'Must be a number between 1 and 31556926 (year)',
+  filter_wrapper: 'Must be either ", \' or `',
+  update_checks: 'Must be a number between 1 and 31556926 (year)',
+  pre_releases: 'Must be either true or false',
+  anonymous_statistics: 'Must be either true or false',
+  log_level: 'Must be either trace, debug, info, warn, error or silent',
+};
 const searcher = new FuzzySearch(
   SETTINGS.filter(key => key !== 'uuid' && key !== 'last_update'),
   [],
@@ -53,12 +66,15 @@ function getValue(key: keyof Settings, value: string): void {
       }),
     ];
   } catch (error) {
+    let message = error.message.replace('Config schema violation: ', '');
+    if (ERRORS[key.toString()]) message = ERRORS[key.toString()];
+
     /* istanbul ignore next: validation by ajv, no need to test */
-    throw new AlfredError(
-      Errors.InvalidSetting,
-      `${error.message.replace('Config schema violation: ', '')} (show docs)`,
-      { isSafe: true, title: `SET(✗): ${key}`, error }
-    );
+    throw new AlfredError(Errors.InvalidSetting, `${message} (show docs)`, {
+      isSafe: true,
+      title: `SET(✗): ${key}`,
+      error,
+    });
   } finally {
     settingsStore(ENV.meta.dataPath).set(key, oldValue);
   }

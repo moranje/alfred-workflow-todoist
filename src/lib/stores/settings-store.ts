@@ -98,6 +98,8 @@ export const settingsSchema: { [key: string]: JSONSchema } = {
     description:
       'Configure the filter string wrapper for tasks, (must be \', " or `)',
     type: 'string',
+    pattern: '["\'`]',
+    maxLength: 1,
   },
 
   update_checks: {
