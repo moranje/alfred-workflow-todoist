@@ -1,3 +1,11 @@
+# [6.0.0-alpha.5](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.4...v6.0.0-alpha.5) (2020-02-12)
+
+
+### Bug Fixes
+
+* updater not storing last update timestamp ([35ff532](https://github.com/moranje/alfred-workflow-todoist/commit/35ff5328bd4bc789a7929e1c30fe03694c2c305d))
+* **commands:** [#151](https://github.com/moranje/alfred-workflow-todoist/issues/151) don't rely on alfred input filtering, remove uids ([92d9ac4](https://github.com/moranje/alfred-workflow-todoist/commit/92d9ac44d58761ea74216f54eea83a73101e7015))
+
 # [6.0.0-alpha.4](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.3...v6.0.0-alpha.4) (2020-02-11)
 
 
