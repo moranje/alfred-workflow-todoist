@@ -294,7 +294,7 @@ node $node_flags alfred-workflow-todoist.js "{\"name\": \"parse\", \"args\": \"$
 				<key>argumenttype</key>
 				<integer>1</integer>
 				<key>escaping</key>
-				<integer>36</integer>
+				<integer>38</integer>
 				<key>keyword</key>
 				<string>todo:setting</string>
 				<key>queuedelaycustom</key>
