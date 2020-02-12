@@ -217,7 +217,7 @@ export class Item {
     quicklookurl = void 0,
   }: Item) {
     Object.assign(this, {
-      uid: uid || md5(title + subtitle),
+      uid,
       title,
       subtitle,
       icon,
