@@ -1,12 +1,17 @@
-[![Build Status](https://travis-ci.org/moranje/alfred-workflow-todoist.svg?branch=master)](https://travis-ci.org/moranje/alfred-workflow-todoist)
-[![Coverage Status](https://coveralls.io/repos/github/moranje/alfred-workflow-todoist/badge.svg)](https://coveralls.io/github/moranje/alfred-workflow-todoist) ![](https://img.shields.io/librariesio/github/moranje/alfred-workflow-todoist.svg) [![CodeFactor](https://www.codefactor.io/repository/github/moranje/alfred-workflow-todoist/badge)](https://www.codefactor.io/repository/github/moranje/alfred-workflow-todoist) ![GitHub Releases (by Asset)](https://img.shields.io/github/downloads/moranje/alfred-workflow-todoist/latest/Alfred.Workflow.Todoist.alfredworkflow.svg)
+[![Build
+Status](https://travis-ci.org/moranje/alfred-workflow-todoist.svg?branch=alpha)](https://travis-ci.org/moranje/alfred-workflow-todoist)
+![Coveralls github branch](https://img.shields.io/coveralls/github/moranje/alfred-workflow-todoist/alpha)
+[![CodeFactor](https://www.codefactor.io/repository/github/moranje/alfred-workflow-todoist/badge/alpha)](https://www.codefactor.io/repository/github/moranje/alfred-workflow-todoist/overview/alpha)
+![GitHub Pre-Releases (by
+Asset)](https://img.shields.io/github/downloads-pre/moranje/alfred-workflow-todoist/latest/Alfred.Workflow.Todoist.alfredworkflow)
+![GitHub](https://img.shields.io/github/license/moranje/alfred-workflow-todoist) ![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/moranje/alfred-workflow-todoist)
 
 # ALFRED TODOIST WORKFLOW
 
 Add and search [Todoist](https://todoist.com/) tasks straight from [Alfred](https://www.alfredapp.com). It uses Todoist stable `v1` [REST API](https://developer.todoist.com/rest/v1).
 
-| [Getting started](#getting-started) | [Installation](#installation) | [Configuration](#configuration) | [Usage](#usage) | [Contributing](#contributing) |
-| :---------------------------------: | :---------------------------: | :-----------------------------: | :-------------: | :---------------------------: |
+| [Getting started](#getting-started) | [Installation](#installation) | [Usage](#usage) | [Configuration](#configuration) | [Contributing](#contributing) |
+| :---------------------------------: | :---------------------------: | :-------------: | :-----------------------------: | :---------------------------: |
 
 
 ## Getting started
@@ -20,7 +25,7 @@ Note that the workflow expects node to be installed in the default location(s), 
 
 ## Installation
 
-[Download](https://github.com/moranje/alfred-workflow-todoist/releases/latest/download/Alfred.Workflow.Todoist.alfredworkflow) and import workflow.
+[Download](https://github.com/moranje/alfred-workflow-todoist/releases) and import workflow.
 
 ### Non-standard node installation
 
@@ -71,14 +76,60 @@ If the workflow doesn't work as expected, perform the following to get a clue ab
 
 If the error messages outputs node errors, either make sure you have the appropriate node version or follow the steps [above](#Non---standard-node-installation) to enable the workflow with a non-standard node installation.
 
+## Usage
+
+### Task string
+
+| Name       | Notation                   | Explanation                                                                                                                                                             |
+| ---------- | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| _task_     | Any text except `,`        | The task title.                                                                                                                                                         |
+| _project_  | Either `#personal<1>`      | Use either the hashtag notation or bracket notation if the project name has spaces in it. The project name is case sensitive.                                           |
+| _label_    | `@15_min<2>`               | [Label](https://get.todoist.help/hc/en-us/articles/205195042) names can't contain any whitespace characters. _This is a premium feature_.                               |
+| _priority_ | Either `p2` or `!!2`       | A value between `1` (urgent) and `4` (normal)                                                                                                                           |
+| _section_  | `#personal<1>::section<4>` | A project [section](https://get.todoist.help/hc/en-us/articles/360003788739). Can only come after parent project.                                                       |
+| _filter_   | `"@15_min #personal"`      | Filter through Todoist. [Read the docs](https://get.todoist.help/hc/en-us/articles/205248842-Filters). _This is a premium feature_. \*NOT implemented yet in the alpha. |
+| _date_     | A date string              | See the [Todoist documentation](https://support.todoist.com/hc/en-us/articles/205325931-Dates-and-Times) for supported date formats.                                    |
+
+### Search for tasks
+
+`todos {task_string}`
+
+Any search query one character or longer. Uses fuzzy search to find the tasks.
+`Projects`, `labels`, `priorities` and `sections` can also be used to filter
+tasks further.
+
+Example: `todos car` => returns (because of fuzzy search):
+
+- _Rent_ **car**
+- _New_ **ca**_t_ **r**_ecipe's_
+- **C**_ut Gr_**a**_s tomo_**r**_row_
+
+### Create task
+
+`todo {task_string}`
+
+Example: _todo Get things done, tomorrow @ 9_
+Example: _todo Build tree house #home !!2 @15min, tomorrow @ 9_
+
+_*Important*_
+
+For date parsing the work the date needs to be the only thing after the comma.
+
+The reason for this is that multilanguage date string parsing is hard, and Todoist has already solved this problem. But in order to have Todoist read the date the workflow needs to present it a string that holds just the date. The workflow does this by having the date string between a comma and the end of the string.
+
 ## Configuration
 
-| Name                   | Notation                                                                                          | Explanation                                                                                                                               |
-| ---------------------- | ------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| _token_                | `^[0-9a-fA-F]{40}$` (default empty)                                                               | The todoist API token.                                                                                                                    |
-| _language_             | `en`, `da`, `pl`, `zh`, `ko`, `de`, `pt`, `ja`, `it`, `fr`, `sv`, `ru`, `es`, `nl` (default `en`) | The language for natural language date processing (by todoist) and to calculate time to complete a task.                                  |
-| _cache_timeout_        | A positive number (default `3600`, an hour)                                                       | The time (in seconds) until the cache is refreshed (until that time todoist information is stored locally to make things a little faster) |
-| _anonymous_statistics_ | `true` or `false` (default `true`)                                                                | Doesn't do much at the moment but I intent to use it to track installs                                                                    |
+| Name                   | Input                                                                                                                        | Explanation                                                                                                                                                                                                                                        |
+| ---------------------- | ---------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| _token_                | `^[0-9a-fA-F]{40}$` (default empty)                                                                                          | The todoist API token.                                                                                                                                                                                                                             |
+| _language_             | `da`, `de`, `en`, `es`, `fi`, `fr`, `it`, `ja`, `ko`, `nl`, `pl`, `pt_BR`, `ru`, `sv`, `tr`, `zh_CN`, `zh_TW` (default `en`) | The language for natural language date processing (by todoist) and to calculate time to complete a task.                                                                                                                                           |
+| _cache_timeout_        | A positive number (default 2629743, a month)                                                                                 | The time (in seconds) for the cache to timeout. Affects all other resources (`projects`, `labels` and `sections`).                                                                                                                                 |
+| _cache_timeout_tasks_  | A positive number (default 604800, a week)                                                                                   | the time (in seconds) for the `tasks` cache to timeout.                                                                                                                                                                                            |
+| _filter_wrapper_       | Either `"`, `'` or `` ` `` (defaults to `"`).                                                                                | The character to enclose search filters in. Adjust this if you really need to use quotes in your tasks.                                                                                                                                            |
+| _update_checks_        | A positive number (default 604800, a week)                                                                                   | The time (in seconds). To check for a new workflow update.                                                                                                                                                                                         |
+| _pre_releases_         | Either `true` or `false`. Defaults to `false`                                                                                | Wether to receive prerease (`alpha` and `beta`) update notifications                                                                                                                                                                               |
+| _anonymous_statistics_ | `true` or `false` (default `true`)                                                                                           | This is used to track erros through Sentry.io. When an unexpected error happens in the workflow it is stored in sentry. Extra measures are in place to make sure personal information (like the api token or task details) are not send to Sentry. |
+| _log_level_            | Either `silent`, `error`, `warn`, `info`, `debug` or `trace`. Defaults to `error`.                                           | Get more info in the logs.                                                                                                                                                                                                                         |
 
 `todo:setting token {api token}`
 
@@ -95,43 +146,6 @@ Example: _todo:setting cache_timeout 13_
 `todo:setting anonymous_statistics {true or false}`
 
 Example: _todo:setting anonymous_statistics false_
-
-## Usage
-
-| Name       | Notation                                | Explanation                                                                                                                          |
-| ---------- | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| _task_     | Any text except `,`                     | The task title.                                                                                                                      |
-| _date_     | A date string                           | See the [Todoist documentation](https://support.todoist.com/hc/en-us/articles/205325931-Dates-and-Times) for supported date formats. |
-| _project_  | Either `#personal` or `#[next actions]` | Use either the hashtag notation or bracket notation if the project name has spaces in it. The project name is case sensitive.        |
-| _label_    | `@label`                                | Label names can't contain any whitespace characters. Labels are case insensitive.                                                    |
-| _priority_ | Either `p2` or `!!2`                    | A value between `1` (urgent) and `4` (normal)                                                                                        |
-
-### Search for tasks
-
-`todos {query}`
-
-### Query
-
-Any search query one character or longer. Uses fuzzy search to find the tasks.
-
-Example: `todos car` => returns (because of fuzzy search):
-
-- _Rent_ **car**
-- _New_ **ca**_t_ **r**_ecipe's_
-- **C**_ut Gr_**a**_s tomo_**r**_row_
-
-### Create task
-
-`todo {task}, {date}`
-
-Example: _todo Get things done, tomorrow @ 9_
-Example: _todo Build tree house #home !!2 @15min, tomorrow @ 9_
-
-_*Important*_
-
-For date parsing the work the date needs to be the only thing after the comma.
-
-The reason for this is that multilanguage date string parsing is hard, and Todoist has already solved this problem. But in order to have Todoist read the date the workflow needs to present it a string that holds just the date. The workflow does this by having the date string between a comma and the end of the string.
 
 ## Documentation
 
