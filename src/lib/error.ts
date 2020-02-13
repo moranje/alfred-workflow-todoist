@@ -76,18 +76,18 @@ function errorDetail(error: Error | AlfredError): string {
     [
       'ALFRED WORKFLOW TODOIST',
       '----------------------------------------',
-      `title: ${title}`,
-      `description: ${description}`,
+      `_Title_: ${title}`,
+      `_Description_: ${description}`,
       '',
-      `os: macOS ${ENV.meta.osx}`,
-      `query: ${call.args}`,
-      `node.js: ${ENV.meta.nodejs}`,
-      `alfred: ${ENV.meta.alfred}`,
-      `workflow: ${ENV.workflow.version}`,
-      `workflow-id: ${ENV.workflow.uid}`,
+      `_OS_: macOS ${ENV.meta.osx}`,
+      `_Query_: ${call.args}`,
+      `_Node.js_: ${ENV.meta.nodejs}`,
+      `_Alfred_: ${ENV.meta.alfred}`,
+      `_Workflow_: ${ENV.workflow.version}`,
+      `_Workflow-id_: ${ENV.workflow.uid}`,
       // @ts-ignore: I can't think of a way for the stack property to be
       // undefined. I figured this a problem with type definitions.
-      `\nStack: ${cleanStack(error.stack, { pretty: true })}`,
+      `\n_Stack_: ${cleanStack(error.stack)}`,
     ]
       .join('\n')
       // Hide token from log by default
@@ -132,7 +132,7 @@ function createIssueLink(error: Error): string {
       '',
       errorDetail(error),
     ].join('\n'),
-    title: error.stack?.split('\n')[0],
+    title: '[Bug] ' + error.stack?.split('\n')[0],
   });
 }
 
