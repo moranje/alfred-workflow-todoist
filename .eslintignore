@@ -1,0 +1,10 @@
+
+/dist/
+/coverage/
+**/tests/**
+grammar.ts
+cz-config.js
+tools
+dist/
+tests/
+__mocks__/

@@ -1,8 +1,14 @@
 {
-  "**/*.{ts,js,json,md,yml}": [
-    "prettier --write"
+  "**/*.{ts,js,json,yml}": [
+    "npm run lint:prettier"
+  ],
+  "*.md": [
+    "npm run lint:markdownlint",
+    "npm run lint:prettier"
   ],
   "src/**/*.{ts,js}": [
-    "eslint --fix"
+    "npm run lint:eslint",
+    "npm run lint:prettier",
+    "npm run test:unit:file"
   ]
 }

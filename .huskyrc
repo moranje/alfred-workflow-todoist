@@ -1,6 +1,5 @@
 {
   "hooks": {
-    "pre-commit": "tsc --noEmit && lint-staged",
-    "post-checkout": "rimraf node_modules && npm install --no-audit"
+    "pre-commit": "PRE_COMMIT=true tsc --noEmit && lint-staged"
   }
 }

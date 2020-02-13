@@ -1,16 +1,35 @@
-.awcache
+# OS Files
 .DS_Store
-.idea
-.nyc_output
+Thumbs.db
+
+# Dependencies
+node_modules/
+
+# Caches
 .rpt2_cache
-.env
-*.log
-cache
-compiled
-coverage
+
+# Symlinks
 data
-alfred-workflow-todoist.js
-Alfred Workflow Todoist.alfredworkflow
-docs
-node_modules
-dist/
+cache
+
+# Dev/Build Artifacts
+/dist/
+/coverage/
+.nyc_output
+
+# Local Env Files
+.env
+
+# Log Files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Unconfigured Editors
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw*
