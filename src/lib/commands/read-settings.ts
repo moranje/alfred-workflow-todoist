@@ -104,7 +104,7 @@ function getKeys(key: keyof Settings): void {
  * @param query A settings query string.
  */
 export async function readSettings(query: string): Promise<void> {
-  const [key, value] = query.split(' ');
+  const [key, value] = query.trim().split(/ +/);
 
   if (value != null) return getValue(key as keyof Settings, value);
 
