@@ -39,7 +39,7 @@ async function getProjectById(id: number): Promise<string> {
         /* istanbul ignore next */
         throw requestError(error);
       })
-  ).filter(project => project.id === id);
+  ).filter(project => project.id === id) ?? [{}];
 
   return project.name;
 }
@@ -65,7 +65,7 @@ async function getSectionById(id: number): Promise<string> {
         /* istanbul ignore next */
         throw requestError(error);
       })
-  ).filter(section => section.id === id);
+  ).filter(section => section.id === id) ?? [{}];
 
   return section.name;
 }
@@ -82,7 +82,6 @@ async function subtitleDisplayList(task: TodoistTask): Promise<string[]> {
   if (task.priority && task.priority > 1) {
     options.push(`\u203C ${5 - task.priority}`);
   }
-  // TODO: replace with time passed in user locale
   if (task.due?.date) options.push(`\u29D6 ${task.due?.date}`);
 
   return options;
@@ -204,7 +203,6 @@ export async function read(query: string): Promise<void> {
   if (parsed.currentToken === 'label') return listLabels(query);
   if (parsed.currentToken === 'priority') return listPriorities(query);
   if (parsed.currentToken === 'section') return listSections(query, parsed);
-  // TODO: implement filter search (should ignore other tokens)
 
   const tasks = await getApi()
     .v1.task.query(['content'], parsed.content)
