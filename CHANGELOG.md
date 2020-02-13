@@ -1,3 +1,11 @@
+# [6.0.0-alpha.6](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.5...v6.0.0-alpha.6) (2020-02-13)
+
+
+### Bug Fixes
+
+* **commands:** error when trying to retrieve a non existent project ([42e0009](https://github.com/moranje/alfred-workflow-todoist/commit/42e0009d794f9ab6c62002b0e6d8163b5ca41fa9))
+* **settings:** [#152](https://github.com/moranje/alfred-workflow-todoist/issues/152) settings break with multiple consecutive spaces ([b3f2f2a](https://github.com/moranje/alfred-workflow-todoist/commit/b3f2f2a678e61d30a490d23e84028f1d6efe1e6d))
+
 # [6.0.0-alpha.5](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.4...v6.0.0-alpha.5) (2020-02-12)
 
 
