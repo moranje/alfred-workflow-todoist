@@ -15,7 +15,7 @@ node_js:
   - 12
   - 10
 script:
-  - npm run build && npm run test:prod
+  - run-s build test
 after_success:
   - npm run report-coverage
   - npm run semantic-release

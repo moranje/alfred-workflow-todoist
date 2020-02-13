@@ -40,14 +40,13 @@
     "setup:dev": "ts-node tools/setup.ts",
     "start": "rollup -c rollup.config.ts -w",
     "test:debug": "node --inspect-brk node_modules/.bin/jest --no-cache --watch --runInBand",
-    "test:prod": "NODE_ENV=production npm run test -- --coverage --no-cache",
     "test:ui": "npx majestic",
     "test:unit": "jest",
     "test:unit:file": "npm run test:unit -- --findRelatedTests --passWithNoTests",
     "test:watch": "jest --watch",
     "test:unit:watch": "npm run test:unit -- --watch --notify --notifyMode change",
     "test:unit:ci": "npm run test:unit -- --coverage --ci",
-    "test": "npm run lint && npm run test:unit"
+    "test": "NODE_ENV=production run-s lint test:unit:ci"
   },
   "config": {
     "commitizen": {
