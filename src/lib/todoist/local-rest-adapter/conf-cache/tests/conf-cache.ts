@@ -1,16 +1,47 @@
 /* eslint-disable jest/no-hooks */
-jest.mock('@/lib/todoist/local-rest-adapter/conf-cache');
-
 import { CacheStore } from '@/lib/todoist/local-rest-adapter/conf-cache';
+import { LOCAL_FIXTURES } from '@/tests/helpers/fixtures';
+import fs from 'fs';
+import { spyOnImplementing } from 'jest-mock-process';
 
-// TODO: mock fs.writeWileSync()
+// jest.mock('write-file-atomic', (path: string, data: any) => {});
+// let fsMock = spyOnImplementing(fs, 'writeFileSync', (...args: any) => args);
 
-let store;
+let store = new CacheStore({
+  cwd: 'src/tests/stores',
+  configName: 'cache',
+  cacheTimeout: 100,
+});
 
 describe('unit: Cache timestamp store', () => {
   beforeEach(() => {
-    store = new CacheStore({});
+    store.reset();
+    store.set('TASK', LOCAL_FIXTURES.tasks);
   });
 
-  it.todo('should test something');
+  it('.get()', () => {
+    expect.assertions(2);
+
+    expect(store.get('<missing>')).toBeUndefined();
+    expect(store.get('TASK')).toEqual(LOCAL_FIXTURES.tasks);
+  });
+
+  it('.set()', () => {
+    expect.assertions(2);
+    store.set('ITEM', 'Item');
+    let cache = store.get('_cache');
+
+    expect(store.get('ITEM')).toBe('Item');
+    expect(cache).toBe(3);
+  });
+
+  it.todo('.has()');
+
+  it.todo('.reset()');
+
+  it.todo('.isExipred()');
+
+  // afterAll(() => {
+  //   fsMock.mockRestore();
+  // });
 });

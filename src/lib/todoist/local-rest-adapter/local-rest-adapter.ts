@@ -83,7 +83,7 @@ export default class LocalRESTAdapter<
    * @returns The cached resource.
    */
   peekAll(): Store[Name] {
-    return this.store.get(this.type);
+    return this.store.get(this.type) ?? [];
   }
 
   /**
@@ -127,7 +127,7 @@ export default class LocalRESTAdapter<
   async findAll(options?: any): Promise<GetResourceByName<Name>[]> {
     const cache = this.peekAll() as GetResourceByName<Name>[];
 
-    if (cache != null && !options?.skipCache) return cache;
+    if (cache.length > 0 && !options?.skipCache) return cache;
 
     const remote = await super.findAll(options);
     if (!equal(remote, this.store.get(this.type))) {
