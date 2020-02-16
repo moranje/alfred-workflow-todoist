@@ -1,5 +1,27 @@
+import formatDistance from 'date-fns/formatDistance';
+import {
+  da,
+  de,
+  enUS,
+  es,
+  fi,
+  fr,
+  it,
+  ja,
+  ko,
+  nl,
+  pl,
+  ptBR,
+  ru,
+  sv,
+  tr,
+  zhCN,
+  zhTW,
+} from 'date-fns/locale';
+import parseISO from 'date-fns/parseISO';
 import { TodoistTask } from 'todoist-rest-api';
 
+import { getApi, requestError } from '../todoist';
 import { createCall } from '@/lib/cli-args';
 import {
   listLabels,
@@ -14,8 +36,25 @@ import { parser } from '@/lib/todoist/parser';
 import { Item, List, workflowList } from '@/lib/workflow';
 import readTasksView from '@/lib/workflow/views/read-tasks';
 
-import { getApi, requestError } from '../todoist';
-import { ENV } from '../utils';
+const LOCALES = {
+  da,
+  de,
+  en: enUS,
+  es,
+  fi,
+  fr,
+  it,
+  ja,
+  ko,
+  nl,
+  pl,
+  pt_BR: ptBR,
+  ru,
+  sv,
+  tr,
+  zh_CN: zhCN,
+  zh_TW: zhTW,
+};
 
 function assertNoComma(query: string): void | never {
   const index = query.indexOf(',');
@@ -72,6 +111,7 @@ async function getSectionById(id: number): Promise<string> {
 
 async function subtitleDisplayList(task: TodoistTask): Promise<string[]> {
   const options = [];
+  const due = task.due?.datetime ?? task.due?.date;
 
   if (task.section_id) {
     options.push(`\u00A7 ${await getSectionById(task.section_id)}`);
@@ -82,7 +122,14 @@ async function subtitleDisplayList(task: TodoistTask): Promise<string[]> {
   if (task.priority && task.priority > 1) {
     options.push(`\u203C ${5 - task.priority}`);
   }
-  if (task.due?.date) options.push(`\u29D6 ${task.due?.date}`);
+  if (due) {
+    options.push(
+      `\u29D6 ${formatDistance(parseISO(due), new Date(), {
+        addSuffix: true,
+        locale: LOCALES[settingsStore().get('language')],
+      })}`
+    );
+  }
 
   return options;
 }
