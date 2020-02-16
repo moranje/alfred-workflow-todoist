@@ -42,6 +42,12 @@ export class CacheStore<GenericStore = any> extends Conf<GenericStore> {
    */
   cacheTimeout: number;
   constructor(options: CacheStoreOptions<GenericStore>) {
+    if (!Number.isInteger(options.cacheTimeout) || options.cacheTimeout < 0) {
+      throw new TypeError(
+        `Expected option cacheTimeout to be a positive number was ${options.cacheTimeout}`
+      );
+    }
+
     super(Object.assign(options, { deserialize, serialize }));
 
     this.cacheTimeout = options.cacheTimeout;
