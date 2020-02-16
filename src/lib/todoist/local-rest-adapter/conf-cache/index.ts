@@ -27,7 +27,7 @@ function deserialize<GenericStore>(json: string): GenericStore {
   const stored = JSON.parse(json);
 
   // Only initialize store the first time running a run
-  if (Object.is(timestampStore.store, {})) {
+  if (Object.keys(timestampStore.store).length === 0) {
     timestampStore.store = stored._cache;
   }
   delete stored._cache;
