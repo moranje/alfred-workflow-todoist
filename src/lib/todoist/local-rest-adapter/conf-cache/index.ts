@@ -26,10 +26,10 @@ function serialize<GenericStore>(userStore: GenericStore): string {
 function deserialize<GenericStore>(json: string): GenericStore {
   const stored = JSON.parse(json);
 
-  timestampStore.store = Object.assign(
-    timestampStore.store,
-    stored._cache || {}
-  );
+  // Only initialize store the first time running a run
+  if (Object.is(timestampStore.store, {})) {
+    timestampStore.store = stored._cache;
+  }
   delete stored._cache;
 
   return stored;
