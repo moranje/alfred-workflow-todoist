@@ -105,3 +105,25 @@ export function getCurrentCall(): Call {
 export function createCall(call: Call): string {
   return serialize(call);
 }
+
+/**
+ * Wether the current call expects user input. User input is read through stdin
+ * which means logging to stdout may break the user experience.
+ *
+ * @returns True when a the call is user facing.
+ */
+export function isUserFacingCall(): boolean {
+  let call;
+  try {
+    call = getCurrentCall();
+  } catch {
+    // Err on the side of caution.
+    return true;
+  }
+
+  return (
+    call.name === 'parse' ||
+    call.name === 'read' ||
+    call.name === 'readSettings'
+  );
+}

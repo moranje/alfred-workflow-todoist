@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { format } from 'util';
+import * as Sentry from '@sentry/node';
 
-import settingsStore from '@/lib/stores/settings-store';
-import { ENV } from '@/lib/utils';
-
+import cleanStack from 'clean-stack';
 import { AlfredError } from './error';
 import { init } from './sentry';
+import { isUserFacingCall } from './cli-args';
+import settingsStore from '@/lib/stores/settings-store';
 
-type LogLevel = 'silent' | 'error' | 'warn' | 'info' | 'debug' | 'trace';
+type LogStates = 'error' | 'warn' | 'info' | 'debug' | 'trace';
+type LogLevel = 'silent' | LogStates;
 
 export interface Logger {
   readonly level: LogLevel;
@@ -29,6 +32,17 @@ const LEVEL: { [key: string]: number } = {
 
 let instance: Logger | null = null;
 
+function createOutput(type: LogStates, args: any[]): string {
+  // @ts-ignore: chttps://github.com/microsoft/TypeScript/issues/4130
+  return `[${type.toUpperCase()}] ${format(...args)}\n`;
+}
+
+function createLog(type: LogStates, isStdOut: boolean, args: any[]): void {
+  isStdOut
+    ? process.stdout.write(createOutput(type, args))
+    : process.stderr.write(createOutput(type, args));
+}
+
 /**
  * Exported for testing purposes.
  *
@@ -39,7 +53,7 @@ export function createLogger(loglevel: LogLevel): Logger {
   /**
    * Setup error tracking through Sentry.
    */
-  const Sentry = init();
+  let sentry: typeof Sentry | null;
 
   return {
     get level(): LogLevel {
@@ -52,62 +66,67 @@ export function createLogger(loglevel: LogLevel): Logger {
      * @param trace An array of trace messages.
      */
     trace(...trace: any): void {
-      if (LEVEL[loglevel.toString()] === LEVEL.trace) console.trace(...trace);
+      if (LEVEL[loglevel.toString()] === LEVEL.trace) {
+        const fullStack = (Error().stack || '').split('\n');
+        const stack = fullStack.slice(2).join('\n');
+
+        createLog('trace', !isUserFacingCall(), [
+          ...trace,
+          `\n\n${cleanStack(stack, { pretty: true })}`,
+        ]);
+      }
     },
 
-    /**
+    /*/**
      * Logs any messages with a log level of 'debug' or lower to stdout..
      *
      * @param debug An array of debug messages.
-     */
-    debug(...debug: any): void {
+     */ debug(...debug: any): void {
       if (LEVEL[loglevel.toString()] >= LEVEL.debug) {
-        process.stdout.write(format.apply(this, debug) + '\n');
+        createLog('debug', !isUserFacingCall(), debug);
       }
     },
 
-    /**
+    /*/**
      * Logs any messages with log level of 'info' or lower to stdout.
      *
      * @param info An array of info messages.
-     */
-    info(...info: any): void {
+     */ info(...info: any): void {
       if (LEVEL[loglevel.toString()] >= LEVEL.info) {
-        process.stdout.write(format.apply(this, info) + '\n');
+        createLog('info', !isUserFacingCall(), info);
       }
     },
 
-    /**
+    /*/**
      * Logs any messages with log level of 'warn' or lower to stderr.
      *
      * @param warn An array of warnings.
-     */
-    warn(...warn: any): void {
+     */ warn(...warn: any): void {
       if (LEVEL[loglevel.toString()] >= LEVEL.warn) {
-        {
-          process.stderr.write(format.apply(this, warn) + '\n');
-        }
+        createLog('warn', false, warn);
       }
     },
 
-    /**
+    /*/**
      * Logs any messages with log level of 'error' or lower to stderr. Also logs
      * the error to sentry if the user allows it.
      *
      * @param error An array of Errors or error messages.
-     */
-    error(...error: any): void {
+     */ error(...error: any): void {
       if (LEVEL[loglevel.toString()] >= LEVEL.error) {
-        process.stderr.write(format.apply(this, error) + '\n');
+        createLog('error', false, error);
       }
 
-      if (Sentry != null) {
+      if (sentry === undefined) sentry = init();
+
+      if (sentry != null) {
         error.forEach((err: any) => {
           if (
             (err instanceof Error && !(err instanceof AlfredError)) ||
             (err instanceof AlfredError && err.isSafe !== true)
           ) {
-            Sentry.captureException(err);
+            // @ts-ignore
+            sentry.captureException(err);
           }
         });
       }

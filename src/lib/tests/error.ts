@@ -7,35 +7,12 @@ import '@/tests/helpers/nock-requests';
 
 import { spyOnImplementing } from 'jest-mock-process';
 
-import * as cli from '@/lib/cli-args';
 import { AlfredError, Errors, funnelError } from '@/lib/error';
 import * as notifier from '@/lib/workflow/notification';
+import { maybeMockRestore, setUserFacingCall } from '../../tests/helpers/utils';
 
 let stdoutSpy: jest.SpyInstance;
 let stderrSpy: jest.SpyInstance;
-
-const maybeMockRestore = (a: any): void =>
-  a.mockRestore && typeof a.mockRestore === 'function'
-    ? a.mockRestore()
-    : undefined;
-
-function callWith(
-  name:
-    | 'read'
-    | 'parse'
-    | 'readSettings'
-    | 'openUrl'
-    | 'create'
-    | 'remove'
-    | 'writeSetting'
-    | 'refreshCache',
-  args: any
-): void {
-  spyOnImplementing(cli, 'getCurrentCall', () => ({
-    name,
-    args,
-  }));
-}
 
 const notification = spyOnImplementing(
   notifier,
@@ -52,7 +29,6 @@ describe('unit: Error management', () => {
   afterEach(() => {
     stdoutSpy.mockRestore();
     stderrSpy.mockRestore();
-    maybeMockRestore(cli.getCurrentCall);
   });
 
   afterAll(() => {
@@ -67,7 +43,7 @@ describe('unit: Error management', () => {
   it('should show a bug report list item when faced with an unsafe error', () => {
     expect.assertions(1);
 
-    callWith('parse', '<empty>');
+    setUserFacingCall(true);
     funnelError(new Error("That's error nr. 1"));
 
     expect(stdoutSpy.mock.calls[0][0]).toContainAllAlfredItemsWith('subtitle', [
@@ -78,7 +54,7 @@ describe('unit: Error management', () => {
   it('should show a notification with a bug report link when faced with an unsafe error if a list item is not available', () => {
     expect.assertions(1);
 
-    callWith('writeSetting', { key: 'test', value: '<empty>' });
+    setUserFacingCall(false);
     funnelError(new Error("That's error nr. 2"));
 
     expect(notification).toHaveBeenCalledWith(
@@ -91,7 +67,7 @@ describe('unit: Error management', () => {
   it('should show an error log when faced with an unsafe error', () => {
     expect.assertions(1);
 
-    callWith('parse', '<empty>');
+    setUserFacingCall(true);
     funnelError(new Error("That's error nr. 3"));
 
     expect(stderrSpy.mock.calls[0][0]).toMatch(/That's error nr. 3/);
@@ -104,7 +80,7 @@ describe('unit: Error management', () => {
   it('should show a list item describing the problem when faced with a safe error', () => {
     expect.assertions(1);
 
-    callWith('parse', '<empty>');
+    setUserFacingCall(true);
     funnelError(
       new AlfredError(Errors.InvalidArgument, "That's error nr. 4", {
         isSafe: true,
@@ -119,7 +95,7 @@ describe('unit: Error management', () => {
   it('should show a notification describing the problem when faced with a safe error if a list item is not available', () => {
     expect.assertions(1);
 
-    callWith('writeSetting', { key: 'test', value: '<empty>' });
+    setUserFacingCall(false);
     funnelError(
       new AlfredError(Errors.InvalidArgument, "That's error nr. 5", {
         isSafe: true,
@@ -136,7 +112,7 @@ describe('unit: Error management', () => {
   it('should show an regular log when faced with a safe error', () => {
     expect.assertions(1);
 
-    callWith('parse', '<empty>');
+    setUserFacingCall(true);
     funnelError(
       new AlfredError(Errors.InvalidArgument, "That's error nr. 6", {
         isSafe: true,

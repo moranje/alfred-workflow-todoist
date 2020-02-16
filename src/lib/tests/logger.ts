@@ -13,22 +13,20 @@ import { AlfredError, Errors } from '@/lib/error';
 
 import { createLogger } from '../logger';
 import settingsStore from '../stores/settings-store';
+import { setUserFacingCall } from '../../tests/helpers/utils';
 
 let mockStdout: jest.SpyInstance;
 let mockStderr: jest.SpyInstance;
-let mockTrace: jest.SpyInstance;
 
 describe('unit: Logger', () => {
   beforeEach(() => {
     mockStdout = mockProcessStdout();
     mockStderr = mockProcessStderr();
-    mockTrace = spyOnImplementing(console, 'trace', () => true);
   });
 
   afterEach(() => {
     mockStdout.mockRestore();
     mockStderr.mockRestore();
-    mockTrace.mockRestore();
   });
 
   it('should return the set loglevel', () => {
@@ -40,7 +38,7 @@ describe('unit: Logger', () => {
   });
 
   it('should not log when set to silent', () => {
-    expect.assertions(3);
+    expect.assertions(2);
 
     const logger = createLogger('silent');
     logger.trace('trace message');
@@ -51,30 +49,30 @@ describe('unit: Logger', () => {
 
     expect(mockStdout).not.toHaveBeenCalled();
     expect(mockStderr).not.toHaveBeenCalled();
-    expect(mockTrace).not.toHaveBeenCalled();
   });
 
   it('should return trace, debug, info, warn and error logs when the loglevel is set to trace', () => {
-    expect.assertions(3);
+    expect.assertions(2);
 
+    setUserFacingCall(false);
     const logger = createLogger('trace');
-    logger.trace('trace message');
-    logger.debug('debug message');
-    logger.info('info message');
-    logger.warn('warn message');
-    logger.error('error message');
+    logger.trace('message');
+    logger.debug('message');
+    logger.info('message');
+    logger.warn('message');
+    logger.error('message');
 
     // eslint-disable-next-line jest/prefer-strict-equal
     expect(mockStdout.mock.calls).toEqual([
-      ['debug message\n'],
-      ['info message\n'],
+      [expect.stringContaining('[TRACE] message')],
+      ['[DEBUG] message\n'],
+      ['[INFO] message\n'],
     ]);
     // eslint-disable-next-line jest/prefer-strict-equal
     expect(mockStderr.mock.calls).toEqual([
-      ['warn message\n'],
-      ['error message\n'],
+      ['[WARN] message\n'],
+      ['[ERROR] message\n'],
     ]);
-    expect(mockTrace).toHaveBeenCalledWith('trace message');
   });
 
   it('should have made a call to sentry when anonymous_statistics is set to true', () => {

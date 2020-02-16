@@ -1,12 +1,11 @@
 import cleanStack from 'clean-stack';
 import newGithubIssueUrl from 'new-github-issue-url';
 
-import { createCall, getCurrentCall } from '@/lib/cli-args';
+import logger from './logger';
+import { createCall, getCurrentCall, isUserFacingCall } from '@/lib/cli-args';
 import { ENV } from '@/lib/utils';
 import { Item, workflowList } from '@/lib/workflow';
 import { notification } from '@/lib/workflow/notification';
-
-import logger from './logger';
 
 /**
  * Error constants.
@@ -48,7 +47,7 @@ export class AlfredError extends Error {
     this.isSafe = options?.isSafe ?? false;
     if (options?.error?.name) this.name += ` (${options.error.name})`;
 
-    Error.stackTraceLimit = 50;
+    AlfredError.stackTraceLimit = 50;
     Error.captureStackTrace(options?.error ?? this, AlfredError);
   }
 }
@@ -95,22 +94,6 @@ function errorDetail(error: Error | AlfredError): string {
   );
 }
 
-function isUserFacingMethod(): boolean {
-  let call;
-  try {
-    call = getCurrentCall();
-  } catch {
-    // Err on the side of caution.
-    return true;
-  }
-
-  return (
-    call.name === 'parse' ||
-    call.name === 'read' ||
-    call.name === 'readSettings'
-  );
-}
-
 function createIssueLink(error: Error): string {
   return newGithubIssueUrl({
     user: 'moranje',
@@ -137,7 +120,7 @@ function createIssueLink(error: Error): string {
 }
 
 function listProblem(error: AlfredError): void {
-  if (isUserFacingMethod()) {
+  if (isUserFacingCall()) {
     return workflowList
       .clear()
       .addItem(
@@ -165,7 +148,7 @@ function listProblem(error: AlfredError): void {
 }
 
 function listBug(error: Error): void {
-  if (isUserFacingMethod()) {
+  if (isUserFacingCall()) {
     return workflowList
       .clear()
       .addItem(
