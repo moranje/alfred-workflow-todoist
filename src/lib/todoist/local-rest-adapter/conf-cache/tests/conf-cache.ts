@@ -27,12 +27,10 @@ describe('unit: Cache timestamp store', () => {
   });
 
   it('.set()', () => {
-    expect.assertions(2);
+    expect.assertions(1);
     store.set('ITEM', 'Item');
-    let cache = store.get('_cache');
 
     expect(store.get('ITEM')).toBe('Item');
-    expect(cache).toBe(3);
   });
 
   it.todo('.has()');
