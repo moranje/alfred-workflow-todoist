@@ -1,3 +1,16 @@
+# [6.0.0-alpha.7](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.6...v6.0.0-alpha.7) (2020-02-16)
+
+
+### Bug Fixes
+
+* **cache:** handle empty resource lists ([af89785](https://github.com/moranje/alfred-workflow-todoist/commit/af89785f5a1c4ffc1bedc1cdaf05c858c145b706))
+* **cache:** issue where cache timestamps wouldn't be updated once created ([5156040](https://github.com/moranje/alfred-workflow-todoist/commit/515604085198124165424037aa4c31b4cbeae9e1))
+
+
+### Features
+
+* **parser:** reimplement date from now for timestamped tasks ([cd090d8](https://github.com/moranje/alfred-workflow-todoist/commit/cd090d8a26486bd36dc266582c0bc02469f9f9ef))
+
 # [6.0.0-alpha.6](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.5...v6.0.0-alpha.6) (2020-02-13)
 
 
