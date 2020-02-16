@@ -38,7 +38,7 @@ module.exports = {
     '@typescript-eslint/ban-ts-ignore': 'warn',
     camelcase: 'off',
     '@typescript-eslint/camelcase': [
-      'error',
+      'warn',
       {
         allow: [
           'project_id',
@@ -57,6 +57,9 @@ module.exports = {
           'pre_releases',
           'log_level',
           'last_update',
+          'pt_BR',
+          'zh_CN',
+          'zh_TW',
         ],
       },
     ],
