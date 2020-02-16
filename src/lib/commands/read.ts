@@ -19,9 +19,9 @@ import {
   zhTW,
 } from 'date-fns/locale';
 import parseISO from 'date-fns/parseISO';
+import sort from 'fast-sort';
 import { TodoistTask } from 'todoist-rest-api';
 
-import { getApi, requestError } from '../todoist';
 import { createCall } from '@/lib/cli-args';
 import {
   listLabels,
@@ -35,6 +35,8 @@ import settingsStore from '@/lib/stores/settings-store';
 import { parser } from '@/lib/todoist/parser';
 import { Item, List, workflowList } from '@/lib/workflow';
 import readTasksView from '@/lib/workflow/views/read-tasks';
+
+import { getApi, requestError } from '../todoist';
 
 const LOCALES = {
   da,
@@ -263,7 +265,9 @@ export async function read(query: string): Promise<void> {
     sectionId: parsed.section?.id,
   });
   const list = await mapTasks(
-    filteredTasks.slice(0, settingsStore().get('max_items'))
+    sort(filteredTasks)
+      .asc(task => task?.due?.datetime ?? task?.due?.date)
+      .slice(0, settingsStore().get('max_items'))
   );
   list.push(listRefreshItem('task'));
 

@@ -27,11 +27,11 @@ describe('integration: Read()', () => {
     await command({ name: 'read', args: '' });
 
     expect(stdoutSpy.mock.calls[0][0]).toContainAllAlfredItemsWith('title', [
+      'COMPLETE: Project review (local)',
+      'COMPLETE: Sign up for dance class (local)',
       'COMPLETE: Get milk (local)',
       'COMPLETE: Plan a thing (local)',
       'COMPLETE: Buy the thing (local)',
-      'COMPLETE: Sign up for dance class (local)',
-      'COMPLETE: Project review (local)',
       'REFRESH CACHE',
     ]);
   });
