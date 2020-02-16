@@ -1,3 +1,15 @@
+# [6.0.0-alpha.8](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.7...v6.0.0-alpha.8) (2020-02-16)
+
+
+### Bug Fixes
+
+* **cache:** cache always being reset ([d83408e](https://github.com/moranje/alfred-workflow-todoist/commit/d83408e0a066545b1c0db26fe2962a49ed93054d))
+
+
+### Features
+
+* **commands:** [#13](https://github.com/moranje/alfred-workflow-todoist/issues/13) sort by due date by default ([32044b0](https://github.com/moranje/alfred-workflow-todoist/commit/32044b072c20b949af05aebfcf6083e5e453e9aa))
+
 # [6.0.0-alpha.7](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.6...v6.0.0-alpha.7) (2020-02-16)
 
 
