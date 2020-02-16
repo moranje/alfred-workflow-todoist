@@ -1,15 +1,14 @@
-import { ParsedTodoistTaskOptions } from '@types';
 import FuzzySearch from 'fuzzy-search';
 import { TodoistTaskOptions } from 'todoist-rest-api';
 
+import { ResourceName } from '../todoist/local-rest-adapter';
+import { getApi, requestError } from '../todoist';
+import { AlfredError, Errors } from '../error';
 import { createCall } from '@/lib/cli-args';
 import settingsStore from '@/lib/stores/settings-store';
 import { Item, List } from '@/lib/workflow';
 
-import { AlfredError, Errors } from '../error';
-import { getApi, requestError } from '../todoist';
-import { ResourceName } from '../todoist/local-rest-adapter';
-import { ENV } from '../utils';
+import { ParsedTodoistTaskOptions } from '@types';
 
 /**
  * Creates a cache refresh list item.
@@ -173,6 +172,6 @@ export function toTaskOptions(
     priority: parsed.priority,
     section_id: parsed.section?.id ?? undefined,
     due_string: parsed.date,
-    due_lang: settingsStore(ENV.meta.dataPath).get('language'),
+    due_lang: settingsStore().get('language'),
   };
 }

@@ -1,9 +1,9 @@
 import Conf from 'conf';
 import { JSONSchema } from 'json-schema-typed';
 
-import { AlfredError, Errors } from '@/lib/error';
-
+import { ENV } from '../utils';
 import { uuid } from '../workflow';
+import { AlfredError, Errors } from '@/lib/error';
 
 export type Settings = {
   token: string;
@@ -170,7 +170,7 @@ function createStore(path: string): Conf {
  * @returns A `Conf` instance.
  */
 export default function settingsStore(
-  path: string | undefined
+  path: string | undefined = ENV.meta.dataPath
 ): Conf<Settings> {
   if (!path) {
     throw new AlfredError(

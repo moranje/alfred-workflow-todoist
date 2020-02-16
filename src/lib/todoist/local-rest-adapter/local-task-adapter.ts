@@ -1,9 +1,9 @@
 import { TaskAdapter } from 'todoist-rest-api';
 
+import { ResourceName, Store } from './types';
+import { LocalRESTAdapter } from '.';
 import { CacheStore } from '@/lib/todoist/local-rest-adapter/conf-cache';
 
-import { LocalRESTAdapter } from '.';
-import { ResourceName, Store } from './types';
 export default class LocalTaskAdapter<
   Name extends ResourceName
 > extends LocalRESTAdapter<Name> {

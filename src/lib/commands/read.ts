@@ -216,7 +216,7 @@ export async function read(query: string): Promise<void> {
     sectionId: parsed.section?.id,
   });
   const list = await mapTasks(
-    filteredTasks.slice(0, settingsStore(ENV.meta.dataPath).get('max_items'))
+    filteredTasks.slice(0, settingsStore().get('max_items'))
   );
   list.push(listRefreshItem('task'));
 

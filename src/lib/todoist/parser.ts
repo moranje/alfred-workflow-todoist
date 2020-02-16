@@ -1,14 +1,13 @@
+import nearley from 'nearley';
+import { AlfredError, Errors } from '../error';
 import {
   IdToken,
   ParsedTodoistTaskOptions,
   TodoistToken,
   ValueToken,
 } from '@types';
-import nearley from 'nearley';
 
 import grammar from '@/lib/todoist/grammar';
-
-import { AlfredError, Errors } from '../error';
 
 function parserAdapter([results]: TodoistToken[][]): ParsedTodoistTaskOptions {
   return results.reduce<ParsedTodoistTaskOptions>(

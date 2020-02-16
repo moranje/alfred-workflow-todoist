@@ -1,10 +1,9 @@
-/* eslint simple-import-sort/sort: 0 */
-import dotenv from 'dotenv';
+import { config } from 'dotenv';
 import macOsVersion from 'macos-version';
 import pkg from '@pkg';
 
 // Load .env file
-dotenv.config();
+config();
 
 type Env = string | undefined;
 

@@ -1,9 +1,7 @@
-import { CacheStore } from '@/lib/todoist/local-rest-adapter/conf-cache';
-import { ENV } from '@/lib/utils';
-
 import { AlfredError, Errors } from '../error';
 import { Store } from '../todoist/local-rest-adapter';
 import settingsStore from './settings-store';
+import { CacheStore } from '@/lib/todoist/local-rest-adapter/conf-cache';
 
 let instance: CacheStore<Store> | null = null;
 
@@ -12,9 +10,7 @@ function createStore(path: string): CacheStore<Store> {
   return new CacheStore<Store>({
     configName: 'cache',
     cwd: path,
-    cacheTimeout: settingsStore(ENV.meta.dataPath).get(
-      'cache_timeout'
-    ) as number,
+    cacheTimeout: settingsStore().get('cache_timeout') as number,
   });
 }
 
@@ -33,9 +29,6 @@ export default function cacheStore(
       `Expected a valid cache path, got ${path}`
     );
   }
-
-  console.trace('cacheStore');
-  console.error('cacheStore');
 
   if (instance != null) return instance;
   instance = createStore(path);

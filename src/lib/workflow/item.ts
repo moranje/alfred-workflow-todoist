@@ -1,5 +1,3 @@
-import md5 from 'md5';
-
 interface Icon {
   type?: string;
   path?: string;

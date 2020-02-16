@@ -1,8 +1,6 @@
-import settingsStore from '@/lib/stores/settings-store';
-import { ENV } from '@/lib/utils';
-import { Item } from '@/lib/workflow';
-
 import { createCall } from '../cli-args';
+import settingsStore from '@/lib/stores/settings-store';
+import { Item } from '@/lib/workflow';
 
 const EMPTY_ITEM = new Item({
   title: "Sorry, I've got nothing to show you",
@@ -36,7 +34,7 @@ export class List {
   }
 
   get items(): Item[] {
-    const maxItems = settingsStore(ENV.meta.dataPath).get('max_items');
+    const maxItems = settingsStore().get('max_items');
 
     return this._items.slice(0, maxItems);
   }

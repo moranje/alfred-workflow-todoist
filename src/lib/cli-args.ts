@@ -1,9 +1,8 @@
-import { TodoistTask, TodoistTaskOptions } from 'todoist-rest-api';
 import { isPrimitive } from 'util';
-
-import { Settings } from '@/lib/stores/settings-store';
+import { TodoistTask, TodoistTaskOptions } from 'todoist-rest-api';
 
 import { ResourceName } from './todoist/local-rest-adapter';
+import { Settings } from '@/lib/stores/settings-store';
 
 type Arg =
   | string

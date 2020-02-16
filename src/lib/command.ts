@@ -1,6 +1,3 @@
-import { Call } from '@/lib/cli-args';
-import { AlfredError, Errors } from '@/lib/error';
-
 import {
   create,
   openUrl,
@@ -11,6 +8,8 @@ import {
   remove,
   writeSetting,
 } from './commands';
+import { Call } from '@/lib/cli-args';
+import { AlfredError, Errors } from '@/lib/error';
 
 /**
  * A method runner.

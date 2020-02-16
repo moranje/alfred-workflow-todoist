@@ -1,3 +1,5 @@
+import settingsStore from '../stores/settings-store';
+import { AlfredError, Errors } from '../error';
 import { ParsedTodoistTaskOptions } from '@types';
 
 import { createCall } from '@/lib/cli-args';
@@ -9,16 +11,12 @@ import {
   toTaskOptions,
 } from '@/lib/commands/helpers';
 import { parser } from '@/lib/todoist/parser';
-import { ENV } from '@/lib/utils';
 import { Item } from '@/lib/workflow';
 import { List, workflowList } from '@/lib/workflow/list';
 import createView from '@/lib/workflow/views/create-task';
 
-import { AlfredError, Errors } from '../error';
-import settingsStore from '../stores/settings-store';
-
 function assertNoQoutes(query: string): void | never {
-  const wrapper = settingsStore(ENV.meta.dataPath).get('filter_wrapper');
+  const wrapper = settingsStore().get('filter_wrapper');
   const quote = wrapper === '"' ? "'" : '"';
   const index = query.indexOf(wrapper);
   if (index !== -1) {

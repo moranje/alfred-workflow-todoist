@@ -1,8 +1,8 @@
+import todoist, { LocalTodoistRESTAPI } from './local-rest-adapter/index';
 import { AlfredError, Errors } from '@/lib/error';
+import logger from '@/lib/logger';
 import settingsStore from '@/lib/stores/settings-store';
 import { ENV } from '@/lib/utils';
-
-import todoist, { LocalTodoistRESTAPI } from './local-rest-adapter/index';
 
 export * from './parser';
 let API: LocalTodoistRESTAPI;
@@ -15,13 +15,11 @@ export function getApi(): LocalTodoistRESTAPI {
 
   try {
     API = todoist(
-      settingsStore(ENV.meta.dataPath).get('token'),
-      settingsStore(ENV.meta.dataPath).get('cache_timeout'),
+      settingsStore().get('token'),
+      settingsStore().get('cache_timeout'),
       {
         path: ENV.meta.cachePath,
-        taskCacheTimeout: settingsStore(ENV.meta.dataPath).get(
-          'cache_timeout_tasks'
-        ),
+        taskCacheTimeout: settingsStore().get('cache_timeout_tasks'),
       }
     );
   } catch (error) {
@@ -52,6 +50,8 @@ export function getApi(): LocalTodoistRESTAPI {
  * @returns An `AlfredError` instance.
  */
 export function requestError(error: Error): AlfredError {
+  logger().debug('requestError', error);
+
   /* istanbul ignore next */
   return new AlfredError(Errors.TodoistAPIError, error.message, {
     error,

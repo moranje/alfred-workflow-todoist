@@ -6,9 +6,8 @@ import {
   RESTAdapter,
 } from 'todoist-rest-api';
 
-import { CacheStore } from '@/lib/todoist/local-rest-adapter/conf-cache';
-
 import { ResourceName, Store } from './types';
+import { CacheStore } from '@/lib/todoist/local-rest-adapter/conf-cache';
 
 export default class LocalRESTAdapter<
   Name extends ResourceName

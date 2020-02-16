@@ -1,12 +1,8 @@
 import moo from 'moo';
 
 import settingsStore from '@/lib/stores/settings-store';
-import { ENV } from '@/lib/utils';
 
-const FILTER_WRAPPER = settingsStore(ENV.meta.dataPath).get(
-  'filter_wrapper',
-  '"'
-);
+const FILTER_WRAPPER = settingsStore().get('filter_wrapper', '"');
 const NAME = /[^\s<\n][^<\n]*/;
 const NAME_BRACKETS = /[^\s<\n][^\]\n]*/;
 

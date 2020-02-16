@@ -1,16 +1,14 @@
 import FuzzySearch from 'fuzzy-search';
 
+import { createCall } from '../cli-args';
+import { AlfredError, Errors } from '../error';
+import { Item, List } from '../workflow';
 import settingsStore, {
   Settings,
   settingsSchema,
 } from '@/lib/stores/settings-store';
 
-import { createCall } from '../cli-args';
-import { AlfredError, Errors } from '../error';
-import { ENV } from '../utils';
-import { Item, List } from '../workflow';
-
-const SETTINGS = Object.keys(settingsStore(ENV.meta.dataPath).store);
+const SETTINGS = Object.keys(settingsStore().store);
 const ERRORS: { [key: string]: string } = {
   token: 'Should be 40 characters and consist only of hexadecimals',
   language:
@@ -48,10 +46,10 @@ function typeCastSetting(
 
 function getValue(key: keyof Settings, value: string): void {
   let items: Item[] = [];
-  const oldValue = settingsStore(ENV.meta.dataPath).get(key);
+  const oldValue = settingsStore().get(key);
 
   try {
-    settingsStore(ENV.meta.dataPath).set(key, typeCastSetting(key, value));
+    settingsStore().set(key, typeCastSetting(key, value));
     items = [
       new Item({
         title: `SET(✓): ${key} to ${typeCastSetting(key, value)}`,
@@ -76,7 +74,7 @@ function getValue(key: keyof Settings, value: string): void {
       error,
     });
   } finally {
-    settingsStore(ENV.meta.dataPath).set(key, oldValue);
+    settingsStore().set(key, oldValue);
   }
 
   return new List(items).write();
@@ -87,7 +85,7 @@ function getKeys(key: keyof Settings): void {
     settingKey =>
       new Item({
         title: `SET: ${settingKey}`,
-        subtitle: `Current value: ${settingsStore(ENV.meta.dataPath).get(
+        subtitle: `Current value: ${settingsStore().get(
           settingKey as keyof Settings
         )}`,
         autocomplete: `${settingKey} `,

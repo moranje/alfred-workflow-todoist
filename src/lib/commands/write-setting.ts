@@ -1,6 +1,5 @@
 import { AlfredError, Errors } from '@/lib/error';
 import settingsStore, { Settings } from '@/lib/stores/settings-store';
-import { ENV } from '@/lib/utils';
 import { notification } from '@/lib/workflow';
 
 /**
@@ -17,7 +16,7 @@ export async function writeSetting({
 }): Promise<void> {
   if (key != null && value != null) {
     try {
-      settingsStore(ENV.meta.dataPath).set(key, value);
+      settingsStore().set(key, value);
       notification({
         subtitle: 'Setting updated',
         message: `Setting ${key} is now ${value}`,

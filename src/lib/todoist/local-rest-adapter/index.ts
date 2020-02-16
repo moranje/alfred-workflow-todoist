@@ -1,8 +1,7 @@
-import { CacheStore } from '@/lib/todoist/local-rest-adapter/conf-cache';
-
 import LocalRESTAdapter from './local-rest-adapter';
 import LocalTaskAdapter from './local-task-adapter';
 import { Store } from './types';
+import { CacheStore } from '@/lib/todoist/local-rest-adapter/conf-cache';
 // Export types
 export * from 'todoist-rest-api';
 export * from './types';

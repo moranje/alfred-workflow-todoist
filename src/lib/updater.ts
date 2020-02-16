@@ -69,15 +69,14 @@ function getReleases(
 function isUpdateCheckNeeded(): boolean {
   const now = Date.now();
   // TODO: needs guard and fallback
-  const lastUpdate = settingsStore(ENV.meta.dataPath).get('last_update') ?? now;
+  const lastUpdate = settingsStore().get('last_update') ?? now;
   // TODO: needs guard and fallback
   const updateInterval =
-    settingsStore(ENV.meta.dataPath).get('update_checks') *
-    1000; /* Milliseconds */
+    settingsStore().get('update_checks') * 1000; /* Milliseconds */
   const timePassed = now - new Date(lastUpdate).getTime();
 
   // Do not keep nagging
-  settingsStore(ENV.meta.dataPath).set('last_update', new Date().toISOString());
+  settingsStore().set('last_update', new Date().toISOString());
 
   if (timePassed > updateInterval) return true;
 
@@ -127,7 +126,7 @@ export async function checkForWorkflowUpdate(): Promise<void> {
 
   const { latest, prerelease } = getReleases(releases);
   // TODO: needs guard and fallback
-  const hasPrereleases = settingsStore(ENV.meta.dataPath).get('pre_releases');
+  const hasPrereleases = settingsStore().get('pre_releases');
 
   if (
     hasPrereleases === true &&

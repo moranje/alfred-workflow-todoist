@@ -123,7 +123,7 @@ export function createLogger(loglevel: LogLevel): Logger {
  */
 export default function logger(logLevel?: LogLevel): Logger {
   if (instance != null) return instance;
-  const level = logLevel ?? settingsStore(ENV.meta.dataPath).get('log_level');
+  const level = logLevel ?? settingsStore().get('log_level');
   instance = createLogger(level);
 
   return instance;
