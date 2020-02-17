@@ -32,10 +32,10 @@ If you have installed node.js in a non-standard way (e.g. through **nvm** or **h
 
 **Create symlink to current node version:**
 
-1. In the terminal, navigate to /usr/local/bin<br>
+1. In the terminal, navigate to /usr/local/bin\
    `cd /usr/local/bin`
-2. Create symlink to current node version<br>
-   `ln -s $(which node) node`<br>
+2. Create symlink to current node version\
+   `ln -s $(which node) node`\
    (note, if you're using a different shell - fish, zsh, etc. - you may need to make slight changes to make the command work).
 
 This method should work with different versions of nvm (including changing to other versions), as long as you don't remove the symlinked node version (or the symlink itself of course).
@@ -190,7 +190,8 @@ For commits the project follows the `angular commit guidelines` and uses `semant
 
 Which guides you through the motions.
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/moranje/alfred-workflow-todoist/issues). You can also take a look at the [contributing guide](https://github.com/moranje/alfred-workflow-todoist/CONTRIBUTING.md).
+Contributions, issues and feature requests are welcome!\
+Feel free to check [issues page](https://github.com/moranje/alfred-workflow-todoist/issues). You can also take a look at the [contributing guide](https://github.com/moranje/alfred-workflow-todoist/CONTRIBUTING.md).
 
 ## Show your support
 
@@ -202,4 +203,5 @@ Give a ⭐️ if this project helped you!
 
 ## License
 
-Copyright © 2020 [M. Oranje](https://github.com/moranje).<br /> This project is [MIT](https://github.com/moranje/alfred-workflow-todoist/blob/master/LICENSE) licensed.
+Copyright © 2020 [M. Oranje](https://github.com/moranje).\
+This project is [MIT](https://github.com/moranje/alfred-workflow-todoist/blob/master/LICENSE) licensed.
