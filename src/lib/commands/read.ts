@@ -19,7 +19,7 @@ import {
   zhTW,
 } from 'date-fns/locale';
 import parseISO from 'date-fns/parseISO';
-import sort from 'fast-sort';
+import { orderBy } from 'natural-orderby';
 import { TodoistTask } from 'todoist-rest-api';
 
 import { createCall } from '@/lib/cli-args';
@@ -265,9 +265,11 @@ export async function read(query: string): Promise<void> {
     sectionId: parsed.section?.id,
   });
   const list = await mapTasks(
-    sort(filteredTasks)
-      .asc(task => task?.due?.datetime ?? task?.due?.date)
-      .slice(0, settingsStore().get('max_items'))
+    orderBy(
+      filteredTasks,
+      [(task: TodoistTask) => task?.due?.datetime ?? task?.due?.date],
+      'asc'
+    ).slice(0, settingsStore().get('max_items'))
   );
   list.push(listRefreshItem('task'));
 
