@@ -1,7 +1,7 @@
 {
   "name": "alfred-workflow-todoist",
   "version": "6.0.0-alpha.8",
-  "description": "",
+  "description": "An Alfred workflow for managing tasks in Todoist",
   "keywords": [],
   "repository": {
     "type": "git",
@@ -35,7 +35,7 @@
     "lint:all:prettier": "npm run lint:prettier -- \"{src,tools}/**/*.{ts,js}\"",
     "lint": "run-s lint:all:*",
     "prepush": "npm run build && npm run test:prod",
-    "report-coverage": "cat ./coverage/lcov.info | coveralls",
+    "report-coverage": "codecov",
     "semantic-release": "semantic-release",
     "setup:dev": "ts-node tools/setup.ts",
     "start": "rollup -c rollup.config.ts -w",
@@ -115,6 +115,7 @@
     "babel-jest": "^25.1.0",
     "chalk": "^3.0.0",
     "chance": "^1.1.4",
+    "codecov": "^3.6.5",
     "colors": "1.4.0",
     "coveralls": "3.0.9",
     "cz-customizable": "6.2.0",

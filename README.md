@@ -1,10 +1,9 @@
-[![Build
-Status](https://travis-ci.org/moranje/alfred-workflow-todoist.svg?branch=alpha)](https://travis-ci.org/moranje/alfred-workflow-todoist)
-![Coveralls github branch](https://img.shields.io/coveralls/github/moranje/alfred-workflow-todoist/alpha)
+[![Build Status](https://travis-ci.org/moranje/alfred-workflow-todoist.svg?branch=alpha)](https://travis-ci.org/moranje/alfred-workflow-todoist)
 [![CodeFactor](https://www.codefactor.io/repository/github/moranje/alfred-workflow-todoist/badge/alpha)](https://www.codefactor.io/repository/github/moranje/alfred-workflow-todoist/overview/alpha)
-![GitHub Pre-Releases (by
-Asset)](https://img.shields.io/github/downloads-pre/moranje/alfred-workflow-todoist/latest/Alfred.Workflow.Todoist.alfredworkflow)
-![GitHub](https://img.shields.io/github/license/moranje/alfred-workflow-todoist) ![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/moranje/alfred-workflow-todoist)
+[![codecov](https://codecov.io/gh/moranje/alfred-workflow-todoist/branch/alpha/graph/badge.svg)](https://codecov.io/gh/moranje/alfred-workflow-todoist/branch/alpha)
+[![GitHub Pre-Releases (by Asset)](https://img.shields.io/github/downloads-pre/moranje/alfred-workflow-todoist/latest/Alfred.Workflow.Todoist.alfredworkflow)](https://github.com/moranje/alfred-workflow-todoist/releases)
+![GitHub](https://img.shields.io/github/license/moranje/alfred-workflow-todoist)
+![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/moranje/alfred-workflow-todoist)
 
 # ALFRED TODOIST WORKFLOW
 
@@ -33,10 +32,10 @@ If you have installed node.js in a non-standard way (e.g. through **nvm** or **h
 
 **Create symlink to current node version:**
 
-1. In the terminal, navigate to /usr/local/bin
+1. In the terminal, navigate to /usr/local/bin<br>
    `cd /usr/local/bin`
-2. Create symlink to current node version
-   `ln -s $(which node) node`
+2. Create symlink to current node version<br>
+   `ln -s $(which node) node`<br>
    (note, if you're using a different shell - fish, zsh, etc. - you may need to make slight changes to make the command work).
 
 This method should work with different versions of nvm (including changing to other versions), as long as you don't remove the symlinked node version (or the symlink itself of course).
@@ -45,16 +44,10 @@ The downside is having problems switching between versions because most processe
 
 **Manually add node path to the workflow:**
 
-1. In the terminal, reveal the path to your node installation
-   `which node`
-2. Copy the output, but omit the executable
-   (e.g.
-   `/Users/{user}/.nvm/versions/node/v11.6.0/bin`, not
-   `/Users/{user}/.nvm/versions/node/v11.6.0/bin/node`)
-3. Navigate to the workflow in Alfred Preferences
-   _Alfred Preferences_ -> _Workflows_-tab
-4. Click "Configure workflow and variables" in the top right corner and edit the node_path variable with the node path followed by a colon i.e.
-   `/Users/{user}/.nvm/versions/node/v11.6.0/bin:`
+1. In the terminal, reveal the path to your node installation `which node`
+2. Copy the output, but omit the executable (e.g. `/Users/{user}/.nvm/versions/node/v11.6.0/bin`, not `/Users/{user}/.nvm/versions/node/v11.6.0/bin/node`)
+3. Navigate to the workflow in Alfred Preferences _Alfred Preferences_ -> _Workflows_-tab
+4. Click "Configure workflow and variables" in the top right corner and edit the node_path variable with the node path followed by a colon i.e. `/Users/{user}/.nvm/versions/node/v11.6.0/bin:`
 
 **Observe**, variable will have to be updated whenever node version changes.
 
@@ -62,8 +55,7 @@ The downside is having problems switching between versions because most processe
 
 If you need to enable any node.js command-line flags, you can with
 
-1. Navigate to the workflow in Alfred Preferences
-   _Alfred Preferences_ -> _Workflows_-tab
+1. Navigate to the workflow in Alfred Preferences _Alfred Preferences_ -> _Workflows_-tab
 2. Click "Configure workflow and variables" in the top right corner and edit the node_flag variable with the command-line flag i.e. `--experimental-worker --experimental-modules`
 
 ### Debug
@@ -94,9 +86,7 @@ If the error messages outputs node errors, either make sure you have the appropr
 
 `todos {task_string}`
 
-Any search query one character or longer. Uses fuzzy search to find the tasks.
-`Projects`, `labels`, `priorities` and `sections` can also be used to filter
-tasks further.
+Any search query one character or longer. Uses fuzzy search to find the tasks. `Projects`, `labels`, `priorities` and `sections` can also be used to filter tasks further.
 
 Example: `todos car` => returns (because of fuzzy search):
 
@@ -162,7 +152,7 @@ View [CHANGELOG.md](https://github.com/moranje/alfred-workflow-todoist/blob/mast
 
 - Fork and clone the repo
 
-  _git clone https://github.com/YOUR-USERNAME/alfred-worflow-todoist_
+  _git clone <https://github.com/YOUR-USERNAME/alfred-worflow-todoist>_
 
 - Install dependencies
 
@@ -186,20 +176,25 @@ Create a distributable package (.alfredworkflow) after the build step with
 
 Run Jest test suite with:
 
-`npm run test`
-`npm run test:prod`
+`npm run test:unit`
 
 Or run a watcher with
 
-`npm run test:watch`
+`npm run test:unit:watch`
 
 ### Commits
 
-For commits I follow the `angular commit guidelines` and use `semantic release` to automate builds, semver version updates and changelog creation. The way to make sure this all works is to run:
+For commits the project follows the `angular commit guidelines` and uses `semantic release` to automate builds, semver version updates and changelog creation. The way to make sure this all works is to run:
 
 `npm run commit`
 
-Which guides you through the motions
+Which guides you through the motions.
+
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/moranje/alfred-workflow-todoist/issues). You can also take a look at the [contributing guide](https://github.com/moranje/alfred-workflow-todoist/CONTRIBUTING.md).
+
+## Show your support
+
+Give a ⭐️ if this project helped you!
 
 ## Code of conduct
 
@@ -207,4 +202,4 @@ Which guides you through the motions
 
 ## License
 
-[License MIT](https://github.com/moranje/alfred-workflow-todoist/blob/master/LICENSE) © [Martien Oranje](https://github.com/moranje)
+Copyright © 2020 [M. Oranje](https://github.com/moranje).<br /> This project is [MIT](https://github.com/moranje/alfred-workflow-todoist/blob/master/LICENSE) licensed.
