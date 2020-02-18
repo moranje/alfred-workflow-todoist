@@ -1,4 +1,3 @@
-/* eslint simple-import-sort/sort: 0 */
 import compareVersions from 'compare-versions';
 
 import { getCurrentCall } from '@/lib/cli-args';
@@ -17,7 +16,8 @@ async function main(): Promise<void | null> {
    * Updater.
    */
   if (call.name === 'parse' || call.name === 'read') {
-    await checkForWorkflowUpdate();
+    // Should never break the flow of the app
+    await checkForWorkflowUpdate().catch(funnelError);
   }
 
   /**

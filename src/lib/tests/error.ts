@@ -10,6 +10,7 @@ import { spyOnImplementing } from 'jest-mock-process';
 import { AlfredError, Errors, funnelError } from '@/lib/error';
 import * as notifier from '@/lib/workflow/notification';
 import { maybeMockRestore, setUserFacingCall } from '../../tests/helpers/utils';
+import toBeValidAlfredList from '../../tests/helpers/matchers/to-be-valid-alfred-list';
 
 let stdoutSpy: jest.SpyInstance;
 let stderrSpy: jest.SpyInstance;
@@ -27,6 +28,7 @@ describe('unit: Error management', () => {
   });
 
   afterEach(() => {
+    setUserFacingCall(false);
     stdoutSpy.mockRestore();
     stderrSpy.mockRestore();
   });
@@ -54,7 +56,6 @@ describe('unit: Error management', () => {
   it('should show a notification with a bug report link when faced with an unsafe error if a list item is not available', () => {
     expect.assertions(1);
 
-    setUserFacingCall(false);
     funnelError(new Error("That's error nr. 2"));
 
     expect(notification).toHaveBeenCalledWith(
@@ -68,7 +69,7 @@ describe('unit: Error management', () => {
     expect.assertions(1);
 
     setUserFacingCall(true);
-    funnelError(new Error("That's error nr. 3"));
+    funnelError(new AlfredError(Errors.InvalidArgument, "That's error nr. 3"));
 
     expect(stderrSpy.mock.calls[0][0]).toMatch(/That's error nr. 3/);
   });
@@ -95,7 +96,6 @@ describe('unit: Error management', () => {
   it('should show a notification describing the problem when faced with a safe error if a list item is not available', () => {
     expect.assertions(1);
 
-    setUserFacingCall(false);
     funnelError(
       new AlfredError(Errors.InvalidArgument, "That's error nr. 5", {
         isSafe: true,
@@ -122,14 +122,16 @@ describe('unit: Error management', () => {
     expect(stderrSpy.mock.calls[0][0]).toMatch(/That's error nr. 6/);
   });
 
-  it('should not rely on call params', () => {
-    expect.assertions(2);
+  it('should not show show a list item for hidden items', () => {
+    expect.assertions(1);
 
-    funnelError(new AlfredError(Errors.InvalidArgument, "That's error nr. 8"));
+    setUserFacingCall(true);
+    funnelError(
+      new AlfredError(Errors.InvalidArgument, "That's error nr. 9", {
+        hide: true,
+      })
+    );
 
-    expect(stderrSpy.mock.calls[0][0]).toMatch(/That's error nr. 8/);
-    expect(stdoutSpy.mock.calls[0][0]).toContainAllAlfredItemsWith('subtitle', [
-      'Create a bug report',
-    ]);
+    expect(stdoutSpy.mock.calls[0]).toBeUndefined();
   });
 });

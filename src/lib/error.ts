@@ -18,12 +18,14 @@ export const Errors = {
   InvalidAPIResponse: 'Invalid API response error',
   ParserError: 'Parser error',
   TodoistAPIError: 'Todoist API error',
+  UpdaterError: 'Updater error',
   External: 'External error',
 };
 
 interface AlfredErrorOptions {
   isSafe?: boolean;
   title?: string;
+  hide?: boolean;
   error?: Error;
 }
 
@@ -31,6 +33,7 @@ export class AlfredError extends Error {
   commonType: string;
   description: string;
   isSafe?: boolean;
+  hide: boolean;
   title: string;
   constructor(
     commonType: string,
@@ -45,6 +48,7 @@ export class AlfredError extends Error {
     this.description = this.message = description;
     this.title = options?.title ?? 'Oops, this is not supposed to happen';
     this.isSafe = options?.isSafe ?? false;
+    this.hide = options?.hide ?? false;
     if (options?.error?.name) this.name += ` (${options.error.name})`;
 
     AlfredError.stackTraceLimit = 50;
@@ -170,12 +174,6 @@ function listBug(error: Error): void {
   });
 }
 
-function unrecoverableError(error: Error): void {
-  logger().error(error);
-
-  return listBug(error);
-}
-
 /**
  * Error management. Should only be called in toplevel error handlers. Doesn't
  * interrupt the flow of the application.
@@ -184,13 +182,12 @@ function unrecoverableError(error: Error): void {
  * @returns Void.
  */
 export function funnelError(error: Error): void {
-  if (error instanceof AlfredError && error.isSafe) {
-    logger().error(error);
+  logger().error(error);
 
-    return listProblem(error);
-  }
+  if (error instanceof AlfredError && error.hide) return;
+  if (error instanceof AlfredError && error.isSafe) return listProblem(error);
 
-  return unrecoverableError(error);
+  return listBug(error);
 }
 
 /**

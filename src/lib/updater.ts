@@ -5,8 +5,7 @@ import { createCall } from '@/lib/cli-args';
 import settingsStore from '@/lib/stores/settings-store';
 import { ENV } from '@/lib/utils';
 import { Item, workflowList } from '@/lib/workflow';
-
-// import { createLogger } from './logger';
+import { AlfredError, Errors } from '@/lib/error';
 
 export interface Release {
   url: string;
@@ -22,6 +21,7 @@ export interface Release {
   assets?: (Asset | null)[] | null;
   body: string;
 }
+
 export interface Asset {
   url: string;
   id: number;
@@ -37,17 +37,6 @@ export interface Asset {
 
 const RELEASES_URL =
   'https://api.github.com/repos/moranje/alfred-workflow-todoist/releases';
-
-// function assertUpdateCheckPossible(): void | never {
-//   'assert has github releases';
-
-//   'assert valid version';
-
-//   'assert has settings store';
-//   'assert valid update checks';
-//   'assert valid pre_releases';
-//   'assert valid last_update';
-// }
 
 function getReleases(
   releases: Release[]
@@ -68,9 +57,7 @@ function getReleases(
 
 function isUpdateCheckNeeded(): boolean {
   const now = Date.now();
-  // TODO: needs guard and fallback
   const lastUpdate = settingsStore().get('last_update') ?? now;
-  // TODO: needs guard and fallback
   const updateInterval =
     settingsStore().get('update_checks') * 1000; /* Milliseconds */
   const timePassed = now - new Date(lastUpdate).getTime();
@@ -113,32 +100,37 @@ function addRelease(release: Release, current: string): void {
 }
 
 /**
- *
+ * Check github for new releases (or prereleases). This should not interrupt the
+ * workflow of a user.
  */
 export async function checkForWorkflowUpdate(): Promise<void> {
-  if (isUpdateCheckNeeded() === false) return;
-  // const all = assertUpdateCheckPossible();
+  try {
+    if (isUpdateCheckNeeded() === false) return;
 
-  // TODO: needs guard and fallback
-  const { body: releases } = await got(RELEASES_URL, {
-    responseType: 'json',
-  });
+    const { body: releases } = await got(RELEASES_URL, {
+      responseType: 'json',
+    });
 
-  const { latest, prerelease } = getReleases(releases);
-  // TODO: needs guard and fallback
-  const hasPrereleases = settingsStore().get('pre_releases');
+    const { latest, prerelease } = getReleases(releases);
+    const hasPrereleases = settingsStore().get('pre_releases');
 
-  if (
-    hasPrereleases === true &&
-    prerelease &&
-    /* current < prerelease */
-    compare(ENV.workflow.version, prerelease.tag_name) === -1
-  ) {
-    return addRelease(prerelease, ENV.workflow.version);
-  }
+    if (
+      hasPrereleases === true &&
+      prerelease &&
+      /* current < prerelease */
+      compare(ENV.workflow.version, prerelease.tag_name) === -1
+    ) {
+      return addRelease(prerelease, ENV.workflow.version);
+    }
 
-  /* current < latest */
-  if (latest && compare(ENV.workflow.version, latest.tag_name) === -1) {
-    return addRelease(latest, ENV.workflow.version);
+    /* current < latest */
+    if (latest && compare(ENV.workflow.version, latest.tag_name) === -1) {
+      return addRelease(latest, ENV.workflow.version);
+    }
+  } catch (error) {
+    throw new AlfredError(Errors.UpdaterError, error.message, {
+      hide: true,
+      error,
+    });
   }
 }
