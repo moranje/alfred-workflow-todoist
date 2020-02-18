@@ -1,3 +1,4 @@
+#!/bin/zsh
 VERSION="$1"
 
 npx sentry-cli releases new "$VERSION" --finalize
