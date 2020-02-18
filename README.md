@@ -186,9 +186,9 @@ Or run a watcher with
 
 For commits the project follows the `angular commit guidelines` and uses `semantic release` to automate builds, semver version updates and changelog creation. The way to make sure this all works is to run:
 
-`npm run commit`
+`npm run cm`
 
-Which guides you through the motions.
+Which guides you through the motions (`cm` is short for `commit`).
 
 Contributions, issues and feature requests are welcome!\
 Feel free to check [issues page](https://github.com/moranje/alfred-workflow-todoist/issues). You can also take a look at the [contributing guide](https://github.com/moranje/alfred-workflow-todoist/CONTRIBUTING.md).
