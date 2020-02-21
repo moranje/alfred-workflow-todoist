@@ -2,10 +2,10 @@ import compare from 'compare-versions';
 import got from 'got';
 
 import { createCall } from '@/lib/cli-args';
+import { AlfredError, Errors } from '@/lib/error';
 import settingsStore from '@/lib/stores/settings-store';
 import { ENV } from '@/lib/utils';
 import { Item, workflowList } from '@/lib/workflow';
-import { AlfredError, Errors } from '@/lib/error';
 
 export interface Release {
   url: string;
@@ -96,6 +96,8 @@ function addRelease(release: Release, current: string): void {
         quicklookurl: release.html_url,
       })
     );
+  } else {
+    throw new AlfredError(Errors.UpdaterError, 'Invalid release assets');
   }
 }
 
@@ -127,6 +129,8 @@ export async function checkForWorkflowUpdate(): Promise<void> {
     if (latest && compare(ENV.workflow.version, latest.tag_name) === -1) {
       return addRelease(latest, ENV.workflow.version);
     }
+
+    throw new AlfredError(Errors.UpdaterError, 'Update check unsuccessful');
   } catch (error) {
     throw new AlfredError(Errors.UpdaterError, error.message, {
       hide: true,

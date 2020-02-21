@@ -3,8 +3,6 @@ import nock from 'nock';
 import { REMOTE_FIXTURES } from './fixtures';
 
 const TODOIST_API_URI = 'https://api.todoist.com/rest/v1';
-const GITHUB_PACKAGE_URL =
-  'https://raw.githubusercontent.com/moranje/alfred-workflow-todoist/master/package.json';
 
 // TASKS
 nock(TODOIST_API_URI)
@@ -129,8 +127,3 @@ nock(TODOIST_API_URI)
   .delete('/sections/3')
   .reply(200, {})
   .persist();
-
-// Github package.json
-nock(GITHUB_PACKAGE_URL)
-  .get('/')
-  .reply(200, REMOTE_FIXTURES.package);

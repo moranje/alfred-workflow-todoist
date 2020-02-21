@@ -218,7 +218,186 @@ export const REMOTE_FIXTURES = {
       name: 'Done',
     },
   ],
-  package: {
-    version: '5.8.4',
-  },
+  releases: [
+    {
+      url:
+        'https://api.github.com/repos/moranje/alfred-workflow-todoist/releases/23502796',
+      assets_url:
+        'https://api.github.com/repos/moranje/alfred-workflow-todoist/releases/23502796/assets',
+      upload_url:
+        'https://uploads.github.com/repos/moranje/alfred-workflow-todoist/releases/23502796/assets{?name,label}',
+      html_url:
+        'https://github.com/moranje/alfred-workflow-todoist/releases/tag/v100.0.0-alpha.1',
+      id: 23502796,
+      node_id: 'MDc6UmVsZWFzZTIzNTAyNzk2',
+      tag_name: 'v100.0.0-alpha.1',
+      target_commitish: 'master',
+      name: 'v100.0.0-alpha.1',
+      draft: false,
+      author: {
+        login: 'moranje',
+        id: 666528,
+        node_id: 'MDQ6VXNlcjY2NjUyOA==',
+        avatar_url: 'https://avatars0.githubusercontent.com/u/666528?v=4',
+        gravatar_id: '',
+        url: 'https://api.github.com/users/moranje',
+        html_url: 'https://github.com/moranje',
+        followers_url: 'https://api.github.com/users/moranje/followers',
+        following_url:
+          'https://api.github.com/users/moranje/following{/other_user}',
+        gists_url: 'https://api.github.com/users/moranje/gists{/gist_id}',
+        starred_url:
+          'https://api.github.com/users/moranje/starred{/owner}{/repo}',
+        subscriptions_url: 'https://api.github.com/users/moranje/subscriptions',
+        organizations_url: 'https://api.github.com/users/moranje/orgs',
+        repos_url: 'https://api.github.com/users/moranje/repos',
+        events_url: 'https://api.github.com/users/moranje/events{/privacy}',
+        received_events_url:
+          'https://api.github.com/users/moranje/received_events',
+        type: 'User',
+        site_admin: false,
+      },
+      prerelease: true,
+      created_at: '2020-02-08T11:18:19Z',
+      published_at: '2020-02-08T11:18:35Z',
+      assets: [
+        {
+          url:
+            'https://api.github.com/repos/moranje/alfred-workflow-todoist/releases/assets/17888796',
+          id: 17888796,
+          node_id: 'MDEyOlJlbGVhc2VBc3NldDE3ODg4Nzk2',
+          name: 'Alfred.Workflow.Todoist.alfredworkflow',
+          label: 'Alfred Workflow Todoist.alfredworkflow',
+          uploader: {
+            login: 'moranje',
+            id: 666528,
+            node_id: 'MDQ6VXNlcjY2NjUyOA==',
+            avatar_url: 'https://avatars0.githubusercontent.com/u/666528?v=4',
+            gravatar_id: '',
+            url: 'https://api.github.com/users/moranje',
+            html_url: 'https://github.com/moranje',
+            followers_url: 'https://api.github.com/users/moranje/followers',
+            following_url:
+              'https://api.github.com/users/moranje/following{/other_user}',
+            gists_url: 'https://api.github.com/users/moranje/gists{/gist_id}',
+            starred_url:
+              'https://api.github.com/users/moranje/starred{/owner}{/repo}',
+            subscriptions_url:
+              'https://api.github.com/users/moranje/subscriptions',
+            organizations_url: 'https://api.github.com/users/moranje/orgs',
+            repos_url: 'https://api.github.com/users/moranje/repos',
+            events_url: 'https://api.github.com/users/moranje/events{/privacy}',
+            received_events_url:
+              'https://api.github.com/users/moranje/received_events',
+            type: 'User',
+            site_admin: false,
+          },
+          content_type: 'text/plain',
+          state: 'uploaded',
+          size: 1378680,
+          download_count: 2,
+          created_at: '2020-02-08T11:18:32Z',
+          updated_at: '2020-02-08T11:18:33Z',
+          browser_download_url:
+            'https://github.com/moranje/alfred-workflow-todoist/releases/download/v100.0.0-alpha.1/Alfred.Workflow.Todoist.alfredworkflow',
+        },
+      ],
+      tarball_url:
+        'https://api.github.com/repos/moranje/alfred-workflow-todoist/tarball/v100.0.0-alpha.1',
+      zipball_url:
+        'https://api.github.com/repos/moranje/alfred-workflow-todoist/zipball/v100.0.0-alpha.1',
+      body:
+        '# [100.0.0-alpha.1](https://github.com/moranje/alfred-workflow-todoist/compare/v99.8.4...v100.0.0-alpha.1) (2020-02-08)\n\n\n### Features\n\n* **project:** full rewrite ([2849c8a](https://github.com/moranje/alfred-workflow-todoist/commit/2849c8a081f4254610ac41125c79fed9a55e557d)), closes [#128](https://github.com/moranje/alfred-workflow-todoist/issues/128) [#126](https://github.com/moranje/alfred-workflow-todoist/issues/126) [#20](https://github.com/moranje/alfred-workflow-todoist/issues/20) [#124](https://github.com/moranje/alfred-workflow-todoist/issues/124) [#128](https://github.com/moranje/alfred-workflow-todoist/issues/128) [#126](https://github.com/moranje/alfred-workflow-todoist/issues/126) [#124](https://github.com/moranje/alfred-workflow-todoist/issues/124) [#20](https://github.com/moranje/alfred-workflow-todoist/issues/20)\n* **project:** provide a useful error as a list item when node.js is not installed ([e039157](https://github.com/moranje/alfred-workflow-todoist/commit/e0391577db34aa353fd1458698e7304a51821303))\n\n\n### BREAKING CHANGES\n\n* **project:** Improve string parsing, now requires id for project, labels and sections\n\n\n\n',
+    },
+    {
+      url:
+        'https://api.github.com/repos/moranje/alfred-workflow-todoist/releases/22240689',
+      assets_url:
+        'https://api.github.com/repos/moranje/alfred-workflow-todoist/releases/22240689/assets',
+      upload_url:
+        'https://uploads.github.com/repos/moranje/alfred-workflow-todoist/releases/22240689/assets{?name,label}',
+      html_url:
+        'https://github.com/moranje/alfred-workflow-todoist/releases/tag/v99.8.4',
+      id: 22240689,
+      node_id: 'MDc6UmVsZWFzZTIyMjQwNjg5',
+      tag_name: 'v99.8.4',
+      target_commitish: 'master',
+      name: 'v99.8.4',
+      draft: false,
+      author: {
+        login: 'moranje',
+        id: 666528,
+        node_id: 'MDQ6VXNlcjY2NjUyOA==',
+        avatar_url: 'https://avatars0.githubusercontent.com/u/666528?v=4',
+        gravatar_id: '',
+        url: 'https://api.github.com/users/moranje',
+        html_url: 'https://github.com/moranje',
+        followers_url: 'https://api.github.com/users/moranje/followers',
+        following_url:
+          'https://api.github.com/users/moranje/following{/other_user}',
+        gists_url: 'https://api.github.com/users/moranje/gists{/gist_id}',
+        starred_url:
+          'https://api.github.com/users/moranje/starred{/owner}{/repo}',
+        subscriptions_url: 'https://api.github.com/users/moranje/subscriptions',
+        organizations_url: 'https://api.github.com/users/moranje/orgs',
+        repos_url: 'https://api.github.com/users/moranje/repos',
+        events_url: 'https://api.github.com/users/moranje/events{/privacy}',
+        received_events_url:
+          'https://api.github.com/users/moranje/received_events',
+        type: 'User',
+        site_admin: false,
+      },
+      prerelease: false,
+      created_at: '2019-12-15T20:54:20Z',
+      published_at: '2019-12-15T20:54:32Z',
+      assets: [
+        {
+          url:
+            'https://api.github.com/repos/moranje/alfred-workflow-todoist/releases/assets/16813046',
+          id: 16813046,
+          node_id: 'MDEyOlJlbGVhc2VBc3NldDE2ODEzMDQ2',
+          name: 'Alfred.Workflow.Todoist.alfredworkflow',
+          label: 'Alfred Workflow Todoist.alfredworkflow',
+          uploader: {
+            login: 'moranje',
+            id: 666528,
+            node_id: 'MDQ6VXNlcjY2NjUyOA==',
+            avatar_url: 'https://avatars0.githubusercontent.com/u/666528?v=4',
+            gravatar_id: '',
+            url: 'https://api.github.com/users/moranje',
+            html_url: 'https://github.com/moranje',
+            followers_url: 'https://api.github.com/users/moranje/followers',
+            following_url:
+              'https://api.github.com/users/moranje/following{/other_user}',
+            gists_url: 'https://api.github.com/users/moranje/gists{/gist_id}',
+            starred_url:
+              'https://api.github.com/users/moranje/starred{/owner}{/repo}',
+            subscriptions_url:
+              'https://api.github.com/users/moranje/subscriptions',
+            organizations_url: 'https://api.github.com/users/moranje/orgs',
+            repos_url: 'https://api.github.com/users/moranje/repos',
+            events_url: 'https://api.github.com/users/moranje/events{/privacy}',
+            received_events_url:
+              'https://api.github.com/users/moranje/received_events',
+            type: 'User',
+            site_admin: false,
+          },
+          content_type: 'text/plain',
+          state: 'uploaded',
+          size: 1160421,
+          download_count: 354,
+          created_at: '2019-12-15T20:54:29Z',
+          updated_at: '2019-12-15T20:54:29Z',
+          browser_download_url:
+            'https://github.com/moranje/alfred-workflow-todoist/releases/download/v99.8.4/Alfred.Workflow.Todoist.alfredworkflow',
+        },
+      ],
+      tarball_url:
+        'https://api.github.com/repos/moranje/alfred-workflow-todoist/tarball/v99.8.4',
+      zipball_url:
+        'https://api.github.com/repos/moranje/alfred-workflow-todoist/zipball/v99.8.4',
+      body:
+        '## [99.8.4](https://github.com/moranje/alfred-workflow-todoist/compare/v5.8.3...v99.8.4) (2019-12-15)\n\n\n### Bug Fixes\n\n* **alfred:** notifications not showing in Alfred v4 ([93c7307](https://github.com/moranje/alfred-workflow-todoist/commit/93c7307137983647183171b07ba2a04008b18407)), closes [#125](https://github.com/moranje/alfred-workflow-todoist/issues/125)\n* **dependency:** lower required node.js to v10.x ([a222d5d](https://github.com/moranje/alfred-workflow-todoist/commit/a222d5d50d4c1d3b943b13b7332eedf6f403ace6))\n* **settings:** no update notifications for alfa and beta releases ([1ad3186](https://github.com/moranje/alfred-workflow-todoist/commit/1ad31860379f108025f51c5a1bbcfe8ed5a4d868))\n\n\n\n',
+    },
+  ],
 };
