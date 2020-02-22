@@ -1,3 +1,15 @@
+# [6.0.0-alpha.9](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.8...v6.0.0-alpha.9) (2020-02-22)
+
+
+### Bug Fixes
+
+* **commands:** certain characters not (" and \) being parsed ([d53d68f](https://github.com/moranje/alfred-workflow-todoist/commit/d53d68f699c214d1048d98d80bc224b97377b73e))
+
+
+### Features
+
+* **commands:** filter tasks directly through Todoist ([f9bd460](https://github.com/moranje/alfred-workflow-todoist/commit/f9bd460a2c9a03f0d4efe92ffe6612fa1d6d231e)), closes [#13](https://github.com/moranje/alfred-workflow-todoist/issues/13) [#20](https://github.com/moranje/alfred-workflow-todoist/issues/20) [#72](https://github.com/moranje/alfred-workflow-todoist/issues/72)
+
 # [6.0.0-alpha.8](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.7...v6.0.0-alpha.8) (2020-02-16)
 
 
