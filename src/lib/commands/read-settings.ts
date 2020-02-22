@@ -5,7 +5,7 @@ import settingsStore, {
   settingsSchema,
 } from '@/lib/stores/settings-store';
 
-import { createCall } from '../cli-args';
+import { createCall } from '../cli-arguments';
 import { AlfredError, Errors } from '../error';
 import { Item, List } from '../workflow';
 

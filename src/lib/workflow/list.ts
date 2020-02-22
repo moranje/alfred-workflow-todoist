@@ -1,4 +1,4 @@
-import { createCall } from '../cli-args';
+import { createCall } from '../cli-arguments';
 import settingsStore from '@/lib/stores/settings-store';
 import { Item } from '@/lib/workflow';
 

@@ -3,8 +3,8 @@ import moo from 'moo';
 import settingsStore from '@/lib/stores/settings-store';
 
 const FILTER_WRAPPER = settingsStore().get('filter_wrapper', '"');
-const NAME = /[^\s<\n][^<\n]*/;
-const NAME_BRACKETS = /[^\s<\n][^\]\n]*/;
+const NAME = /[^\s<][^\n<]*/;
+const NAME_BRACKETS = /[^\s<][^\n\]]*/;
 
 export default moo.states({
   main: {
@@ -15,7 +15,7 @@ export default moo.states({
     doubleExclamation: { match: /!!/, push: 'priority' },
     colon: { match: /::/, push: 'section' },
     comma: { match: /,/, push: 'date' },
-    filterStart: { match: RegExp(`${FILTER_WRAPPER}`), push: 'filter' },
+    filterStart: { match: new RegExp(`${FILTER_WRAPPER}`), push: 'filter' },
     priority: /p[1-4]/,
   },
 
@@ -45,12 +45,12 @@ export default moo.states({
   },
 
   filter: {
-    filterEnd: { match: RegExp(`${FILTER_WRAPPER}`), pop: 1 },
-    filter: RegExp(`[^${FILTER_WRAPPER}\n]+`),
+    filterEnd: { match: new RegExp(`${FILTER_WRAPPER}`), pop: 1 },
+    filter: new RegExp(`[^${FILTER_WRAPPER}\n]+`),
   },
 
   insideBrackets: {
-    bracketClose: { match: /\]/, next: 'closed' },
+    bracketClose: { match: /]/, next: 'closed' },
     name: NAME_BRACKETS,
   },
 
@@ -60,6 +60,6 @@ export default moo.states({
 
   tid: {
     braceClose: { match: />/, pop: 1 },
-    tid: /[0-9]+/,
+    tid: /\d+/,
   },
 });

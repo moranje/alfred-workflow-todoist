@@ -2,7 +2,11 @@ import cleanStack from 'clean-stack';
 import newGithubIssueUrl from 'new-github-issue-url';
 
 import logger from './logger';
-import { createCall, getCurrentCall, isUserFacingCall } from '@/lib/cli-args';
+import {
+  createCall,
+  getCurrentCall,
+  isUserFacingCall,
+} from '@/lib/cli-arguments';
 import { ENV } from '@/lib/utils';
 import { Item, workflowList } from '@/lib/workflow';
 import { notification } from '@/lib/workflow/notification';
@@ -94,7 +98,7 @@ function errorDetail(error: Error | AlfredError): string {
     ]
       .join('\n')
       // Hide token from log by default
-      .replace(/[0-9a-fA-F]{40}/gm, '<token hidden>')
+      .replace(/[\dA-Fa-f]{40}/gm, '<token hidden>')
   );
 }
 

@@ -8,7 +8,7 @@ import {
   remove,
   writeSetting,
 } from './commands';
-import { Call } from '@/lib/cli-args';
+import { Call } from '@/lib/cli-arguments';
 import { AlfredError, Errors } from '@/lib/error';
 
 /**

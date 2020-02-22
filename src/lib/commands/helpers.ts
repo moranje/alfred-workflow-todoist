@@ -4,7 +4,7 @@ import { TodoistTaskOptions } from 'todoist-rest-api';
 import { ResourceName } from '../todoist/local-rest-adapter';
 import { getApi, requestError } from '../todoist';
 import { AlfredError, Errors } from '../error';
-import { createCall } from '@/lib/cli-args';
+import { createCall } from '@/lib/cli-arguments';
 import settingsStore from '@/lib/stores/settings-store';
 import { Item, List } from '@/lib/workflow';
 

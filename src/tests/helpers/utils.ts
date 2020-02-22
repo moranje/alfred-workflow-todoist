@@ -1,6 +1,6 @@
 import { spyOnImplementing } from 'jest-mock-process';
 
-import * as cli from '@/lib/cli-args';
+import * as cli from '@/lib/cli-arguments';
 
 export function callWith(
   name:

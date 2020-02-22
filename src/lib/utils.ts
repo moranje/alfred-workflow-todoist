@@ -7,7 +7,7 @@ config();
 
 type Env = string | undefined;
 
-const getEnv = (key: string): Env => process.env[`alfred_${key}`];
+const getEnvironment = (key: string): Env => process.env[`alfred_${key}`];
 const workflowPath = process.cwd();
 
 const meta: {
@@ -19,9 +19,9 @@ const meta: {
 } = {
   osx: macOsVersion() as string, // will always be MacOs
   nodejs: process.version,
-  alfred: getEnv('version'),
-  dataPath: getEnv('workflow_data'),
-  cachePath: getEnv('workflow_cache'),
+  alfred: getEnvironment('version'),
+  dataPath: getEnvironment('workflow_data'),
+  cachePath: getEnvironment('workflow_cache'),
 };
 
 const requirements: {
@@ -39,8 +39,8 @@ const workflow: {
   readonly notifierPath: string;
 } = {
   version: pkg.version,
-  uid: getEnv('workflow_uid'),
-  bundleId: getEnv('workflow_bundleid'),
+  uid: getEnvironment('workflow_uid'),
+  bundleId: getEnvironment('workflow_bundleid'),
   workflowPath,
   workflowTimestamp: `${workflowPath}/workflow.json`,
   notifierPath: `${workflowPath}/notifier/terminal-notifier.app/Contents/MacOS/terminal-notifier`,

@@ -22,7 +22,7 @@ import parseISO from 'date-fns/parseISO';
 import { orderBy } from 'natural-orderby';
 import { TodoistTask } from 'todoist-rest-api';
 
-import { createCall } from '@/lib/cli-args';
+import { createCall } from '@/lib/cli-arguments';
 import {
   listLabels,
   listPriorities,
@@ -93,7 +93,7 @@ async function getLabelsByIds(ids: number[]): Promise<string> {
         /* istanbul ignore next */
         throw requestError(error);
       })
-  ).filter(label => ids.indexOf(label.id) !== -1);
+  ).filter(label => ids.includes(label.id));
 
   return labels.map(label => label.name).join(',');
 }
@@ -185,11 +185,11 @@ function collection<T extends TodoistTask>(
         keys != null &&
         matches != null &&
         collection.find((element: T) =>
-          element.label_ids?.find(id => matches.indexOf(id) !== -1)
+          element.label_ids?.find(id => matches.includes(id))
         )
       ) {
         collection = collection.filter((element: T) =>
-          element.label_ids?.find(id => matches.indexOf(id) !== -1)
+          element.label_ids?.find(id => matches.includes(id))
         );
       }
 

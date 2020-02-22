@@ -39,6 +39,7 @@ export type Call =
       args: ResourceName;
     };
 
+// eslint-disable-next-line unicorn/no-unreadable-array-destructuring
 const [, , ...argv] = process.argv;
 export const callNames: { [key: string]: boolean } = {
   parse: true,
@@ -51,10 +52,10 @@ export const callNames: { [key: string]: boolean } = {
   refreshCache: true,
 };
 
-function assertValidArgs(args: Arg): asserts args is Arg {
-  if (args == null) {
+function assertValidArguments($arguments: any): asserts $arguments is Arg {
+  if ($arguments == null) {
     throw new TypeError(
-      `Property args should not be null or undefined, was ${args}`
+      `Property args should not be null or undefined, was ${$arguments}`
     );
   }
 }
@@ -79,7 +80,7 @@ function assertValidCall(call: Call): asserts call is Call {
     );
   }
 
-  assertValidArgs(call.args);
+  assertValidArguments(call.args);
 }
 
 function serialize(call: Call): string | never {
@@ -90,7 +91,7 @@ function serialize(call: Call): string | never {
 
 function escape(string: string): string {
   // @ts-ignore: is valid
-  return String(string).replace(/["\\\b\f\n\r\t]/g, char => {
+  return String(string).replace(/[\b\t\n\f\r"\\]/g, char => {
     switch (char) {
       case '"':
         return '\\"';
@@ -112,7 +113,7 @@ function escape(string: string): string {
 
 function deserialize(serialized: string): Call | never {
   const escaped = serialized.replace(
-    /"args": "([\s\S]+?)"}/,
+    /"args": "([\S\s]+?)"}/,
     (match, input) => {
       return `"args": "${escape(input)}"}`;
     }

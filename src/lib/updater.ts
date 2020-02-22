@@ -1,7 +1,7 @@
 import compare from 'compare-versions';
 import got from 'got';
 
-import { createCall } from '@/lib/cli-args';
+import { createCall } from '@/lib/cli-arguments';
 import { AlfredError, Errors } from '@/lib/error';
 import logger from '@/lib/logger';
 import settingsStore from '@/lib/stores/settings-store';

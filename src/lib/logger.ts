@@ -6,7 +6,7 @@ import { format } from 'util';
 
 import settingsStore from '@/lib/stores/settings-store';
 
-import { isUserFacingCall } from './cli-args';
+import { isUserFacingCall } from './cli-arguments';
 import { AlfredError } from './error';
 import { init } from './sentry';
 
@@ -33,15 +33,15 @@ const LEVEL: { [key: string]: number } = {
 
 let instance: Logger | null = null;
 
-function createOutput(type: LogStates, args: any[]): string {
+function createOutput(type: LogStates, output: any): string {
   // @ts-ignore: chttps://github.com/microsoft/TypeScript/issues/4130
-  return `[${type.toUpperCase()}] ${format(...args)}\n`;
+  return `[${type.toUpperCase()}] ${format(...output)}\n`;
 }
 
-function createLog(type: LogStates, isStdOut: boolean, args: any[]): void {
+function createLog(type: LogStates, isStdOut: boolean, output: any): void {
   isStdOut
-    ? process.stdout.write(createOutput(type, args))
-    : process.stderr.write(createOutput(type, args));
+    ? process.stdout.write(createOutput(type, output))
+    : process.stderr.write(createOutput(type, output));
 }
 
 /**
@@ -70,7 +70,7 @@ export function createLogger(loglevel: LogLevel): Logger {
       if (LEVEL[loglevel.toString()] === LEVEL.trace) {
         // istanbul ignore next: haven't come across a situation where
         // Error.stack is undefined. No way to test this.
-        const fullStack = (Error().stack || '').split('\n');
+        const fullStack = (new Error().stack || '').split('\n');
         const stack = fullStack.slice(2).join('\n');
 
         createLog('trace', !isUserFacingCall(), [
@@ -127,13 +127,13 @@ export function createLogger(loglevel: LogLevel): Logger {
       if (sentry === undefined) sentry = init();
 
       if (sentry != null) {
-        error.forEach((err: any) => {
+        error.forEach((message: any) => {
           if (
-            (err instanceof Error && !(err instanceof AlfredError)) ||
-            (err instanceof AlfredError && err.isSafe !== true)
+            (message instanceof Error && !(message instanceof AlfredError)) ||
+            (message instanceof AlfredError && message.isSafe !== true)
           ) {
             // @ts-ignore
-            sentry.captureException(err);
+            sentry.captureException(message);
           }
         });
       }

@@ -2,7 +2,7 @@ import settingsStore from '../stores/settings-store';
 import { AlfredError, Errors } from '../error';
 import { ParsedTodoistTaskOptions } from '@types';
 
-import { createCall } from '@/lib/cli-args';
+import { createCall } from '@/lib/cli-arguments';
 import {
   listLabels,
   listPriorities,

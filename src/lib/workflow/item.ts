@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/prevent-abbreviations */
 interface Icon {
   type?: string;
   path?: string;

@@ -1,4 +1,4 @@
-import todoist, { LocalTodoistRESTAPI } from './local-rest-adapter/index';
+import todoist, { LocalTodoistRESTAPI } from './local-rest-adapter';
 import { AlfredError, Errors } from '@/lib/error';
 import logger from '@/lib/logger';
 import settingsStore from '@/lib/stores/settings-store';

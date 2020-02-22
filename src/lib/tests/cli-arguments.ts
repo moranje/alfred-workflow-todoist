@@ -1,5 +1,5 @@
 import mockArgv from 'mock-argv';
-// import { createCall } from '@/lib/cli-args';
+// import { createCall } from '@/lib/cli-arguments';
 
 type CallName =
   | 'parse'
@@ -35,7 +35,7 @@ describe('unit: CLI', () => {
 
     const characters = '\\ " \t \n \r \b \f';
     await mockArgv([cliArgs('read', characters)], async () => {
-      const { getCurrentCall } = await import('@/lib/cli-args');
+      const { getCurrentCall } = await import('@/lib/cli-arguments');
 
       const cli = getCurrentCall();
 
@@ -47,7 +47,7 @@ describe('unit: CLI', () => {
     expect.assertions(1);
 
     await mockArgv([{}], async () => {
-      const { getCurrentCall } = await import('@/lib/cli-args');
+      const { getCurrentCall } = await import('@/lib/cli-arguments');
 
       expect(() => {
         const cli = getCurrentCall();
@@ -59,7 +59,7 @@ describe('unit: CLI', () => {
     expect.assertions(1);
 
     await mockArgv(['{}'], async () => {
-      const { getCurrentCall } = await import('@/lib/cli-args');
+      const { getCurrentCall } = await import('@/lib/cli-arguments');
 
       expect(() => {
         const cli = getCurrentCall();
@@ -71,7 +71,7 @@ describe('unit: CLI', () => {
     expect.assertions(1);
 
     await mockArgv(['{"name": "read"}'], async () => {
-      const { getCurrentCall } = await import('@/lib/cli-args');
+      const { getCurrentCall } = await import('@/lib/cli-arguments');
 
       expect(() => {
         const cli = getCurrentCall();
@@ -82,7 +82,7 @@ describe('unit: CLI', () => {
   it('should serialize to a JSON parsable string', async () => {
     expect.assertions(1);
 
-    const { createCall } = await import('@/lib/cli-args');
+    const { createCall } = await import('@/lib/cli-arguments');
 
     const characters = '\\ " \t \n \r \b \f';
     const call = createCall({
@@ -97,7 +97,7 @@ describe('unit: CLI', () => {
     expect.assertions(1);
 
     await mockArgv([cliArgs('parse', '')], async () => {
-      const { isUserFacingCall } = await import('@/lib/cli-args');
+      const { isUserFacingCall } = await import('@/lib/cli-arguments');
       expect(isUserFacingCall()).toBe(true);
     });
   });
@@ -106,7 +106,7 @@ describe('unit: CLI', () => {
     expect.assertions(1);
 
     await mockArgv([cliArgs('read', '')], async () => {
-      const { isUserFacingCall } = await import('@/lib/cli-args');
+      const { isUserFacingCall } = await import('@/lib/cli-arguments');
       expect(isUserFacingCall()).toBe(true);
     });
   });
@@ -115,7 +115,7 @@ describe('unit: CLI', () => {
     expect.assertions(1);
 
     await mockArgv([cliArgs('readSettings', '')], async () => {
-      const { isUserFacingCall } = await import('@/lib/cli-args');
+      const { isUserFacingCall } = await import('@/lib/cli-arguments');
       expect(isUserFacingCall()).toBe(true);
     });
   });
@@ -124,7 +124,7 @@ describe('unit: CLI', () => {
     expect.assertions(1);
 
     await mockArgv([cliArgs('openUrl', '')], async () => {
-      const { isUserFacingCall } = await import('@/lib/cli-args');
+      const { isUserFacingCall } = await import('@/lib/cli-arguments');
       expect(isUserFacingCall()).toBe(false);
     });
   });
@@ -133,7 +133,7 @@ describe('unit: CLI', () => {
     expect.assertions(1);
 
     await mockArgv([cliArgs('create', '')], async () => {
-      const { isUserFacingCall } = await import('@/lib/cli-args');
+      const { isUserFacingCall } = await import('@/lib/cli-arguments');
       expect(isUserFacingCall()).toBe(false);
     });
   });
@@ -142,7 +142,7 @@ describe('unit: CLI', () => {
     expect.assertions(1);
 
     await mockArgv([cliArgs('remove', '')], async () => {
-      const { isUserFacingCall } = await import('@/lib/cli-args');
+      const { isUserFacingCall } = await import('@/lib/cli-arguments');
       expect(isUserFacingCall()).toBe(false);
     });
   });
@@ -151,7 +151,7 @@ describe('unit: CLI', () => {
     expect.assertions(1);
 
     await mockArgv([cliArgs('writeSetting', '')], async () => {
-      const { isUserFacingCall } = await import('@/lib/cli-args');
+      const { isUserFacingCall } = await import('@/lib/cli-arguments');
       expect(isUserFacingCall()).toBe(false);
     });
   });
@@ -160,7 +160,7 @@ describe('unit: CLI', () => {
     expect.assertions(1);
 
     await mockArgv([cliArgs('refreshCache', '')], async () => {
-      const { isUserFacingCall } = await import('@/lib/cli-args');
+      const { isUserFacingCall } = await import('@/lib/cli-arguments');
       expect(isUserFacingCall()).toBe(false);
     });
   });
@@ -169,7 +169,7 @@ describe('unit: CLI', () => {
     expect.assertions(1);
 
     await mockArgv([cliArgs('anything', '')], async () => {
-      const { isUserFacingCall } = await import('@/lib/cli-args');
+      const { isUserFacingCall } = await import('@/lib/cli-arguments');
       expect(isUserFacingCall()).toBe(true);
     });
   });

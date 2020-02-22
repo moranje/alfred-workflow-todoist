@@ -1,6 +1,6 @@
 import compareVersions from 'compare-versions';
 
-import { getCurrentCall } from '@/lib/cli-args';
+import { getCurrentCall } from '@/lib/cli-arguments';
 import command from '@/lib/command';
 import { AlfredError, Errors, funnelError } from '@/lib/error';
 import { checkForWorkflowUpdate } from '@/lib/updater';

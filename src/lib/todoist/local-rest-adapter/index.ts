@@ -54,7 +54,7 @@ export default function todoist(
     path: '',
   }
 ): LocalTodoistRESTAPI {
-  if (!/^[0-9A-Fa-f]{40}$/.test(apiKey)) {
+  if (!/^[\dA-Fa-f]{40}$/.test(apiKey)) {
     throw Object.assign(
       new TypeError(
         `Invalid API token. A token should be 40 characters long and exist of hexadecimals, was ${apiKey} (${apiKey.length} characters)`
