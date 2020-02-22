@@ -10,13 +10,18 @@ module.exports = {
     sourceType: 'module',
     project: './tsconfig.json',
   },
-  plugins: ['simple-import-sort', 'jsdoc', 'security', 'jest'],
+  plugins: [/*'import', */ 'jsdoc', 'sonarjs', 'security', 'jest'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier/@typescript-eslint',
     'plugin:prettier/recommended',
+    // 'plugin:import/errors',
+    // 'plugin:import/warnings',
+    // 'plugin:import/typescript ',
+    'plugin:unicorn/recommended',
     'plugin:jsdoc/recommended',
+    'plugin:sonarjs/recommended',
     'plugin:eslint-comments/recommended',
     'plugin:security/recommended',
     'plugin:jest/all',
@@ -25,6 +30,15 @@ module.exports = {
     jsdoc: {
       ignorePrivate: true,
     },
+    // 'import/parsers': {
+    //   '@typescript-eslint/parser': ['.ts'],
+    // },
+    // 'import/resolver': {
+    //   // use <root>/tsconfig.json
+    //   typescript: {
+    //     alwaysTryTypes: true,
+    //   },
+    // },
   },
   rules: {
     'no-warning-comments': [
@@ -34,7 +48,10 @@ module.exports = {
         location: 'start',
       },
     ],
-    'simple-import-sort/sort': 'error',
+    // 'import/no-relative-parent-imports': 'error',
+    // 'import/order': 'error',
+    // 'import/default': 'off',
+    'unicorn/no-unsafe-regex': 'warn',
     '@typescript-eslint/ban-ts-ignore': 'warn',
     camelcase: 'off',
     '@typescript-eslint/camelcase': [
