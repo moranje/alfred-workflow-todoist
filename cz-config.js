@@ -45,7 +45,7 @@ module.exports = {
     'commands',
     'settings',
     'build',
-    'dependency',
+    'dependencies',
   ],
 
   allowBreakingChanges: ['feat', 'fix', 'improvement'],

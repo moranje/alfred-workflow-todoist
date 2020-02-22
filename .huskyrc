@@ -1,6 +1,6 @@
 {
   "hooks": {
     "pre-commit": "PRE_COMMIT=true tsc --noEmit && lint-staged",
-    "prepare-commit-msg": "exec < /dev/tty && git cz --hook"
+    "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
   }
 }

@@ -25,7 +25,7 @@
     "build:grammar": "npx nearleyc src/lib/todoist/grammar.ne -o src/lib/todoist/grammar.ts && echo \"// @ts-nocheck\n$(cat src/lib/todoist/grammar.ts)\" > src/lib/todoist/grammar.ts",
     "build:workflow": "ts-node tools/build-workflow.ts",
     "bump-version": "ts-node tools/bump-version.ts",
-    "cm": "git-cz",
+    "commit": "git-cz",
     "debug": "ts-node tools/debug.ts",
     "lint:eslint": "eslint --fix",
     "lint:markdownlint": "markdownlint --fix",
@@ -50,10 +50,10 @@
   },
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-customizable"
+      "path": "node_modules/cz-customizable"
     },
     "cz-customizable": {
-      "config": "./cz-config.js"
+      "config": "cz-config.js"
     }
   },
   "dependencies": {
