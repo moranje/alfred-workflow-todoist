@@ -3,6 +3,7 @@ import got from 'got';
 
 import { createCall } from '@/lib/cli-args';
 import { AlfredError, Errors } from '@/lib/error';
+import logger from '@/lib/logger';
 import settingsStore from '@/lib/stores/settings-store';
 import { ENV } from '@/lib/utils';
 import { Item, workflowList } from '@/lib/workflow';
@@ -130,10 +131,12 @@ export async function checkForWorkflowUpdate(): Promise<void> {
       return addRelease(latest, ENV.workflow.version);
     }
 
-    throw new AlfredError(Errors.UpdaterError, 'Update check unsuccessful');
+    // istanbul ignore next: no need to test here
+    logger().info('Update check completed, no new updates found.');
   } catch (error) {
     throw new AlfredError(Errors.UpdaterError, error.message, {
       hide: true,
+      title: 'A problem with the silent updater check has occurred',
       error,
     });
   }

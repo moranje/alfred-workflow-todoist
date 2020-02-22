@@ -1,5 +1,5 @@
 import inquirer from 'inquirer';
-import { mkdir, ln, rm } from 'shelljs';
+import { mkdir, ln, rm, exec } from 'shelljs';
 import { existsSync } from 'fs';
 
 let dataPath = '';
@@ -77,6 +77,8 @@ inquirer
     rm('-rf', 'data', 'cache');
     ln('-s', dataPath, `data`);
     ln('-s', cachePath, `cache`);
+    // Needed globally for the git commands to work
+    exec('npm i -g commitizen');
   })
   .catch((err: Error) => {
     console.error("That didn't go as planned\n", err);

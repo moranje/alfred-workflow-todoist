@@ -105,21 +105,6 @@ describe('unit: Updater', () => {
     );
   });
 
-  it('should not fetch prereleases if a user has not enabled this setting', async () => {
-    expect.assertions(1);
-
-    scope
-      .get('/releases')
-      .once()
-      .reply(200, [{ prerelease: true, tag_name: 'v100.0.0-alpha.1' }])
-      .persist();
-
-    settingsStore().set('pre_releases', false);
-    await expect(checkForWorkflowUpdate()).rejects.toThrow(
-      /Update check unsuccessful/
-    );
-  });
-
   it('should throw an error if the release has no assets', async () => {
     expect.assertions(1);
 

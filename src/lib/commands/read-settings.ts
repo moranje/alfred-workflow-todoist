@@ -1,23 +1,26 @@
 import FuzzySearch from 'fuzzy-search';
 
-import { createCall } from '../cli-args';
-import { AlfredError, Errors } from '../error';
-import { Item, List } from '../workflow';
 import settingsStore, {
   Settings,
   settingsSchema,
 } from '@/lib/stores/settings-store';
 
+import { createCall } from '../cli-args';
+import { AlfredError, Errors } from '../error';
+import { Item, List } from '../workflow';
+
+const BETWEEN_SECOND_AND_YEAR =
+  'Must be a number between 1 and 31556926 (year)';
 const SETTINGS = Object.keys(settingsStore().store);
 const ERRORS: { [key: string]: string } = {
   token: 'Should be 40 characters and consist only of hexadecimals',
   language:
     'Must be: da, de, en, es, fi, fr, it, ja, ko, nl, pl, pt_BR, ru, sv, tr, zh_CN or zh_TW',
   max_items: 'Must be a number between 1 and 20',
-  cache_timeout: 'Must be a number between 1 and 31556926 (year)',
-  cache_timeout_tasks: 'Must be a number between 1 and 31556926 (year)',
+  cache_timeout: BETWEEN_SECOND_AND_YEAR,
+  cache_timeout_tasks: BETWEEN_SECOND_AND_YEAR,
   filter_wrapper: 'Must be either ", \' or `',
-  update_checks: 'Must be a number between 1 and 31556926 (year)',
+  update_checks: BETWEEN_SECOND_AND_YEAR,
   pre_releases: 'Must be either true or false',
   anonymous_statistics: 'Must be either true or false',
   log_level: 'Must be either trace, debug, info, warn, error or silent',

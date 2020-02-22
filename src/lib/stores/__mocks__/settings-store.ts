@@ -10,7 +10,7 @@ const STORE: { [key: string]: string | number | boolean } = {
   anonymous_statistics: false,
   log_level: 'error',
   last_update: new Date(2000).toISOString(), // Random date long ago
-  uuid: '0092990d-5cd1-4c84-b2f7-dd6d1b53d44f',
+  uuid: 'deadc0de-5cd1-4c84-b2f7-dd6d1b53d44f',
 };
 
 const map = new Map();

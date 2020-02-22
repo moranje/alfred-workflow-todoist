@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { format } from 'util';
 import * as Sentry from '@sentry/node';
-
 import cleanStack from 'clean-stack';
+import { format } from 'util';
+
+import settingsStore from '@/lib/stores/settings-store';
+
+import { isUserFacingCall } from './cli-args';
 import { AlfredError } from './error';
 import { init } from './sentry';
-import { isUserFacingCall } from './cli-args';
-import settingsStore from '@/lib/stores/settings-store';
 
 type LogStates = 'error' | 'warn' | 'info' | 'debug' | 'trace';
 type LogLevel = 'silent' | LogStates;
@@ -67,6 +68,8 @@ export function createLogger(loglevel: LogLevel): Logger {
      */
     trace(...trace: any): void {
       if (LEVEL[loglevel.toString()] === LEVEL.trace) {
+        // istanbul ignore next: haven't come across a situation where
+        // Error.stack is undefined. No way to test this.
         const fullStack = (Error().stack || '').split('\n');
         const stack = fullStack.slice(2).join('\n');
 
@@ -81,7 +84,8 @@ export function createLogger(loglevel: LogLevel): Logger {
      * Logs any messages with a log level of 'debug' or lower to stdout..
      *
      * @param debug An array of debug messages.
-     */ debug(...debug: any): void {
+     */
+    debug(...debug: any): void {
       if (LEVEL[loglevel.toString()] >= LEVEL.debug) {
         createLog('debug', !isUserFacingCall(), debug);
       }
@@ -91,7 +95,8 @@ export function createLogger(loglevel: LogLevel): Logger {
      * Logs any messages with log level of 'info' or lower to stdout.
      *
      * @param info An array of info messages.
-     */ info(...info: any): void {
+     */
+    info(...info: any): void {
       if (LEVEL[loglevel.toString()] >= LEVEL.info) {
         createLog('info', !isUserFacingCall(), info);
       }
@@ -101,7 +106,8 @@ export function createLogger(loglevel: LogLevel): Logger {
      * Logs any messages with log level of 'warn' or lower to stderr.
      *
      * @param warn An array of warnings.
-     */ warn(...warn: any): void {
+     */
+    warn(...warn: any): void {
       if (LEVEL[loglevel.toString()] >= LEVEL.warn) {
         createLog('warn', false, warn);
       }
@@ -112,7 +118,8 @@ export function createLogger(loglevel: LogLevel): Logger {
      * the error to sentry if the user allows it.
      *
      * @param error An array of Errors or error messages.
-     */ error(...error: any): void {
+     */
+    error(...error: any): void {
       if (LEVEL[loglevel.toString()] >= LEVEL.error) {
         createLog('error', false, error);
       }

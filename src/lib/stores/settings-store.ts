@@ -1,30 +1,32 @@
 import Conf from 'conf';
 import { JSONSchema } from 'json-schema-typed';
 
-import { ENV } from '../utils';
-import { uuid } from '../workflow';
 import { AlfredError, Errors } from '@/lib/error';
 
+import { ENV } from '../utils';
+import { uuid } from '../workflow';
+
+export type Language =
+  | 'da'
+  | 'de'
+  | 'en'
+  | 'es'
+  | 'fi'
+  | 'fr'
+  | 'it'
+  | 'ja'
+  | 'ko'
+  | 'nl'
+  | 'pl'
+  | 'pt_BR'
+  | 'ru'
+  | 'sv'
+  | 'tr'
+  | 'zh_CN'
+  | 'zh_TW';
 export type Settings = {
   token: string;
-  language:
-    | 'da'
-    | 'de'
-    | 'en'
-    | 'es'
-    | 'fi'
-    | 'fr'
-    | 'it'
-    | 'ja'
-    | 'ko'
-    | 'nl'
-    | 'pl'
-    | 'pt_BR'
-    | 'ru'
-    | 'sv'
-    | 'tr'
-    | 'zh_CN'
-    | 'zh_TW';
+  language: Language;
   max_items: number;
   cache_timeout: number;
   cache_timeout_tasks: number;
@@ -39,6 +41,8 @@ export type Settings = {
 };
 
 let instance: Conf<Settings> | null = null;
+const BETWEEN_SECOND_AND_YEAR =
+  'In seconds. Must be a number between 1 and 31556926 (year)';
 
 export const settingsSchema: { [key: string]: JSONSchema } = {
   token: {
@@ -81,14 +85,14 @@ export const settingsSchema: { [key: string]: JSONSchema } = {
   },
 
   cache_timeout: {
-    description: 'In seconds. Must be a number between 1 and 31556926 (year)',
+    description: BETWEEN_SECOND_AND_YEAR,
     type: 'number',
     minimum: 1,
     maximum: 31556926,
   },
 
   cache_timeout_tasks: {
-    description: 'In seconds. Must be a number between 1 and 31556926 (year)',
+    description: BETWEEN_SECOND_AND_YEAR,
     type: 'number',
     minimum: 1,
     maximum: 31556926,
@@ -104,7 +108,7 @@ export const settingsSchema: { [key: string]: JSONSchema } = {
 
   update_checks: {
     type: 'number',
-    description: 'In seconds. Must be a number between 1 and 31556926 (year)',
+    description: BETWEEN_SECOND_AND_YEAR,
     minimum: 1,
     maximum: 31556926,
   },
