@@ -36,7 +36,7 @@ import { parser } from '@/lib/todoist/parser';
 import { Item, List, workflowList } from '@/lib/workflow';
 import readTasksView from '@/lib/workflow/views/read-tasks';
 
-import { getApi, requestError } from '../todoist';
+import { getApi, requestError } from '@/lib/todoist';
 
 const LOCALES = {
   da,
@@ -252,12 +252,33 @@ export async function read(query: string): Promise<void> {
   if (parsed.currentToken === 'label') return listLabels(query);
   if (parsed.currentToken === 'priority') return listPriorities(query);
   if (parsed.currentToken === 'section') return listSections(query, parsed);
+  let tasks;
+  if (parsed.filter) {
+    tasks = await getApi()
+      .v1.task.findAll({
+        filter: parsed.filter,
+        lang: settingsStore().get('language'),
+      })
+      .catch(error => {
+        throw new AlfredError(
+          Errors.TodoistAPIError,
+          "Something in there just doesnt't sit right with Todoist, see docs",
+          {
+            error,
+            title: 'The Todoist API call failed',
+            url: 'https://get.todoist.help/hc/en-us/articles/205248842-Filters',
+            isSafe: true,
+          }
+        );
+      });
+  } else {
+    tasks = await getApi()
+      .v1.task.query(['content'], parsed.content)
+      .catch(error => {
+        throw requestError(error);
+      });
+  }
 
-  const tasks = await getApi()
-    .v1.task.query(['content'], parsed.content)
-    .catch(error => {
-      throw requestError(error);
-    });
   const filteredTasks = filter(tasks, {
     projectId: parsed.project?.id,
     labelIds: (parsed.labels || []).map(label => label.id),

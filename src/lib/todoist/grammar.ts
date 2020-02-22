@@ -1,5 +1,5 @@
 // @ts-nocheck
-// Generated automatically by nearley, version 2.19.0
+// Generated automatically by nearley, version 2.19.1
 // http://github.com/Hardmath123/nearley
 // Bypasses TS6133. Allow declared but unused functions.
 // @ts-ignore
@@ -580,7 +580,7 @@ const grammar: Grammar = {
       postprocess: ([_, filter]) => {
         return {
           value: filter.value,
-          type: 'filter',
+          type: 'incomplete-filter',
         };
       },
     },
@@ -605,7 +605,7 @@ const grammar: Grammar = {
       postprocess: () => {
         return {
           value: '',
-          type: 'filter',
+          type: 'incomplete-filter',
         };
       },
     },

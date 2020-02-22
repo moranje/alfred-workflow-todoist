@@ -30,6 +30,7 @@ interface AlfredErrorOptions {
   isSafe?: boolean;
   title?: string;
   hide?: boolean;
+  url?: string;
   error?: Error;
 }
 
@@ -39,6 +40,7 @@ export class AlfredError extends Error {
   isSafe?: boolean;
   hide: boolean;
   title: string;
+  url: string;
   constructor(
     commonType: string,
     description: string,
@@ -53,6 +55,8 @@ export class AlfredError extends Error {
     this.title = options?.title ?? 'Oops, this is not supposed to happen';
     this.isSafe = options?.isSafe ?? false;
     this.hide = options?.hide ?? false;
+    this.url =
+      options?.url ?? 'https://github.com/moranje/alfred-workflow-todoist';
     if (options?.error?.name) this.name += ` (${options.error.name})`;
 
     AlfredError.stackTraceLimit = 50;
@@ -135,11 +139,12 @@ function listProblem(error: AlfredError): void {
         new Item({
           arg: createCall({
             name: 'openUrl',
-            args: 'https://github.com/moranje/alfred-workflow-todoist',
+            args: error.url,
           }),
           title: error.title,
           subtitle: error.message,
           valid: true,
+          quicklookurl: error.url,
           text: {
             copy: `${error.name}: ${error.message}`,
           },
@@ -151,7 +156,7 @@ function listProblem(error: AlfredError): void {
   return notification({
     subtitle: error.title,
     message: error.message,
-    url: 'https://github.com/moranje/alfred-workflow-todoist',
+    url: error.url,
   });
 }
 

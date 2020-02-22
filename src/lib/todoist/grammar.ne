@@ -326,7 +326,7 @@ Filter ->
     ([_, filter]) => {
       return {
         value: filter.value,
-        type: 'filter'
+        type: 'incomplete-filter'
       }
     }
   %}
@@ -342,7 +342,7 @@ Filter ->
     () => {
       return {
         value: '',
-        type: 'filter'
+        type: 'incomplete-filter'
       }
     }
   %}
@@ -363,4 +363,3 @@ Content ->
 
 ContentPartial ->
   %content {% id %}
-

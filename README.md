@@ -79,7 +79,7 @@ If the error messages outputs node errors, either make sure you have the appropr
 | _label_    | `@15_min<2>`               | [Label](https://get.todoist.help/hc/en-us/articles/205195042) names can't contain any whitespace characters. _This is a premium feature_.                               |
 | _priority_ | Either `p2` or `!!2`       | A value between `1` (urgent) and `4` (normal)                                                                                                                           |
 | _section_  | `#personal<1>::section<4>` | A project [section](https://get.todoist.help/hc/en-us/articles/360003788739). Can only come after parent project.                                                       |
-| _filter_   | `"@15_min #personal"`      | Filter through Todoist. [Read the docs](https://get.todoist.help/hc/en-us/articles/205248842-Filters). _This is a premium feature_. \*NOT implemented yet in the alpha. |
+| _filter_   | `"@15min & #Personal"`     | Filter through Todoist. [Read the docs](https://get.todoist.help/hc/en-us/articles/205248842-Filters). _This is a premium feature_. \*NOT implemented yet in the alpha. |
 | _date_     | A date string              | See the [Todoist documentation](https://support.todoist.com/hc/en-us/articles/205325931-Dates-and-Times) for supported date formats.                                    |
 
 ### Search for tasks

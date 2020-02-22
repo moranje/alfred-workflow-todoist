@@ -56,7 +56,7 @@ export class List {
   }
 
   clear(): List {
-    this.items = [];
+    this._items = [];
 
     return this;
   }

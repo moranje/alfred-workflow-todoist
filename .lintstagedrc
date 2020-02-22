@@ -3,7 +3,6 @@
     "npm run lint:prettier"
   ],
   "*.md": [
-    "npm run lint:markdownlint",
     "npm run lint:prettier"
   ],
   "src/**/*.{ts,js}": [

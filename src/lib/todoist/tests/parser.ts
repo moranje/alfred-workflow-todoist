@@ -312,8 +312,8 @@ describe('unit: Parser', () => {
 
     const todo = parser('"') as T;
 
-    expect(todo.filter).toBe('');
-    expect(todo.currentToken).toBe('filter');
+    expect(todo.filter).toBeUndefined();
+    expect(todo.currentToken).toBe('incomplete-filter');
   });
 
   it('should parse an two consecutive filter quotes as a filter', () => {
@@ -328,7 +328,7 @@ describe('unit: Parser', () => {
   it('should parse incomplete filter notations as filter', () => {
     expect.assertions(2);
 
-    expect((parser('"Filter') as T).filter).toBe('Filter');
+    expect((parser('"Filter') as T).currentToken).toBe('incomplete-filter');
     expect((parser('"Filter"') as T).filter).toBe('Filter');
   });
 

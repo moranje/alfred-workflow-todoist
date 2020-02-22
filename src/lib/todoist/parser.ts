@@ -90,6 +90,8 @@ export function parser(text: string): ParsedTodoistTaskOptions | void {
     throw new AlfredError(Errors.ParserError, subtitle, {
       title,
       error,
+      url:
+        'https://github.com/moranje/alfred-workflow-todoist/tree/alpha#usage',
       isSafe: true,
     });
   }

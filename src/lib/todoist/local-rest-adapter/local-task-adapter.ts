@@ -1,11 +1,13 @@
-import { TaskAdapter } from 'todoist-rest-api';
+import { TaskAdapter, GetResourceByName } from 'todoist-rest-api';
+import equal from 'deep-equal';
 
-import { ResourceName, Store } from './types';
+import { Store } from './types';
 import { LocalRESTAdapter } from '.';
 import { CacheStore } from '@/lib/todoist/local-rest-adapter/conf-cache';
+import { Language } from '@/lib/stores/settings-store';
 
 export default class LocalTaskAdapter<
-  Name extends ResourceName
+  Name extends 'task'
 > extends LocalRESTAdapter<Name> {
   taskAdapter: TaskAdapter<'task'>;
   // The 'type' parameter is used for type inference
@@ -13,6 +15,29 @@ export default class LocalTaskAdapter<
     super(type, token, store);
 
     this.taskAdapter = new TaskAdapter('task', token);
+  }
+
+  async findAll(options?: {
+    project_id?: number;
+    label_id?: number;
+    filter?: string;
+    lang?: Language;
+    skipCache?: boolean;
+  }): Promise<GetResourceByName<Name>[]> {
+    const cache = this.peekAll() as GetResourceByName<Name>[];
+
+    if (cache.length > 0 && !options?.skipCache && !options?.filter) {
+      return cache;
+    }
+
+    const remote = await this.taskAdapter.findAll(options);
+    if (!equal(remote, this.store.get(this.type))) {
+      const typeSafeRemote = remote as Store[Name];
+      this.store.set(this.type, typeSafeRemote);
+    }
+
+    // @ts-ignore: should really find a way to please the typescript compiler
+    return remote;
   }
 
   async close(id: number): Promise<boolean> {
