@@ -33,7 +33,6 @@ module.exports = {
     '/dist/',
     '/tools/',
     'alfred-workflow-todoist.ts',
-    'cli-args',
   ],
 
   // A list of reporter names that Jest uses when writing coverage reports

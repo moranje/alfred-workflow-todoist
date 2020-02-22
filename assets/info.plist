@@ -96,7 +96,7 @@
 				<key>argumenttype</key>
 				<integer>1</integer>
 				<key>escaping</key>
-				<integer>36</integer>
+				<integer>102</integer>
 				<key>keyword</key>
 				<string>todos</string>
 				<key>queuedelaycustom</key>
@@ -119,8 +119,7 @@
 
 . ./check-node.sh
 
-escaped="$(echo "{query}" | sed 's/"/\\"/g')"
-node $node_flags alfred-workflow-todoist.js "{\"name\": \"read\", \"args\": \"$escaped\"}"
+node $node_flags alfred-workflow-todoist.js "{\"name\": \"read\", \"args\": \"{query}\"}"
 </string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
@@ -219,7 +218,7 @@ node $node_flags alfred-workflow-todoist.js "{query}"</string>
 				<key>argumenttype</key>
 				<integer>0</integer>
 				<key>escaping</key>
-				<integer>36</integer>
+				<integer>102</integer>
 				<key>keyword</key>
 				<string>todo</string>
 				<key>queuedelaycustom</key>
@@ -242,8 +241,7 @@ node $node_flags alfred-workflow-todoist.js "{query}"</string>
 
 . ./check-node.sh
 
-escaped="$(echo "{query}" | sed 's/"/\\"/g')"
-node $node_flags alfred-workflow-todoist.js "{\"name\": \"parse\", \"args\": \"$escaped\"}"
+node $node_flags alfred-workflow-todoist.js "{\"name\": \"parse\", \"args\": \"{query}\"}"
 </string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
@@ -294,7 +292,7 @@ node $node_flags alfred-workflow-todoist.js "{\"name\": \"parse\", \"args\": \"$
 				<key>argumenttype</key>
 				<integer>1</integer>
 				<key>escaping</key>
-				<integer>38</integer>
+				<integer>102</integer>
 				<key>keyword</key>
 				<string>todo:setting</string>
 				<key>queuedelaycustom</key>
@@ -317,8 +315,7 @@ node $node_flags alfred-workflow-todoist.js "{\"name\": \"parse\", \"args\": \"$
 
 . ./check-node.sh
 
-escaped="$(echo "{query}" | sed 's/"/\\"/g')"
-node $node_flags alfred-workflow-todoist.js "{\"name\": \"readSettings\", \"args\": \"$escaped\"}"
+node $node_flags alfred-workflow-todoist.js "{\"name\": \"readSettings\", \"args\": \"{query}\"}"
 </string>
 				<key>scriptargtype</key>
 				<integer>0</integer>
@@ -412,7 +409,7 @@ node $node_flags alfred-workflow-todoist.js "{\"name\": \"readSettings\", \"args
 		<string></string>
 	</dict>
 	<key>version</key>
-	<string>0.0.0-development</string>
+	<string>6.0.0-alpha.8</string>
 	<key>webaddress</key>
 	<string>https://github.com/moranje/alfred-workflow-todoist</string>
 </dict>

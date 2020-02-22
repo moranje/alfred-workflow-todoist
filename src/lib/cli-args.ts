@@ -1,8 +1,9 @@
-import { isPrimitive } from 'util';
 import { TodoistTask, TodoistTaskOptions } from 'todoist-rest-api';
+import { isPrimitive } from 'util';
+
+import { Settings } from '@/lib/stores/settings-store';
 
 import { ResourceName } from './todoist/local-rest-adapter';
-import { Settings } from '@/lib/stores/settings-store';
 
 type Arg =
   | string
@@ -39,6 +40,16 @@ export type Call =
     };
 
 const [, , ...argv] = process.argv;
+export const callNames: { [key: string]: boolean } = {
+  parse: true,
+  read: true,
+  readSettings: true,
+  openUrl: true,
+  create: true,
+  remove: true,
+  writeSetting: true,
+  refreshCache: true,
+};
 
 function assertValidArgs(args: Arg): asserts args is Arg {
   if (args == null) {
@@ -49,13 +60,22 @@ function assertValidArgs(args: Arg): asserts args is Arg {
 }
 
 function assertValidCall(call: Call): asserts call is Call {
+  // istanbul ignore next: shouldn't be possible in codebase
   if (!call || isPrimitive(call)) {
     throw new TypeError(`The call should be a an object, was ${call}`);
   }
 
   if (!call.name || typeof call.name !== 'string') {
     throw new TypeError(
-      `Expected call.name to be a string was ${call.name} (${typeof call.name})`
+      `Expected call.name to be a string was ${
+        call.name
+      } (of type ${typeof call.name})`
+    );
+  }
+
+  if (!callNames[call.name.toString()]) {
+    throw new TypeError(
+      `Expected call.name to be one of parse, read, readSettings, openUrl, create, remove, writeSetting, refreshCache, was ${call.name}`
     );
   }
 
@@ -68,22 +88,49 @@ function serialize(call: Call): string | never {
   return JSON.stringify(call);
 }
 
+function escape(string: string): string {
+  // @ts-ignore: is valid
+  return String(string).replace(/["\\\b\f\n\r\t]/g, char => {
+    switch (char) {
+      case '"':
+        return '\\"';
+      case '\b':
+        return '\\b';
+      case '\f':
+        return '\\f';
+      case '\n':
+        return '\\n';
+      case '\r':
+        return '\\r';
+      case '\t':
+        return '\\t';
+      default:
+        return char;
+    }
+  });
+}
+
 function deserialize(serialized: string): Call | never {
-  if (typeof serialized !== 'string') {
-    throw new TypeError(
-      `Expected a string in deserialize, got ${serialized} (${typeof serialized})`
-    );
-  }
+  const escaped = serialized.replace(
+    /"args": "([\s\S]+?)"}/,
+    (match, input) => {
+      return `"args": "${escape(input)}"}`;
+    }
+  );
 
   try {
-    const call = JSON.parse(serialized) as Call;
+    const call = JSON.parse(escaped) as Call;
     assertValidCall(call);
 
     return call;
   } catch (error) {
-    throw new TypeError(
-      `Expected a JSON string, got '${serialized}' (${typeof serialized})`
-    );
+    if (error instanceof SyntaxError) {
+      throw new TypeError(
+        `Expected a JSON string, got '${escaped}' (${typeof escaped})`
+      );
+    }
+
+    throw new TypeError(error.message);
   }
 }
 
@@ -116,7 +163,7 @@ export function isUserFacingCall(): boolean {
   let call;
   try {
     call = getCurrentCall();
-  } catch {
+  } catch (error) {
     // Err on the side of caution.
     return true;
   }
