@@ -12,9 +12,6 @@ on:
       - beta
       - alpha
 
-env:
-  NODE_ENV: production
-
 jobs:
   build:
     runs-on: macos-latest
@@ -49,6 +46,7 @@ jobs:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           SENTRY_ORG: ${{ secrets.SENTRY_ORG }}
           SENTRY_PROJECT: ${{ secrets.SENTRY_PROJECT }}
+          NODE_ENV: production
 
       - name: Run test suite
         run: npm run test
@@ -68,3 +66,4 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_ENV: production
