@@ -92,6 +92,7 @@
     "@semantic-release/changelog": "5.0.0",
     "@semantic-release/exec": "5.0.0",
     "@semantic-release/git": "9.0.0",
+    "@sentry/cli": "^1.51.1",
     "@types/chance": "^1.0.8",
     "@types/conf": "3.0.0",
     "@types/deep-equal": "^1.0.1",
