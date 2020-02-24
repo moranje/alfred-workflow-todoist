@@ -122,7 +122,7 @@
     "nearley": "2.19.0",
     "node-notifier": "5.4.0",
     "stampit": "4.3.0",
-    "write-json-file": "3.1.0"
+    "write-json-file": "3.2.0"
   },
   "devDependencies": {
     "@babel/polyfill": "7.7.0",
