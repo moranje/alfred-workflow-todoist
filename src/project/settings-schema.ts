@@ -6,7 +6,7 @@ export interface Schema {
   description: string
   type: string
   properties: Properties
-  required?: (string)[] | null
+  required?: string[] | null
 }
 
 /** @hidden */
@@ -32,7 +32,7 @@ export interface Language {
   description: string
   explanation: string
   type: string
-  enum?: (string)[] | null
+  enum?: string[] | null
 }
 
 /** @hidden */
