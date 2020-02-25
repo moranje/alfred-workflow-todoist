@@ -12,14 +12,14 @@ function noop() {
 
 function copyAssets() {
   mkdirp.sync(`dist/workflow`);
-  cp(`${TEMP_FOLDER}/info.plist`, 'dist/workflow/info.plist');
-  cp(`${TEMP_FOLDER}/icon.png`, 'dist/workflow/icon.png');
-  cp(`${TEMP_FOLDER}/check-node.sh`, 'dist/workflow/check-node.sh');
+  cp('-u', `${TEMP_FOLDER}/info.plist`, 'dist/workflow/info.plist');
+  cp('-u', `${TEMP_FOLDER}/icon.png`, 'dist/workflow/icon.png');
+  cp('-u', `${TEMP_FOLDER}/check-node.sh`, 'dist/workflow/check-node.sh');
   // cp('-R', `${TEMP_FOLDER}/images/`, 'dist/workflow/images/')
 }
 
 function storeAssets() {
-  cp('dist/workflow/info.plist', `${TEMP_FOLDER}/info.plist`);
+  cp('-u', 'dist/workflow/info.plist', `${TEMP_FOLDER}/info.plist`);
 }
 
 if (call === 'copyAssets') {

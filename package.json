@@ -18,7 +18,7 @@
   "main": "dist/workflow/alfred-workflow-todoist.js",
   "typings": "src/typings.d.ts",
   "scripts": {
-    "prebuild": "ts-node tools/move-files.ts storeAssets && rimraf dist",
+    "prebuild": "rimraf dist",
     "build": "ts-node tools/build.ts production",
     "build:all": "run-s build:grammar build build:workflow",
     "build:dev": "ts-node tools/move-files.ts storeAssets && ts-node tools/build.ts",
