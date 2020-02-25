@@ -77,8 +77,6 @@ inquirer
     rm('-rf', 'data', 'cache');
     ln('-s', dataPath, `data`);
     ln('-s', cachePath, `cache`);
-    // Needed globally for the git commands to work
-    exec('npm i -g commitizen');
   })
   .catch((err: Error) => {
     console.error("That didn't go as planned\n", err);
