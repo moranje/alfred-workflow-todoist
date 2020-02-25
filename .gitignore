@@ -13,7 +13,6 @@ data
 cache
 
 # Dev/Build Artifacts
-/dist/
 /coverage/
 .nyc_output
 
