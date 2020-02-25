@@ -24,6 +24,7 @@
     "build:dev": "ts-node tools/move-files.ts storeAssets && ts-node tools/build.ts",
     "build:grammar": "npx nearleyc src/lib/todoist/grammar.ne -o src/lib/todoist/grammar.ts && echo \"// @ts-nocheck\n$(cat src/lib/todoist/grammar.ts)\" > src/lib/todoist/grammar.ts",
     "build:workflow": "ts-node tools/build-workflow.ts",
+    "bump-version": "ts-node tools/bump-version.ts && ts-node tools/move-files.ts storeAssets",
     "commit": "./node_modules/cz-customizable/standalone.js",
     "debug": "ts-node tools/debug.ts",
     "lint:eslint": "eslint --fix",
