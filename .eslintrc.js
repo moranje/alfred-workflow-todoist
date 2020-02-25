@@ -22,7 +22,6 @@ module.exports = {
     'plugin:unicorn/recommended',
     'plugin:jsdoc/recommended',
     'plugin:sonarjs/recommended',
-    'plugin:eslint-comments/recommended',
     'plugin:security/recommended',
     'plugin:jest/all',
   ],
@@ -41,12 +40,8 @@ module.exports = {
     // },
   },
   rules: {
-    'no-warning-comments': [
+    'unicorn/expiring-todo-comments': [
       process.env.PRE_COMMIT ? 'error' : 'warn',
-      {
-        terms: ['todo', 'fixme'],
-        location: 'start',
-      },
     ],
     // 'import/no-relative-parent-imports': 'error',
     // 'import/order': 'error',

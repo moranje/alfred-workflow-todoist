@@ -125,6 +125,7 @@ async function subtitleDisplayList(task: TodoistTask): Promise<string[]> {
     options.push(`\u203C ${5 - task.priority}`);
   }
   if (due) {
+    // TODO [engine:node@>=12]: replace with Intl.RelativeTimeFormat
     options.push(
       `\u29D6 ${formatDistance(parseISO(due), new Date(), {
         addSuffix: true,
