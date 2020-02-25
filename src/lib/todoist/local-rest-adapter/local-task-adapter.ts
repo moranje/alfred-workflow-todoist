@@ -26,11 +26,19 @@ export default class LocalTaskAdapter<
   }): Promise<GetResourceByName<Name>[]> {
     const cache = this.peekAll() as GetResourceByName<Name>[];
 
-    if (cache.length > 0 && !options?.skipCache && !options?.filter) {
+    if (cache.length > 0 && options?.skipCache !== true && !options?.filter) {
       return cache;
     }
 
-    const remote = await this.taskAdapter.findAll(options);
+    // Shouldn't be passed along to the API request
+    const parameters = {
+      project_id: options?.project_id,
+      label_id: options?.label_id,
+      filter: options?.filter,
+      lang: options?.lang,
+    };
+
+    const remote = await this.taskAdapter.findAll(parameters);
     if (!equal(remote, this.store.get(this.type))) {
       const typeSafeRemote = remote as Store[Name];
       this.store.set(this.type, typeSafeRemote);

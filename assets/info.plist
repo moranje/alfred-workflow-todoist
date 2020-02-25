@@ -34,19 +34,6 @@
 				<false/>
 			</dict>
 		</array>
-		<key>425292E2-8641-4346-A537-F128D473408C</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>853C0BDB-9C62-4715-86A4-E71735849C80</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
 		<key>853C0BDB-9C62-4715-86A4-E71735849C80</key>
 		<array>
 			<dict>
@@ -170,39 +157,6 @@ node $node_flags alfred-workflow-todoist.js "{query}"</string>
 			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
 			<string>329F88DE-5F91-459A-8CA3-9471677B3673</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>action</key>
-				<integer>0</integer>
-				<key>argument</key>
-				<integer>3</integer>
-				<key>argumenttext</key>
-				<string>Get milk #Projecten&lt;2222894826&gt; @10min&lt;537752121&gt; @opleiding&lt;2150940159&gt; !!1 ::Doing&lt;1786288&gt;, morgen 10 uur</string>
-				<key>focusedappvariable</key>
-				<false/>
-				<key>focusedappvariablename</key>
-				<string></string>
-				<key>hotkey</key>
-				<integer>17</integer>
-				<key>hotmod</key>
-				<integer>1048576</integer>
-				<key>hotstring</key>
-				<string>T</string>
-				<key>leftcursor</key>
-				<false/>
-				<key>modsmode</key>
-				<integer>0</integer>
-				<key>relatedAppsMode</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.hotkey</string>
-			<key>uid</key>
-			<string>425292E2-8641-4346-A537-F128D473408C</string>
 			<key>version</key>
 			<integer>2</integer>
 		</dict>
@@ -361,13 +315,6 @@ node $node_flags alfred-workflow-todoist.js "{\"name\": \"readSettings\", \"args
 			<string>User actions</string>
 			<key>xpos</key>
 			<integer>600</integer>
-			<key>ypos</key>
-			<integer>220</integer>
-		</dict>
-		<key>425292E2-8641-4346-A537-F128D473408C</key>
-		<dict>
-			<key>xpos</key>
-			<integer>80</integer>
 			<key>ypos</key>
 			<integer>220</integer>
 		</dict>

@@ -60,6 +60,7 @@ module.exports = {
         allow: [
           'project_id',
           'label_ids',
+          'label_id',
           'section_id',
           'due_string',
           'due_date',

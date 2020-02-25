@@ -56,6 +56,8 @@ export function requestError(error: Error): AlfredError {
   return new AlfredError(Errors.TodoistAPIError, error.message, {
     error,
     title: 'The request to the API failed',
+    // @ts-ignore
+    url: error.url,
     isSafe: true,
   });
 }
