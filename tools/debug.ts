@@ -25,7 +25,7 @@ inquirer
   .then((answers: any) => {
     process.chdir(answers.workflow);
 
-    // TODO: make this alfred 4 ready
+    // TODO [>6.0.0]: make this alfred 4 ready
     exec(
       'alfred_workflow_data="$HOME/Library/Application Support/Alfred 3/Workflow Data/com.alfred-workflow-todoist" ' +
         'alfred_workflow_cache="$HOME/Library/Caches/com.runningwithcrayons.Alfred-3/Workflow Data/com.alfred-workflow-todoist" ' +
