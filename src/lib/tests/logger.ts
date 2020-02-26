@@ -75,7 +75,7 @@ describe('unit: Logger', () => {
     ]);
   });
 
-  it('should have made a call to sentry when anonymous_statistics is set to true', () => {
+  it('should have made a call to sentry when error_tracking is set to true', () => {
     expect.assertions(2);
 
     const error = new Error('Houston, we have a problem');
@@ -86,7 +86,7 @@ describe('unit: Logger', () => {
         isSafe: true,
       }
     );
-    settingsStore('reset').set('anonymous_statistics', true);
+    settingsStore('reset').set('error_tracking', true);
     const logger = createLogger('error');
     logger.error('Sentry error', error, alfredError);
 

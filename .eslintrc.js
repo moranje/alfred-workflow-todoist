@@ -65,6 +65,7 @@ module.exports = {
           'max_items',
           'cache_timeout',
           'anonymous_statistics',
+          'error_tracking',
           'filter_wrapper',
           'update_checks',
           'pre_releases',

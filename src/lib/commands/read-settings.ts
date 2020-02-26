@@ -22,7 +22,7 @@ const ERRORS: { [key: string]: string } = {
   filter_wrapper: 'Must be either ", \' or `',
   update_checks: BETWEEN_SECOND_AND_YEAR,
   pre_releases: 'Must be either true or false',
-  anonymous_statistics: 'Must be either true or false',
+  error_tracking: 'Must be either true or false',
   log_level: 'Must be either trace, debug, info, warn, error or silent',
 };
 const searcher = new FuzzySearch(

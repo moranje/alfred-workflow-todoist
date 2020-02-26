@@ -11,7 +11,7 @@ import settingsStore from '@/lib/stores/settings-store';
  * error collection.
  */
 export function init(): typeof Sentry | null {
-  if (settingsStore().get('anonymous_statistics') === true) {
+  if (settingsStore().get('error_tracking') === true) {
     Sentry.init({
       dsn: 'https://fcddabe319894f7bb07321c9d93ae3a2@sentry.io/1454575',
       release: ENV.workflow.version,

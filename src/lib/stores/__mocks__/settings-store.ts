@@ -7,7 +7,7 @@ const STORE: { [key: string]: string | number | boolean } = {
   filter_wrapper: '"',
   update_checks: 604800, // Week in seconds
   pre_releases: false,
-  anonymous_statistics: false,
+  error_tracking: false,
   log_level: 'error',
   last_update: new Date(2000).toISOString(), // Random date long ago
   uuid: 'deadc0de-5cd1-4c84-b2f7-dd6d1b53d44f',
@@ -100,7 +100,7 @@ export const settingsSchema: { [key: string]: any } = {
     description: 'Be notified of alpha and beta releases',
   },
 
-  anonymous_statistics: {
+  error_tracking: {
     description: 'Anonymous error tracking',
     type: 'boolean',
   },

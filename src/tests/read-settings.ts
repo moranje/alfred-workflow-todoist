@@ -31,7 +31,7 @@ describe('integration: Read Settings()', () => {
       'SET: filter_wrapper',
       'SET: update_checks',
       'SET: pre_releases',
-      'SET: anonymous_statistics',
+      'SET: error_tracking',
       'SET: log_level',
     ]);
   });

@@ -6,7 +6,7 @@ jest.mock('@/lib/stores/settings-store');
 jest.mock('@sentry/node');
 
 describe('unit: Sentry', () => {
-  it('should not return a Sentry instance when anonymous_statistics is false', () => {
+  it('should not return a Sentry instance when error_tracking is false', () => {
     expect.assertions(1);
 
     settingsStore('reset');
@@ -15,10 +15,10 @@ describe('unit: Sentry', () => {
     expect(Sentry).toBeNull();
   });
 
-  it('should return a Sentry anonymous_statistics is true', () => {
+  it('should return a Sentry error_tracking is true', () => {
     expect.assertions(1);
 
-    settingsStore('').set('anonymous_statistics', true);
+    settingsStore('').set('error_tracking', true);
     const Sentry = init();
 
     expect(Sentry).not.toBeNull();

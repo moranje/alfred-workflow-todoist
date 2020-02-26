@@ -5,6 +5,7 @@ import { AlfredError, Errors } from '@/lib/error';
 
 import { ENV } from '../utils';
 import { uuid } from '../workflow';
+import pkg from '@pkg';
 
 export type Language =
   | 'da'
@@ -33,8 +34,9 @@ export type Settings = {
   filter_wrapper: string;
   update_checks: number;
   pre_releases: boolean;
-  // TODO: replace with `error_tracking`
-  anonymous_statistics: boolean;
+  error_tracking: boolean;
+  // TODO [>=7.0.0]: remove from codebase
+  anonymous_statistics?: boolean;
   log_level: 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'silent';
   last_update: string;
   uuid: string;
@@ -119,6 +121,12 @@ export const settingsSchema: { [key: string]: JSONSchema } = {
   },
 
   anonymous_statistics: {
+    description:
+      'DEPRECATED: automaticaLly replaced with error_tracking property',
+    type: 'boolean',
+  },
+
+  error_tracking: {
     description: 'Anonymous error tracking',
     type: 'boolean',
   },
@@ -150,6 +158,7 @@ function createStore(path: string): Conf {
     configName: 'settings',
     cwd: path,
     schema: settingsSchema,
+    projectVersion: pkg.version,
     defaults: {
       token: '',
       language: 'en',
@@ -159,10 +168,16 @@ function createStore(path: string): Conf {
       filter_wrapper: '"',
       update_checks: 604800, // Week in seconds
       pre_releases: false,
-      anonymous_statistics: true,
       log_level: 'error',
       last_update: new Date(2000).toISOString(), // Random date long ago
       uuid: uuid(),
+    },
+    migrations: {
+      '5.8.4': (store): void => {
+        const value = store.get('anonymous_statistics') ?? true;
+        store.set('error_tracking', value);
+        store.delete('anonymous_statistics');
+      },
     },
   });
 }
