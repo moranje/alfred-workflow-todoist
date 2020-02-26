@@ -202,6 +202,6 @@ export function funnelError(error: Error): void {
 /**
  * Error listeners.
  */
-// NOTE (any): Doesn't match call signature but will be an error
+// NOTE (any): Doesn't match call signature but 1st argument will be an error
 process.once('unhandledRejection', funnelError as any);
 process.once('uncaughtException', funnelError);
