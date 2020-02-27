@@ -50,11 +50,10 @@
         ]
       }
     ],
-    "@eclass/semantic-release-sentry-releases",
     [
       "@semantic-release/exec",
       {
-        "publishCmd": "./tools/sentry-release.sh ${nextRelease.version}"
+        "publishCmd": "./tools/sentry-release.sh ${nextRelease.version} ${commits[commit.length - 1].hash} ${commits[0].hash}"
       }
     ]
   ]

@@ -59,7 +59,16 @@ jobs:
 
       - name: Create release
         if: success()
-        run: npm run semantic-release
+        uses: cycjimmy/semantic-release-action@v2
+        with:
+          extra_plugins: |
+            @semantic-release/commit-analyzer
+            @semantic-release/release-notes-generator
+            @semantic-release/npm
+            @semantic-release/exec
+            @semantic-release/changelog
+            @semantic-release/git
+            @semantic-release/github
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
