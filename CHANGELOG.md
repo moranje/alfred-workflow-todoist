@@ -30,89 +30,7 @@
 
 - **project:** Improve string parsing, now requires id for project, labels and sections
 
-# [6.0.0-alpha.10](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.9...v6.0.0-alpha.10) (2020-02-25)
-
-### Bug Fixes
-
-- api filter requests being broken ([3b344a1](https://github.com/moranje/alfred-workflow-todoist/commit/3b344a10a5741030e281b0077f6d8e8c28834bd7))
-- **todoist:** task cache not being refreshed ([179c0bc](https://github.com/moranje/alfred-workflow-todoist/commit/179c0bcc67a0b1e3d7c5e55fb7e5d732f2065fbb))
-
-# [6.0.0-alpha.9](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.8...v6.0.0-alpha.9) (2020-02-22)
-
-### Bug Fixes
-
-- **commands:** certain characters not (" and \) being parsed ([d53d68f](https://github.com/moranje/alfred-workflow-todoist/commit/d53d68f699c214d1048d98d80bc224b97377b73e))
-
-### Features
-
-- **commands:** filter tasks directly through Todoist ([f9bd460](https://github.com/moranje/alfred-workflow-todoist/commit/f9bd460a2c9a03f0d4efe92ffe6612fa1d6d231e)), closes [#13](https://github.com/moranje/alfred-workflow-todoist/issues/13) [#20](https://github.com/moranje/alfred-workflow-todoist/issues/20) [#72](https://github.com/moranje/alfred-workflow-todoist/issues/72)
-
-# [6.0.0-alpha.8](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.7...v6.0.0-alpha.8) (2020-02-16)
-
-### Bug Fixes
-
-- **cache:** cache always being reset ([d83408e](https://github.com/moranje/alfred-workflow-todoist/commit/d83408e0a066545b1c0db26fe2962a49ed93054d))
-
-### Features
-
-- **commands:** [#13](https://github.com/moranje/alfred-workflow-todoist/issues/13) sort by due date by default ([32044b0](https://github.com/moranje/alfred-workflow-todoist/commit/32044b072c20b949af05aebfcf6083e5e453e9aa))
-
-# [6.0.0-alpha.7](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.6...v6.0.0-alpha.7) (2020-02-16)
-
-### Bug Fixes
-
-- **cache:** handle empty resource lists ([af89785](https://github.com/moranje/alfred-workflow-todoist/commit/af89785f5a1c4ffc1bedc1cdaf05c858c145b706))
-- **cache:** issue where cache timestamps wouldn't be updated once created ([5156040](https://github.com/moranje/alfred-workflow-todoist/commit/515604085198124165424037aa4c31b4cbeae9e1))
-
-### Features
-
-- **parser:** reimplement date from now for timestamped tasks ([cd090d8](https://github.com/moranje/alfred-workflow-todoist/commit/cd090d8a26486bd36dc266582c0bc02469f9f9ef))
-
-# [6.0.0-alpha.6](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.5...v6.0.0-alpha.6) (2020-02-13)
-
-### Bug Fixes
-
-- **commands:** error when trying to retrieve a non existent project ([42e0009](https://github.com/moranje/alfred-workflow-todoist/commit/42e0009d794f9ab6c62002b0e6d8163b5ca41fa9))
-- **settings:** [#152](https://github.com/moranje/alfred-workflow-todoist/issues/152) settings break with multiple consecutive spaces ([b3f2f2a](https://github.com/moranje/alfred-workflow-todoist/commit/b3f2f2a678e61d30a490d23e84028f1d6efe1e6d))
-
-# [6.0.0-alpha.5](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.4...v6.0.0-alpha.5) (2020-02-12)
-
-### Bug Fixes
-
-- updater not storing last update timestamp ([35ff532](https://github.com/moranje/alfred-workflow-todoist/commit/35ff5328bd4bc789a7929e1c30fe03694c2c305d))
-- **commands:** [#151](https://github.com/moranje/alfred-workflow-todoist/issues/151) don't rely on alfred input filtering, remove uids ([92d9ac4](https://github.com/moranje/alfred-workflow-todoist/commit/92d9ac44d58761ea74216f54eea83a73101e7015))
-
-# [6.0.0-alpha.4](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.3...v6.0.0-alpha.4) (2020-02-11)
-
-### Bug Fixes
-
-- updater not picking up new prereleases, please update manually ([fdcb793](https://github.com/moranje/alfred-workflow-todoist/commit/fdcb793369000b580217db4a58311816503bb5c3))
-- **project:** unhelpful error message when missing todoist token in settings ([5a0af91](https://github.com/moranje/alfred-workflow-todoist/commit/5a0af91b49b0c5b83ad73cb1fec768233e19df64))
-
-# [6.0.0-alpha.3](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.2...v6.0.0-alpha.3) (2020-02-08)
-
-### Bug Fixes
-
-- alfred workflow version is the same as the release version again ([0ce67a3](https://github.com/moranje/alfred-workflow-todoist/commit/0ce67a37d97a6dc8df26e13165350f09c96a3786))
-
-# [6.0.0-alpha.2](https://github.com/moranje/alfred-workflow-todoist/compare/v6.0.0-alpha.1...v6.0.0-alpha.2) (2020-02-08)
-
-### Bug Fixes
-
-- **build:** possibly fix version number not updated in alfred workflow ([ac02c22](https://github.com/moranje/alfred-workflow-todoist/commit/ac02c22f62e2ebbc0e2a69d4878d58b867e367a6))
-
-# [6.0.0-alpha.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.8.4...v6.0.0-alpha.1) (2020-02-08)
-
-### Features
-
-- **project:** full rewrite ([2849c8a](https://github.com/moranje/alfred-workflow-todoist/commit/2849c8a081f4254610ac41125c79fed9a55e557d)), closes [#128](https://github.com/moranje/alfred-workflow-todoist/issues/128) [#126](https://github.com/moranje/alfred-workflow-todoist/issues/126) [#20](https://github.com/moranje/alfred-workflow-todoist/issues/20) [#124](https://github.com/moranje/alfred-workflow-todoist/issues/124) [#128](https://github.com/moranje/alfred-workflow-todoist/issues/128) [#126](https://github.com/moranje/alfred-workflow-todoist/issues/126) [#124](https://github.com/moranje/alfred-workflow-todoist/issues/124) [#20](https://github.com/moranje/alfred-workflow-todoist/issues/20)
-- **project:** provide a useful error as a list item when node.js is not installed ([e039157](https://github.com/moranje/alfred-workflow-todoist/commit/e0391577db34aa353fd1458698e7304a51821303))
-
-### BREAKING CHANGES
-
-- **project:** Improve string parsing, now requires id for project, labels and sections
-
-## [5.8.4](https://github.com/moranje/alfred-workflow-todoist/compare/v5.8.3...v5.8.4) (2019-12-15)
+# [5.8.4](https://github.com/moranje/alfred-workflow-todoist/compare/v5.8.3...v5.8.4) (2019-12-15)
 
 ### Bug Fixes
 
@@ -120,7 +38,7 @@
 - **dependency:** lower required node.js to v10.x ([a222d5d](https://github.com/moranje/alfred-workflow-todoist/commit/a222d5d50d4c1d3b943b13b7332eedf6f403ace6))
 - **settings:** no update notifications for alfa and beta releases ([1ad3186](https://github.com/moranje/alfred-workflow-todoist/commit/1ad31860379f108025f51c5a1bbcfe8ed5a4d868))
 
-## [5.8.3](https://github.com/moranje/alfred-workflow-todoist/compare/v5.8.2...v5.8.3) (2019-08-04)
+# [5.8.3](https://github.com/moranje/alfred-workflow-todoist/compare/v5.8.2...v5.8.3) (2019-08-04)
 
 ### Bug Fixes
 
@@ -128,14 +46,14 @@
 - **tests:** failing test suite due a bug in nock under node 12 ([42cc96d](https://github.com/moranje/alfred-workflow-todoist/commit/42cc96d))
 - **todoist:** support emoticons/emoji ([bfdce97](https://github.com/moranje/alfred-workflow-todoist/commit/bfdce97)), closes [#112](https://github.com/moranje/alfred-workflow-todoist/issues/112)
 
-## [5.8.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.8.1...v5.8.2) (2019-04-22)
+# [5.8.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.8.1...v5.8.2) (2019-04-22)
 
 ### Bug Fixes
 
 - **parser:** add all language scripts in a more robust way ([b5fd7b4](https://github.com/moranje/alfred-workflow-todoist/commit/b5fd7b4)), closes [#111](https://github.com/moranje/alfred-workflow-todoist/issues/111)
 - **parser:** use es5 compatible robust script parsing ([0b22006](https://github.com/moranje/alfred-workflow-todoist/commit/0b22006)), closes [#111](https://github.com/moranje/alfred-workflow-todoist/issues/111)
 
-## [5.8.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.8.0...v5.8.1) (2019-04-05)
+# [5.8.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.8.0...v5.8.1) (2019-04-05)
 
 ### Bug Fixes
 
@@ -151,7 +69,7 @@
 
 - **project:** periodic checks for workflow updates ([e9f4262](https://github.com/moranje/alfred-workflow-todoist/commit/e9f4262)), closes [#108](https://github.com/moranje/alfred-workflow-todoist/issues/108)
 
-## [5.7.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.7.0...v5.7.1) (2019-03-26)
+# [5.7.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.7.0...v5.7.1) (2019-03-26)
 
 ### Bug Fixes
 
@@ -166,31 +84,31 @@
 - **parser:** add support for scripts other than latin ([b12ce3d](https://github.com/moranje/alfred-workflow-todoist/commit/b12ce3d)), closes [#105](https://github.com/moranje/alfred-workflow-todoist/issues/105)
 - **todoist:** add japanese timestamp translations ([44b47dd](https://github.com/moranje/alfred-workflow-todoist/commit/44b47dd))
 
-## [5.6.5](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.4...v5.6.5) (2018-12-05)
+# [5.6.5](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.4...v5.6.5) (2018-12-05)
 
 ### Bug Fixes
 
 - fix missing new invocation in cache module (probably harmless) ([4777b2f](https://github.com/moranje/alfred-workflow-todoist/commit/4777b2f))
 
-## [5.6.4](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.3...v5.6.4) (2018-11-11)
+# [5.6.4](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.3...v5.6.4) (2018-11-11)
 
 ### Bug Fixes
 
 - allow labels to be hyphenated ([ae309ef](https://github.com/moranje/alfred-workflow-todoist/commit/ae309ef)), closes [#50](https://github.com/moranje/alfred-workflow-todoist/issues/50)
 
-## [5.6.3](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.2...v5.6.3) (2018-10-27)
+# [5.6.3](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.2...v5.6.3) (2018-10-27)
 
 ### Bug Fixes
 
 - add valid error handler fot task creation logic ([13446cc](https://github.com/moranje/alfred-workflow-todoist/commit/13446cc))
 
-## [5.6.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.1...v5.6.2) (2018-10-27)
+# [5.6.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.1...v5.6.2) (2018-10-27)
 
 ### Bug Fixes
 
 - completing a task now closes a task instead of deleting it ([a0c71f8](https://github.com/moranje/alfred-workflow-todoist/commit/a0c71f8)), closes [#47](https://github.com/moranje/alfred-workflow-todoist/issues/47)
 
-## [5.6.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.0...v5.6.1) (2018-10-15)
+# [5.6.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.6.0...v5.6.1) (2018-10-15)
 
 ### Bug Fixes
 
@@ -219,13 +137,13 @@
 - respect `cache_timeout` setting ([bf18000](https://github.com/moranje/alfred-workflow-todoist/commit/bf18000))
 - respect `language` setting when creating a task ([c09a903](https://github.com/moranje/alfred-workflow-todoist/commit/c09a903))
 
-## [5.4.5](https://github.com/moranje/alfred-workflow-todoist/compare/v5.4.4...v5.4.5) (2018-10-10)
+# [5.4.5](https://github.com/moranje/alfred-workflow-todoist/compare/v5.4.4...v5.4.5) (2018-10-10)
 
 ### Bug Fixes
 
 - **settings:** validation: allow uuid to be made up out `A-F` chars ([951bcf3](https://github.com/moranje/alfred-workflow-todoist/commit/951bcf3))
 
-## [5.4.4](https://github.com/moranje/alfred-workflow-todoist/compare/v5.4.3...v5.4.4) (2018-10-09)
+# [5.4.4](https://github.com/moranje/alfred-workflow-todoist/compare/v5.4.3...v5.4.4) (2018-10-09)
 
 ### Bug Fixes
 
@@ -233,19 +151,19 @@
 - allows for token setting to be empty (initial state) ([4140290](https://github.com/moranje/alfred-workflow-todoist/commit/4140290))
 - setting validation errors ([302d9b7](https://github.com/moranje/alfred-workflow-todoist/commit/302d9b7))
 
-## [5.4.3](https://github.com/moranje/alfred-workflow-todoist/compare/v5.4.2...v5.4.3) (2018-10-08)
+# [5.4.3](https://github.com/moranje/alfred-workflow-todoist/compare/v5.4.2...v5.4.3) (2018-10-08)
 
 ### Bug Fixes
 
 - handle unknown settings in settings.json ([0680885](https://github.com/moranje/alfred-workflow-todoist/commit/0680885)), closes [#40](https://github.com/moranje/alfred-workflow-todoist/issues/40) [#41](https://github.com/moranje/alfred-workflow-todoist/issues/41)
 
-## [5.4.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.4.1...v5.4.2) (2018-10-07)
+# [5.4.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.4.1...v5.4.2) (2018-10-07)
 
 ### Bug Fixes
 
 - more consistent caching of todoist API calls ([f397593](https://github.com/moranje/alfred-workflow-todoist/commit/f397593))
 
-## [5.4.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.4.0...v5.4.1) (2018-10-07)
+# [5.4.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.4.0...v5.4.1) (2018-10-07)
 
 ### Bug Fixes
 
@@ -265,13 +183,13 @@
 
 - cache Todoist API calls ([0946caa](https://github.com/moranje/alfred-workflow-todoist/commit/0946caa))
 
-## [5.3.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.3.1...v5.3.2) (2018-10-07)
+# [5.3.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.3.1...v5.3.2) (2018-10-07)
 
 ### Bug Fixes
 
 - add missing files ([23bda15](https://github.com/moranje/alfred-workflow-todoist/commit/23bda15))
 
-## [5.3.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.3.0...v5.3.1) (2018-10-07)
+# [5.3.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.3.0...v5.3.1) (2018-10-07)
 
 ### Bug Fixes
 
@@ -299,19 +217,19 @@
 
 - **workflow:** notification now links to created task ([244eb95](https://github.com/moranje/alfred-workflow-todoist/commit/244eb95))
 
-## [5.1.3](https://github.com/moranje/alfred-workflow-todoist/compare/v5.1.2...v5.1.3) (2018-10-05)
+# [5.1.3](https://github.com/moranje/alfred-workflow-todoist/compare/v5.1.2...v5.1.3) (2018-10-05)
 
 ### Bug Fixes
 
 - not being able to define a workflow setting ([5c042ea](https://github.com/moranje/alfred-workflow-todoist/commit/5c042ea))
 
-## [5.1.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.1.1...v5.1.2) (2018-10-04)
+# [5.1.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.1.1...v5.1.2) (2018-10-04)
 
 ### Bug Fixes
 
 - unwanted deletion of plist and icon files ([9093f6f](https://github.com/moranje/alfred-workflow-todoist/commit/9093f6f))
 
-## [5.1.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.1.0...v5.1.1) (2018-10-04)
+# [5.1.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.1.0...v5.1.1) (2018-10-04)
 
 ### Bug Fixes
 
@@ -323,31 +241,31 @@
 
 - **workflow:** better error reporting ([52c132b](https://github.com/moranje/alfred-workflow-todoist/commit/52c132b))
 
-## [5.0.5](https://github.com/moranje/alfred-workflow-todoist/compare/v5.0.4...v5.0.5) (2018-10-03)
+# [5.0.5](https://github.com/moranje/alfred-workflow-todoist/compare/v5.0.4...v5.0.5) (2018-10-03)
 
 ### Bug Fixes
 
 - the .aflredworkflow not being updated ([fac7e6f](https://github.com/moranje/alfred-workflow-todoist/commit/fac7e6f))
 
-## [5.0.4](https://github.com/moranje/alfred-workflow-todoist/compare/v5.0.3...v5.0.4) (2018-10-03)
+# [5.0.4](https://github.com/moranje/alfred-workflow-todoist/compare/v5.0.3...v5.0.4) (2018-10-03)
 
 ### Bug Fixes
 
 - include version number in workflow ([01d56d3](https://github.com/moranje/alfred-workflow-todoist/commit/01d56d3))
 
-## [5.0.3](https://github.com/moranje/alfred-workflow-todoist/compare/v5.0.2...v5.0.3) (2018-10-02)
+# [5.0.3](https://github.com/moranje/alfred-workflow-todoist/compare/v5.0.2...v5.0.3) (2018-10-02)
 
 ### Bug Fixes
 
 - hopefully fixes automated version bumping in package.json ([1c631cd](https://github.com/moranje/alfred-workflow-todoist/commit/1c631cd))
 
-## [5.0.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.0.1...v5.0.2) (2018-10-02)
+# [5.0.2](https://github.com/moranje/alfred-workflow-todoist/compare/v5.0.1...v5.0.2) (2018-10-02)
 
 ### Bug Fixes
 
 - asset folder not being created on ci server ([49f97b2](https://github.com/moranje/alfred-workflow-todoist/commit/49f97b2))
 
-## [5.0.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.0.0...v5.0.1) (2018-10-02)
+# [5.0.1](https://github.com/moranje/alfred-workflow-todoist/compare/v5.0.0...v5.0.1) (2018-10-02)
 
 ### Bug Fixes
 
