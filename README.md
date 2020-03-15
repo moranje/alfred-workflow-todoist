@@ -118,7 +118,7 @@ Example: `todos car` => returns (because of fuzzy search):
 
 - _Rent_ **car**
 - _New_ **ca**_t_ **r**_ecipe's_
-- **C**_ut Gr_**a**_s tomo_**r**_row_
+- **C**_ut Gr_**a**_ss tomo_**r**_row_
 
 ### Create task
 
