@@ -1,0 +1,434 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>alfred-workflow-todoist</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">alfred-workflow-todoist</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> alfred-workflow-todoist</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<p><a href="https://travis-ci.org/moranje/alfred-workflow-todoist"><img src="https://travis-ci.org/moranje/alfred-workflow-todoist.svg?branch=master" alt="Build Status"></a>
+				<a href="https://coveralls.io/github/moranje/alfred-workflow-todoist"><img src="https://coveralls.io/repos/github/moranje/alfred-workflow-todoist/badge.svg" alt="Coverage Status"></a> <img src="https://img.shields.io/librariesio/github/moranje/alfred-workflow-todoist.svg" alt=""> <a href="https://www.codefactor.io/repository/github/moranje/alfred-workflow-todoist"><img src="https://www.codefactor.io/repository/github/moranje/alfred-workflow-todoist/badge" alt="CodeFactor"></a> <img src="https://img.shields.io/github/downloads/moranje/alfred-workflow-todoist/latest/Alfred.Workflow.Todoist.alfredworkflow.svg" alt="GitHub Releases (by Asset)"></p>
+				<a href="#alfred-todoist-workflow" id="alfred-todoist-workflow" style="color: inherit; text-decoration: none;">
+					<h1>ALFRED TODOIST WORKFLOW</h1>
+				</a>
+				<p>Add and search <a href="https://todoist.com/">Todoist</a> tasks straight from <a href="https://www.alfredapp.com">Alfred</a>. It uses Todoist stable <code>v1</code> <a href="https://developer.todoist.com/rest/v1">REST API</a>.</p>
+				<table>
+					<thead>
+						<tr>
+							<th align="center"><a href="#getting-started">Getting started</a></th>
+							<th align="center"><a href="#installation">Installation</a></th>
+							<th align="center"><a href="#configuration">Configuration</a></th>
+							<th align="center"><a href="#usage">Usage</a></th>
+							<th align="center"><a href="#contributing">Contributing</a></th>
+						</tr>
+					</thead>
+				</table>
+				<a href="#getting-started" id="getting-started" style="color: inherit; text-decoration: none;">
+					<h2>Getting started</h2>
+				</a>
+				<p>For this workflow to work you need:</p>
+				<ul>
+					<li>Alfred version <code>3.x</code> or <code>4.x</code> and a powerpack licence.</li>
+					<li><a href="https://nodejs.org/en/download/">Node.js</a> version <code>10.x</code> or up</li>
+				</ul>
+				<p>Note that the workflow expects node to be installed in the default location(s), i.e. <code>/usr/local/bin</code> or <code>/usr/bin</code>. See <a href="#Non---standard-node-installation">installation notes</a> below on how to make the workflow work with non-standard node installations.</p>
+				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+					<h2>Installation</h2>
+				</a>
+				<p><a href="https://github.com/moranje/alfred-workflow-todoist/releases/latest/download/Alfred.Workflow.Todoist.alfredworkflow">Download</a> and import workflow.</p>
+				<a href="#non-standard-node-installation" id="non-standard-node-installation" style="color: inherit; text-decoration: none;">
+					<h3>Non-standard node installation</h3>
+				</a>
+				<p>If you have installed node.js in a non-standard way (e.g. through <strong>nvm</strong> or <strong>homebrew</strong>), you may need to do either of the following to make the workflow work:</p>
+				<p><strong>Create symlink to current node version:</strong></p>
+				<ol>
+					<li>In the terminal, navigate to /usr/local/bin
+					<code>cd /usr/local/bin</code></li>
+					<li>Create symlink to current node version
+						<code>ln -s $(which node) node</code>
+					(note, if you&#39;re using a different shell - fish, zsh, etc. - you may need to make slight changes to make the command work).</li>
+				</ol>
+				<p>This method should work with different versions of nvm (including changing to other versions), as long as you don&#39;t remove the symlinked node version (or the symlink itself of course).</p>
+				<p>The downside is having problems switching between versions because most processes will default to the symlinked version.</p>
+				<p><strong>Manually add node path to the workflow:</strong></p>
+				<ol>
+					<li>In the terminal, reveal the path to your node installation
+					<code>which node</code></li>
+					<li>Copy the output, but omit the executable
+						(e.g.
+						<code>/Users/{user}/.nvm/versions/node/v11.6.0/bin</code>, not
+					<code>/Users/{user}/.nvm/versions/node/v11.6.0/bin/node</code>)</li>
+					<li>Navigate to the workflow in Alfred Preferences
+					<em>Alfred Preferences</em> -&gt; <em>Workflows</em>-tab</li>
+					<li>Click &quot;Configure workflow and variables&quot; in the top right corner and edit the node_path variable with the node path followed by a colon i.e.
+					<code>/Users/{user}/.nvm/versions/node/v11.6.0/bin:</code></li>
+				</ol>
+				<p><strong>Observe</strong>, variable will have to be updated whenever node version changes.</p>
+				<a href="#node-flags" id="node-flags" style="color: inherit; text-decoration: none;">
+					<h4>Node flags</h4>
+				</a>
+				<p>If you need to enable any node.js command-line flags, you can with</p>
+				<ol>
+					<li>Navigate to the workflow in Alfred Preferences
+					<em>Alfred Preferences</em> -&gt; <em>Workflows</em>-tab</li>
+					<li>Click &quot;Configure workflow and variables&quot; in the top right corner and edit the node_flag variable with the command-line flag i.e. <code>--experimental-worker --experimental-modules</code></li>
+				</ol>
+				<a href="#debug" id="debug" style="color: inherit; text-decoration: none;">
+					<h3>Debug</h3>
+				</a>
+				<p>If the workflow doesn&#39;t work as expected, perform the following to get a clue about the issue:</p>
+				<ol>
+					<li>Navigate to the workflow in <em>Alfred Preferences</em> -&gt; <em>Workflows</em>-tab</li>
+					<li>Enable <em>Debug mode</em> (button in the top-right corner of the screen)</li>
+					<li>Watch for messages in the bottom log-pane when using the workflow.</li>
+				</ol>
+				<p>If the error messages outputs node errors, either make sure you have the appropriate node version or follow the steps <a href="#Non---standard-node-installation">above</a> to enable the workflow with a non-standard node installation.</p>
+				<a href="#configuration" id="configuration" style="color: inherit; text-decoration: none;">
+					<h2>Configuration</h2>
+				</a>
+				<table>
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Notation</th>
+							<th>Explanation</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td><em>token</em></td>
+							<td><code>^[0-9a-fA-F]{40}$</code> (default empty)</td>
+							<td>The todoist API token.</td>
+						</tr>
+						<tr>
+							<td><em>language</em></td>
+							<td><code>en</code>, <code>da</code>, <code>pl</code>, <code>zh</code>, <code>ko</code>, <code>de</code>, <code>pt</code>, <code>ja</code>, <code>it</code>, <code>fr</code>, <code>sv</code>, <code>ru</code>, <code>es</code>, <code>nl</code> (default <code>en</code>)</td>
+							<td>The language for natural language date processing (by todoist) and to calculate time to complete a task.</td>
+						</tr>
+						<tr>
+							<td><em>cache_timeout</em></td>
+							<td>A positive number (default <code>3600</code>, an hour)</td>
+							<td>The time (in seconds) until the cache is refreshed (until that time todoist information is stored locally to make things a little faster)</td>
+						</tr>
+						<tr>
+							<td><em>anonymous_statistics</em></td>
+							<td><code>true</code> or <code>false</code> (default <code>true</code>)</td>
+							<td>Doesn&#39;t do much at the moment but I intent to use it to track installs</td>
+						</tr>
+				</tbody></table>
+				<p><code>todo:setting token {api token}</code></p>
+				<p>Example: <em>todo:setting token 2d2e2a334c5f36e7a7c43b46e</em></p>
+				<p><code>todo:setting language {language}</code></p>
+				<p>Example: <em>todo:setting language nl</em></p>
+				<p><code>todo:setting cache_timeout {time in seconds}</code></p>
+				<p>Example: <em>todo:setting cache_timeout 13</em></p>
+				<p><code>todo:setting anonymous_statistics {true or false}</code></p>
+				<p>Example: <em>todo:setting anonymous_statistics false</em></p>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<table>
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Notation</th>
+							<th>Explanation</th>
+						</tr>
+					</thead>
+					<tbody><tr>
+							<td><em>task</em></td>
+							<td>Any text except <code>,</code></td>
+							<td>The task title.</td>
+						</tr>
+						<tr>
+							<td><em>date</em></td>
+							<td>A date string</td>
+							<td>See the <a href="https://support.todoist.com/hc/en-us/articles/205325931-Dates-and-Times">Todoist documentation</a> for supported date formats.</td>
+						</tr>
+						<tr>
+							<td><em>project</em></td>
+							<td>Either <code>#personal</code> or <code>#[next actions]</code></td>
+							<td>Use either the hashtag notation or bracket notation if the project name has spaces in it. The project name is case sensitive.</td>
+						</tr>
+						<tr>
+							<td><em>label</em></td>
+							<td><code>@label</code></td>
+							<td>Label names can&#39;t contain any whitespace characters. Labels are case insensitive.</td>
+						</tr>
+						<tr>
+							<td><em>priority</em></td>
+							<td>Either <code>p2</code> or <code>!!2</code></td>
+							<td>A value between <code>1</code> (urgent) and <code>4</code> (normal)</td>
+						</tr>
+				</tbody></table>
+				<a href="#search-for-tasks" id="search-for-tasks" style="color: inherit; text-decoration: none;">
+					<h3>Search for tasks</h3>
+				</a>
+				<p><code>todos {query}</code></p>
+				<a href="#query" id="query" style="color: inherit; text-decoration: none;">
+					<h3>Query</h3>
+				</a>
+				<p>Any search query one character or longer. Uses fuzzy search to find the tasks.</p>
+				<p>Example: <code>todos car</code> =&gt; returns (because of fuzzy search):</p>
+				<ul>
+					<li><em>Rent</em> <strong>car</strong></li>
+					<li><em>New</em> <strong>ca</strong><em>t</em> <strong>r</strong><em>ecipe&#39;s</em></li>
+					<li><strong>C</strong><em>ut Gr</em><strong>a</strong><em>ss tomo</em><strong>r</strong><em>row</em></li>
+				</ul>
+				<a href="#create-task" id="create-task" style="color: inherit; text-decoration: none;">
+					<h3>Create task</h3>
+				</a>
+				<p><code>todo {task}, {date}</code></p>
+				<p>Example: <em>todo Get things done, tomorrow @ 9</em>
+				Example: <em>todo Build tree house #home !!2 @15min, tomorrow @ 9</em></p>
+				<p><em><em>Important</em></em></p>
+				<p>For date parsing the work the date needs to be the only thing after the comma.</p>
+				<p>The reason for this is that multilanguage date string parsing is hard, and Todoist has already solved this problem. But in order to have Todoist read the date the workflow needs to present it a string that holds just the date. The workflow does this by having the date string between a comma and the end of the string.</p>
+				<a href="#documentation" id="documentation" style="color: inherit; text-decoration: none;">
+					<h2>Documentation</h2>
+				</a>
+				<p>Read the <a href="https://moranje.github.io/alfred-workflow-todoist">docs</a>.</p>
+				<a href="#changelog" id="changelog" style="color: inherit; text-decoration: none;">
+					<h2>Changelog</h2>
+				</a>
+				<p>View <a href="https://github.com/moranje/alfred-workflow-todoist/blob/master/CHANGELOG.md">CHANGELOG.md</a></p>
+				<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
+					<h2>Contributing</h2>
+				</a>
+				<a href="#instructions" id="instructions" style="color: inherit; text-decoration: none;">
+					<h3>Instructions</h3>
+				</a>
+				<ul>
+					<li><p>Fork and clone the repo</p>
+						<p><em>git clone <a href="https://github.com/YOUR-USERNAME/alfred-worflow-todoist">https://github.com/YOUR-USERNAME/alfred-worflow-todoist</a></em></p>
+					</li>
+					<li><p>Install dependencies</p>
+						<p><em>npm install</em></p>
+					</li>
+					<li><p>Symlink to project workflow folder</p>
+						<p><em>npm run setup:dev</em></p>
+					</li>
+				</ul>
+				<a href="#build" id="build" style="color: inherit; text-decoration: none;">
+					<h3>Build</h3>
+				</a>
+				<p>Create a new build with</p>
+				<p><code>npm run build</code></p>
+				<p>Create a distributable package (.alfredworkflow) after the build step with</p>
+				<p><code>npm run build:workflow</code></p>
+				<a href="#run-tests" id="run-tests" style="color: inherit; text-decoration: none;">
+					<h3>Run tests</h3>
+				</a>
+				<p>Run Jest test suite with:</p>
+				<p><code>npm run test</code>
+				<code>npm run test:prod</code></p>
+				<p>Or run a watcher with</p>
+				<p><code>npm run test:watch</code></p>
+				<a href="#commits" id="commits" style="color: inherit; text-decoration: none;">
+					<h3>Commits</h3>
+				</a>
+				<p>For commits I follow the <code>angular commit guidelines</code> and use <code>semantic release</code> to automate builds, semver version updates and changelog creation. The way to make sure this all works is to run:</p>
+				<p><code>npm run commit</code></p>
+				<p>Which guides you through the motions</p>
+				<a href="#code-of-conduct" id="code-of-conduct" style="color: inherit; text-decoration: none;">
+					<h2>Code of conduct</h2>
+				</a>
+				<p><a href="https://github.com/moranje/alfred-workflow-todoist/blob/master/code-of-conduct.md">Code of Conduct</a></p>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p><a href="https://github.com/moranje/alfred-workflow-todoist/blob/master/LICENSE">License MIT</a> © <a href="https://github.com/moranje">Martien Oranje</a></p>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-not-exported">
+						<a href="modules/_fast_plist_.html">&quot;fast-<wbr>plist&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-not-exported">
+						<a href="modules/_macos_version_.html">&quot;macos-<wbr>version&quot;</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-not-exported">
+						<a href="modules/project.html">project</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-not-exported">
+						<a href="modules/todoist.html">todoist</a>
+					</li>
+					<li class=" tsd-kind-module tsd-is-not-exported">
+						<a href="modules/workflow.html">workflow</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#todoist_api_uri" class="tsd-kind-icon">TODOIST_<wbr>API_<wbr>URI</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#getsetting" class="tsd-kind-icon">get<wbr>Setting</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#getsettings" class="tsd-kind-icon">get<wbr>Settings</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#handleerror" class="tsd-kind-icon">handle<wbr>Error</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#list" class="tsd-kind-icon">list</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#parser" class="tsd-kind-icon">parser</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#removeobject" class="tsd-kind-icon">remove<wbr>Object</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#save" class="tsd-kind-icon">save</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#serialize" class="tsd-kind-icon">serialize</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#uuid" class="tsd-kind-icon">uuid</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="globals.html#verify" class="tsd-kind-icon">verify</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#env" class="tsd-kind-icon">ENV</a>
+					</li>
+					<li class=" tsd-kind-object-literal">
+						<a href="globals.html#schema" class="tsd-kind-icon">Schema</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
