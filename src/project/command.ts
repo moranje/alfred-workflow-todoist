@@ -164,7 +164,8 @@ export const Command: project.CommandFactory = compose({
         json: true
       })
         .then(response => {
-          if (response.body.version.match(/alfa|beta/).length > 0) return
+          let alfa_beta_match = response.body.version.match(/alfa|beta/)
+          if (alfa_beta_match && alfa_beta_match.length > 0) return
 
           if (response.body.version > FILES.workflowConfig.version) {
             Notification({
