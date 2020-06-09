@@ -1,34 +1,31 @@
-import { AlfredError, FILES, Schema, SETTINGS_PATH } from '@/project';
-import { Item, List, Notification, uuid } from '@/workflow';
-import AJV from 'ajv';
-import compose from 'stampit';
-import writeJsonFile from 'write-json-file';
+import { AlfredError, FILES, Schema, SETTINGS_PATH } from '@/project'
+import { Item, List, Notification, uuid } from '@/workflow'
+import AJV from 'ajv'
+import compose from 'stampit'
+import writeJsonFile from 'write-json-file'
 
 /** @hidden */
 const ajv = new AJV({ allErrors: true })
 
 /** @hidden */
-const SettingsList = compose(
-  List,
-  {
-    init(this: workflow.ListInstance, { settings }: { settings: project.Settings }) {
-      this.items = this.items || []
+const SettingsList = compose(List, {
+  init(this: workflow.ListInstance, { settings }: { settings: project.Settings }) {
+    this.items = this.items || []
 
-      Object.keys(Schema.properties).forEach((key: string) => {
-        if (key !== 'uuid') {
-          this.items.push(
-            Item({
-              title: `SETTING: ${key}`,
-              subtitle: `${Schema.properties[key].explanation}`,
-              autocomplete: ` ${key}`,
-              valid: false
-            })
-          )
-        }
-      })
-    }
+    Object.keys(Schema.properties).forEach((key: string) => {
+      if (key !== 'uuid') {
+        this.items.push(
+          Item({
+            title: `SETTING: ${key}`,
+            subtitle: `${Schema.properties[key].explanation}`,
+            autocomplete: ` ${key}`,
+            valid: false
+          })
+        )
+      }
+    })
   }
-)
+})
 
 /** @hidden */
 const SettingList = compose(List, {
@@ -122,7 +119,7 @@ function createDefault() {
     uuid: uuid(),
     anonymous_statistics: true
   }
-  let validate = ajv.compile(Schema)
+  const validate = ajv.compile(Schema)
 
   if (validate(starter)) {
     return starter
@@ -133,7 +130,7 @@ function createDefault() {
 
 /** @hidden */
 function castSettingTypes(settings: project.Settings) {
-  let typeCast: project.Settings = settings
+  const typeCast: project.Settings = settings
 
   Object.entries(settings).forEach(([key, value]) => {
     if (Schema.properties[key] && Schema.properties[key].type === 'boolean') {
@@ -164,8 +161,8 @@ function castSettingTypes(settings: project.Settings) {
 
 /** @hidden */
 function getErrors(key: string, value: string | number | boolean, settings: project.Settings) {
-  let updated = Object.assign({}, settings, { [key]: value })
-  let validate = ajv.compile(Schema)
+  const updated = Object.assign({}, settings, { [key]: value })
+  const validate = ajv.compile(Schema)
 
   if (!validate(castSettingTypes(updated))) {
     return validate.errors || []
@@ -180,28 +177,28 @@ export function getSettings(): project.Settings {
 }
 
 export function getSetting(setting: string) {
-  let settings = getSettings()
+  const settings = getSettings()
 
   return settings[setting]
 }
 
 export function list() {
-  let settings = getSettings()
-  let settingsList = SettingsList({ settings })
+  const settings = getSettings()
+  const settingsList = SettingsList({ settings })
 
   return settingsList.write()
 }
 
 export function verify(key: string, value: string | number | boolean) {
-  let settings = getSettings()
-  let settingList = SettingList({ key, value, settings })
+  const settings = getSettings()
+  const settingList = SettingList({ key, value, settings })
 
   return settingList.write()
 }
 
 export async function save({ key, value }: { key: string; value: string | number | boolean }) {
-  let settings = getSettings()
-  let errors = getErrors(key, value, settings)
+  const settings = getSettings()
+  const errors = getErrors(key, value, settings)
 
   if (errors.length === 0) {
     await writeJsonFile(SETTINGS_PATH, Object.assign(settings, { [key]: value }))
