@@ -1,55 +1,60 @@
-import { getSetting } from '@/project';
-import { LabelAdapter, LabelList, parser, ProjectAdapter, ProjectList, Task, TaskList } from '@/todoist';
-import { Item, List } from '@/workflow';
-import compose from 'stampit';
+import { getSetting } from '@/project'
+import {
+  LabelAdapter,
+  LabelList,
+  parser,
+  ProjectAdapter,
+  ProjectList,
+  Task,
+  TaskList
+} from '@/todoist'
+import { Item, List } from '@/workflow'
+import compose from 'stampit'
 
 /** @hidden */
 function createTask(parsed: todoist.Parsed, locale: string) {
-  let task = Task(parsed)
-  let taskList = TaskList({ tasks: [task], action: 'CREATE', locale })
+  const task = Task(parsed)
+  const taskList = TaskList({ tasks: [task], action: 'CREATE', locale })
 
   return taskList.write()
 }
 
 /** @hidden */
 async function showProjects(query: string) {
-  let project = query.replace(/^.*#/, '').replace(/\[|\]/g, '')
-  let projects = await ProjectAdapter({ token: getSetting('token') }).query(project, 'name')
+  const project = query.replace(/^.*#/, '').replace(/\[|\]/g, '')
+  const projects = await ProjectAdapter({ token: getSetting('token') }).query(project, 'name')
 
   return ProjectList({ projects, query }).write()
 }
 
 /** @hidden */
 async function showLabels(query: string) {
-  let label = query.replace(/^.*@/, '')
-  let labels = await LabelAdapter({ token: getSetting('token') }).query(label, 'name')
+  const label = query.replace(/^.*@/, '')
+  const labels = await LabelAdapter({ token: getSetting('token') }).query(label, 'name')
 
   return LabelList({ labels, query }).write()
 }
 
 /** @hidden */
 function showPriorities(query: string) {
-  let priority = query.replace(/^.*?!!/, '').replace(/^.*?p/, '')
-  let priorityNames: { [index: string]: string } = {
+  const priority = query.replace(/^.*?!!/, '').replace(/^.*?p/, '')
+  const priorityNames: { [index: string]: string } = {
     '1': 'urgent',
     '2': 'high',
     '3': 'medium',
     '4': 'low'
   }
 
-  const Priority: workflow.PriorityFactory = compose(
-    Item,
-    {
-      init(this: workflow.ItemInstance, title: number) {
-        this.title = `${title}`
-        this.subtitle = `Set priority to ${priorityNames[`${title}`]}`
-        this.autocomplete = `${query
-          .replace(/(^.*!!)[1-4]$/, '$1')
-          .replace(/(^.*?p)[1-4]$/, '$1')}${title} `
-        this.valid = false
-      }
+  const Priority: workflow.PriorityFactory = compose(Item, {
+    init(this: workflow.ItemInstance, title: number) {
+      this.title = `${title}`
+      this.subtitle = `Set priority to ${priorityNames[`${title}`]}`
+      this.autocomplete = `${query
+        .replace(/(^.*!!)[1-4]$/, '$1')
+        .replace(/(^.*?p)[1-4]$/, '$1')}${title} `
+      this.valid = false
     }
-  )
+  })
 
   if (+priority >= 1 && +priority <= 4) {
     return List({ items: [Priority(+priority)] }).write()
