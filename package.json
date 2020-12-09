@@ -144,7 +144,7 @@
     "@types/mkdirp": "0.5.2",
     "@types/moo": "0.5.0",
     "@types/nearley": "2.11.0",
-    "@types/nock": "10.0.3",
+    "@types/nock": "11.1.0",
     "@types/node": "12.6.8",
     "@types/shelljs": "0.8.6",
     "@types/stampit": "3.0.3",
