@@ -120,7 +120,7 @@
     "mkdirp": "0.5.1",
     "moo": "0.5.1",
     "nearley": "2.19.0",
-    "node-notifier": "5.4.0",
+    "node-notifier": "8.0.1",
     "stampit": "4.3.0",
     "write-json-file": "3.1.0"
   },
