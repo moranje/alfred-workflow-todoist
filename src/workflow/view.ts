@@ -8,8 +8,7 @@ export const View: workflow.ViewFactory = compose({
   init(this: workflow.ViewInstance) {
     this.upperCase = (text: string) => text.toUpperCase()
     this.lowerCase = (text: string) => text.toLowerCase()
-    this.sentenceCase = (text: string) =>
-      text.charAt(0).toUpperCase() + text.substring(1)
+    this.sentenceCase = (text: string) => text.charAt(0).toUpperCase() + text.substring(1)
 
     this.when = (condition: any, truthy: string, falsy: string) => {
       if (typeof condition === 'string' && !condition.trim()) return falsy
@@ -19,7 +18,7 @@ export const View: workflow.ViewFactory = compose({
       return falsy
     }
 
-    this.ws = (count: number = 1) => {
+    this.ws = (count = 1) => {
       return ' '.repeat(count)
     }
   },
@@ -38,8 +37,8 @@ export const View: workflow.ViewFactory = compose({
         lowerCase: this.lowerCase,
         sentenceCase: this.sentenceCase,
         ws: this.ws,
-        when: this.when
+        when: this.when,
       })
-    }
-  }
+    },
+  },
 })

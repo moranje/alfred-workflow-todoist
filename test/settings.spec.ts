@@ -3,7 +3,7 @@ import { list, save } from '@/project'
 jest.mock('@/project/references')
 jest.mock('@/project/files', () => ({
   __esModule: true,
-  FILES: { cache: [] }
+  FILES: { cache: [] },
 }))
 jest.mock('write-json-file', () => {
   return async (path: string, data: any) => {
@@ -24,7 +24,7 @@ describe('Unit: Settings', () => {
 
   it('should be able to read settings', () => {
     list()
-    let items = JSON.parse(spy.mock.calls[0][0]).items
+    const items = JSON.parse(spy.mock.calls[0][0]).items
 
     expect(items[0].title).toBe('SETTING: token')
     expect(items[1].title).toBe('SETTING: language')
@@ -35,7 +35,7 @@ describe('Unit: Settings', () => {
 
   it('should be able to read settings when none exist on disk', () => {
     list()
-    let items = JSON.parse(spy.mock.calls[0][0]).items
+    const items = JSON.parse(spy.mock.calls[0][0]).items
 
     expect(items[0].title).toBe('SETTING: token')
     expect(items[1].title).toBe('SETTING: language')
@@ -46,7 +46,7 @@ describe('Unit: Settings', () => {
 
   it('should be able to edit token setting', async () => {
     await save({ key: 'token', value: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' })
-    let json = spy.mock.calls[0][0]
+    const json = spy.mock.calls[0][0]
 
     expect(json.token).toBe('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
     expect(json.language).toBe('en')
@@ -57,7 +57,7 @@ describe('Unit: Settings', () => {
 
   it('should be able to edit language setting', async () => {
     await save({ key: 'language', value: 'nl' })
-    let json = spy.mock.calls[0][0]
+    const json = spy.mock.calls[0][0]
 
     expect(json.token).toBe('')
     expect(json.language).toBe('nl')
@@ -68,7 +68,7 @@ describe('Unit: Settings', () => {
 
   it('should be able to edit max_items setting', async () => {
     await save({ key: 'max_items', value: 3 })
-    let json = spy.mock.calls[0][0]
+    const json = spy.mock.calls[0][0]
 
     expect(json.token).toBe('')
     expect(json.language).toBe('en')
@@ -79,7 +79,7 @@ describe('Unit: Settings', () => {
 
   it('should be able to edit cache_timeout setting', async () => {
     await save({ key: 'cache_timeout', value: 3 })
-    let json = spy.mock.calls[0][0]
+    const json = spy.mock.calls[0][0]
 
     expect(json.token).toBe('')
     expect(json.language).toBe('en')
@@ -90,7 +90,7 @@ describe('Unit: Settings', () => {
 
   it('should be able to edit anonymous_statistics setting', async () => {
     await save({ key: 'anonymous_statistics', value: true })
-    let json = spy.mock.calls[0][0]
+    const json = spy.mock.calls[0][0]
 
     expect(json.token).toBe('')
     expect(json.language).toBe('en')
@@ -101,7 +101,7 @@ describe('Unit: Settings', () => {
 
   it('should be able to edit settings when none exist on disk', async () => {
     await save({ key: 'token', value: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa' })
-    let json = spy.mock.calls[0][0]
+    const json = spy.mock.calls[0][0]
 
     expect(json.token).toBe('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
     expect(json.language).toBe('en')

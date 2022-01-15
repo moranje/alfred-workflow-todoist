@@ -33,5 +33,5 @@ try {
 export const FILES: project.FILES = {
   settings,
   cache,
-  workflowConfig
+  workflowConfig,
 }

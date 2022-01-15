@@ -8,6 +8,6 @@ export const Notification = compose({
   methods: {
     write() {
       console.log(this)
-    }
-  }
+    },
+  },
 })

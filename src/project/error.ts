@@ -1,5 +1,5 @@
-import { ENV } from "@/project";
-import { Notification } from '@/workflow';
+import { ENV } from '@/project'
+import { Notification } from '@/workflow'
 
 /** @hidden */
 const argv = Object.assign([], process.argv)
@@ -14,7 +14,7 @@ const ERROR_ENV = {
   OSX_VERSION: ENV.OSX_VERSION,
   NODE_VERSION: ENV.NODE_VERSION,
   ALFRED_VERSION: ENV.ALFRED_VERSION,
-  WORKFLOW_VERSION: ENV.WORKFLOW_VERSION
+  WORKFLOW_VERSION: ENV.WORKFLOW_VERSION,
 }
 
 /**
@@ -44,7 +44,7 @@ export class AlfredError extends Error {
 }
 
 export function handleError(err: Error) {
-  let error = new AlfredError(err.message, err.name, err.stack)
+  const error = new AlfredError(err.message, err.name, err.stack)
 
   return Notification(Object.assign(error, { query })).write()
 }

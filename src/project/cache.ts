@@ -11,7 +11,7 @@ const cacheTimeout: number = getSetting('cache_timeout')
 /** @hidden */
 const options = {
   max: 500,
-  maxAge: 1000 * cacheTimeout
+  maxAge: 1000 * cacheTimeout,
 }
 /** @hidden */
 const cache = new LRUCache(options)
@@ -31,8 +31,8 @@ export { cache }
  */
 export function removeObject(type: string, id: number): void {
   // @ts-ignore incorrect return type on cache.get()
-  let objects: any[] = cache.get(type) || []
-  let removed = remove(objects, (obj: any) => obj.id === id)
+  const objects: any[] = cache.get(type) || []
+  const removed = remove(objects, (obj: any) => obj.id === id)
 
   if (!removed) {
     throw new AlfredError(`Could not remove item with id ${id} from ${type}`)

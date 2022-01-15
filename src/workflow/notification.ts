@@ -9,7 +9,7 @@ const NOTIFICATION_DEFAULTS: workflow.NotificationOptions = {
   message: "There's nothing to say.",
   icon: `${process.cwd()}/icon.png`,
   timeout: 5,
-  hideSuccessLogs: false
+  hideSuccessLogs: false,
 }
 
 /**
@@ -31,7 +31,7 @@ function logError(error: project.AlfredError) {
       `node.js: ${error.NODE_VERSION}`,
       `alfred: ${error.ALFRED_VERSION}`,
       `workflow: ${error.WORKFLOW_VERSION}`,
-      `Stack: ${error.stack}`
+      `Stack: ${error.stack}`,
     ]
       .join('\n')
       // Hide token from log by default
@@ -55,7 +55,7 @@ function notify(options: workflow.NotificationOptions) {
 
   if (ENV.ALFRED_VERSION.split('.').shift() === '3') sender += '-3'
 
-  let child = spawn(
+  const child = spawn(
     NOTIFIER_PATH,
     [
       '-title',
@@ -71,12 +71,12 @@ function notify(options: workflow.NotificationOptions) {
       '-open',
       `"${options.open}"`,
       '-timeout',
-      `${options.timeout}`
+      `${options.timeout}`,
       // '> /dev/null 2>&1 &'
     ],
     {
       detached: true,
-      stdio: 'ignore'
+      stdio: 'ignore',
     }
   )
 
@@ -99,13 +99,13 @@ export const Notification: workflow.NotificationFactory = compose({
     let values = Object.assign({}, output)
 
     if (output instanceof Error) {
-      let name = output.name.charAt(0).toUpperCase() + output.name.substring(1) || 'Error'
+      const name = output.name.charAt(0).toUpperCase() + output.name.substring(1) || 'Error'
 
       values = Object.assign({
         title: 'ALFRED WORKFLOW TODOIST',
         subtitle: '✕ How unfortunate...',
         message: `${name}: ${output.message}`,
-        error: output
+        error: output,
       })
     }
 
@@ -131,6 +131,6 @@ export const Notification: workflow.NotificationFactory = compose({
       }
 
       return notify(this)
-    }
-  }
+    },
+  },
 })

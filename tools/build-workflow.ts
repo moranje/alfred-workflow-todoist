@@ -6,7 +6,7 @@ shell.exec('npm run bump-version', { silent: true })
 zip({
   source: '*',
   destination: '"../Alfred Workflow Todoist.alfredworkflow"',
-  cwd: 'dist/workflow/'
+  cwd: 'dist/workflow/',
 })
   .then(() => {
     console.log('all done!')

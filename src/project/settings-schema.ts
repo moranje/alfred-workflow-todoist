@@ -6,7 +6,7 @@ export interface Schema {
   description: string
   type: string
   properties: Properties
-  required?: (string)[] | null
+  required?: string[] | null
 }
 
 /** @hidden */
@@ -32,7 +32,7 @@ export interface Language {
   description: string
   explanation: string
   type: string
-  enum?: (string)[] | null
+  enum?: string[] | null
 }
 
 /** @hidden */
@@ -70,14 +70,14 @@ export const Schema: Schema = {
       description: 'A todoist API token',
       explanation: 'Must be a valid todoist token (40 chars and only 0-9 and a-f)',
       type: 'string',
-      pattern: '(?:^[0-9a-fA-F]{40}$)|^$'
+      pattern: '(?:^[0-9a-fA-F]{40}$)|^$',
     },
 
     language: {
       description: 'A todoist language',
       explanation: 'Must be one of: en, da, pl, zh, ko, de, pt, ja, it, fr, sv, ru, es, nl',
       type: 'string',
-      enum: ['en', 'da', 'pl', 'zh', 'ko', 'de', 'pt', 'ja', 'it', 'fr', 'sv', 'ru', 'es', 'nl']
+      enum: ['en', 'da', 'pl', 'zh', 'ko', 'de', 'pt', 'ja', 'it', 'fr', 'sv', 'ru', 'es', 'nl'],
     },
 
     max_items: {
@@ -85,7 +85,7 @@ export const Schema: Schema = {
       explanation: 'Must be a number between 1 and 20',
       type: 'number',
       minimum: 1,
-      maximum: 20
+      maximum: 20,
     },
 
     cache_timeout: {
@@ -93,7 +93,7 @@ export const Schema: Schema = {
       explanation: 'Must be a number between 1 and 604800',
       type: 'number',
       minimum: 1,
-      maximum: 604800
+      maximum: 604800,
     },
 
     uuid: {
@@ -101,14 +101,14 @@ export const Schema: Schema = {
       explanation: 'This should be left unchanged',
       type: 'string',
       pattern: '[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}',
-      format: 'uuid'
+      format: 'uuid',
     },
 
     anonymous_statistics: {
       description: 'Usage information',
       explanation: 'Can either be true of false',
-      type: 'boolean'
-    }
+      type: 'boolean',
+    },
   },
-  required: ['token', 'language', 'max_items', 'uuid', 'anonymous_statistics']
+  required: ['token', 'language', 'max_items', 'uuid', 'anonymous_statistics'],
 }
