@@ -151,7 +151,7 @@
     "@types/write-json-file": "3.2.1",
     "@typescript-eslint/eslint-plugin": "2.9.0",
     "@typescript-eslint/parser": "2.9.0",
-    "bestzip": "2.1.5",
+    "bestzip": "2.1.7",
     "colors": "1.4.0",
     "commitizen": "4.0.3",
     "coveralls": "3.0.9",
