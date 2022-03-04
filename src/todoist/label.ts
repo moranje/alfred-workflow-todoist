@@ -1,6 +1,6 @@
-import { AlfredError } from '@/project';
-import { Item, List } from '@/workflow';
-import compose from 'stampit';
+import { AlfredError } from '@/project'
+import { Item, List } from '@/workflow'
+import compose from 'stampit'
 
 /** @hidden */
 export const Label: todoist.LabelFactory = compose({
@@ -18,27 +18,24 @@ export const Label: todoist.LabelFactory = compose({
     }
 
     Object.assign(this, label)
-  }
+  },
 })
 
 /** @hidden */
-export const LabelList: todoist.LabelListFactory = compose(
-  List,
-  {
-    init(
-      this: todoist.LabelListInstance,
-      { labels = [], query }: { labels: todoist.Label[]; query: string }
-    ) {
-      labels.forEach((label: todoist.Label) => {
-        this.items.push(
-          Item({
-            title: label.name,
-            subtitle: `Add label ${label.name} to task`,
-            autocomplete: `${query.replace(/(^.*@).*/, '$1')}${label.name} `,
-            valid: false
-          })
-        )
-      })
-    }
-  }
-)
+export const LabelList: todoist.LabelListFactory = compose(List, {
+  init(
+    this: todoist.LabelListInstance,
+    { labels = [], query }: { labels: todoist.Label[]; query: string }
+  ) {
+    labels.forEach((label: todoist.Label) => {
+      this.items.push(
+        Item({
+          title: label.name,
+          subtitle: `Add label ${label.name} to task`,
+          autocomplete: `${query.replace(/(^.*@).*/, '$1')}${label.name} `,
+          valid: false,
+        })
+      )
+    })
+  },
+})

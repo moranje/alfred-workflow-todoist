@@ -1,6 +1,6 @@
-import plist from 'fast-plist';
-import { readFileSync } from 'fs';
-import macOsVersion from 'macos-version';
+import plist from 'fast-plist'
+import { readFileSync } from 'fs'
+import macOsVersion from 'macos-version'
 
 /** @hidden */
 let alfredVersion = 'unknown'
@@ -31,10 +31,9 @@ try {
   // Do nothing
 }
 
-
 export const ENV = {
   OSX_VERSION: macOsVersion(),
   NODE_VERSION: process.version,
   ALFRED_VERSION: alfredVersion,
-  WORKFLOW_VERSION: workflowVersion
+  WORKFLOW_VERSION: workflowVersion,
 }

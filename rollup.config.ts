@@ -28,10 +28,10 @@ export default {
     'util',
     'os',
     'worker_treads',
-    'zlib'
+    'zlib',
   ],
   watch: {
-    include: 'src/**'
+    include: 'src/**',
   },
   plugins: [
     // Allow json resolution
@@ -42,7 +42,7 @@ export default {
 
     // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
     commonjs({
-      ignore: ['worker_threads']
+      ignore: ['worker_threads'],
     }),
     // Allow node_modules resolution, so you can use 'external' to control
     // which external modules to include in the bundle
@@ -50,6 +50,6 @@ export default {
     resolve(),
 
     // Resolve source maps to the original source
-    sourceMaps()
-  ]
+    sourceMaps(),
+  ],
 }

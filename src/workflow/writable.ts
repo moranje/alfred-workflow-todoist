@@ -31,6 +31,6 @@ export const Writable: workflow.WritableFactory = compose({
       })
 
       return console.log(...mapped)
-    }
-  }
+    },
+  },
 })

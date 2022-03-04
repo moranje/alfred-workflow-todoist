@@ -5,7 +5,7 @@ export {
   CACHE_PATH,
   WORKFLOW_JSON,
   WORKFLOW_PATH,
-  NOTIFIER_PATH
+  NOTIFIER_PATH,
 } from './references'
 export { Schema } from './settings-schema'
 export { FILES } from './files'

@@ -5,12 +5,8 @@ const argv = Object.assign([], process.argv)
 argv.splice(0, 2)
 const call: 'moveToTemp' | 'moveFromTemp' | undefined = argv.shift()
 
-const dataPath = `${
-  process.env.HOME
-}/Library/Application Support/Alfred 3/Workflow Data/com.alfred-workflow-todoist`
-const cachePath = `${
-  process.env.HOME
-}/Library/Caches/com.runningwithcrayons.Alfred-3/Workflow Data/com.alfred-workflow-todoist`
+const dataPath = `${process.env.HOME}/Library/Application Support/Alfred 3/Workflow Data/com.alfred-workflow-todoist`
+const cachePath = `${process.env.HOME}/Library/Caches/com.runningwithcrayons.Alfred-3/Workflow Data/com.alfred-workflow-todoist`
 const cwd = process.cwd()
 const TEMP_FOLDER = 'assets'
 
@@ -28,10 +24,12 @@ function moveToTemp() {
 
 function moveFromTemp() {
   mkdirp(`dist/workflow`)
-  let plist = shell.cp(`${TEMP_FOLDER}/info.plist`, 'dist/workflow/info.plist').stderr
-  let icon = shell.cp(`${TEMP_FOLDER}/icon.png`, 'dist/workflow/icon.png').stderr
-  let workflowConfig = shell.cp(`${TEMP_FOLDER}/workflow.json`, 'dist/workflow/workflow.json')
-    .stderr
+  const plist = shell.cp(`${TEMP_FOLDER}/info.plist`, 'dist/workflow/info.plist').stderr
+  const icon = shell.cp(`${TEMP_FOLDER}/icon.png`, 'dist/workflow/icon.png').stderr
+  const workflowConfig = shell.cp(
+    `${TEMP_FOLDER}/workflow.json`,
+    'dist/workflow/workflow.json'
+  ).stderr
   // shell.cp('-R', `${TEMP_FOLDER}/images/`, 'dist/workflow/images/')
 
   if (!plist && !icon && !workflowConfig) {

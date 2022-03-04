@@ -37,10 +37,7 @@ try {
  * CLI option logic
  */
 if (type === 'read') {
-  command
-    .read(query)
-    .catch(handleError)
-    .finally(handleSerialization)
+  command.read(query).catch(handleError).finally(handleSerialization)
 } else if (type === 'create') {
   try {
     command.create(query)
@@ -55,12 +52,9 @@ if (type === 'read') {
     .catch(handleError)
     .finally(handleSerialization)
 } else if (type === 'remove') {
-  command
-    .remove(JSON.parse(query))
-    .catch(handleError)
-    .finally(handleSerialization)
+  command.remove(JSON.parse(query)).catch(handleError).finally(handleSerialization)
 } else if (type === 'settings' && query.trim() !== '') {
-  let [key, value] = query.trim().split(' ')
+  const [key, value] = query.trim().split(' ')
   command.verifySetting(key, value)
 } else if (type === 'settings') {
   command.listSettings()

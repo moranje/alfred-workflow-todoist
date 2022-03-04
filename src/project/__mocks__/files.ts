@@ -1,10 +1,10 @@
-export let FILES = {
+export const FILES = {
   settings: {
     token: '0123456789abcde0123456789abcde0123456789',
     language: 'en',
     max_items: '9',
     anonymous_statistics: 'true',
-    unknown: {}
+    unknown: {},
   },
   cache: [
     {
@@ -15,13 +15,13 @@ export let FILES = {
             {
               id: 1,
               name: '15min',
-              order: 1
+              order: 1,
             },
             {
               id: 7,
               name: 'on_road',
-              order: 7
-            }
+              order: 7,
+            },
           ],
           id: 1,
           project_id: 1,
@@ -33,20 +33,20 @@ export let FILES = {
           priority: 1,
           comment_count: 0,
           url: 'https://todoist.com/showTask?id=1',
-          project: { id: 1, name: 'Inbox', order: 0, indent: 1, comment_count: 0 }
+          project: { id: 1, name: 'Inbox', order: 0, indent: 1, comment_count: 0 },
         },
         {
           labels: [
             {
               id: 1,
               name: '15min',
-              order: 1
+              order: 1,
             },
             {
               id: 6,
               name: 'at_home',
-              order: 6
-            }
+              order: 6,
+            },
           ],
           id: 2,
           project_id: 2,
@@ -58,25 +58,25 @@ export let FILES = {
           priority: 1,
           comment_count: 1,
           url: 'https://todoist.com/showTask?id=2',
-          project: { id: 2, name: 'Next Actions', order: 0, indent: 1, comment_count: 0 }
+          project: { id: 2, name: 'Next Actions', order: 0, indent: 1, comment_count: 0 },
         },
         {
           labels: [
             {
               id: 2,
               name: '30min',
-              order: 2
+              order: 2,
             },
             {
               id: 8,
               name: 'at_store',
-              order: 8
+              order: 8,
             },
             {
               id: 10,
               name: 'next_actions',
-              order: 10
-            }
+              order: 10,
+            },
           ],
           id: 3,
           project_id: 3,
@@ -88,25 +88,25 @@ export let FILES = {
           priority: 1,
           comment_count: 0,
           url: 'https://todoist.com/showTask?id=3',
-          project: { id: 3, name: 'Waiting', order: 0, indent: 1, comment_count: 0 }
+          project: { id: 3, name: 'Waiting', order: 0, indent: 1, comment_count: 0 },
         },
         {
           labels: [
             {
               id: 3,
               name: '1hour',
-              order: 3
+              order: 3,
             },
             {
               id: 6,
               name: 'at_home',
-              order: 6
+              order: 6,
             },
             {
               id: 9,
               name: 'waiting_for',
-              order: 9
-            }
+              order: 9,
+            },
           ],
           id: 4,
           project_id: 4,
@@ -119,25 +119,25 @@ export let FILES = {
           comment_count: 0,
           due: { recurring: false, string: '10 okt.', date: '2018-10-10' },
           url: 'https://todoist.com/showTask?id=4',
-          project: { id: 4, name: 'Someday/Maybe', order: 0, indent: 1, comment_count: 0 }
+          project: { id: 4, name: 'Someday/Maybe', order: 0, indent: 1, comment_count: 0 },
         },
         {
           labels: [
             {
               id: 2,
               name: '30min',
-              order: 2
+              order: 2,
             },
             {
               id: 5,
               name: 'at_work',
-              order: 5
+              order: 5,
             },
             {
               id: 10,
               name: 'next_actions',
-              order: 10
-            }
+              order: 10,
+            },
           ],
           id: 5,
           project_id: 5,
@@ -150,10 +150,10 @@ export let FILES = {
           comment_count: 0,
           due: { recurring: false, string: '9 okt.', date: '2018-10-09' },
           url: 'https://todoist.com/showTask?id=5',
-          project: { id: 5, name: 'Work', order: 0, indent: 1, comment_count: 0 }
-        }
+          project: { id: 5, name: 'Work', order: 0, indent: 1, comment_count: 0 },
+        },
       ],
-      e: 32535126000000 // 3000-12-31T00:00:00
+      e: 32535126000000, // 3000-12-31T00:00:00
     },
     {
       k: 'labels',
@@ -167,9 +167,9 @@ export let FILES = {
         { id: 7, name: 'on_road', order: 7 },
         { id: 8, name: 'at_store', order: 8 },
         { id: 9, name: 'waiting_for', order: 9 },
-        { id: 10, name: 'next_actions', order: 10 }
+        { id: 10, name: 'next_actions', order: 10 },
       ],
-      e: 32535126000000 // 3000-12-31T00:00:00
+      e: 32535126000000, // 3000-12-31T00:00:00
     },
     {
       k: 'projects',
@@ -178,9 +178,9 @@ export let FILES = {
         { id: 2, name: 'Next Actions', order: 1, indent: 1, comment_count: 0 },
         { id: 3, name: 'Waiting', order: 2, indent: 1, comment_count: 0 },
         { id: 4, name: 'Someday/Maybe', order: 3, indent: 1, comment_count: 0 },
-        { id: 5, name: 'Work', order: 4, indent: 1, comment_count: 0 }
+        { id: 5, name: 'Work', order: 4, indent: 1, comment_count: 0 },
       ],
-      e: 32535126000000 // 3000-12-31T00:00:00
-    }
-  ]
+      e: 32535126000000, // 3000-12-31T00:00:00
+    },
+  ],
 }

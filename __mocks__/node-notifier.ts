@@ -6,5 +6,5 @@ export default {
 
   on(name: string, fn: any) {
     fn({}, { open: '' })
-  }
+  },
 }

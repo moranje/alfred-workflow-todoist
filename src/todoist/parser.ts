@@ -1,5 +1,5 @@
-import * as grammar from '@/todoist/grammar';
-import nearley from 'nearley';
+import * as grammar from '@/todoist/grammar'
+import nearley from 'nearley'
 
 /**
  * Parse a string.
@@ -19,7 +19,7 @@ export function parser(text: string): todoist.Parsed {
 /** @hidden */
 function organize([results]: todoist.Token[][]): todoist.Parsed {
   // Defaults
-  let tokens: todoist.Parsed = {
+  const tokens: todoist.Parsed = {
     content: '<Give a name to this task>',
     labels: [],
     priority: '1',
@@ -38,13 +38,13 @@ function organize([results]: todoist.Token[][]): todoist.Parsed {
         project: this.project ? `${this.project}` : void 0,
         project_id: this.project_id,
         labels:
-          this.labels && this.labels.length > 0 ? this.labels.map(label => `${label}`) : void 0,
-        label_ids: this.label_ids && this.label_ids.length > 0 ? this.label_ids : void 0
+          this.labels && this.labels.length > 0 ? this.labels.map((label) => `${label}`) : void 0,
+        label_ids: this.label_ids && this.label_ids.length > 0 ? this.label_ids : void 0,
       }
-    }
+    },
   }
 
-  results.forEach(token => {
+  results.forEach((token) => {
     if (token.type === 'content') {
       if (token.value.trim() !== '') {
         tokens.content += token.value.trim()
