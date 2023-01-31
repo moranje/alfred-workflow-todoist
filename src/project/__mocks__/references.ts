@@ -35,4 +35,4 @@ export const NOTIFIER_PATH = `${process.cwd()}/dist/workflow/notifier/terminal-n
 /**
  * The API base path.
  */
-export const TODOIST_API_URI = 'https://api.todoist.com/rest/v1'
+export const TODOIST_API_URI = 'https://api.todoist.com/rest/v2'
